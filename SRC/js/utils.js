@@ -1,0 +1,564 @@
+/**
+ * Noop
+ * */
+function noop () {}
+
+/**
+ * Ключи к координатам и размерам в зависимости от ориентации фоторамы
+ * */
+function getOrientationKeys (orientation) {
+  if (orientation === 'vertical') {
+    return { _pos: 'top',
+    _pos2: 'left',
+    _coo: '_y',
+    _coo2: '_x',
+    _side: 'height',
+    _side2: 'width' }
+  } else {
+    return { _pos: 'left',
+      _pos2: 'top',
+      _coo: '_x',
+      _coo2: '_y',
+      _side: 'width',
+      _side2: 'height' }
+  }
+}
+
+/**
+ * Простой лимитер
+ * */
+function minMaxLimit (value, min, max) {
+  return Math.max(typeof min !== 'number' ? -Infinity : min, Math.min(typeof max !== 'number' ? Infinity : max, value));
+}
+
+/**
+ * Парсит матрицу трансформации элемента,
+ * возвращает величину по определённой координате (top или left)
+ * */
+function readTransform (css, _pos) {
+  ////////console.log('---readTransform---', css);
+  return css.match(/-?\d+/g)[_pos === 'left' ? 4 : 5];
+}
+
+/**
+ * Функция для чтения актуальной позиции элемента
+ * */
+function readPosition ($el, _pos, css3) {
+  if (CSSTR && css3) {
+    return Number(readTransform($el.css('transform'), _pos));
+  } else {
+    return Number($el.css(_pos).replace('px', ''));
+  }
+}
+
+/**
+ * Возвращает позицию для использования в .css(), например:
+ *   $el.css(getTranslate(100, 'left'));
+ * */
+function getTranslate (pos, _pos, css3) {
+  var obj = {};
+  if (CSSTR && css3) {
+    obj.transform = _pos === 'left' ? 'translate3d(' + pos + 'px,0,0)' : 'translate3d(0,' + pos + 'px,0)';
+  } else {
+    obj[_pos] = pos;
+    obj[_pos === 'left' ? 'top' : 'left'] = 0;
+  }
+  return obj;
+}
+
+/**
+ * Возвращает время анимации для использования в .css(), например:
+ *   $el.css(getDuration(333));
+ * */
+function getDuration (time) {
+  return {'transition-duration': time + 'ms'};
+}
+
+/**
+ * Получаем число N из строки 'Npx'.
+ * Можно вычленить любую другую единицу, передав её вторым параметром:
+ * numberFromPx()
+ * */
+function numberFromMeasure (value, measure) {
+  value = Number(String(value).replace(measure || 'px', ''));
+  return isNaN(value) ? false : value;
+}
+
+/**
+ * Размер в процентах
+ * */
+function numberFromPercent (value) {
+  var number = numberFromMeasure(value, '%');
+  return !!number && /%$/.test(value) ? number : false;
+}
+
+/**
+ * Можно ли использовать размер, если да — возвращает исходное value
+ * */
+function measureIsValid (value) {
+  return !!numberFromMeasure(value) || !!numberFromMeasure(value, '%') ? value : false;
+}
+
+/**
+ * returning innerWidth or innerHeight depends on orientation
+ * */
+//function innerSideMethod (_side) {
+//  return ('inner' + _side).replace('rw', 'rW').replace('rh', 'rH');
+//}
+
+function capitaliseFirstLetter (string) {
+  return string && string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+/**
+ * Позиция по индексу
+ * */
+function getPosByIndex (index, side, margin, baseIndex) {
+  return (index - (baseIndex || 0)) * (side + (margin || 0));
+}
+
+/**
+ * Индекс по позиции
+ * */
+function getIndexByPos (pos, side, margin, baseIndex) {
+  return - Math.round(pos / (side + (margin || 0)) - (baseIndex || 0));
+}
+
+function getRandomInt (min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+/**
+ * Слушаем событие transitionend,
+ * выполняем заданный колбек
+ * */
+function bindTransitionEnd ($el) {
+
+  var elData = $el.data();
+
+  if (elData.transEnd) return;
+
+  var el = $el.get(0),
+      transitionEndEvent = {
+        WebkitTransition: 'webkitTransitionEnd',
+        MozTransition: 'transitionend',
+        OTransition: 'oTransitionEnd',
+        msTransition: 'MSTransitionEnd',
+        transition: 'transitionend'
+      };
+  el.addEventListener(transitionEndEvent[Modernizr.prefixed('transition')], function (e) {
+    var transProp = elData.transProp;
+    if (transProp.match(e.propertyName) || transProp.match('all')) {
+      elData.transProp = transProp.replace(e.propertyName, '');
+
+      elData.onEndFn.call(this);
+    }
+  });
+  elData.transEnd = true;
+}
+
+/**
+ * Присваивание колбека для выполнения после завершения анимации
+ * */
+function afterTransition ($el, fn, time) {
+  var done,
+      elData = $el.data();
+
+  elData.transProp = $el.css('transition-property');
+  elData.onEndFn = function () {
+    ////////////console.log('Cработал нативный transitionend', fn);
+    done = true;
+    fn.call(this);
+  };
+
+  bindTransitionEnd($el);
+
+  clearTimeout(elData.transTimeout);
+
+  if (!time) return;
+
+  elData.transTimeout = setTimeout(function () {
+    // Если не сработал нативный transitionend (а такое бывает),
+    // через таймаут вызываем onEndFn насильно:
+    if (done) return;
+    ////////////console.log('Не сработал нативный transitionend!', fn);
+    $el.data().onEndFn = noop;
+    fn.call($el.get(0));
+  }, time * 1.1);
+}
+
+/**
+ * Универсальная функция для остановки анимируемого объекта,
+ * возвращает актуальную позицию
+ * */
+function stop ($el, _pos, css3) {
+  if (CSSTR && css3) {
+    $el.css(getDuration(0));
+    afterTransition($el, noop);
+  } else {
+    $el.stop();
+  }
+  var lockedLeft = readPosition($el, _pos, css3);
+  $el.css(getTranslate(lockedLeft, _pos, css3));
+  return lockedLeft;
+}
+
+/**
+ * Сопротивление на краях шахты
+ * */
+function edgeResistance (pos, edge) {
+  return Math.round(pos + ((edge - pos) / 1.5));
+}
+
+function getProtocol() {
+  getProtocol.protocol = getProtocol.protocol || (location.protocol === 'https://' ? 'https://' : 'http://');
+  return getProtocol.protocol;
+}
+
+function parseHref (href) {
+  var a = document.createElement('a');
+  a.href = href;
+  return a;
+}
+
+function findVideoId (href, forceVideo) {
+  if (typeof href === 'undefined') return;
+  href = parseHref(href);
+  var id,
+      type;
+
+  if (href.host.match('youtube.com') && href.search) {
+    id = href.search.split('v=')[1];
+    if (id) {
+      var ampersandPosition = id.indexOf('&');
+      if (ampersandPosition !== -1) {
+        id = id.substring(0, ampersandPosition);
+      }
+      type = 'youtube';
+    }
+  } else if (href.host === 'youtube.com' || href.host === 'youtu.be') {
+    id = href.pathname.replace(/^\/(embed\/|v\/)?/, '').replace(/\/.*/, '');
+    type = 'youtube';
+  } else if (href.host === 'vimeo.com' || href.host === 'player.vimeo.com') {
+    type = 'vimeo';
+    id = href.pathname.replace(/^\/(video\/)?/, '').replace(/\/.*/, '');
+  }
+
+  if ((!id || !type) && forceVideo) {
+    id = href.href;
+    type = 'custom';
+  }
+
+  return id ? {id: id, type: type} : false;
+}
+
+function getVideoThumbs (dataFrame, data, i, api) {
+  var img, thumb, video = dataFrame.video;
+  if (video.type === 'youtube') {
+    thumb = getProtocol() + 'img.youtube.com/vi/' + video.id + '/default.jpg';
+    img = thumb.replace(/\/default.jpg$/, '/hqdefault.jpg');
+    dataFrame.thumbsReady = true;
+  } else if (video.type === 'vimeo') {
+    $.ajax({
+      url: getProtocol() + 'vimeo.com/api/v2/video/' + video.id + '.json',
+      dataType: 'jsonp',
+      success: function(json){
+        ////////////console.log('JSONP success');
+        dataFrame.thumbsReady = true;
+        updateData(data, {img: json[0].thumbnail_large, thumb: json[0].thumbnail_small}, i, api);
+      }
+    });
+  } else {
+    dataFrame.thumbsReady = true;
+  }
+
+  //if (img || thumb) {
+    return {
+      img: img,
+      thumb: thumb
+    }
+  //}
+}
+
+function updateData (data, _dataFrame, i, api) {
+  ////////////console.log('updateData', _dataFrame, i);
+  for (var _i = 0, _l = data.length; _i < _l; _i++) {
+    var dataFrame = data[_i];
+
+    ////////////console.log(dataFrame.i, i);
+
+    if (dataFrame.i === i && dataFrame.thumbsReady) {
+      ////////////console.log('splice', dataFrame._imgSrc, dataFrame._thumbSrc);
+
+      api.splice(_i, 1, {
+        //_imgSrc: dataFrame._imgSrc,
+        //_thumbSrc: dataFrame._thumbSrc,
+        i: i,
+        video: dataFrame.video,
+        videoReady: true,
+        caption: dataFrame.caption,
+        img: dataFrame.img || _dataFrame.img,
+        thumb: dataFrame.thumb || _dataFrame.thumb
+      });
+
+      break;
+    }
+  }
+}
+
+/**
+ * Парсим ХТМЛ в массив с данными об изображениях
+ * */
+function getDataFromHtml ($el) {
+  var data = [];
+
+  function getDataFromImg ($img, checkVideo) {
+    var imgData = $img.data(),
+        $child = $img.children('img').eq(0),
+        _imgHref = $img.attr('href'),
+        _imgSrc = $img.attr('src'),
+        _thumbSrc = $child.attr('src'),
+        _video = imgData.video,
+        video = checkVideo ? findVideoId(_imgHref, _video === true) : false;
+
+    //////////console.log('video1', video);
+
+    if (video) {
+      _imgHref = false;
+    } else if (checkVideo) {
+      //////////console.log('find video from _imgSrc', _imgSrc);
+      video = findVideoId(_imgSrc, _video === true);
+      if (video) {
+        _imgSrc = false;
+      } else {
+        video = findVideoId(_video, _video);
+      }
+    }
+
+    //////////console.log('video2', video);
+
+//    if (video && (!imgSrc || !thumbSrc)) {
+//      var thumbs = getVideoThumbs(video, data, i, api);
+//      imgHref = imgSrc = imgSrc || thumbs.img;
+//      thumbSrc = thumbSrc || thumbs.thumb;
+//    }
+
+    return {
+      //_imgHref: _imgHref,
+      //_imgSrc: _imgSrc,
+      //_thumbSrc: _thumbSrc,
+      video: video,
+      img: _imgHref || _imgSrc || _thumbSrc,
+      thumb: _thumbSrc || _imgSrc || _imgHref,
+      full: $img.attr('data-full') || $child.attr('data-full'),
+      caption: $img.attr('title') || $child.attr('title'),
+      fit: imgData.fit || $child.data('fit'),
+      id: $img.attr('id') || $child.attr('id')
+    }
+  }
+
+  $el.children().each(function (i) {
+    var $this = $(this),
+        dataFrame = $this.data();
+    if ($this.is('a, img')) {
+      dataFrame = getDataFromImg($this, true);
+    } else if (!$this.is(':empty')) {
+      dataFrame.html = this;
+      dataFrame.caption = dataFrame.caption || $this.attr('title');
+    } else {
+      return;
+    }
+
+    //////console.log('dataFrame', dataFrame);
+    //dataFrame.i = i;
+    data.push(dataFrame);
+  });
+
+  return data;
+}
+
+/**
+ * Проверка видимости элемента (visibility: hidden — это видимый элемент, в данном контексте)
+ * Работает в 3-4 раза быстрее джейкверевского ':hidden'
+ * */
+function isHidden (el) {
+  //////////////console.log('isHidden', el, el.offsetWidth, el.offsetHeight);
+
+  return el.offsetWidth === 0 && el.offsetHeight === 0;
+}
+
+/**
+ * Фунция-посредник, чтобы выполнить другую функцию только, если определённый элемент видим (имеет размеры) на странице
+ * */
+function waitFor (test, fn, timeout) {
+  //////////////console.log('waitFor', test());
+  if (test()) {
+    fn();
+  } else {
+    setTimeout(function () {
+      waitFor(test, fn);
+    }, timeout || 100);
+  }
+}
+
+/**
+ * Вписывает объект в заданные рамки тремя способами: none, contain и cover
+ * */
+function fit ($el, measuresToFit, method) {
+  var elData = $el.data(),
+      measures = elData.measures;
+
+  //console.log('FIT1', $el, measures);
+
+  if (measures && (!elData.last ||
+      elData.last.mw !== measures.width ||
+      elData.last.mh !== measures.height ||
+      elData.last.mr !== measures.ratio ||
+      elData.last.mfw !== measuresToFit.width__ ||
+      elData.last.mfh !== measuresToFit.height__ ||
+      elData.last.mm !== method)) {
+
+    //console.log('FIT2', $el, measures, measuresToFit, method);
+
+    var width = measures.width,
+        height = measures.height,
+        ratio = measuresToFit.width_ / measuresToFit.height_,
+        biggerRatioFLAG = measures.ratio >= ratio,
+        fitFLAG = method === true,
+        containFLAG = method === 'contain',
+        coverFLAG = method === 'cover';
+
+    if (biggerRatioFLAG && (fitFLAG || containFLAG) || !biggerRatioFLAG && coverFLAG) {
+      width = minMaxLimit(measuresToFit.width_, 0, fitFLAG ? width : Infinity);
+      height = width / measures.ratio;
+    } else if (biggerRatioFLAG && coverFLAG || !biggerRatioFLAG && (fitFLAG || containFLAG)) {
+      height = minMaxLimit(measuresToFit.height_, 0, fitFLAG ? height : Infinity);
+      width = height * measures.ratio;
+    }
+
+    $el.css({
+      width: Math.round(width),
+      height: Math.round(height),
+      marginLeft: Math.round(- width / 2),
+      marginTop: Math.round(- height / 2)
+    });
+
+    elData.last = {
+      mw: measures.width,
+      mh: measures.height,
+      mr: measures.ratio,
+      mfw: measuresToFit.width_,
+      mfh: measuresToFit.height_,
+      mm: method///,
+      ///$w: elData.$wrap
+    }
+  }
+
+  ///if (elData.$wrap) {
+    ////console.log('FIT $wrap');
+    ///fit(elData.$wrap, {width__: measuresToFit.width_, height__: measuresToFit.height_});
+  ///}
+
+  ///if (measures) return true;
+}
+
+function findShadowEdge (pos, minPos, maxPos) {
+  return minPos === maxPos ? false : pos <= minPos ? 'left' : pos >= maxPos ? 'right' : 'left right';
+}
+
+function getIndexFromHash (hash, data, ok) {
+  if (!ok) return false;
+
+  var index = Number(hash);
+  if (!isNaN(index)) return index - 1;
+
+  for (var _i = 0, _l = data.length; _i < _l; _i++) {
+    var dataFrame = data[_i];
+
+    if (dataFrame.id === hash) {
+      index = _i;
+      break;
+    }
+  }
+
+  return index;
+}
+
+function setHash (hash, eq) {
+  if (eq) return;
+
+  setHash.on = true;
+
+  location.replace(/*location.protocol
+      + '//'
+      + location.href.host
+      + location.pathname.replace(/^\/?/, '/')
+      + location.search
+      + */'#' + hash);
+
+  clearTimeout(setHash.timeout);
+  setHash.timeout = setTimeout(function () {
+    setHash.on = false;
+  }, 100);
+}
+
+function smartClick ($el, fn, _options) {
+  _options = _options || {};
+
+  $el.each(function () {
+    var $this = $(this),
+        thisData = $this.data(),
+        startEvent;
+
+    if (thisData.clickOn) return;
+
+    ////////////console.log('click on', $this);
+
+    thisData.clickOn = true;
+
+    $.extend(touch($this, {
+      onStart: function (e) {
+        //////////console.log('smartClick onStart');
+        startEvent = e;
+        (_options.onStart || noop).call(this, e);
+      },
+      onMove: _options.onMove || noop,
+      onEnd: function (result) {
+        if (result.moved || _options.tail.checked) return;
+
+        //////////console.log('smartClick onEnd');
+        fn.call(this, startEvent);
+      }
+    }), _options.tail);
+
+  });
+}
+
+function preventDefault (e) {
+  e.preventDefault();
+}
+
+function stopPropagation (e) {
+  e.stopPropagation();
+}
+
+function noInteraction () {
+  return false;
+}
+
+function bindNoInteraction ($el) {
+  return $el.each(function () {
+    $(this)
+        .off('mousedown mousemove mouseup')
+        .on('mousedown mousemove mouseup', noInteraction);
+    if (TOUCH) {
+      this.removeEventListener('touchstart', noInteraction);
+      this.removeEventListener('touchmove', noInteraction);
+      this.removeEventListener('touchend', noInteraction);
+      this.addEventListener('touchstart', noInteraction);
+      this.addEventListener('touchmove', noInteraction);
+      this.addEventListener('touchend', noInteraction);
+    }
+  });
+}

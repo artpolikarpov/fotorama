@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <script src=jquery-1.8.2.js></script>
+</head>
+<body>
+
+<div id="test"
+     data-boolean1="true"
+     data-boolean2="false"
+     data-boolean3="fals"
+     data-number1="34"
+     data-number2="34.456"
+     data-number3="34,456"
+     data-number4="34/4"
+     data-array1='{"blue": "12", "test": "function (window, b) { Math.min (3, 2); console.log(window, b); function abc(cde) { return cde }; console.log(abc(123)); return this; }"}'
+     data-array2="{'blue': '12', 'test': 'bar'}"
+     data-function="function () { Math.min(3,5)}"
+    ></div>
+
+<div id="div" data-role="page" data-lastValue="43" data-hidden="true" data-options='{"name":"John"}'></div>
+
+<script>
+  $(function(){
+    var $test = $('#test');
+    $.each($test.data(), function (name, prop) {
+      //document.write(name + ': ' + prop + ' (' + typeof(prop) + ')<br> ');
+    });
+
+    var test = $test.data('array1').test;
+    console.log(eval('(' + test + ')')(window, 123));
+
+
+    console.log($('#div').data())
+  });
+</script>
+
+
+</body>
+</html>

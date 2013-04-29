@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    div > img { display: block; margin: 0 0 .5em; }
+  </style>
+  
+  <script src=""http://code.jquery.com/jquery-1.9.1.min.js"></script" title=""http://code.jquery.com/jquery-1.9.1.min.js"></script">
+
+  <link rel="stylesheet" href="../fotorama.css">
+  <script src=""../fotorama.js"></script" title=""../fotorama.js"></script">
+</head>
+
+<body style="background: #eee;">
+
+<div class="fotorama" data-nav="dots" data-captions="true" data-allow-fullscreen="true" data-loop="true" data-arrows="true" data-allow-full-screen="false" data-width="550" data-height="391" style="">
+  <img src="http://alexeilebedev.com/misc/acapella.jpg" title="http://alexeilebedev.com/misc/acapella.jpg">
+  <img src="http://alexeilebedev.com/misc/crazyjohn.jpg" title="http://alexeilebedev.com/misc/crazyjohn.jpg">
+  <img src="http://alexeilebedev.com/misc/dudeintheground-lo.jpg" title="http://alexeilebedev.com/misc/dudeintheground-lo.jpg">
+  <img src="http://alexeilebedev.com/misc/dudes.jpg" title="http://alexeilebedev.com/misc/dudes.jpg">
+  <img src="http://alexeilebedev.com/misc/explanation.jpg" title="http://alexeilebedev.com/misc/explanation.jpg">
+  <img src="http://alexeilebedev.com/misc/eyes.jpg" title="http://alexeilebedev.com/misc/eyes.jpg">
+  <img src="http://alexeilebedev.com/misc/facing-wind.jpg" title="http://alexeilebedev.com/misc/facing-wind.jpg">
+  <img src="http://alexeilebedev.com/misc/father-son-looking.jpg" title="http://alexeilebedev.com/misc/father-son-looking.jpg">
+  <img src="http://alexeilebedev.com/misc/flipoff.jpg" title="http://alexeilebedev.com/misc/flipoff.jpg">
+  <img src="http://alexeilebedev.com/misc/freakout.jpg" title="http://alexeilebedev.com/misc/freakout.jpg">
+  <img src="http://alexeilebedev.com/misc/guy-in-car.jpg" title="http://alexeilebedev.com/misc/guy-in-car.jpg">
+  <img src="http://alexeilebedev.com/misc/guy-in-park.jpg" title="http://alexeilebedev.com/misc/guy-in-park.jpg">
+  <img src="http://alexeilebedev.com/misc/homeless-sleeping.jpg" title="http://alexeilebedev.com/misc/homeless-sleeping.jpg">
+  <img src="http://alexeilebedev.com/misc/italianguy.jpg" title="http://alexeilebedev.com/misc/italianguy.jpg">
+  <img src="http://alexeilebedev.com/misc/KIOSK.jpg" title="http://alexeilebedev.com/misc/KIOSK.jpg">
+  <img src="http://alexeilebedev.com/misc/ladies-riding.jpg" title="http://alexeilebedev.com/misc/ladies-riding.jpg">
+  <img src="http://alexeilebedev.com/misc/lift-dude.jpg" title="http://alexeilebedev.com/misc/lift-dude.jpg">
+  <img src="http://alexeilebedev.com/misc/severedhead-lo.jpg" title="http://alexeilebedev.com/misc/severedhead-lo.jpg">
+  <img src="http://alexeilebedev.com/misc/smoking.jpg" title="http://alexeilebedev.com/misc/smoking.jpg">
+  <img src="http://alexeilebedev.com/misc/streetlook.jpg" title="http://alexeilebedev.com/misc/streetlook.jpg">
+  <img src="http://alexeilebedev.com/misc/two-umbrellas.jpg" title="http://alexeilebedev.com/misc/two-umbrellas.jpg">
+  <img src="http://alexeilebedev.com/misc/woman-reading.jpg" title="http://alexeilebedev.com/misc/woman-reading.jpg">
+</div>
+
+<script>
+  $(function () {
+    // Events
+    var $fotorama = $('.fotorama'),
+        api =  $fotorama.data('api');
+
+    $fotorama.on('fotorama:show fotorama:showend fotorama:load fotorama:fullscreenenter fotorama:fullscreenexit fotorama:loadvideo fotorama:unloadvideo fotorama:startautoplay fotorama:stopautoplay', function (e, data) {
+      console.log(e.type, api.activeIndex);
+    });
+
+    //api.startAutoplay();
+
+    //api.setOptions({orientation: 'vertical'});
+    //api.resize({width: '90%', height: '90%'}, 1000);
+    api.push({img: 'http://alexeilebedev.com/antarctica/05-lo.jpg'}, {video: 'http://youtube.com/embed/lS_ubz6Sa9c'})
+  });
+</script>
+
+</body>
+</html>

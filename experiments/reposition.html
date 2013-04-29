@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reposition test</title>
+  <script src=jquery-1.7.2.min.js></script>
+  <script>
+    $(function () {
+      var fotorama = $('.fotorama');
+      var $shaft = $('.fotorama__stage__shaft');
+      var $frame = $('.fotorama__frame');
+
+      var $emptyFrame = $('<div class="fotorama__frame fotorama__frame--empty"></div>');
+      $emptyFrame = $emptyFrame.add($emptyFrame.clone());
+
+      $frame = $frame.add($emptyFrame);
+
+      /**/
+      var size1 = 500, size2 = 333;
+
+      // Минус 2, чтобы не учитывать пустые кадры .fotorama__frame--empty
+      var frameSize = $frame.size() - 2;
+      var activeIndex = 0;
+
+      var pos1 = 'left', pos2 = 'top', margin1 = 'margin-left', margin2 = 'margin-top';
+
+      function minMaxLimit (value, min, max) {
+        return Math.min(max, Math.max(min, value));
+      }
+
+      // Отдельно вставляем новый кадр, если необходимо
+      function putActiveFrame (index, indexDiff) {
+        if (indexDiff > 1) {
+          $frame.eq(index).appendTo($shaft);
+        } else if (indexDiff < -1) {
+          $frame.eq(index)
+              .css(margin1, -size1)
+              .prependTo($shaft);
+        }
+      }
+
+      // Анимируем к новому кадру
+      window.showFrame = function showFrame (index) {
+        index = minMaxLimit(index, 0, frameSize - 1);
+
+        var indexDiff = minMaxLimit(index - activeIndex, -2, 2);
+        activeIndex = index;
+
+        putActiveFrame(index, indexDiff);
+
+        var pos = {};
+        pos[pos1] = - indexDiff * size1 - size1;
+        $shaft.stop().animate(pos, 333, function () {
+          // Сразу после анимации перестраиваем кадры, и позиционируем шахту
+          putFrames(activeIndex);
+          repositionShaft(0);
+        });
+      }
+
+      // Вставляем кадры в шахту
+      function putFrames (index) {
+        var activeFrame = $frame.eq(index);
+        var prevFrame = index > 0 ? $frame.eq(index - 1) : $emptyFrame.eq(0);
+        var nextFrame = index < frameSize ? $frame.eq(index + 1) : $emptyFrame.eq(1);
+
+        // Удаляем все лишние кадры
+        $frame.not(activeFrame).not(prevFrame).not(nextFrame).detach();
+
+        // Вставляем нужные кадры в правильном порядке
+        activeFrame
+            .appendTo($shaft)
+            .css(margin1, 0)
+            .before(prevFrame)
+            .after(nextFrame);
+      }
+
+      // Передвигаем шахту, под новый индекс
+      function repositionShaft (shiftPos) {
+        $shaft.css(pos1, -size1 + shiftPos);
+      }
+
+      /**/
+      putCount = 0;
+      function testPut() {
+        putFrames(putCount);
+        repositionShaft(-size1 + size1 * putCount);
+        putCount++;
+        if (putCount >= 3) putCount = 0;
+      }
+      setInterval(testPut, 100);
+      testPut();
+
+      /**/
+//      putFrames(activeIndex);
+//      repositionShaft(0);
+//      setTimeout(function () {
+//        showFrame(1);
+//        setTimeout(function () {
+//          showFrame(2);
+//          setTimeout(function () {
+//            showFrame(4);
+//            setTimeout(function () {
+//              showFrame(0);
+//              setTimeout(function () {
+//                showFrame(2);
+//                setTimeout(function () {
+//                  showFrame(1);
+//                  setTimeout(function () {
+//                    showFrame(2);
+//                    setTimeout(function () {
+//                      showFrame(3);
+//                      setTimeout(function () {
+//                        showFrame(4);
+//                        setTimeout(function () {
+//                          showFrame(5);
+//                          setTimeout(function () {
+//                            showFrame(-1);
+//                          }, 2000);
+//                        }, 2000);
+//                      }, 2000);
+//                    }, 2000);
+//                  }, 2000);
+//                }, 2000);
+//              }, 2000);
+//            }, 2000);
+//          }, 2000);
+//        }, 2000);
+//      }, 2000);
+    });
+  </script>
+
+  <style>
+    .fotorama {}
+    .fotorama__stage {
+      overflow: hidden;
+      position: relative;
+
+      /**/
+      width: 500px;
+      height: 333px;
+    }
+    .fotorama__stage__shaft {
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      /**/
+      width: 2500px; /* 500 * 5 + 0 * 5 (размер на 5 кадров, плюс отступы между кадрами) */
+      height: 333px;
+    }
+    .fotorama__frame {
+      float: left;
+
+      /**/
+      width: 500px;
+      height: 333px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="fotorama">
+  <div class="fotorama__stage">
+    <div class="fotorama__stage__shaft">
+      <div class="fotorama__frame" style="background: #eee;">0</div>
+      <div class="fotorama__frame" style="background: #cde;">1</div>
+      <div class="fotorama__frame" style="background: #edc;">2</div>
+      <div class="fotorama__frame" style="background: #aef;">3</div>
+      <div class="fotorama__frame" style="background: #fca;">4</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple touch engine</title>
+  <meta name="viewport" content="width=1000">
+  <script src=jquery-1.7.2.min.js></script>
+
+  <script>
+    (function (window, document, $, undefined) {
+    var TOUCH = 'ontouchstart' in window,
+        $DOCUMENT = $(document);
+
+      $(function () {
+
+        function Touch ($el, options) {
+          this.$el = $el;
+          this.el = $el.get(0);
+
+          this.options = options;
+
+          this.onStartFn = options.onStart || $.noop;
+          this.onMoveFn = options.onMove || $.noop;
+          this.onEndFn = options.onEnd || $.noop;
+
+          this.initialize();
+        }
+
+        Touch.prototype.initialize = function () {
+          if (!TOUCH) {
+            this.el.onmousedown = $.proxy(this.onStart, this);
+            document.onmousemove = $.proxy(this.onMove, this);
+            document.onmouseup = $.proxy(this.onEnd, this);
+          } else {
+            this.el.ontouchstart = $.proxy(this.onStart, this);
+            this.el.ontouchmove = $.proxy(this.onMove, this);
+            this.el.ontouchend = $.proxy(this.onEnd, this);
+          }
+        }
+
+        Touch.prototype.onStart = function (e) {
+          if (this.touchEnabledFLAG || (e.touches && e.touches.length > 1)) return;
+
+          if (!TOUCH) e.preventDefault();
+
+          //console.log(e.type, e.pageX, e.pageY);
+
+          this.offset = this.$el.offset();
+          this.width = this.$el.width();
+          this.height = this.$el.height();
+
+          this.checkedDirectionFLAG = false;
+          this.movableFLAG = false;
+
+          this.startE = e;
+
+          this.onStartFn(e);
+
+          this.touchEnabledFLAG = true;
+        }
+
+        Touch.prototype.onMove = function (e) {
+          if (!this.touchEnabledFLAG
+              || (e.pageX - this.offset.left > this.width
+                  || e.pageX - this.offset.left < 0
+                  || e.pageY - this.offset.top > this.height
+                  || e.pageY - this.offset.top < 0)
+              || (e.touches && e.touches.length > 1)) {
+            this.onEnd();
+            return;
+          }
+
+          if (TOUCH && this.options.keepTouchScroll && !this.checkedDirectionFLAG) {
+            var xShift = Math.abs(e.pageX - this.startE.pageX);
+            var yShift = Math.abs(e.pageY - this.startE.pageY);
+            var xWin = xShift - yShift >= 5;
+            var yWin = yShift - xShift >= 5;
+
+            //console.log(xWin, yWin);
+            if (xWin || yWin) {
+              this.checkedDirectionFLAG = true;
+              this.movableFLAG = (this.options.keepTouchScroll === 'y' && xWin) || (this.options.keepTouchScroll === 'x' && yWin);
+            }
+
+          } else if (!TOUCH || !this.options.keepTouchScroll || this.movableFLAG) {
+            e.preventDefault();
+
+            ////console.log(e.type, e.pageX, e.pageY);
+
+            this.onMoveFn(e);
+          }
+
+        }
+
+        Touch.prototype.onEnd = function () {
+          if (!this.touchEnabledFLAG) return;
+
+          //console.log('onEnd');
+
+          this.onEndFn();
+
+          this.touchEnabledFLAG = false;
+        }
+
+        function onShaftTouchStart (e) {
+
+        }
+
+
+        var shaftTouch = new Touch($('#shaft'), {
+          onStart: onShaftTouchStart,
+          keepTouchScroll: 'y'
+        });
+
+      });
+    })(window, document, jQuery)
+  </script>
+</head>
+<body style="margin: 20px;">
+
+<div style="background: #ddd; width: 900px; height: 600px; margin: auto; font-size: 64px;" id="shaft">
+  mouse...
+</div>
+
+<div style="width: 2000px;">123</div>
+
+</body>
+</html>

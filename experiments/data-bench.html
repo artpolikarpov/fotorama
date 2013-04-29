@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <script src=jquery-1.8.2.js></script>
+</head>
+<body>
+
+<div id="test"
+     data-boolean1="true"
+     data-boolean2="false"
+     data-boolean3="fals"
+     data-number1="34"
+     data-number2="34.456"
+     data-number3="34,456"
+     data-number4="34/4"
+     data-array1='{"blue": "12", "test": "function (window, b) { Math.min (3, 2); console.log(window, b); function abc(cde) { return cde }; console.log(abc(123)); return this; }"}'
+     data-array2="{'blue': '12', 'test': 'bar'}"
+     data-function="function () { Math.min(3,5)}"
+    ></div>
+
+<script>
+  $(function(){
+    var $body = $('body');
+    var $test = $('#test');
+
+    $test.data('some', 1);
+//    $.each($test.data(), function (name, prop) {
+//      document.write(name + ': ' + prop + ' (' + typeof(prop) + ')<br> ');
+//    });
+
+    //var test = $test.data('array1').test;
+
+    console.time("Read $('#test') selector 100 000 times");
+    for (i = 0; i < 100000; i++) {
+      var $test = $('#test');
+    }
+    console.timeEnd("Read $('#test') selector 100 000 times");
+
+    console.time("Read $('body #test') selector");
+    for (i = 0; i < 100000; i++) {
+      var $test = $('body #test');
+    }
+    console.timeEnd("Read $('body #test') selector");
+
+    console.time("Read $test.data()");
+    for (i = 0; i < 100000; i++) {
+      var testData = $test.data();
+    }
+    console.timeEnd("Read $test.data()");
+
+    console.time("Read $test.data('array1')");
+    for (i = 0; i < 100000; i++) {
+      var testData = $test.data('array1');
+    }
+    console.timeEnd("Read $test.data('array1')");
+
+
+    console.time("Read $test.data().array1");
+    for (i = 0; i < 100000; i++) {
+      var testData = $test.data().array1;
+    }
+    console.timeEnd("Read $test.data().array1");
+
+    console.time("Read $test.data('some')");
+    for (i = 0; i < 100000; i++) {
+      var testData = $test.data('some');
+    }
+    console.timeEnd("Read $test.data('some')");
+
+    console.time("Read $test.data().some");
+    for (i = 0; i < 100000; i++) {
+      var testData = $test.data().some;
+    }
+    console.timeEnd("Read $test.data().some");
+
+      console.time("Read $.data($test, 'some')");
+      for (i = 0; i < 100000; i++) {
+          var testData = $.data($test, 'some');
+      }
+      console.timeEnd("Read $.data($test, 'some')");
+
+    console.time("Set $test.data('some', 3)");
+    for (i = 0; i < 100000; i++) {
+      $test.data('some', 3);
+    }
+    console.timeEnd("Set $test.data('some', 3)");
+    console.log($test.data('some') == 3);
+
+    console.time("Set $test.data().some = 4");
+    for (i = 0; i < 100000; i++) {
+      $test.data().some = 4;
+    }
+    console.timeEnd("Set $test.data().some = 4");
+    console.log($test.data('some') == 4);
+
+    console.time("$test.data({some: 5})");
+    for (i = 0; i < 100000; i++) {
+      $test.data({some: 5});
+    }
+    console.timeEnd("$test.data({some: 5})");
+    console.log($test.data('some') == 5);
+
+    console.time("Detach and attach $test");
+    for (i = 0; i < 100000; i++) {
+      $test.detach();
+      $test.appendTo($body);
+    }
+    console.timeEnd("Detach and attach $test");
+
+    console.time("Change $test.css({left: 1, top: -1})");
+    for (i = 0; i < 100000; i++) {
+      $test.css({left: 1, top: -1}).css({left: -1, top: 1});
+    }
+    console.timeEnd("Change $test.css({left: 1, top: -1})");
+
+    console.time("Change $test.css('left', 1)");
+    for (i = 0; i < 100000; i++) {
+      $test.css('left', 1).css('left', -1).css('top', 1).css('top', -1);
+    }
+    console.timeEnd("Change $test.css('left', 1)");
+
+      console.time("Check $test.is(':visible')");
+    for (i = 0; i < 100000; i++) {
+      var isVisible = $test.is(':visible');
+    }
+    console.timeEnd("Check $test.is(':visible')");
+
+  });
+</script>
+
+
+</body>
+</html>

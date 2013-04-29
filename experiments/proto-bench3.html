@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+
+<script>
+
+  console.time('Without prototype and new');
+
+  function Class1 (initial) {
+    var method1 = function () {
+      return initial * 1;
+    }
+    var method2 = function () {
+      return initial * 2;
+    }
+    var method3 = function () {
+      return initial * 3;
+    }
+    var method4 = function () {
+      return initial * 4;
+    }
+    var method5 = function () {
+      return initial * 5;
+    }
+    var method6 = function () {
+      return initial * 6;
+    }
+    var method7 = function () {
+      return initial * 7;
+    }
+    var method8 = function () {
+      return initial * 8;
+    }
+    var method9 = function () {
+      return initial * 9;
+    }
+    var method10 = function () {
+      return initial * 10;
+    }
+
+    return method5();
+  }
+
+  var store = {};
+
+  for (i = 0; i < 100000; i++) {
+    store[i] = Class1(i);
+    var val = store[i];
+  }
+
+  console.log(val);
+
+  console.timeEnd('Without prototype and new');
+
+
+
+</script>
+
+</body>
+</html>

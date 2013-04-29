@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <script src=jquery-1.8.2.js></script>
+  <script>
+    $(function () {
+      var $test = $('.test'),
+          $activeTest;
+      if ($test.size()) {
+        console.time('not($test.eq(index))');
+        for (i = 0; i < 10000; i++) {
+          $activeTest = $test.not($test.eq(0));
+        }
+        console.log($activeTest);
+        console.timeEnd('not($test.eq(index))');
+
+        console.time('not("eq:index")');
+        for (i = 0; i < 10000; i++) {
+          $activeTest = $test.not(':eq(' + 0 + ')');
+        }
+        console.log($activeTest);
+        console.timeEnd('not("eq:index")');
+      }
+    });
+  </script>
+  <style>
+    .hide { display: none; }
+  </style>
+</head>
+<body>
+
+<div class="test">1</div>
+<div class="test">2</div>
+<div class="test">3</div>
+<div class="test">4</div>
+<div class="test">5</div>
+<div class="test">6</div>
+<div class="test">7</div>
+<div class="test">8</div>
+<div class="test">9</div>
+<div class="test">10</div>
+<div class="test">11</div>
+<div class="test">12</div>
+<div class="test">13</div>
+<div class="test">14</div>
+<div class="test">15</div>
+<div class="test">16</div>
+<div class="test">17</div>
+<div class="test">18</div>
+<div class="test">19</div>
+<div class="test">20</div>
+<div class="test">21</div>
+<div class="test">22</div>
+<div class="test">23</div>
+<div class="test">24</div>
+<div class="test">25</div>
+<div class="test">26</div>
+<div class="test">27</div>
+<div class="test">28</div>
+<div class="test">29</div>
+<div class="test">30</div>
+<div class="test">31</div>
+<div class="test">32</div>
+<div class="test">33</div>
+<div class="test">34</div>
+<div class="test">35</div>
+<div class="test">36</div>
+<div class="test">37</div>
+<div class="test">38</div>
+<div class="test">39</div>
+<div class="test">40</div>
+<div class="test">41</div>
+<div class="test">42</div>
+<div class="test">43</div>
+<div class="test">44</div>
+<div class="test">45</div>
+<div class="test">46</div>
+<div class="test">47</div>
+<div class="test">48</div>
+<div class="test">49</div>
+<div class="test">50</div>
+<div class="test">51</div>
+<div class="test">52</div>
+<div class="test">53</div>
+<div class="test">54</div>
+<div class="test">55</div>
+<div class="test">56</div>
+<div class="test">57</div>
+<div class="test">58</div>
+<div class="test">59</div>
+<div class="test">60</div>
+<div class="test">61</div>
+<div class="test">62</div>
+<div class="test">63</div>
+<div class="test">64</div>
+<div class="test">65</div>
+<div class="test">66</div>
+<div class="test">67</div>
+<div class="test">68</div>
+<div class="test">69</div>
+<div class="test">70</div>
+<div class="test">71</div>
+<div class="test">72</div>
+<div class="test">73</div>
+<div class="test">74</div>
+<div class="test">75</div>
+<div class="test">76</div>
+<div class="test">77</div>
+<div class="test">78</div>
+<div class="test">79</div>
+<div class="test">80</div>
+<div class="test">81</div>
+<div class="test">82</div>
+<div class="test">83</div>
+<div class="test">84</div>
+<div class="test">85</div>
+<div class="test">86</div>
+<div class="test">87</div>
+<div class="test">88</div>
+<div class="test">89</div>
+<div class="test">90</div>
+<div class="test">91</div>
+<div class="test">92</div>
+<div class="test">93</div>
+<div class="test">94</div>
+<div class="test">95</div>
+<div class="test">96</div>
+<div class="test">97</div>
+<div class="test">98</div>
+<div class="test">99</div>
+<div class="test">100</div>
+
+</body>
+</html>

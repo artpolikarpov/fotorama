@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+
+  <meta charset="utf-8">
+
+  <script src=jquery.js></script>
+
+  <link rel=stylesheet  href=../PRODUCT/fotorama.css>
+  <script src=../mixdown/fotorama.js></script>
+
+
+  <script>
+    $(function () {
+      var $fotorama = $('.fotorama'),
+          fotoramaData = $fotorama.data(),
+          api = fotoramaData.api;
+
+
+      // FULLSCREEN
+      $('#fotorama-fullscreen').on('click', function(){
+        api.requestFullScreen();
+      });
+
+      $fotorama.on('fotorama:fullscreenenter', function () {
+        api.setOptions({nav: 'thumbs', navPosition: 'before', orientation: 'vertical'});
+      });
+
+      $fotorama.on('fotorama:fullscreenexit', function () {
+        api.setOptions({nav: 'dots', navPosition: 'after', orientation: 'horizontal'});
+      });
+
+    });
+  </script>
+
+
+
+  <meta name="viewport" content="width=device-width">
+
+</head>
+<body style="margin: 10px; background: #eeebcd;">
+
+
+<style>
+  /*.fotorama__stage { border: 1px solid; }*/
+</style>
+
+<p>qwerqwer qwer qwerlk qwerlkj qwer</p>
+
+<p>qwer jqwer qwerkj <br><br><br> werkj wf woerijg wrkjfsjw g</p>
+
+<div style="float: left; width: 300px">134 123o4 poi erwerot wpeorti wert</div>
+
+<div style="float: left;" class="fotorama" data-orientation="horizontal" data-ratio="3/2" data-start-index="-10" data-width="500" data-flexible="false" data-allow-full-screen="true" data-css-transitions="true" data-nav="dots" data-loop="true" data-fit="cover">
+  <img src="http://alexeilebedev.com/misc/dudeintheground-lo.jpg">
+  <img src="http://alexeilebedev.com/misc/explanation.jpg" data-fit="none">
+  <img src="http://alexeilebedev.com/misc/facing-wind.jpg">
+  <img src="http://alexeilebedev.com/misc/father-son-looking.jpg">
+  <img src="http://alexeilebedev.com/misc/freakout.jpg">
+  <img src="http://alexeilebedev.com/misc/guy-in-car.jpg">
+  <img src="http://alexeilebedev.com/misc/guy-in-park.jpg">
+  <img src="http://alexeilebedev.com/misc/homeless-sleeping.jpg">
+  <img src="http://alexeilebedev.com/misc/italianguy.jpg">
+  <img src="http://alexeilebedev.com/misc/KIOSK.jpg">
+  <img src="http://alexeilebedev.com/misc/woman-reading.jpg">
+
+  <img src="http://alexeilebedev.com/misc/dudeintheground-lo.jpg">
+  <img src="http://alexeilebedev.com/misc/explanation.jpg">
+  <img src="http://alexeilebedev.com/misc/facing-wind.jpg">
+  <img src="http://alexeilebedev.com/misc/father-son-looking.jpg">
+  <img src="http://alexeilebedev.com/misc/freakout.jpg">
+  <img src="http://alexeilebedev.com/misc/guy-in-car.jpg">
+  <img src="http://alexeilebedev.com/misc/guy-in-park.jpg">
+  <img src="http://alexeilebedev.com/misc/homeless-sleeping.jpg">
+  <img src="http://alexeilebedev.com/misc/italianguy.jpg">
+  <img src="http://alexeilebedev.com/misc/KIOSK.jpg">
+  <img src="http://alexeilebedev.com/misc/woman-reading.jpg">
+
+  <img src="http://alexeilebedev.com/misc/dudeintheground-lo.jpg">
+  <img src="http://alexeilebedev.com/misc/explanation.jpg">
+  <img src="http://alexeilebedev.com/misc/facing-wind.jpg">
+  <img src="http://alexeilebedev.com/misc/father-son-looking.jpg">
+  <img src="http://alexeilebedev.com/misc/freakout.jpg">
+  <img src="http://alexeilebedev.com/misc/guy-in-car.jpg">
+  <img src="http://alexeilebedev.com/misc/guy-in-park.jpg">
+  <img src="http://alexeilebedev.com/misc/homeless-sleeping.jpg">
+  <img src="http://alexeilebedev.com/misc/italianguy.jpg">
+  <img src="http://alexeilebedev.com/misc/KIOSK.jpg">
+  <img src="http://alexeilebedev.com/misc/woman-reading.jpg">
+
+  <img src="http://alexeilebedev.com/misc/dudeintheground-lo.jpg">
+  <img src="http://alexeilebedev.com/misc/explanation.jpg">
+  <img src="http://alexeilebedev.com/misc/facing-wind.jpg">
+  <img src="http://alexeilebedev.com/misc/father-son-looking.jpg">
+  <img src="http://alexeilebedev.com/misc/freakout.jpg">
+  <img src="http://alexeilebedev.com/misc/guy-in-car.jpg">
+  <img src="http://alexeilebedev.com/misc/guy-in-park.jpg">
+  <img src="http://alexeilebedev.com/misc/homeless-sleeping.jpg">
+  <img src="http://alexeilebedev.com/misc/italianguy.jpg">
+  <img src="http://alexeilebedev.com/misc/KIOSK.jpg">
+  <img src="http://alexeilebedev.com/misc/woman-reading.jpg">
+
+  <img src="http://alexeilebedev.com/misc/dudeintheground-lo.jpg">
+  <img src="http://alexeilebedev.com/misc/explanation.jpg">
+  <img src="http://alexeilebedev.com/misc/facing-wind.jpg">
+  <img src="http://alexeilebedev.com/misc/father-son-looking.jpg">
+  <img src="http://alexeilebedev.com/misc/freakout.jpg">
+  <img src="http://alexeilebedev.com/misc/guy-in-car.jpg">
+  <img src="http://alexeilebedev.com/misc/guy-in-park.jpg">
+  <img src="http://alexeilebedev.com/misc/homeless-sleeping.jpg">
+  <img src="http://alexeilebedev.com/misc/italianguy.jpg">
+  <img src="http://alexeilebedev.com/misc/KIOSK.jpg">
+  <img src="http://alexeilebedev.com/misc/woman-reading.jpg">
+
+  <img src="http://alexeilebedev.com/misc/dudeintheground-lo.jpg">
+  <img src="http://alexeilebedev.com/misc/explanation.jpg">
+  <img src="http://alexeilebedev.com/misc/facing-wind.jpg">
+  <img src="http://alexeilebedev.com/misc/father-son-looking.jpg">
+  <img src="http://alexeilebedev.com/misc/freakout.jpg">
+  <img src="http://alexeilebedev.com/misc/guy-in-car.jpg">
+  <img src="http://alexeilebedev.com/misc/guy-in-park.jpg">
+  <img src="http://alexeilebedev.com/misc/homeless-sleeping.jpg">
+  <img src="http://alexeilebedev.com/misc/italianguy.jpg">
+  <img src="http://alexeilebedev.com/misc/KIOSK.jpg">
+  <img src="http://alexeilebedev.com/misc/woman-reading.jpg">
+
+  <img src="http://alexeilebedev.com/misc/dudeintheground-lo.jpg">
+  <img src="http://alexeilebedev.com/misc/explanation.jpg">
+  <img src="http://alexeilebedev.com/misc/facing-wind.jpg">
+  <img src="http://alexeilebedev.com/misc/father-son-looking.jpg">
+  <img src="http://alexeilebedev.com/misc/freakout.jpg">
+  <img src="http://alexeilebedev.com/misc/guy-in-car.jpg">
+  <img src="http://alexeilebedev.com/misc/guy-in-park.jpg">
+  <img src="http://alexeilebedev.com/misc/homeless-sleeping.jpg">
+  <img src="http://alexeilebedev.com/misc/italianguy.jpg">
+  <img src="http://alexeilebedev.com/misc/KIOSK.jpg">
+  <img src="http://alexeilebedev.com/misc/woman-reading.jpg">
+</div>
+
+<div style="clear: both;"></div>
+
+
+<button id="fotorama-fullscreen">#fotorama-fullscreen</button>
+
+<p>Text check!</p>
+<p>Text check!</p>
+<p>Text check!</p>
+<p>Text check!</p><p>Text check!</p><p>Text check!</p>
+<p>Text check!</p>
+<p>Text check!</p><p>Text check!</p><p>Text check!</p>
+<p>Text check!</p><p>Text check!</p>
+<p>Text check!</p>
+<p>Text check!</p>
+<p>Text check!</p>
+
+
+
+
+
+
+
+
+
+</body>
+</html>

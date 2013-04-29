@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+
+<script>
+
+  console.time('Without prototype');
+
+  function Class1 (initial) {
+    this.initial = initial;
+    this.method1 = function () {
+      return this.initial * 1;
+    }
+    this.method2 = function () {
+      return this.initial * 2;
+    }
+    this.method3 = function () {
+      return this.initial * 3;
+    }
+    this.method4 = function () {
+      return this.initial * 4;
+    }
+    this.method5 = function () {
+      return this.initial * 5;
+    }
+    this.method6 = function () {
+      return this.initial * 6;
+    }
+    this.method7 = function () {
+      return this.initial * 7;
+    }
+    this.method8 = function () {
+      return this.initial * 8;
+    }
+    this.method9 = function () {
+      return this.initial * 9;
+    }
+    this.method10 = function () {
+      return this.initial * 10;
+    }
+  }
+
+  var store = {};
+
+  for (i = 0; i < 100000; i++) {
+    store[i] = new Class1(i);
+    var val = store[i].method5();
+  }
+  console.log(val);
+
+  console.timeEnd('Without prototype');
+
+
+
+</script>
+
+</body>
+</html>

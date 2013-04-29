@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+
+<script>
+
+function log () {
+  console.warn.apply(console, arguments);
+}
+
+var someFunction = function (a, b, c) {
+  log(a, b, c);
+  this.getA = function () { return a };
+  this.getB = function () { return b };
+  this.getC = function () { return c };
+
+  var d = function () {
+    return 'd';
+  }
+
+  //return this;
+  //this.some = a;
+}
+
+someFunction.prototype.some = function () {
+  return this.getA() + this.getB() + this.getC();
+};
+
+
+var one = new someFunction(1, 1, 1);
+var two = new someFunction(2, 2, 2);
+var three = new someFunction(3, 3, 3);
+
+console.log(one.some(), two.some(), three.some());
+
+console.log(one.some());
+console.log('one.a = 10');
+one.a = 10;
+console.log(one.some());
+
+console.assert(one.some() != two.some(), 'Инстансы одинаковые');
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+
+  <script src=jquery.js></script>
+  <!--<script src=../mixdown/fotorama.js></script>-->
+  <script src=../mixdown/fotorama.js></script>
+  <link rel=stylesheet  href=../PRODUCT/fotorama.css>
+
+  <script>
+//    $.extend($.fotorama.defaults, {
+//      cropToFit: true,
+//      loop: true
+//    });
+  </script>
+
+  <style>
+    .my-fotorama { position: relative; }
+  </style>
+
+</head>
+<body>
+
+
+<button>$('.my-fotorama').fotorama()</button>
+&middot;
+<button>$('.my-fotorama').fotorama('destroy')</button>
+
+<br><br>
+
+<div class="my-fotorama" data-data=''>
+  <img src="i/nyc/lift-dude.jpg">
+  <img src="i/nyc/explanation.jpg">
+  <img src="i/nyc/severedhead-lo.jpg">
+  <img src="i/nyc/facing-wind.jpg">
+  <img src="i/nyc/father-son-looking.jpg">
+  <img src="i/nyc/smoking.jpg">
+  <img src="i/nyc/guy-in-car.jpg">
+  <img src="i/nyc/woman-reading.jpg">
+  <img src="i/nyc/streetlook.jpg">
+  <img src="i/nyc/italianguy.jpg">
+  <img src="i/nyc/KIOSK.jpg">
+</div>
+
+<br><br>
+
+<div class="my-fotorama" data-loop="true">
+  <div style="position: absolute; width: 100%; height: 100%; background: #eee;">1</div>
+  <div style="position: absolute; width: 100%; height: 100%; background: #cda;">2</div>
+  <div style="position: absolute; width: 100%; height: 100%; background: #ad9;">3</div>
+</div>
+
+<br><br>
+
+<div class="my-fotorama" data-loop="true">
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
+</div>
+
+
+<script>
+  $(function () {
+    $('button').on('click', function () {
+      eval('(' + $(this).text() + ')');
+    });
+  });
+</script>
+
+
+</body>
+</html>

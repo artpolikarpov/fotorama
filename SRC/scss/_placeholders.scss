@@ -1,0 +1,109 @@
+// Плейсхолдеры
+%stretch {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+%grab-cursor {
+  cursor: move;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+  cursor: -o-grab;
+  cursor: -ms-grab;
+  cursor: grab;
+}
+
+%stretch-for-fit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -50% 0 0 -50%;
+  width: 100%;
+  height: 100%;
+}
+
+%initial-translate {
+  @include transform(translate3d(0, 0, 0));
+}
+
+%transition-for-touch {
+  @include transition(transform 0ms);
+}
+
+%bezier {
+  @include transition-timing-function(cubic-bezier(.1, .25, .25, 1));
+}
+
+%no-select {
+  @include experimental(user-select, none);
+}
+
+%select {
+  @include experimental(user-select, text);
+  //cursor: auto;
+  //* {
+  //  cursor: auto;
+  //}
+}
+
+%backface-visibility {
+  -webkit-backface-visibility: hidden;
+}
+
+%empty-bg {
+  background: url(data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=);
+
+}
+
+%no-margin {
+  margin: 0;
+  padding: 0;
+}
+
+%inline-block {
+  @include inline-block;
+}
+
+%content-box {
+  @include box-sizing(content-box);
+}
+
+%hidden {
+  position: absolute;
+  left: -99999px;
+  top: -99999px;
+  z-index: -1;
+}
+
+%visible {
+  position: relative;
+  left: auto;
+  top: auto;
+  z-index: auto;
+  opacity: 1;
+}
+
+%no-tap {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+%transitionDuration {
+  @include transition-duration(333ms);
+}
+
+%transitionDurationZero {
+  @include transition-duration(0);
+}
+
+%sprite {
+  background: url('fotorama.png') no-repeat;
+  @media (#{-webkit-min-device-pixel-ratio}: 1.5), (min-resolution: 144dpi) {
+    background: url('fotorama@2x.png') no-repeat;
+    background-size: 96px 192px;
+  }
+}

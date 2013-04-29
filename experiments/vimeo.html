@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<body>
+<!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+
+<script src="jquery-1.8.2.js"></script>
+<script src="../SRC/js/utils.js"></script>
+
+<script>
+  $(function () {
+    function getProtocol() {
+      getProtocol.protocol = getProtocol.protocol || (location.protocol === 'https://' ? 'https://' : 'http://');
+      return getProtocol.protocol;
+    }
+
+
+    var VimeoAPIReadyFLAG;
+
+    if (typeof Froogaloop === 'undefined' && !VimeoAPIReadyFLAG) {
+      VimeoAPIReadyFLAG = '*';
+      var tag = document.createElement('script');
+      tag.src = getProtocol() + "a.vimeocdn.com/js/froogaloop2.min.js";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      //player;
+
+      waitFor(function () {
+        console.log('wait');
+        return typeof Froogaloop !== 'undefined';
+      }, function () {
+        console.log('ok');
+        VimeoAPIReadyFLAG = true;
+
+        player = $f($('#vimeo_56477894_1')[0]);
+
+        player.api('play');
+
+        // player.api('pause');
+      });
+    }
+
+
+
+    $.ajax({
+      url: 'http://vimeo.com/api/v2/video/6271487.json',
+      dataType: 'jsonp', // Notice! JSONP <-- P (lowercase)
+      success: function(json){
+        // do stuff with json (in this case an array)
+        console.log("Success", json);
+      },
+      error: function(){
+        console.log("Error");
+      }
+    });
+
+
+    $('iframe').on('load error', function (e) {
+      console.log(e.type, this);
+    });
+
+
+  });
+
+</script>
+
+
+<iframe src="http://player.vimeo.com/video/56477894?api=1&player_id=vimeo_56477894_1" id="vimeo_56477894_1" width="800" height="450" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe> <p><a href="http://vimeo.com/56477894">STORYBOARD: A Day With New York City's Pothole Repair Crew</a> from <a href="http://vimeo.com/tumblr">Tumblr</a> on <a href="http://vimeo.com">Vimeo</a>.</p>
+
+
+<br><br><br>
+<iframe src="youtube.com/embed/lS_ubz6Sa9c" width="800" height="450" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+
+
+</body>
+</html>

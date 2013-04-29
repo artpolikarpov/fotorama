@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+
+  <script src=jquery-1.8.2.js></script>
+  <script>
+    $(function () {
+      var $body = $('body');
+
+      var _pageXLast,
+          timeStampLast = 0,
+          speedLast,
+          distance,
+          time,
+          speed;
+
+      $(document).on('mousemove', function (e) {
+        time = e.timeStamp - timeStampLast;
+        if (time > 100) {
+          distance = Math.abs(e.pageX - _pageXLast);
+
+          speed = distance / time;
+//          if (speedLast) {
+//            speed = (speed + speedLast)/2;
+//          }
+
+          $body.text(Math.round(speed*100) + ' (px/ms)*100');
+
+          _pageXLast = e.pageX;
+          timeStampLast = e.timeStamp;
+          speedLast = speed;
+        }
+
+      });
+    });
+
+  </script>
+
+</head>
+<body>
+
+</body>
+</html>

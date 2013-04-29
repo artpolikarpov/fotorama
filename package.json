@@ -1,0 +1,15 @@
+{
+  "name": "Fotorama",
+  "version": "4.0.0",
+  "license": "MIT License",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-string-replace": "~0.2.4",
+    "grunt-contrib-cssmin": "~0.6.0",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-watch": "~0.3.1",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-jst": "~0.5.0",
+    "grunt-contrib-compass": "~0.2.0"
+  }
+}

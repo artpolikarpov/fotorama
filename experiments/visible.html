@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <script src=jquery-1.8.2.js></script>
+  <script>
+    function isHidden (elem) {
+      return elem.offsetWidth === 0 && elem.offsetHeight === 0;
+    }
+
+    function jQueryIsHidden ($elem) {
+      return $elem.is(':hidden');
+    }
+
+    $(function(){
+
+      console.time('jQueryIsHidden 1000×12');
+      for (i = 0; i < 1000; ++i) {
+        console.assert(!jQueryIsHidden($('#test1')), '#test1 is hidden');
+        console.assert(!jQueryIsHidden($('#test2')), '#test2 is hidden');
+        console.assert(jQueryIsHidden($('#test3')), '#test3 is visible');
+        console.assert(jQueryIsHidden($('#test4')), '#test4 is visible');
+        console.assert(!jQueryIsHidden($('#test5')), '#test5 is hidden');
+        console.assert(!jQueryIsHidden($('#test6')), '#test6 is hidden');
+        console.assert(jQueryIsHidden($('#test7')), '#test7 is visible');
+        console.assert(!jQueryIsHidden($('#test8')), '#test8 is hidden');
+        console.assert(!jQueryIsHidden($('#test9')), '#test9 is hidden');
+        console.assert(!jQueryIsHidden($('#test10')), '#test10 is hidden');
+        console.assert(!jQueryIsHidden($('#test11')), '#test11 is hidden');
+        console.assert(jQueryIsHidden($('#test12')), '#test12 is visible');
+      }
+      console.timeEnd('jQueryIsHidden 1000×12');
+
+      console.time('isHidden 1000×12');
+      for (i = 0; i < 1000; ++i) {
+        console.assert(!isHidden(document.getElementById('test1')), '#test1 is hidden');
+        console.assert(!isHidden(document.getElementById('test2')), '#test2 is hidden');
+        console.assert(isHidden(document.getElementById('test3')), '#test3 is visible');
+        console.assert(isHidden(document.getElementById('test4')), '#test4 is visible');
+        console.assert(!isHidden(document.getElementById('test5')), '#test5 is hidden');
+        console.assert(!isHidden(document.getElementById('test6')), '#test6 is hidden');
+        console.assert(isHidden(document.getElementById('test7')), '#test7 is visible');
+        console.assert(!isHidden(document.getElementById('test8')), '#test8 is hidden');
+        console.assert(!isHidden(document.getElementById('test9')), '#test9 is hidden');
+        console.assert(!isHidden(document.getElementById('test10')), '#test10 is hidden');
+        console.assert(!isHidden(document.getElementById('test11')), '#test11 is hidden');
+        console.assert(isHidden(document.getElementById('test12')), '#test12 is visible');
+      }
+      console.timeEnd('isHidden 1000×12');
+    });
+  </script>
+</head>
+<body>
+
+<div id="test1"></div>
+
+<div id="test2">123</div>
+
+<div id="test3" style="display: none;">1</div>
+
+<div style="display: none;">
+  <div id="test4"></div>
+</div>
+
+<div id="test5" style="padding: 20px;"></div>
+
+<div id="test6" style="padding: 20px; visibility: hidden;"></div>
+
+<div style="display: none;">
+  <div id="test7" style="padding: 20px; visibility: hidden;"></div>
+</div>
+
+<div style="position: absolute; left: -9999px;">
+  <div id="test8" style="padding: 20px; visibility: hidden;"></div>
+</div>
+
+<div style="visibility: hidden;">
+  <div id="test9" style="padding: 20px; visibility: hidden;"></div>
+</div>
+
+<table>
+  <tr>
+    <td><div id="test10" style="visibility: hidden;">1</div></td>
+  </tr>
+</table>
+
+<table style="visibility: hidden;">
+  <tr>
+    <td><div id="test11" style="visibility: hidden; padding: 0 0 1px 0;"></div></td>
+  </tr>
+</table>
+
+<div style="display: none;">
+<table>
+  <tr>
+    <td><div id="test12"></div></td>
+  </tr>
+</table>
+</div>
+
+N. B. Если пустой блок в таблице единственный в ячейке, он не пройдёт тест на видимость, покажет что не видимый. Но если добавить к нему паддинг (хоть 1px) всё будет хорошо.
+
+</body>
+</html>

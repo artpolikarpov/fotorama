@@ -1,0 +1,217 @@
+$arrSize: 32px;
+
+/* Стрелочки, иконки */
+
+.fotorama__arr, .fotorama__fullscreen, .fotorama__video-play, .fotorama__video-close {
+  display: block;
+  position: absolute;
+  z-index: 11;
+  cursor: pointer;
+  opacity: 0;
+  //@extend %empty-bg;
+  @extend %no-tap;
+  @extend %no-select;
+
+}
+
+.fotorama__arr {
+  width: $arrSize * 1.5;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+}
+
+.fotorama__arr__arr {
+  position: absolute;
+  width: $arrSize;
+  height: $arrSize;
+  left: 50%;
+  top: 50%;
+  margin-left: -($arrSize / 2);
+  margin-top: -($arrSize / 2);
+  @extend %sprite;
+}
+
+.fotorama__arr--prev {
+  left: 0;
+  .fotorama__arr__arr {
+    background-position: 0 (-$arrSize);
+  }
+}
+
+.fotorama__arr--next {
+  right: 0;
+  .fotorama__arr__arr {
+    background-position: (-$arrSize) (-$arrSize);
+  }
+}
+
+.fotorama__arr--disabled {
+  cursor: default;
+  *display: none;
+  text-shadow: none;
+}
+
+.fotorama__wrap--vertical {
+  .fotorama__arr {
+    width: 100%;
+    height: $arrSize * 1.5;
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: auto;
+  }
+  .fotorama__arr--prev {
+    top: 0;
+    .fotorama__arr__arr {
+      background-position: 0 0;
+    }
+  }
+  .fotorama__arr--next {
+    bottom: 0;
+    .fotorama__arr__arr {
+      background-position: (-$arrSize) 0;
+    }
+  }
+}
+
+.fotorama__fullscreen {
+  width: $arrSize;
+  height: $arrSize;
+  top: 0;
+  right: 0;
+  @extend %sprite;
+  background-position: 0 (-$arrSize*2);
+  z-index: 20;
+}
+
+.fotorama--fullscreen {
+  .fotorama__fullscreen {
+    background-position: (-$arrSize) (-$arrSize*2);
+  }
+}
+
+.fotorama--lightbox {
+  .fotorama__fullscreen {
+    background-position: (-$arrSize*2) 0;
+  }
+}
+
+.fotorama__video-play {
+  width: $arrSize * 3;
+  height: $arrSize * 3;
+  left: 50%;
+  top: 50%;
+  margin-left: -($arrSize * 3 / 2);
+  margin-top: -($arrSize * 3 / 2);
+  @extend %sprite;
+  background-position: 0 (-$arrSize*3);
+}
+
+.fotorama__stage__frame {
+  .fotorama__video-play {
+    z-index: -1;
+  }
+}
+
+.fotorama__nav__frame, .fotorama__lightbox-nav__frame  {
+  .fotorama__video-play {
+    width: $arrSize;
+    height: $arrSize;
+    left: 50%;
+    top: 50%;
+    margin-left: -($arrSize / 2);
+    margin-top: -($arrSize / 2);
+    background-position: (-$arrSize*2) (-$arrSize);
+    opacity: 1 !important;
+  }
+}
+
+.fotorama__video-close {
+  width: $arrSize;
+  height: $arrSize;
+  top: -$arrSize;
+  right: -$arrSize;
+  opacity: 0;
+  @extend %sprite;
+  background-position: (-$arrSize*2) 0;
+  z-index: 20;
+}
+
+.fotorama__loaded, .fotorama__error {
+  .fotorama__video-play {
+    opacity: 1;
+    z-index: 11;
+  }
+}
+
+/////
+//.fotorama__arr--prev {
+//  left: -($arrSize * 1.5);
+//}
+//.fotorama__arr--next {
+//  right: -($arrSize * 1.5);
+//}
+/////
+
+.fotorama__wrap--video {
+  .fotorama__fullscreen, .fotorama__stage .fotorama__video-play, .fotorama__fullscreen, .fotorama__arr {
+    opacity: 0 !important;
+  }
+  .fotorama__fullscreen {
+    top: -$arrSize;
+    right: -$arrSize;
+  }
+  .fotorama__arr--prev {
+    left: -($arrSize * 1.5);
+  }
+  .fotorama__arr--next {
+    right: -($arrSize * 1.5);
+  }
+  &.fotorama__wrap--vertical {
+    .fotorama__arr--prev {
+      top: -($arrSize * 1.5);
+    }
+    .fotorama__arr--next {
+      bottom: -($arrSize * 1.5);
+    }
+  }
+  .fotorama__video-close {
+    top: 0;
+    right: 0;
+    opacity: 1;
+  }
+}
+
+.fotorama__wrap--touch .fotorama__stage, .fotorama__stage:hover {
+  .fotorama__arr, .fotorama__fullscreen {
+    opacity: 1;
+  }
+  .fotorama__arr--disabled {
+    opacity: .1 !important;
+  }
+  //&.fotorama__stage--tap {
+  //  .fotorama__arr, .fotorama__fullscreen {
+  //    opacity: 0 !important;
+  //  }
+  //}
+}
+
+.fotorama__wrap--css-transitions {
+  .fotorama__fullscreen, .fotorama__video-play, .fotorama__video-close {
+    @include transition-property(all);
+    @extend %transitionDuration;
+    @extend %bezier;
+  }
+  .fotorama__arr {
+    @include transition-property(opacity, left, right);
+    @extend %transitionDuration;
+    @extend %bezier;
+  }
+  &.fotorama__wrap--vertical {
+    .fotorama__arr {
+      @include transition-property(opacity, top, bottom);
+    }
+  }
+}
+

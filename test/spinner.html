@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+
+  <script src=jquery.js></script>
+  <!--<script src=../mixdown/fotorama.js></script>-->
+  <script src=../SRC/js/spin.js></script>
+
+  <script>
+    $(function() {
+      var krutilka = new Spinner({length: 8, radius: 6, width: 2, rotate: 15});
+      var krutilka2 = new Spinner({length: 8, radius: 6, width: 2, rotate: 15});
+
+      krutilka.spin($('div:eq(0)')[0]);
+      krutilka.spin($('div:eq(2)')[0]);
+    });
+
+  </script>
+
+</head>
+<body style="">
+
+
+<div style="width: 100px; height: 100px;">123</div>
+<br><br>
+
+<div style="width: 100px; height: 100px;">234</div>
+<br><br>
+
+<div style="width: 100px; height: 100px;">345</div>
+<br><br>
+
+</body>
+</html>

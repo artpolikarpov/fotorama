@@ -1,0 +1,26 @@
+.fotorama<%= stamp %> .fotorama__nav--thumbs .fotorama__nav__frame {
+  padding: <%= thumbMargin %>px <%= thumbMargin / 2 %>px;
+  width: <%= thumbWidth %>px;
+  height: <%= thumbHeight %>px;
+}
+.fotorama<%= stamp %> .fotorama__thumb {
+  width: <%= thumbWidth %>px;
+  height: <%= thumbHeight %>px;
+}
+.fotorama<%= stamp %> .fotorama__thumb-border {
+  width: <%= thumbWidth - thumbMargin * 2 %>px;
+  height: <%= thumbHeight - thumbMargin * 2 %>px;
+  border-width: <%= thumbMargin %>px;
+  margin-top: <%= thumbMargin %>px;
+  margin-left: <%= - thumbWidth / 2 + thumbMargin / 2 %>px;
+}
+.fotorama<%= stamp %> .fotorama__wrap--vertical .fotorama__nav--thumbs {
+  width: <%= thumbWidth + thumbMargin * 2 %>px;
+}
+.fotorama<%= stamp %> .fotorama__wrap--vertical .fotorama__nav__frame {
+  padding: <%= thumbMargin / 2 %>px <%= thumbMargin %>px;
+}
+.fotorama<%= stamp %> .fotorama__wrap--vertical .fotorama__thumb-border {
+  margin-left: <%= thumbMargin %>px;
+  margin-top: <%= - thumbHeight / 2 + thumbMargin / 2 %>px;
+}
