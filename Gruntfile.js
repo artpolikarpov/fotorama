@@ -1,14 +1,14 @@
 module.exports = function (grunt) {
-	'use strict';
-	grunt.initConfig({
-		pkg: grunt.file.readJSON('package.json'),
-		meta: {
-			banner: '/*!\n * <%= pkg.name %> <%= pkg.version %> | <%= pkg.license %>\n */',
-			sass: ['SRC/scss/*'],
-			js: [
-				'SRC/js/intro.js',
+  'use strict';
+  grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
+    meta: {
+      banner: '/*!\n * <%= pkg.name %> <%= pkg.version %> | <%= pkg.license %>\n */',
+      sass: ['SRC/scss/*'],
+      js: [
+        'SRC/js/intro.js',
         'SRC/js/_.js',
-				'SRC/js/modernizr.js',
+        'SRC/js/modernizr.js',
         'SRC/js/fullscreen.js',
         'SRC/js/css-classes.js',
         'SRC/js/basevars.js',
@@ -17,17 +17,17 @@ module.exports = function (grunt) {
         'SRC/js/animate.js',
         'SRC/js/touch.js',
         'SRC/js/moveontouch.js',
-				'SRC/js/spin.js',
-				'SRC/js/fotorama.js',
+        'SRC/js/spin.js',
+        'SRC/js/fotorama.js',
         'SRC/js/templates.js',
-				'SRC/js/outro.js'
-			]
-		},
+        'SRC/js/outro.js'
+      ]
+    },
     jst: {
       compile: {
         options: {
           namespace: '$.Fotorama.jst',
-          processName: function(filename) {
+          processName: function (filename) {
             return filename.replace('SRC/templates/', '').replace(/.html$/, '').replace(/\//g, '_');
           }
         },
@@ -36,34 +36,34 @@ module.exports = function (grunt) {
         }
       }
     },
-		watch: {
+    watch: {
       jst: {
         files: 'SRC/templates/**/*',
         tasks: 'jst'
       },
-			sass: {
-				files: '<%= meta.sass %>',
-				tasks: 'compass'
-			},
-			js: {
-				files: '<%= meta.js %>',
-				tasks: 'concat:mixdown'
-			}
-		},
-		compass: {
-			dev: {
+      sass: {
+        files: '<%= meta.sass %>',
+        tasks: 'compass'
+      },
+      js: {
+        files: '<%= meta.js %>',
+        tasks: 'concat:mixdown'
+      }
+    },
+    compass: {
+      dev: {
         options: {
           sassDir: 'SRC/scss',
           cssDir: 'PRODUCT',
           noLineComments: true,
           force: true
         }
-			}
-		},
-		concat: {
+      }
+    },
+    concat: {
       mixdown: {
         files: {
-          'mixdown/fotorama.js': '<%= meta.js %>'
+          '_mixdown/fotorama.js': '<%= meta.js %>'
         },
         options: {
           banner: '<%= meta.banner %>'
@@ -77,7 +77,7 @@ module.exports = function (grunt) {
           banner: '<%= meta.banner %>'
         }
       }
-		},
+    },
     cssmin: {
       product: {
         files: {
@@ -91,7 +91,7 @@ module.exports = function (grunt) {
     'string-replace': {
       console: {
         files: {
-          'PRODUCT/fotorama.js': 'mixdown/fotorama.js'
+          'PRODUCT/fotorama.js': '_mixdown/fotorama.js'
         },
         options: {
           replacements: [
@@ -114,7 +114,7 @@ module.exports = function (grunt) {
       }
     }
     //zip: {
-      //'DOWNLOAD/fotorama.zip': 'PRODUCT'
+    //'DOWNLOAD/fotorama.zip': 'PRODUCT'
 //      dev: {
 //        src: ['PRODUCT/fotorama.css', 'PRODUCT/fotorama.js', 'PRODUCT/fotorama.png', 'PRODUCT/fotorama@2x.png'],
 //        dest: 'DOWNLOAD/fotorama.uncompressed.zip'
@@ -134,6 +134,6 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-string-replace');
 
-	// Default task
-	grunt.registerTask('default', ['compass', 'cssmin', 'jst', 'concat:mixdown', 'string-replace', 'concat:product', 'uglify']);
+  // Default task
+  grunt.registerTask('default', ['compass', 'cssmin', 'jst', 'concat:mixdown', 'string-replace', 'concat:product', 'uglify']);
 };
