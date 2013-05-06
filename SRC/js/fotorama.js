@@ -6,13 +6,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   // Блок-спутник для загрузки в нём фотографий и проверки размеров,
   // прямо в фотораме это не всегда удобно делать:
-  $.Fotorama.$load = $.Fotorama.$load || $('<div class="fotorama__load"></div>').appendTo($BODY);
+  $.Fotorama.$load = $.Fotorama.$load || $('<div class="' + loadClass+ '"></div>').appendTo($BODY);
   //}
 
   var that = this,
       index = _size,
       stamp = new Date().getTime(),
-      fotorama = $fotorama.addClass('fotorama' + stamp).get(0),
+      fotorama = $fotorama.addClass(_fotoramaClass + stamp).get(0),
       data,
       dataFrameCount = 0,
       fotoramaData = $fotorama.data(),
@@ -25,14 +25,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $wrap = $('<div class="' + wrapClass + ' ' + wrapNotReadyClass + '"></div>').appendTo($_wrap),
       $stage = $('<div class="' + stageClass +'"></div>').appendTo($wrap),
       stage = $stage.get(0),
-      $stageShaft = $('<div class="fotorama__stage__shaft"></div>').appendTo($stage),
+      $stageShaft = $('<div class="' + stageShaftClass + '"></div>').appendTo($stage),
       $stageFrame = $(),
       $arrPrev = $('<div class="' + arrClass + ' ' + arrPrevClass +'"><div class="' + arrArrClass + '"></div></div>'),
       $arrNext = $('<div class="' + arrClass + ' ' + arrNextClass + '"><div class="' + arrArrClass + '"></div></div>'),
       $arrs = $arrPrev.add($arrNext).appendTo($stage),
-      $navWrap = $('<div class="fotorama__nav-wrap"></div>'),
-      $nav = $('<div class="fotorama__nav"></div>').appendTo($navWrap),
-      $navShaft = $('<div class="fotorama__nav__shaft"></div>').appendTo($nav),
+      $navWrap = $('<div class="' + navWrapClass + '"></div>'),
+      $nav = $('<div class="' + navClass + '"></div>').appendTo($navWrap),
+      $navShaft = $('<div class="' + navShaftClass +'"></div>').appendTo($nav),
       $navFrame,
       $navDotFrame = $(),
       $navThumbFrame = $(),
@@ -44,14 +44,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
       stageShaftData = $stageShaft.data(),
       navShaftData = $navShaft.data(),
 
-      $shadows = bindNoInteraction($('<div class="fotorama__shadow fotorama__shadow--left"></div><div class="fotorama__shadow fotorama__shadow--right"></div>').appendTo($stage)),
+      $shadows = bindNoInteraction($('<div class="' + shadowClass + ' ' + shadowLeftClass + '"></div><div class="' + shadowClass + ' ' + shadowRightClass + '"></div>').appendTo($stage)),
       $navShadows = bindNoInteraction($shadows.clone().appendTo($nav)),
 
-      $thumbBorder = $('<div class="fotorama__thumb-border"></div>').appendTo($navShaft),
+      $thumbBorder = $('<div class="' + thumbBorderClass + '"></div>').appendTo($navShaft),
 
-      $fullscreenIcon = $('<div class="fotorama__fullscreen"></div>'),
-      $videoPlay = $('<div class="fotorama__video-play"></div>'),
-      $videoClose = $('<div class="fotorama__video-close"></div>').appendTo($stage),
+      $fullscreenIcon = $('<div class="' + fullscreenIconClass + '"></div>'),
+      $videoPlay = $('<div class="' + videoPlayClass + '"></div>'),
+      $videoClose = $('<div class="' + videoCloseClass + '"></div>').appendTo($stage),
 
 
       $videoPlaying,
@@ -114,9 +114,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
       measuresStash;
 
   $wrap[stageFrameKey] = $('<div class="' + stageFrameClass +'"></div>');
-  $wrap[navThumbFrameKey] = $('<div class="' + navFrameClass + ' ' + navFrameThumbClass + '"><div class="fotorama__thumb"></div></div>');
-  $wrap[navDotFrameKey] = $('<div class="' + navFrameClass + ' fotorama__nav__frame--dot"><div class="fotorama__dot"></div></div>');
-  ///$wrap[lightboxNavFrameKey] = $('<div class="fotorama__lightbox-nav__frame"></div>');
+  $wrap[navThumbFrameKey] = $('<div class="' + navFrameClass + ' ' + navFrameThumbClass + '"><div class="' + thumbClass + '"></div></div>');
+  $wrap[navDotFrameKey] = $('<div class="' + navFrameClass + ' ' + navFrameDotClass + '"><div class="' + dotClass + '"></div></div>');
 
   /* Включаем фотораму */
   $.Fotorama.size++; _size++;
@@ -272,25 +271,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $nav.removeClass(navThumbsClass + ' ' + navDotsClass);
     }
 
-    
-//    if (opts.lightbox) {
-//      o_allowFullScreen = false;
-//      frameDraw(size, 'lightboxNav');
-//      $lightboxNav.insertAfter($anchor);
-//      $fotorama
-//          .appendTo($BODY)
-//          .addClass('fotorama--hidden');
-//
-//      if (that.fullScreen && !lastOptions.lightbox) {
-//        that.cancelFullScreen();
-//      }
-//    } else {
+
       o_allowFullScreen = opts.allowFullScreen;
-      ///$lightboxNav.detach();
       $fotorama
           .insertAfter($anchor)
-          .removeClass('fotorama--hidden');
-//    }
+          .removeClass(hiddenClass);
 
     if (o_nav && o_navBefore) {
       classes.add.push(wrapNavBeforeClass);
@@ -510,7 +495,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
             $frame
                 .trigger('f:load')
                 .removeClass(loadingClass + ' ' + errorClass)
-                .addClass('fotorama__loaded');
+                .addClass(loadedClass);
 
             setMeasures();
           }
@@ -552,7 +537,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
         $img
             .off('load error')
-            .addClass('fotorama__img' + (fullFLAG ? ' fotorama__img--full' : ''))
+            .addClass(imgClass + (fullFLAG ? ' ' + imgFullClass : ''))
             .prependTo($frame);
 
           fit($img, specialMeasures || measures, specialFit || dataFrame.fit || opts.fit);
@@ -564,7 +549,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           $frame
               .trigger('f:load')
               .removeClass(loadingClass + ' ' + errorClass)
-              .addClass('fotorama__loaded ' + (fullFLAG ? 'fotorama__loaded--full' : 'fotorama__loaded--img'));
+              .addClass(loadedClass + ' ' + (fullFLAG ? loadedFullClass : loadedImgClass));
 
           if (type === 'stage') {
             $fotorama.trigger('fotorama:load', eventData(normalizeIndex(index)));
@@ -654,14 +639,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
       if (type === 'stage') {
         // Сцена
         if (dataFrame.html) {
-          $('<div class="fotorama__html"></div>')
+          $('<div class="' + htmlClass +'"></div>')
               .append(dataFrame.html)
               .appendTo($frame);
         }
 
         if (opts.captions && dataFrame.caption) {
-          var $caption = $('<div class="fotorama__caption"></div>').appendTo($frame);
-          $('<div class="fotorama__caption__inner"></div>')
+          var $caption = $('<div class="' + captionClass +'"></div>').appendTo($frame);
+          $('<div class="' + captionInnerClass +'"></div>')
               .append(dataFrame.caption)
               .appendTo($caption);
         }
@@ -680,7 +665,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
             }
           );
 
-          $frame.addClass(stageFrameClass + '--video')
+          $frame.addClass(stageFrameVideoClass)
               .append($oneVideoPlay);
         }
 
@@ -738,28 +723,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       callFit(frameData.$img, measures, method);
       callFit(frameData.$full, measures, method);
-
-      //callFit(frameData.$html, measures);
     });
   }
-
-//  function lightboxNavDraw () {
-//    var $sampleThumb = $('.fotorama__lightbox-nav__frame:eq(1)', $lightboxNav),
-//        thumbHeight = $sampleThumb.height(),
-//        measures = {height__: thumbHeight},
-//        method = 'contain';
-//
-//    $lightboxNavFrame.each(function () {
-//      var $this = $(this),
-//          thisData = $this.data(),
-//          eq = thisData.eq;
-//
-//
-//      if (callFit(thisData.$img, measures, method)) return;
-//
-//      loadImg([eq], 'lightboxNav', measures, method);
-//    });
-//  }
 
   function thumbsDraw (pos, loadFLAG) {
     ////////////console.log('thumbsDraw', pos, loadFLAG);
@@ -773,9 +738,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     specialMeasures[_side_] = o_thumbSide;
     specialMeasures[_side2_] = o_thumbSide2;
 
-    ////////////console.log(pos, thumbSide, thumbImgSide);
-    ////////////console.log(startIndex, stopIndex);
-
     $navThumbFrame.each(function () {
       var $this = $(this),
           thisData = $this.data(),
@@ -787,7 +749,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       if (callFit(thisData.$img, specialMeasures, 'cover')) return;
 
       if (loadFLAG) {
-        ////////console.log('loadImg navThumb');
         loadImg([eq], 'navThumb', specialMeasures, specialFit);
       }
     });
@@ -896,12 +857,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
 
     navAppend($navFrame, $navShaft, true);
-
-//    if (opts.lightbox) {
-//      navAppend($lightboxNavFrame, $lightboxNav);
-//      //$lightboxNavFrame.removeClass(activeClass);
-//      //that.activeFrame[lightboxNavFrameKey].addClass(activeClass);
-//    }
 
     navAppend.done = true;
 
@@ -1200,29 +1155,15 @@ jQuery.Fotorama = function ($fotorama, opts) {
     setTimeout(function () {
       $WINDOW.scrollLeft(0).scrollTop(0);
       // Таймаут нужен для Сафари, чтобы он успел пересчитать скрол и не залип
-      $BODY.addClass(/*lightboxFLAG ? 'lightbox' : */'fullscreen');
+      $BODY.addClass(_fullscreenClass);
 
       $fotorama
-          .addClass('fotorama--fullscreen');
-
-      /*if (!lightboxFLAG) {*/
-        $fotorama
-            .css({top: 0})
-            .appendTo($BODY)
-            .trigger('fotorama:fullscreenenter');
-      /*} else {
-        $fotorama
-            .removeClass('fotorama--hidden')
-            .addClass('fotorama--lightbox')
-            .css({top: scrollTop});
-      }*/
+          .addClass(fullscreenClass)
+          .css({top: 0})
+          .appendTo($BODY)
+          .trigger('fotorama:fullscreenenter');
 
       measuresStash = $.extend({}, measures);
-
-      //optionsStash = $.extend({}, options);
-
-      //options.flexible = false;
-      //opts.fit = options.fit;
 
       unloadVideo($videoPlaying, true);
 
@@ -1238,47 +1179,24 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     that.fullScreen = false;
 
-    /*var lightboxFLAG = opts.lightbox;*/
 
-    if (FULLSCREEN /*&& !lightboxFLAG*/) {
+    if (FULLSCREEN) {
       fullScreenApi.cancelFullScreen(fotorama);
     }
 
-    $BODY.removeClass('fullscreen');
+    $BODY.removeClass(_fullscreenClass);
 
     $fotorama
-        .removeClass('fotorama--fullscreen');
-
-    /*if (!lightboxFLAG) {*/
-      $fotorama
-          .insertAfter($anchor)
-          .trigger('fotorama:fullscreenexit');
-    /*} else {
-      $fotorama
-          .addClass('fotorama--hidden')
-          *//*.removeClass('fotorama--lightbox')*//*
-          .css({top: -99999});
-    }*/
+        .removeClass(fullscreenClass)
+        .insertAfter($anchor)
+        .trigger('fotorama:fullscreenexit');
 
     measures = $.extend({}, measuresStash);
 
-    //if ($videoPlaying) {
     unloadVideo($videoPlaying, true);
-    //}
 
-    //$.extend(options, optionsStash);
-    //opts.fit = options.flexible ? false : options.fit;
-
-//      if (options.flexible) {
-//        flexibleResize();
-//      } else {
     that.resize();
     loadImg([activeIndex, prevIndex, nextIndex], 'stage');
-//    if (opts.flexible) {
-//      //console.log('flexibleResize from cancelFullScreen');
-//      flexibleResize();
-//    }
-    //}
 
     $WINDOW.scrollLeft(scrollLeft).scrollTop(scrollTop);
   }
@@ -1295,7 +1213,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   if (document.addEventListener) {
     document.addEventListener(fullScreenApi.fullScreenEventName, function () {
-      ////////console.log('fullScreenApi.fullScreenEventName', e.type);
       if (!fullScreenApi.isFullScreen() && !$videoPlaying) {
         cancelFullScreen();
       }
@@ -1460,11 +1377,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
 
   function setShadow ($el, edge) {
-    $el.removeClass('fotorama__shadows--left fotorama__shadows--right');
+    $el.removeClass(shadowsLeftClass + ' ' + shadowsRightClass);
 
-    if (edge /*&& options.shadows*/ && !$videoPlaying) {
+    if (edge && !$videoPlaying) {
       $el
-          .addClass(edge.replace(/^|\s/g, ' fotorama__shadows--'));
+          .addClass(edge.replace(/^|\s/g, ' ' + shadowsClass + '--'));
     }
   }
 
@@ -1817,9 +1734,6 @@ $.fn.fotorama = function (method) {
       var that = this,
           $fotorama = $(this),
           fotoramaData = $fotorama.data();
-
-      ////////////console.log('fotoramaData', $.extend({}, fotoramaData));
-
 
       if (!fotoramaData.api) {
         // Если фоторама ещё не инициализирована, включаем её:
