@@ -19,7 +19,7 @@ module.exports = function (grunt) {
         'SRC/js/moveontouch.js',
         'SRC/js/spin.js',
         'SRC/js/fotorama.js',
-        'SRC/js/templates.js',
+        'SRC/templates/compiled.js',
         'SRC/js/outro.js'
       ]
     },
@@ -29,10 +29,13 @@ module.exports = function (grunt) {
           namespace: '$.Fotorama.jst',
           processName: function (filename) {
             return filename.replace('SRC/templates/', '').replace(/.html$/, '').replace(/\//g, '_');
+          },
+          templateSettings: {
+            variable: 'v'
           }
         },
         files: {
-          'SRC/js/templates.js': ['SRC/templates/**/*']
+          'SRC/templates/compiled.js': ['SRC/templates/**/*']
         }
       }
     },

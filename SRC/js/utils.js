@@ -143,7 +143,7 @@ function bindTransitionEnd ($el) {
       transitionEndEvent = {
         WebkitTransition: 'webkitTransitionEnd',
         MozTransition: 'transitionend',
-        OTransition: 'oTransitionEnd',
+        OTransition: 'oTransitionEnd otransitionend',
         msTransition: 'MSTransitionEnd',
         transition: 'transitionend'
       };

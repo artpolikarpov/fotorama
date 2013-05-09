@@ -14,7 +14,7 @@ var escapeEntityMap = {
 // Regexes containing the keys and values listed immediately above.
 var escapeRegex = new RegExp('[&<>"\'/]', 'g');
 
-_.escape = function (string) {
+_.escape = _.escape || function (string) {
   if (string == null) return '';
   return ('' + string).replace(escapeRegex, function(match) {
     return escapeEntityMap[match];

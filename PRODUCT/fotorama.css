@@ -1,7 +1,6 @@
 /*!
  * Fotorama 4.0.0 | MIT License
- */@charset "UTF-8";
-.fotorama__stage__shaft, .fotorama__stage__frame, .fotorama__html {
+ */.fotorama__stage__shaft, .fotorama__stage__frame, .fotorama__html {
   position: absolute;
   width: 100%;
   height: 100%;

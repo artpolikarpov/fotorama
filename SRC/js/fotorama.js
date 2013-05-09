@@ -19,7 +19,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
       size,
 
       // Скелет разметки будущей фоторамы:
-      $style = $('<style></style>').insertBefore($fotorama),
+      $style = $(document.createElement('style')).insertBefore($fotorama),
+
       $anchor = $('<div style="display: none;"></div>').insertBefore($fotorama),
       $_wrap = $('<div></div>'),
       $wrap = $('<div class="' + wrapClass + ' ' + wrapNotReadyClass + '"></div>').appendTo($_wrap),
@@ -973,7 +974,16 @@ jQuery.Fotorama = function ($fotorama, opts) {
       maxWidth: options.maxWidth,
       minHeight: options.minHeight,
       maxHeight: options.maxHeight,
-      ratio: eval(options.ratio ? String(options.ratio).replace(':', '/') : undefined)
+      ratio: (function (_ratio) {
+        if (!_ratio) return;
+        var ratio = Number(_ratio);
+        if (!isNaN(ratio)) {
+          return ratio;
+        } else {
+          ratio = _ratio.split('/');
+          return Number(ratio[0] / ratio[1]) || undefined;
+        }
+      })(options.ratio)
     });
   }
 
@@ -987,21 +997,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
   function resetFotoramaMargins () {
     $_wrap.css({marginLeft: 0, marginRight: 0});
   }
-
-//  function showCaption (time) {
-//    var caption = opts.captions && !$videoPlaying ? that.activeFrame.caption : null;
-//
-//    ////////console.log('***showCaption***', caption);
-//
-//    $captionInner.html(caption);
-//
-//    if (CSSTR && opts.css3) {
-//      $caption.css(getDuration(time));
-//    }
-//
-//    $caption
-//        .css({marginTop: caption ? -$captionInner.innerHeight() : 0});
-//  }
 
   function onTouch (e) {
     if (opts.stopAutoplayOnTouch) {

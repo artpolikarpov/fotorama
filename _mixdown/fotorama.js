@@ -18,7 +18,7 @@ var escapeEntityMap = {
 // Regexes containing the keys and values listed immediately above.
 var escapeRegex = new RegExp('[&<>"\'/]', 'g');
 
-_.escape = function (string) {
+_.escape = _.escape || function (string) {
   if (string == null) return '';
   return ('' + string).replace(escapeRegex, function(match) {
     return escapeEntityMap[match];
@@ -1874,7 +1874,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
       size,
 
       // Скелет разметки будущей фоторамы:
-      $style = $('<style></style>').insertBefore($fotorama),
+      $style = $(document.createElement('style')).insertBefore($fotorama),
+
       $anchor = $('<div style="display: none;"></div>').insertBefore($fotorama),
       $_wrap = $('<div></div>'),
       $wrap = $('<div class="' + wrapClass + ' ' + wrapNotReadyClass + '"></div>').appendTo($_wrap),
@@ -2828,7 +2829,16 @@ jQuery.Fotorama = function ($fotorama, opts) {
       maxWidth: options.maxWidth,
       minHeight: options.minHeight,
       maxHeight: options.maxHeight,
-      ratio: eval(options.ratio ? String(options.ratio).replace(':', '/') : undefined)
+      ratio: (function (_ratio) {
+        if (!_ratio) return;
+        var ratio = Number(_ratio);
+        if (!isNaN(ratio)) {
+          return ratio;
+        } else {
+          ratio = _ratio.split('/');
+          return Number(ratio[0] / ratio[1]) || undefined;
+        }
+      })(options.ratio)
     });
   }
 
@@ -2842,21 +2852,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
   function resetFotoramaMargins () {
     $_wrap.css({marginLeft: 0, marginRight: 0});
   }
-
-//  function showCaption (time) {
-//    var caption = opts.captions && !$videoPlaying ? that.activeFrame.caption : null;
-//
-//    ////////console.log('***showCaption***', caption);
-//
-//    $captionInner.html(caption);
-//
-//    if (CSSTR && opts.css3) {
-//      $caption.css(getDuration(time));
-//    }
-//
-//    $caption
-//        .css({marginTop: caption ? -$captionInner.innerHeight() : 0});
-//  }
 
   function onTouch (e) {
     if (opts.stopAutoplayOnTouch) {
@@ -3754,57 +3749,53 @@ this["$"] = this["$"] || {};
 this["$"]["Fotorama"] = this["$"]["Fotorama"] || {};
 this["$"]["Fotorama"]["jst"] = this["$"]["Fotorama"]["jst"] || {};
 
-this["$"]["Fotorama"]["jst"]["style"] = function(obj) {
-obj || (obj = {});
+this["$"]["Fotorama"]["jst"]["style"] = function(v) {
 var __t, __p = '', __e = _.escape;
-with (obj) {
 __p += '.fotorama' +
-((__t = ( stamp )) == null ? '' : __t) +
+((__t = ( v.stamp )) == null ? '' : __t) +
 ' .fotorama__nav--thumbs .fotorama__nav__frame {\n  padding: ' +
-((__t = ( thumbMargin )) == null ? '' : __t) +
+((__t = ( v.thumbMargin )) == null ? '' : __t) +
 'px ' +
-((__t = ( thumbMargin / 2 )) == null ? '' : __t) +
+((__t = ( v.thumbMargin / 2 )) == null ? '' : __t) +
 'px;\n  width: ' +
-((__t = ( thumbWidth )) == null ? '' : __t) +
+((__t = ( v.thumbWidth )) == null ? '' : __t) +
 'px;\n  height: ' +
-((__t = ( thumbHeight )) == null ? '' : __t) +
+((__t = ( v.thumbHeight )) == null ? '' : __t) +
 'px;\n}\n.fotorama' +
-((__t = ( stamp )) == null ? '' : __t) +
+((__t = ( v.stamp )) == null ? '' : __t) +
 ' .fotorama__thumb {\n  width: ' +
-((__t = ( thumbWidth )) == null ? '' : __t) +
+((__t = ( v.thumbWidth )) == null ? '' : __t) +
 'px;\n  height: ' +
-((__t = ( thumbHeight )) == null ? '' : __t) +
+((__t = ( v.thumbHeight )) == null ? '' : __t) +
 'px;\n}\n.fotorama' +
-((__t = ( stamp )) == null ? '' : __t) +
+((__t = ( v.stamp )) == null ? '' : __t) +
 ' .fotorama__thumb-border {\n  width: ' +
-((__t = ( thumbWidth - thumbMargin * 2 )) == null ? '' : __t) +
+((__t = ( v.thumbWidth - v.thumbMargin * 2 )) == null ? '' : __t) +
 'px;\n  height: ' +
-((__t = ( thumbHeight - thumbMargin * 2 )) == null ? '' : __t) +
+((__t = ( v.thumbHeight - v.thumbMargin * 2 )) == null ? '' : __t) +
 'px;\n  border-width: ' +
-((__t = ( thumbMargin )) == null ? '' : __t) +
+((__t = ( v.thumbMargin )) == null ? '' : __t) +
 'px;\n  margin-top: ' +
-((__t = ( thumbMargin )) == null ? '' : __t) +
+((__t = ( v.thumbMargin )) == null ? '' : __t) +
 'px;\n  margin-left: ' +
-((__t = ( - thumbWidth / 2 + thumbMargin / 2 )) == null ? '' : __t) +
+((__t = ( - v.thumbWidth / 2 + v.thumbMargin / 2 )) == null ? '' : __t) +
 'px;\n}\n.fotorama' +
-((__t = ( stamp )) == null ? '' : __t) +
+((__t = ( v.stamp )) == null ? '' : __t) +
 ' .fotorama__wrap--vertical .fotorama__nav--thumbs {\n  width: ' +
-((__t = ( thumbWidth + thumbMargin * 2 )) == null ? '' : __t) +
+((__t = ( v.thumbWidth + v.thumbMargin * 2 )) == null ? '' : __t) +
 'px;\n}\n.fotorama' +
-((__t = ( stamp )) == null ? '' : __t) +
+((__t = ( v.stamp )) == null ? '' : __t) +
 ' .fotorama__wrap--vertical .fotorama__nav__frame {\n  padding: ' +
-((__t = ( thumbMargin / 2 )) == null ? '' : __t) +
+((__t = ( v.thumbMargin / 2 )) == null ? '' : __t) +
 'px ' +
-((__t = ( thumbMargin )) == null ? '' : __t) +
+((__t = ( v.thumbMargin )) == null ? '' : __t) +
 'px;\n}\n.fotorama' +
-((__t = ( stamp )) == null ? '' : __t) +
+((__t = ( v.stamp )) == null ? '' : __t) +
 ' .fotorama__wrap--vertical .fotorama__thumb-border {\n  margin-left: ' +
-((__t = ( thumbMargin )) == null ? '' : __t) +
+((__t = ( v.thumbMargin )) == null ? '' : __t) +
 'px;\n  margin-top: ' +
-((__t = ( - thumbHeight / 2 + thumbMargin / 2 )) == null ? '' : __t) +
-'px;\n}';
-
-}
+((__t = ( - v.thumbHeight / 2 + v.thumbMargin / 2 )) == null ? '' : __t) +
+'px;\n}\n';
 return __p
 };
 })(window, document, jQuery);
