@@ -132,7 +132,7 @@ function bindTransitionEnd ($el) {
 
   if (elData.transEnd) return;
 
-  var el = $el.get(0),
+  var el = $el[0],
       transitionEndEvent = {
         WebkitTransition: 'webkitTransitionEnd',
         MozTransition: 'transitionend',
@@ -175,7 +175,7 @@ function afterTransition ($el, fn, time) {
     // через таймаут вызываем onEndFn насильно:
     if (done) return;
     $el.data().onEndFn = noop;
-    fn.call($el.get(0));
+    fn.call($el[0]);
   }, time * 1.1);
 }
 
@@ -304,8 +304,6 @@ function getDataFromHtml ($el) {
         _video = imgData.video,
         video = checkVideo ? findVideoId(_imgHref, _video === true) : false;
 
-    //////////console.log('video1', video);
-
     if (video) {
       _imgHref = false;
     } else if (checkVideo) {
@@ -421,7 +419,7 @@ function setStyle ($el, style) {
   if (el.styleSheet){
     el.styleSheet.cssText = style;
   } else {
-    el.html(style);
+    $el.html(style);
   }
 }
 

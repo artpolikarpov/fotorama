@@ -1,15 +1,15 @@
 var
     fullScreenApi = {
-      ok:false,
-      is:function () {
+      ok: false,
+      is: function () {
         return false;
       },
-      request:function () {
+      request: function () {
       },
-      cancel:function () {
+      cancel: function () {
       },
-      event:'',
-      prefix:''
+      event: '',
+      prefix: ''
     },
     browserPrefixes = 'webkit moz o ms khtml'.split(' ');
 
@@ -20,10 +20,8 @@ if (typeof document.cancelFullScreen != 'undefined') {
   // check for fullscreen support by vendor prefix
   for (var i = 0, il = browserPrefixes.length; i < il; i++) {
     fullScreenApi.prefix = browserPrefixes[i];
-
     if (typeof document[fullScreenApi.prefix + 'CancelFullScreen' ] != 'undefined') {
       fullScreenApi.ok = true;
-
       break;
     }
   }
@@ -32,7 +30,6 @@ if (typeof document.cancelFullScreen != 'undefined') {
 // update methods to do something useful
 if (fullScreenApi.ok) {
   fullScreenApi.event = fullScreenApi.prefix + 'fullscreenchange';
-
   fullScreenApi.is = function () {
     switch (this.prefix) {
       case '':

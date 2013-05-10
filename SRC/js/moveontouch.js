@@ -9,7 +9,7 @@
  * @param {Object} options Объект с опциями
  */
 function moveOnTouch ($el, options) {
-  var el = $el.get(0),
+  var el = $el[0],
       elData = $el.data(),
       orientationKeys = getOrientationKeys(options.orientation),
       tail = {
@@ -49,8 +49,6 @@ function moveOnTouch ($el, options) {
 
     slowFLAG = e.altKey;
     movedFLAG = false;
-
-    //console.log('result.control ' + result.control);
 
     controlFLAG = result.control;
 

@@ -10,7 +10,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   var that = this,
       index = _size,
       stamp = new Date().getTime(),
-      fotorama = $fotorama.addClass(_fotoramaClass + stamp).get(0),
+      fotorama = $fotorama.addClass(_fotoramaClass + stamp)[0],
       data,
       dataFrameCount = 0,
       fotoramaData = $fotorama.data(),
@@ -23,7 +23,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $_wrap = $('<div></div>'),
       $wrap = $('<div class="' + wrapClass + ' ' + wrapNotReadyClass + '"></div>').appendTo($_wrap),
       $stage = $('<div class="' + stageClass +'"></div>').appendTo($wrap),
-      stage = $stage.get(0),
+      stage = $stage[0],
       $stageShaft = $('<div class="' + stageShaftClass + '"></div>').appendTo($stage),
       $stageFrame = $(),
       $arrPrev = $('<div class="' + arrClass + ' ' + arrPrevClass +'"><div class="' + arrArrClass + '"></div></div>'),
@@ -429,6 +429,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       if (type === 'navThumb') $frame = frameData.$wrap;
 
       function error () {
+        console.log('error', index, src);
         // Ошибка
         $img.remove();
 
@@ -467,6 +468,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
 
       function loaded() {
+        console.log('loaded', index, src);
+
         // Удачная загрузка:
         // Кешируем оригинальные размеры картинки
         var width = $img.width(),
@@ -500,7 +503,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           if (type === 'stage') {
             $fotorama.trigger('fotorama:load', eventData(normalizeIndex(index)));
           }
-        }, 4);
+        }, 5);
       }
 
       if (!src) {
@@ -553,7 +556,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     krutilka
         .stop()
-        .spin($frame.get(0));
+        .spin($frame[0]);
     $frame.on('f:load f:error', function () {
       $frame.off('f:load f:error');
       krutilka.stop();
@@ -1309,7 +1312,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       setShadow($stage, result.edge);
     },
     onEnd: function(result) {
-
       setShadow($stage);
 
       if (!result.moved) {
@@ -1347,7 +1349,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
 
       if (!result.moved) {
-        var target = result.$target.closest('.' + navFrameClass, $navShaft).get(0);
+        var target = result.$target.closest('.' + navFrameClass, $navShaft)[0];
         if (!target) return;
         onNavFrameClick.call(target, result.startEvent);
       } else if (result.pos !== result.newPos) {

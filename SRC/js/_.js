@@ -1,5 +1,4 @@
 // Underscore
-var _ = {};
 
 // List of HTML entities for escaping.
 var escapeEntityMap = {
@@ -14,9 +13,11 @@ var escapeEntityMap = {
 // Regexes containing the keys and values listed immediately above.
 var escapeRegex = new RegExp('[&<>"\'/]', 'g');
 
-_.escape = _.escape || function (string) {
-  if (string == null) return '';
-  return ('' + string).replace(escapeRegex, function(match) {
-    return escapeEntityMap[match];
-  });
+var _ = {
+  escape: function (string) {
+    if (string == null) return '';
+    return ('' + string).replace(escapeRegex, function(match) {
+      return escapeEntityMap[match];
+    });
+  }
 }

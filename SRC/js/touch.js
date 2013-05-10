@@ -32,13 +32,10 @@ function extendEvent (e, touchFLAG) {
  * @param options {Object} Объект с опциями
  */
 function touch ($el, options) {
-  var el = $el.get(0),
+  var el = $el[0],
       tail = {},
       touchEnabledFLAG,
       movableFLAG,
-//      offset,
-//      width,
-//      height,
       startEvent,
       eventFlowFLAG,
       movedFLAG,
@@ -52,8 +49,6 @@ function touch ($el, options) {
     $target = $(e.target);
     targetIsSelectFLAG = false;
 
-    //console.log('onStart ' + e.type);
-
     if (touchEnabledFLAG
         || eventFlowFLAG
         || (e.touches && e.touches.length > 1)
@@ -65,18 +60,12 @@ function touch ($el, options) {
     touchFLAG = e.type.match('touch');
     extendEvent(e, touchFLAG);
 
-    //offset = $el.offset();
-    //width = $el.width();
-    //height = $el.height();
-
     tail.checked = movableFLAG = movedFLAG = false;
 
     lastEvent = e;
     moveEventType = e.type.replace(/down|start/, 'move');
     startEvent = e;
     controlTouch = tail.control;
-
-    ////////console.log('$target.filter(options.control)', $target.filter(options.control));
 
     (options.onStart || noop).call(el, e, {control: controlTouch, $target: $target});
 
@@ -90,10 +79,6 @@ function touch ($el, options) {
   function onMove (e) {
 
     if (!touchEnabledFLAG
-        /*|| (e._x - offset.left > width
-          || e._x - offset.left < 0
-          || e._y - offset.top > height
-          || e._y - offset.top < 0)*/
         || (e.touches && e.touches.length > 1)) {
       onEnd();
       return;
@@ -102,8 +87,6 @@ function touch ($el, options) {
     }
 
     extendEvent(e, touchFLAG);
-
-    //////console.log('touch.js onMove', e.type);
 
     var xDiff = Math.abs(e._x - startEvent._x),
         yDiff = Math.abs(e._y - startEvent._y),
@@ -122,11 +105,9 @@ function touch ($el, options) {
       }
 
       if (!tail.checked || movableFLAG) {
-        ////////console.log('touch.js onMove preventDefault');
         e.preventDefault();
       }
     } else if (!touchFLAG || movableFLAG) {
-      //////console.log('touch.js onMove preventDefault');
       e.preventDefault();
       (options.onMove || noop).call(el, e);
     } else {
@@ -137,18 +118,13 @@ function touch ($el, options) {
   }
 
   function onEnd (e) {
-    //extendEvent(e);
-
     eventFlowFLAG = tail.control = false;
     if (!touchEnabledFLAG) return;
     if (e && e.preventDefault) e.preventDefault();
-    //////console.log('on End');
     preventEvent = true;
-    //////console.log('preventEvent must be true', preventEvent);
     clearTimeout(preventEventTimeout);
     preventEventTimeout = setTimeout(function () {
       preventEvent = false;
-      //////console.log('preventEvent must be false', preventEvent);
     }, 1000);
     (options.onEnd || noop).call(el, {moved: !!movedFLAG, $target: $target, control: controlTouch, startEvent: startEvent});
     touchEnabledFLAG = false;
@@ -156,7 +132,6 @@ function touch ($el, options) {
 
 
   if (TOUCH) {
-    //console.log('addEventListener');
     el.addEventListener('touchstart', onStart);
     el.addEventListener('touchmove', onMove);
     el.addEventListener('touchend', onEnd);

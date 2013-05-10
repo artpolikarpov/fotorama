@@ -35,7 +35,7 @@ module.exports = function (grunt) {
           }
         },
         files: {
-          'SRC/templates/compiled.js': ['SRC/templates/**/*']
+          'SRC/templates/compiled.js': ['SRC/templates/style']
         }
       }
     },

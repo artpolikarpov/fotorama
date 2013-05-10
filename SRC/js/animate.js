@@ -39,7 +39,6 @@ function fade ($el1, $el2, options, cssTransitions) {
         $el1.removeClass(fadeRearClass);
         $el2.removeClass(fadeFrontClass);
         (options.onEnd || noop)();
-
         onEndFn.done = true;
       },
       duration = getDuration(options.time),
