@@ -3,7 +3,7 @@
  */(function (window, document, $, undefined) {
 
 // Underscore
-_ = typeof _ === 'undefined' ? {} : _;
+var _ = {};
 
 // List of HTML entities for escaping.
 var escapeEntityMap = {
@@ -326,29 +326,29 @@ var Modernizr = (function( window, document, undefined ) {
 })(this, this.document);
 var
     fullScreenApi = {
-      supportsFullScreen:false,
-      isFullScreen:function () {
+      ok:false,
+      is:function () {
         return false;
       },
-      requestFullScreen:function () {
+      request:function () {
       },
-      cancelFullScreen:function () {
+      cancel:function () {
       },
-      fullScreenEventName:'',
+      event:'',
       prefix:''
     },
     browserPrefixes = 'webkit moz o ms khtml'.split(' ');
 
 // check for native support
 if (typeof document.cancelFullScreen != 'undefined') {
-  fullScreenApi.supportsFullScreen = true;
+  fullScreenApi.ok = true;
 } else {
   // check for fullscreen support by vendor prefix
   for (var i = 0, il = browserPrefixes.length; i < il; i++) {
     fullScreenApi.prefix = browserPrefixes[i];
 
     if (typeof document[fullScreenApi.prefix + 'CancelFullScreen' ] != 'undefined') {
-      fullScreenApi.supportsFullScreen = true;
+      fullScreenApi.ok = true;
 
       break;
     }
@@ -356,10 +356,10 @@ if (typeof document.cancelFullScreen != 'undefined') {
 }
 
 // update methods to do something useful
-if (fullScreenApi.supportsFullScreen) {
-  fullScreenApi.fullScreenEventName = fullScreenApi.prefix + 'fullscreenchange';
+if (fullScreenApi.ok) {
+  fullScreenApi.event = fullScreenApi.prefix + 'fullscreenchange';
 
-  fullScreenApi.isFullScreen = function () {
+  fullScreenApi.is = function () {
     switch (this.prefix) {
       case '':
         return document.fullScreen;
@@ -369,12 +369,59 @@ if (fullScreenApi.supportsFullScreen) {
         return document[this.prefix + 'FullScreen'];
     }
   };
-  fullScreenApi.requestFullScreen = function (el) {
+  fullScreenApi.request = function (el) {
     return (this.prefix === '') ? el.requestFullScreen() : el[this.prefix + 'RequestFullScreen']();
   };
-  fullScreenApi.cancelFullScreen = function (el) {
+  fullScreenApi.cancel = function (el) {
     return (this.prefix === '') ? document.cancelFullScreen() : document[this.prefix + 'CancelFullScreen']();
   };
+}
+/* Bez v1.0.10-g5ae0136
+ * http://github.com/rdallasgray/bez
+ *
+ * A plugin to convert CSS3 cubic-bezier co-ordinates to jQuery-compatible easing functions
+ *
+ * With thanks to Nikolay Nemshilov for clarification on the cubic-bezier maths
+ * See http://st-on-it.blogspot.com/2011/05/calculating-cubic-bezier-function.html
+ *
+ * Copyright 2011 Robert Dallas Gray. All rights reserved.
+ * Provided under the FreeBSD license: https://github.com/rdallasgray/bez/blob/master/LICENSE.txt
+ */
+
+function bez(coOrdArray) {
+  var encodedFuncName = "bez_" + $.makeArray(arguments).join("_").replace(".", "p");
+  if (typeof $['easing'][encodedFuncName] !== "function") {
+    var polyBez = function (p1, p2) {
+      var A = [null, null],
+          B = [null, null],
+          C = [null, null],
+          bezCoOrd = function (t, ax) {
+            C[ax] = 3 * p1[ax];
+            B[ax] = 3 * (p2[ax] - p1[ax]) - C[ax];
+            A[ax] = 1 - C[ax] - B[ax];
+            return t * (C[ax] + t * (B[ax] + t * A[ax]));
+          },
+          xDeriv = function (t) {
+            return C[0] + t * (2 * B[0] + 3 * A[0] * t);
+          },
+          xForT = function (t) {
+            var x = t, i = 0, z;
+            while (++i < 14) {
+              z = bezCoOrd(x, 0) - t;
+              if (Math.abs(z) < 1e-3) break;
+              x -= z / xDeriv(x);
+            }
+            return x;
+          };
+      return function (t) {
+        return bezCoOrd(xForT(t), 1);
+      }
+    };
+    $['easing'][encodedFuncName] = function (x, t, b, c, d) {
+      return c * polyBez([coOrdArray[0], coOrdArray[1]], [coOrdArray[2], coOrdArray[3]])(t / d) + b;
+    }
+  }
+  return encodedFuncName;
 }
 var _fotoramaClass = 'fotorama',
     _fullscreenClass = 'fullscreen',
@@ -387,6 +434,7 @@ var _fotoramaClass = 'fotorama',
     wrapCssTransitionsClass = wrapClass + '--css-transitions',
     wrapVideoClass = wrapClass + '--video',
     wrapFadeClass = wrapClass + '--fade',
+    wrapSlideClass = wrapClass + '--slide',
     wrapTouchClass = wrapClass + '--touch',
 
     stageClass = _fotoramaClass + '__stage',
@@ -458,16 +506,10 @@ var $WINDOW = $(window),
     $HTML,
     $BODY,
 
-    //CANVAS = Modernizr.canvas,
     TOUCH = Modernizr.touch,
-    //SVG = Modernizr.inlinesvg,
     QUIRKS_FORCE = document.location.hash.replace('#', '') === 'quirks',
-    //MOBILE = navigator.userAgent.toLowerCase().match(/(phone|ipod|ipad|windows ce|netfront|playstation|midp|up\.browser|android|mobile|mini|tablet|symbian|nintendo|wii)/),
-    //IE = $.browser.msie,
-    //IE6 = IE && $.browser.version === '6.0',
     CSSTR = Modernizr.csstransforms3d && Modernizr.csstransitions && !QUIRKS_FORCE,
-    FULLSCREEN = fullScreenApi.supportsFullScreen,
-    //QUIRKS = document.compatMode !== 'CSS1Compat' && IE,
+    FULLSCREEN = fullScreenApi.ok,
 
     TOUCH_TIMEOUT = 300,
     TRANSITION_DURATION = 333,
@@ -479,6 +521,8 @@ var $WINDOW = $(window),
     // Размеры на тот случай, если пользователь не укажет и брать не откуда
     WIDTH = 500,
     HEIGHT = 333,
+
+    BEZIER = bez([.1, 0, .25, 1]),
 
     X = '{{X}}',
     VIDEO_IFRAME = '<div class="fotorama__video"><iframe src="' + X +'" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></div>',
@@ -589,13 +633,6 @@ function measureIsValid (value) {
   return !!numberFromMeasure(value) || !!numberFromMeasure(value, '%') ? value : false;
 }
 
-/**
- * returning innerWidth or innerHeight depends on orientation
- * */
-//function innerSideMethod (_side) {
-//  return ('inner' + _side).replace('rw', 'rW').replace('rh', 'rH');
-//}
-
 function capitaliseFirstLetter (string) {
   return string && string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -633,7 +670,7 @@ function bindTransitionEnd ($el) {
       transitionEndEvent = {
         WebkitTransition: 'webkitTransitionEnd',
         MozTransition: 'transitionend',
-        OTransition: 'oTransitionEnd',
+        OTransition: 'oTransitionEnd otransitionend',
         msTransition: 'MSTransitionEnd',
         transition: 'transitionend'
       };
@@ -657,7 +694,6 @@ function afterTransition ($el, fn, time) {
 
   elData.transProp = $el.css('transition-property');
   elData.onEndFn = function () {
-    ////////////console.log('Cработал нативный transitionend', fn);
     done = true;
     fn.call(this);
   };
@@ -672,7 +708,6 @@ function afterTransition ($el, fn, time) {
     // Если не сработал нативный transitionend (а такое бывает),
     // через таймаут вызываем onEndFn насильно:
     if (done) return;
-    ////////////console.log('Не сработал нативный transitionend!', fn);
     $el.data().onEndFn = noop;
     fn.call($el.get(0));
   }, time * 1.1);
@@ -754,7 +789,6 @@ function getVideoThumbs (dataFrame, data, i, api) {
       url: getProtocol() + 'vimeo.com/api/v2/video/' + video.id + '.json',
       dataType: 'jsonp',
       success: function(json){
-        ////////////console.log('JSONP success');
         dataFrame.thumbsReady = true;
         updateData(data, {img: json[0].thumbnail_large, thumb: json[0].thumbnail_small}, i, api);
       }
@@ -763,27 +797,19 @@ function getVideoThumbs (dataFrame, data, i, api) {
     dataFrame.thumbsReady = true;
   }
 
-  //if (img || thumb) {
-    return {
-      img: img,
-      thumb: thumb
-    }
-  //}
+  return {
+    img: img,
+    thumb: thumb
+  }
 }
 
 function updateData (data, _dataFrame, i, api) {
-  ////////////console.log('updateData', _dataFrame, i);
   for (var _i = 0, _l = data.length; _i < _l; _i++) {
     var dataFrame = data[_i];
 
-    ////////////console.log(dataFrame.i, i);
-
     if (dataFrame.i === i && dataFrame.thumbsReady) {
-      ////////////console.log('splice', dataFrame._imgSrc, dataFrame._thumbSrc);
 
       api.splice(_i, 1, {
-        //_imgSrc: dataFrame._imgSrc,
-        //_thumbSrc: dataFrame._thumbSrc,
         i: i,
         video: dataFrame.video,
         videoReady: true,
@@ -817,7 +843,6 @@ function getDataFromHtml ($el) {
     if (video) {
       _imgHref = false;
     } else if (checkVideo) {
-      //////////console.log('find video from _imgSrc', _imgSrc);
       video = findVideoId(_imgSrc, _video === true);
       if (video) {
         _imgSrc = false;
@@ -826,18 +851,7 @@ function getDataFromHtml ($el) {
       }
     }
 
-    //////////console.log('video2', video);
-
-//    if (video && (!imgSrc || !thumbSrc)) {
-//      var thumbs = getVideoThumbs(video, data, i, api);
-//      imgHref = imgSrc = imgSrc || thumbs.img;
-//      thumbSrc = thumbSrc || thumbs.thumb;
-//    }
-
     return {
-      //_imgHref: _imgHref,
-      //_imgSrc: _imgSrc,
-      //_thumbSrc: _thumbSrc,
       video: video,
       img: _imgHref || _imgSrc || _thumbSrc,
       thumb: _thumbSrc || _imgSrc || _imgHref,
@@ -860,8 +874,6 @@ function getDataFromHtml ($el) {
       return;
     }
 
-    //////console.log('dataFrame', dataFrame);
-    //dataFrame.i = i;
     data.push(dataFrame);
   });
 
@@ -873,8 +885,6 @@ function getDataFromHtml ($el) {
  * Работает в 3-4 раза быстрее джейкверевского ':hidden'
  * */
 function isHidden (el) {
-  //////////////console.log('isHidden', el, el.offsetWidth, el.offsetHeight);
-
   return el.offsetWidth === 0 && el.offsetHeight === 0;
 }
 
@@ -882,7 +892,6 @@ function isHidden (el) {
  * Фунция-посредник, чтобы выполнить другую функцию только, если определённый элемент видим (имеет размеры) на странице
  * */
 function waitFor (test, fn, timeout) {
-  //////////////console.log('waitFor', test());
   if (test()) {
     fn();
   } else {
@@ -899,8 +908,6 @@ function fit ($el, measuresToFit, method) {
   var elData = $el.data(),
       measures = elData.measures;
 
-  //console.log('FIT1', $el, measures);
-
   if (measures && (!elData.last ||
       elData.last.mw !== measures.width ||
       elData.last.mh !== measures.height ||
@@ -908,8 +915,6 @@ function fit ($el, measuresToFit, method) {
       elData.last.mfw !== measuresToFit.width__ ||
       elData.last.mfh !== measuresToFit.height__ ||
       elData.last.mm !== method)) {
-
-    //console.log('FIT2', $el, measures, measuresToFit, method);
 
     var width = measures.width,
         height = measures.height,
@@ -940,17 +945,19 @@ function fit ($el, measuresToFit, method) {
       mr: measures.ratio,
       mfw: measuresToFit.width_,
       mfh: measuresToFit.height_,
-      mm: method///,
-      ///$w: elData.$wrap
+      mm: method
     }
   }
+}
 
-  ///if (elData.$wrap) {
-    ////console.log('FIT $wrap');
-    ///fit(elData.$wrap, {width__: measuresToFit.width_, height__: measuresToFit.height_});
-  ///}
-
-  ///if (measures) return true;
+function setStyle ($el, style) {
+  var el = $el[0];
+  el.type = 'text/css';
+  if (el.styleSheet){
+    el.styleSheet.cssText = style;
+  } else {
+    el.appendChild(document.createTextNode(style));
+  }
 }
 
 function findShadowEdge (pos, minPos, maxPos) {
@@ -1003,21 +1010,16 @@ function smartClick ($el, fn, _options) {
 
     if (thisData.clickOn) return;
 
-    ////////////console.log('click on', $this);
-
     thisData.clickOn = true;
 
     $.extend(touch($this, {
       onStart: function (e) {
-        //////////console.log('smartClick onStart');
         startEvent = e;
         (_options.onStart || noop).call(this, e);
       },
       onMove: _options.onMove || noop,
       onEnd: function (result) {
         if (result.moved || _options.tail.checked) return;
-
-        //////////console.log('smartClick onEnd');
         fn.call(this, startEvent);
       }
     }), _options.tail);
@@ -1052,55 +1054,6 @@ function bindNoInteraction ($el) {
     }
   });
 }
-/* Bez v1.0.10-g5ae0136
- * http://github.com/rdallasgray/bez
- *
- * A plugin to convert CSS3 cubic-bezier co-ordinates to jQuery-compatible easing functions
- *
- * With thanks to Nikolay Nemshilov for clarification on the cubic-bezier maths
- * See http://st-on-it.blogspot.com/2011/05/calculating-cubic-bezier-function.html
- *
- * Copyright 2011 Robert Dallas Gray. All rights reserved.
- * Provided under the FreeBSD license: https://github.com/rdallasgray/bez/blob/master/LICENSE.txt
- */
-
-function bez(coOrdArray) {
-  var encodedFuncName = "bez_" + $.makeArray(arguments).join("_").replace(".", "p");
-  if (typeof $['easing'][encodedFuncName] !== "function") {
-    var polyBez = function (p1, p2) {
-      var A = [null, null],
-          B = [null, null],
-          C = [null, null],
-          bezCoOrd = function (t, ax) {
-            C[ax] = 3 * p1[ax];
-            B[ax] = 3 * (p2[ax] - p1[ax]) - C[ax];
-            A[ax] = 1 - C[ax] - B[ax];
-            return t * (C[ax] + t * (B[ax] + t * A[ax]));
-          },
-          xDeriv = function (t) {
-            return C[0] + t * (2 * B[0] + 3 * A[0] * t);
-          },
-          xForT = function (t) {
-            var x = t, i = 0, z;
-            while (++i < 14) {
-              z = bezCoOrd(x, 0) - t;
-              if (Math.abs(z) < 1e-3) break;
-              x -= z / xDeriv(x);
-            }
-            return x;
-          };
-      return function (t) {
-        return bezCoOrd(xForT(t), 1);
-      }
-    };
-    $['easing'][encodedFuncName] = function (x, t, b, c, d) {
-      return c * polyBez([coOrdArray[0], coOrdArray[1]], [coOrdArray[2], coOrdArray[3]])(t / d) + b;
-    }
-  }
-  return encodedFuncName;
-}
-var BEZIER = bez([.1, 0, .25, 1]);
-
 /**
  * Универсальная функция для анимирования блока (через ЦСС3 или Джейквери),
  * по одному из свойств, top или left
@@ -1125,7 +1078,6 @@ function slide ($el, options, cssTransitions) {
     if (options.time > 10) {
       afterTransition($el, onEndFn, options.time);
     } else {
-      //console.log('first onEnd');
       onEndFn();
     }
   } else {
@@ -1162,8 +1114,6 @@ function fade ($el1, $el2, options, cssTransitions) {
       .addClass(fadeFrontClass)
       .removeClass(fadeRearClass);
 
-  //console.log('$el1 $el2', $el1, $el2);
-
   if (CSSTR && cssTransitions) {
     if (_$el2) {
       $el1.css(crossfadeFLAG ? opacity0 : opacity1);
@@ -1197,16 +1147,14 @@ function fade ($el1, $el2, options, cssTransitions) {
           .fadeTo(0, crossfadeFLAG ? 0 : 1);
     }
 
-    //setTimeout(function () {
-      $el1
-          .stop()
-          .fadeTo(options.time, 1, onEndFn);
-      $el2
-          .stop()
-          .fadeTo(options.time, 0, onEndFn);
+    $el1
+        .stop()
+        .fadeTo(options.time, 1, onEndFn);
+    $el2
+        .stop()
+        .fadeTo(options.time, 0, onEndFn);
 
-      if (!_$el1 && !_$el2) onEndFn();
-    //}, 4);
+    if (!_$el1 && !_$el2) onEndFn();
   }
 }
 
@@ -1558,7 +1506,6 @@ function moveOnTouch ($el, options) {
     onStart: onStart,
     onMove: onMove,
     onEnd: onEnd,
-//    orientation: options.orientation,
     select: options.select,
     control: options.control
   }), tail);
@@ -2089,6 +2036,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
     opts.autoplay = Math.max(Number(interval) || AUTOPLAY_INTERVAL, opts.transitionDuration * 3);
   }
 
+  function addOrRemove (FLAG) {
+    return FLAG ? 'add' : 'remove';
+  }
+
   /**
    * Options on the fly
    * */
@@ -2111,8 +2062,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       o_nav = o_arrows = false;
       //classes.add.push(selectClass);
     }
-
-
 
     if (opts.autoplay) setAutoplayInterval(opts.autoplay);
 
@@ -2145,7 +2094,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     extendMeasures(opts);
 
     ////////////////console.log('setOptions after', measures);
-    $style.html($.Fotorama.jst.style({thumbWidth: o_vertical ? o_thumbSide2 : o_thumbSide , thumbHeight: o_vertical ? o_thumbSide : o_thumbSide2, thumbMargin: MARGIN, stamp: stamp}));
+    setStyle($style, $.Fotorama.jst.style({thumbWidth: o_vertical ? o_thumbSide2 : o_thumbSide , thumbHeight: o_vertical ? o_thumbSide : o_thumbSide2, thumbMargin: MARGIN, stamp: stamp}));
+    //$style.html($.Fotorama.jst.style({thumbWidth: o_vertical ? o_thumbSide2 : o_thumbSide , thumbHeight: o_vertical ? o_thumbSide : o_thumbSide2, thumbMargin: MARGIN, stamp: stamp}));
     console.log('set $style');
 
 
@@ -2169,11 +2119,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $nav.removeClass(navThumbsClass + ' ' + navDotsClass);
     }
 
-
-      o_allowFullScreen = opts.allowFullScreen;
-      $fotorama
-          .insertAfter($anchor)
-          .removeClass(hiddenClass);
+    o_allowFullScreen = opts.allowFullScreen;
+    $fotorama
+        .insertAfter($anchor)
+        .removeClass(hiddenClass);
 
     if (o_nav && o_navBefore) {
       classes.add.push(wrapNavBeforeClass);
@@ -2192,7 +2141,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
 
     // Анимация перехода, и соответствующие классы:
-    classes[o_fade ? 'add' : 'remove'].push(wrapFadeClass);
+    classes[addOrRemove(o_fade)].push(wrapFadeClass);
+    classes[addOrRemove(!o_fade)].push(wrapSlideClass);
 
     if (o_arrows) {
       $arrs.show();
@@ -2202,8 +2152,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
 
     // Переворачиваем фотораму, если нужно
-    classes[o_vertical ? 'add' : 'remove'].push(wrapVerticalClass);
-    classes[o_vertical ? 'remove' : 'add'].push(wrapHorizontalClass);
+    classes[addOrRemove(o_vertical)].push(wrapVerticalClass);
+    classes[addOrRemove(!o_vertical)].push(wrapHorizontalClass);
 
     // Если ЦСС-транзишны поддерживаются и не отменены пользователем
     ////////////console.log('lastOptions.css3', lastOptions.css3);
@@ -3041,7 +2991,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     //}
 
     if (o_nativeFullScreen) {
-      fullScreenApi.requestFullScreen(fotorama);
+      fullScreenApi.request(fotorama);
     }
 
     setTimeout(function () {
@@ -3073,7 +3023,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
 
     if (FULLSCREEN) {
-      fullScreenApi.cancelFullScreen(fotorama);
+      fullScreenApi.cancel(fotorama);
     }
 
     $BODY.removeClass(_fullscreenClass);
@@ -3094,8 +3044,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   this.cancelFullScreen = function () {
-    if (o_nativeFullScreen && fullScreenApi.isFullScreen()) {
-      fullScreenApi.cancelFullScreen(document);
+    if (o_nativeFullScreen && fullScreenApi.is()) {
+      fullScreenApi.cancel(document);
     } else {
       cancelFullScreen();
     }
@@ -3104,8 +3054,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   if (document.addEventListener) {
-    document.addEventListener(fullScreenApi.fullScreenEventName, function () {
-      if (!fullScreenApi.isFullScreen() && !$videoPlaying) {
+    document.addEventListener(fullScreenApi.event, function () {
+      if (!fullScreenApi.is() && !$videoPlaying) {
         cancelFullScreen();
       }
     });
@@ -3310,7 +3260,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
 
     waitFor(function () {
-      return !fullScreenApi.isFullScreen() || _activeIndex !== activeIndex;
+      return !fullScreenApi.is() || _activeIndex !== activeIndex;
     }, function () {
       if (_activeIndex !== activeIndex) return;
       if (!dataFrame.$video) {
@@ -3704,6 +3654,12 @@ $(function () {
 this["$"] = this["$"] || {};
 this["$"]["Fotorama"] = this["$"]["Fotorama"] || {};
 this["$"]["Fotorama"]["jst"] = this["$"]["Fotorama"]["jst"] || {};
+
+this["$"]["Fotorama"]["jst"]["compiled.js"] = function(v) {
+var __t, __p = '', __e = _.escape;
+__p += 'this["$"] = this["$"] || {};\nthis["$"]["Fotorama"] = this["$"]["Fotorama"] || {};\nthis["$"]["Fotorama"]["jst"] = this["$"]["Fotorama"]["jst"] || {};\n\nthis["$"]["Fotorama"]["jst"]["style"] = function(v) {\nvar __t, __p = \'\', __e = _.escape;\n__p += \'.fotorama\' +\n((__t = ( v.stamp )) == null ? \'\' : __t) +\n\' .fotorama__nav--thumbs .fotorama__nav__frame {\\n  padding: \' +\n((__t = ( v.thumbMargin )) == null ? \'\' : __t) +\n\'px \' +\n((__t = ( v.thumbMargin / 2 )) == null ? \'\' : __t) +\n\'px;\\n  width: \' +\n((__t = ( v.thumbWidth )) == null ? \'\' : __t) +\n\'px;\\n  height: \' +\n((__t = ( v.thumbHeight )) == null ? \'\' : __t) +\n\'px;\\n}\\n.fotorama\' +\n((__t = ( v.stamp )) == null ? \'\' : __t) +\n\' .fotorama__thumb {\\n  width: \' +\n((__t = ( v.thumbWidth )) == null ? \'\' : __t) +\n\'px;\\n  height: \' +\n((__t = ( v.thumbHeight )) == null ? \'\' : __t) +\n\'px;\\n}\\n.fotorama\' +\n((__t = ( v.stamp )) == null ? \'\' : __t) +\n\' .fotorama__thumb-border {\\n  width: \' +\n((__t = ( v.thumbWidth - v.thumbMargin * 2 )) == null ? \'\' : __t) +\n\'px;\\n  height: \' +\n((__t = ( v.thumbHeight - v.thumbMargin * 2 )) == null ? \'\' : __t) +\n\'px;\\n  border-width: \' +\n((__t = ( v.thumbMargin )) == null ? \'\' : __t) +\n\'px;\\n  margin-top: \' +\n((__t = ( v.thumbMargin )) == null ? \'\' : __t) +\n\'px;\\n  margin-left: \' +\n((__t = ( - v.thumbWidth / 2 + v.thumbMargin / 2 )) == null ? \'\' : __t) +\n\'px;\\n}\\n.fotorama\' +\n((__t = ( v.stamp )) == null ? \'\' : __t) +\n\' .fotorama__wrap--vertical .fotorama__nav--thumbs {\\n  width: \' +\n((__t = ( v.thumbWidth + v.thumbMargin * 2 )) == null ? \'\' : __t) +\n\'px;\\n}\\n.fotorama\' +\n((__t = ( v.stamp )) == null ? \'\' : __t) +\n\' .fotorama__wrap--vertical .fotorama__nav__frame {\\n  padding: \' +\n((__t = ( v.thumbMargin / 2 )) == null ? \'\' : __t) +\n\'px \' +\n((__t = ( v.thumbMargin )) == null ? \'\' : __t) +\n\'px;\\n}\\n.fotorama\' +\n((__t = ( v.stamp )) == null ? \'\' : __t) +\n\' .fotorama__wrap--vertical .fotorama__thumb-border {\\n  margin-left: \' +\n((__t = ( v.thumbMargin )) == null ? \'\' : __t) +\n\'px;\\n  margin-top: \' +\n((__t = ( - v.thumbHeight / 2 + v.thumbMargin / 2 )) == null ? \'\' : __t) +\n\'px;\\n}\\n\';\nreturn __p\n};';
+return __p
+};
 
 this["$"]["Fotorama"]["jst"]["style"] = function(v) {
 var __t, __p = '', __e = _.escape;

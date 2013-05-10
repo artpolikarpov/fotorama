@@ -1,28 +1,28 @@
 var
     fullScreenApi = {
-      supportsFullScreen:false,
-      isFullScreen:function () {
+      ok:false,
+      is:function () {
         return false;
       },
-      requestFullScreen:function () {
+      request:function () {
       },
-      cancelFullScreen:function () {
+      cancel:function () {
       },
-      fullScreenEventName:'',
+      event:'',
       prefix:''
     },
     browserPrefixes = 'webkit moz o ms khtml'.split(' ');
 
 // check for native support
 if (typeof document.cancelFullScreen != 'undefined') {
-  fullScreenApi.supportsFullScreen = true;
+  fullScreenApi.ok = true;
 } else {
   // check for fullscreen support by vendor prefix
   for (var i = 0, il = browserPrefixes.length; i < il; i++) {
     fullScreenApi.prefix = browserPrefixes[i];
 
     if (typeof document[fullScreenApi.prefix + 'CancelFullScreen' ] != 'undefined') {
-      fullScreenApi.supportsFullScreen = true;
+      fullScreenApi.ok = true;
 
       break;
     }
@@ -30,10 +30,10 @@ if (typeof document.cancelFullScreen != 'undefined') {
 }
 
 // update methods to do something useful
-if (fullScreenApi.supportsFullScreen) {
-  fullScreenApi.fullScreenEventName = fullScreenApi.prefix + 'fullscreenchange';
+if (fullScreenApi.ok) {
+  fullScreenApi.event = fullScreenApi.prefix + 'fullscreenchange';
 
-  fullScreenApi.isFullScreen = function () {
+  fullScreenApi.is = function () {
     switch (this.prefix) {
       case '':
         return document.fullScreen;
@@ -43,10 +43,10 @@ if (fullScreenApi.supportsFullScreen) {
         return document[this.prefix + 'FullScreen'];
     }
   };
-  fullScreenApi.requestFullScreen = function (el) {
+  fullScreenApi.request = function (el) {
     return (this.prefix === '') ? el.requestFullScreen() : el[this.prefix + 'RequestFullScreen']();
   };
-  fullScreenApi.cancelFullScreen = function (el) {
+  fullScreenApi.cancel = function (el) {
     return (this.prefix === '') ? document.cancelFullScreen() : document[this.prefix + 'CancelFullScreen']();
   };
 }

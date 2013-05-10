@@ -166,7 +166,6 @@ function moveOnTouch ($el, options) {
     onStart: onStart,
     onMove: onMove,
     onEnd: onEnd,
-//    orientation: options.orientation,
     select: options.select,
     control: options.control
   }), tail);

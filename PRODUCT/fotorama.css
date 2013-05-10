@@ -10,7 +10,7 @@
   bottom: 0;
 }
 
-.fotorama__stage__shaft, .fotorama__nav__shaft {
+.fotorama__wrap--slide .fotorama__stage__shaft, .fotorama__nav__shaft {
   cursor: move;
   cursor: -webkit-grab;
   cursor: -moz-grab;
@@ -184,6 +184,10 @@
   position: absolute !important;
   top: 50% !important;
   left: 50% !important;
+}
+
+.fotorama__stage__shaft {
+  cursor: pointer;
 }
 
 .grabbing * {
@@ -654,10 +658,10 @@
   opacity: 1;
 }
 
-.fotorama__wrap--touch .fotorama__stage .fotorama__arr, .fotorama__wrap--touch .fotorama__stage .fotorama__fullscreen-icon, .fotorama__stage:hover .fotorama__arr, .fotorama__stage:hover .fotorama__fullscreen-icon {
+.fotorama__stage:hover .fotorama__arr, .fotorama__stage:hover .fotorama__fullscreen-icon {
   opacity: 1;
 }
-.fotorama__wrap--touch .fotorama__stage .fotorama__arr--disabled, .fotorama__stage:hover .fotorama__arr--disabled {
+.fotorama__stage:hover .fotorama__arr--disabled {
   opacity: .1 !important;
 }
 

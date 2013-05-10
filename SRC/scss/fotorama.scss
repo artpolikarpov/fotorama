@@ -95,9 +95,16 @@ $time: 333ms;
 
 .fotorama__stage__shaft {
   @extend %stretch;
-  @extend %grab-cursor;
   @extend %no-tap;
+  cursor: pointer;
 }
+
+.fotorama__wrap--slide {
+  .fotorama__stage__shaft {
+    @extend %grab-cursor;
+  }
+}
+
 
 .grabbing * {
   cursor: move !important;

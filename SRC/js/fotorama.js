@@ -192,6 +192,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
     opts.autoplay = Math.max(Number(interval) || AUTOPLAY_INTERVAL, opts.transitionDuration * 3);
   }
 
+  function addOrRemove (FLAG) {
+    return FLAG ? 'add' : 'remove';
+  }
+
   /**
    * Options on the fly
    * */
@@ -214,8 +218,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       o_nav = o_arrows = false;
       //classes.add.push(selectClass);
     }
-
-
 
     if (opts.autoplay) setAutoplayInterval(opts.autoplay);
 
@@ -248,7 +250,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     extendMeasures(opts);
 
     ////////////////console.log('setOptions after', measures);
-    $style.html($.Fotorama.jst.style({thumbWidth: o_vertical ? o_thumbSide2 : o_thumbSide , thumbHeight: o_vertical ? o_thumbSide : o_thumbSide2, thumbMargin: MARGIN, stamp: stamp}));
+    setStyle($style, $.Fotorama.jst.style({thumbWidth: o_vertical ? o_thumbSide2 : o_thumbSide , thumbHeight: o_vertical ? o_thumbSide : o_thumbSide2, thumbMargin: MARGIN, stamp: stamp}));
+    //$style.html($.Fotorama.jst.style({thumbWidth: o_vertical ? o_thumbSide2 : o_thumbSide , thumbHeight: o_vertical ? o_thumbSide : o_thumbSide2, thumbMargin: MARGIN, stamp: stamp}));
     console.log('set $style');
 
 
@@ -272,11 +275,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $nav.removeClass(navThumbsClass + ' ' + navDotsClass);
     }
 
-
-      o_allowFullScreen = opts.allowFullScreen;
-      $fotorama
-          .insertAfter($anchor)
-          .removeClass(hiddenClass);
+    o_allowFullScreen = opts.allowFullScreen;
+    $fotorama
+        .insertAfter($anchor)
+        .removeClass(hiddenClass);
 
     if (o_nav && o_navBefore) {
       classes.add.push(wrapNavBeforeClass);
@@ -295,7 +297,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
 
     // Анимация перехода, и соответствующие классы:
-    classes[o_fade ? 'add' : 'remove'].push(wrapFadeClass);
+    classes[addOrRemove(o_fade)].push(wrapFadeClass);
+    classes[addOrRemove(!o_fade)].push(wrapSlideClass);
 
     if (o_arrows) {
       $arrs.show();
@@ -305,8 +308,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
 
     // Переворачиваем фотораму, если нужно
-    classes[o_vertical ? 'add' : 'remove'].push(wrapVerticalClass);
-    classes[o_vertical ? 'remove' : 'add'].push(wrapHorizontalClass);
+    classes[addOrRemove(o_vertical)].push(wrapVerticalClass);
+    classes[addOrRemove(!o_vertical)].push(wrapHorizontalClass);
 
     // Если ЦСС-транзишны поддерживаются и не отменены пользователем
     ////////////console.log('lastOptions.css3', lastOptions.css3);
@@ -1144,7 +1147,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     //}
 
     if (o_nativeFullScreen) {
-      fullScreenApi.requestFullScreen(fotorama);
+      fullScreenApi.request(fotorama);
     }
 
     setTimeout(function () {
@@ -1176,7 +1179,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
 
     if (FULLSCREEN) {
-      fullScreenApi.cancelFullScreen(fotorama);
+      fullScreenApi.cancel(fotorama);
     }
 
     $BODY.removeClass(_fullscreenClass);
@@ -1197,8 +1200,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   this.cancelFullScreen = function () {
-    if (o_nativeFullScreen && fullScreenApi.isFullScreen()) {
-      fullScreenApi.cancelFullScreen(document);
+    if (o_nativeFullScreen && fullScreenApi.is()) {
+      fullScreenApi.cancel(document);
     } else {
       cancelFullScreen();
     }
@@ -1207,8 +1210,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   if (document.addEventListener) {
-    document.addEventListener(fullScreenApi.fullScreenEventName, function () {
-      if (!fullScreenApi.isFullScreen() && !$videoPlaying) {
+    document.addEventListener(fullScreenApi.event, function () {
+      if (!fullScreenApi.is() && !$videoPlaying) {
         cancelFullScreen();
       }
     });
@@ -1413,7 +1416,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
 
     waitFor(function () {
-      return !fullScreenApi.isFullScreen() || _activeIndex !== activeIndex;
+      return !fullScreenApi.is() || _activeIndex !== activeIndex;
     }, function () {
       if (_activeIndex !== activeIndex) return;
       if (!dataFrame.$video) {

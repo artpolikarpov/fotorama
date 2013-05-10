@@ -1,5 +1,5 @@
 // Underscore
-_ = typeof _ === 'undefined' ? {} : _;
+var _ = {};
 
 // List of HTML entities for escaping.
 var escapeEntityMap = {

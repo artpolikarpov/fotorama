@@ -99,13 +99,6 @@ function measureIsValid (value) {
   return !!numberFromMeasure(value) || !!numberFromMeasure(value, '%') ? value : false;
 }
 
-/**
- * returning innerWidth or innerHeight depends on orientation
- * */
-//function innerSideMethod (_side) {
-//  return ('inner' + _side).replace('rw', 'rW').replace('rh', 'rH');
-//}
-
 function capitaliseFirstLetter (string) {
   return string && string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -167,7 +160,6 @@ function afterTransition ($el, fn, time) {
 
   elData.transProp = $el.css('transition-property');
   elData.onEndFn = function () {
-    ////////////console.log('Cработал нативный transitionend', fn);
     done = true;
     fn.call(this);
   };
@@ -182,7 +174,6 @@ function afterTransition ($el, fn, time) {
     // Если не сработал нативный transitionend (а такое бывает),
     // через таймаут вызываем onEndFn насильно:
     if (done) return;
-    ////////////console.log('Не сработал нативный transitionend!', fn);
     $el.data().onEndFn = noop;
     fn.call($el.get(0));
   }, time * 1.1);
@@ -264,7 +255,6 @@ function getVideoThumbs (dataFrame, data, i, api) {
       url: getProtocol() + 'vimeo.com/api/v2/video/' + video.id + '.json',
       dataType: 'jsonp',
       success: function(json){
-        ////////////console.log('JSONP success');
         dataFrame.thumbsReady = true;
         updateData(data, {img: json[0].thumbnail_large, thumb: json[0].thumbnail_small}, i, api);
       }
@@ -273,27 +263,19 @@ function getVideoThumbs (dataFrame, data, i, api) {
     dataFrame.thumbsReady = true;
   }
 
-  //if (img || thumb) {
-    return {
-      img: img,
-      thumb: thumb
-    }
-  //}
+  return {
+    img: img,
+    thumb: thumb
+  }
 }
 
 function updateData (data, _dataFrame, i, api) {
-  ////////////console.log('updateData', _dataFrame, i);
   for (var _i = 0, _l = data.length; _i < _l; _i++) {
     var dataFrame = data[_i];
 
-    ////////////console.log(dataFrame.i, i);
-
     if (dataFrame.i === i && dataFrame.thumbsReady) {
-      ////////////console.log('splice', dataFrame._imgSrc, dataFrame._thumbSrc);
 
       api.splice(_i, 1, {
-        //_imgSrc: dataFrame._imgSrc,
-        //_thumbSrc: dataFrame._thumbSrc,
         i: i,
         video: dataFrame.video,
         videoReady: true,
@@ -327,7 +309,6 @@ function getDataFromHtml ($el) {
     if (video) {
       _imgHref = false;
     } else if (checkVideo) {
-      //////////console.log('find video from _imgSrc', _imgSrc);
       video = findVideoId(_imgSrc, _video === true);
       if (video) {
         _imgSrc = false;
@@ -336,18 +317,7 @@ function getDataFromHtml ($el) {
       }
     }
 
-    //////////console.log('video2', video);
-
-//    if (video && (!imgSrc || !thumbSrc)) {
-//      var thumbs = getVideoThumbs(video, data, i, api);
-//      imgHref = imgSrc = imgSrc || thumbs.img;
-//      thumbSrc = thumbSrc || thumbs.thumb;
-//    }
-
     return {
-      //_imgHref: _imgHref,
-      //_imgSrc: _imgSrc,
-      //_thumbSrc: _thumbSrc,
       video: video,
       img: _imgHref || _imgSrc || _thumbSrc,
       thumb: _thumbSrc || _imgSrc || _imgHref,
@@ -370,8 +340,6 @@ function getDataFromHtml ($el) {
       return;
     }
 
-    //////console.log('dataFrame', dataFrame);
-    //dataFrame.i = i;
     data.push(dataFrame);
   });
 
@@ -383,8 +351,6 @@ function getDataFromHtml ($el) {
  * Работает в 3-4 раза быстрее джейкверевского ':hidden'
  * */
 function isHidden (el) {
-  //////////////console.log('isHidden', el, el.offsetWidth, el.offsetHeight);
-
   return el.offsetWidth === 0 && el.offsetHeight === 0;
 }
 
@@ -392,7 +358,6 @@ function isHidden (el) {
  * Фунция-посредник, чтобы выполнить другую функцию только, если определённый элемент видим (имеет размеры) на странице
  * */
 function waitFor (test, fn, timeout) {
-  //////////////console.log('waitFor', test());
   if (test()) {
     fn();
   } else {
@@ -409,8 +374,6 @@ function fit ($el, measuresToFit, method) {
   var elData = $el.data(),
       measures = elData.measures;
 
-  //console.log('FIT1', $el, measures);
-
   if (measures && (!elData.last ||
       elData.last.mw !== measures.width ||
       elData.last.mh !== measures.height ||
@@ -418,8 +381,6 @@ function fit ($el, measuresToFit, method) {
       elData.last.mfw !== measuresToFit.width__ ||
       elData.last.mfh !== measuresToFit.height__ ||
       elData.last.mm !== method)) {
-
-    //console.log('FIT2', $el, measures, measuresToFit, method);
 
     var width = measures.width,
         height = measures.height,
@@ -450,17 +411,19 @@ function fit ($el, measuresToFit, method) {
       mr: measures.ratio,
       mfw: measuresToFit.width_,
       mfh: measuresToFit.height_,
-      mm: method///,
-      ///$w: elData.$wrap
+      mm: method
     }
   }
+}
 
-  ///if (elData.$wrap) {
-    ////console.log('FIT $wrap');
-    ///fit(elData.$wrap, {width__: measuresToFit.width_, height__: measuresToFit.height_});
-  ///}
-
-  ///if (measures) return true;
+function setStyle ($el, style) {
+  var el = $el[0];
+  el.type = 'text/css';
+  if (el.styleSheet){
+    el.styleSheet.cssText = style;
+  } else {
+    el.appendChild(document.createTextNode(style));
+  }
 }
 
 function findShadowEdge (pos, minPos, maxPos) {
@@ -513,21 +476,16 @@ function smartClick ($el, fn, _options) {
 
     if (thisData.clickOn) return;
 
-    ////////////console.log('click on', $this);
-
     thisData.clickOn = true;
 
     $.extend(touch($this, {
       onStart: function (e) {
-        //////////console.log('smartClick onStart');
         startEvent = e;
         (_options.onStart || noop).call(this, e);
       },
       onMove: _options.onMove || noop,
       onEnd: function (result) {
         if (result.moved || _options.tail.checked) return;
-
-        //////////console.log('smartClick onEnd');
         fn.call(this, startEvent);
       }
     }), _options.tail);

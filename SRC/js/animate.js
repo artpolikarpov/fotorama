@@ -1,5 +1,3 @@
-var BEZIER = bez([.1, 0, .25, 1]);
-
 /**
  * Универсальная функция для анимирования блока (через ЦСС3 или Джейквери),
  * по одному из свойств, top или left
@@ -24,7 +22,6 @@ function slide ($el, options, cssTransitions) {
     if (options.time > 10) {
       afterTransition($el, onEndFn, options.time);
     } else {
-      //console.log('first onEnd');
       onEndFn();
     }
   } else {
@@ -61,8 +58,6 @@ function fade ($el1, $el2, options, cssTransitions) {
       .addClass(fadeFrontClass)
       .removeClass(fadeRearClass);
 
-  //console.log('$el1 $el2', $el1, $el2);
-
   if (CSSTR && cssTransitions) {
     if (_$el2) {
       $el1.css(crossfadeFLAG ? opacity0 : opacity1);
@@ -96,15 +91,13 @@ function fade ($el1, $el2, options, cssTransitions) {
           .fadeTo(0, crossfadeFLAG ? 0 : 1);
     }
 
-    //setTimeout(function () {
-      $el1
-          .stop()
-          .fadeTo(options.time, 1, onEndFn);
-      $el2
-          .stop()
-          .fadeTo(options.time, 0, onEndFn);
+    $el1
+        .stop()
+        .fadeTo(options.time, 1, onEndFn);
+    $el2
+        .stop()
+        .fadeTo(options.time, 0, onEndFn);
 
-      if (!_$el1 && !_$el2) onEndFn();
-    //}, 4);
+    if (!_$el1 && !_$el2) onEndFn();
   }
 }

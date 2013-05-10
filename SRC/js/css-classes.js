@@ -9,6 +9,7 @@ var _fotoramaClass = 'fotorama',
     wrapCssTransitionsClass = wrapClass + '--css-transitions',
     wrapVideoClass = wrapClass + '--video',
     wrapFadeClass = wrapClass + '--fade',
+    wrapSlideClass = wrapClass + '--slide',
     wrapTouchClass = wrapClass + '--touch',
 
     stageClass = _fotoramaClass + '__stage',

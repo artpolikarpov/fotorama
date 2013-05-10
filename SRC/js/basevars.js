@@ -3,16 +3,10 @@ var $WINDOW = $(window),
     $HTML,
     $BODY,
 
-    //CANVAS = Modernizr.canvas,
     TOUCH = Modernizr.touch,
-    //SVG = Modernizr.inlinesvg,
     QUIRKS_FORCE = document.location.hash.replace('#', '') === 'quirks',
-    //MOBILE = navigator.userAgent.toLowerCase().match(/(phone|ipod|ipad|windows ce|netfront|playstation|midp|up\.browser|android|mobile|mini|tablet|symbian|nintendo|wii)/),
-    //IE = $.browser.msie,
-    //IE6 = IE && $.browser.version === '6.0',
     CSSTR = Modernizr.csstransforms3d && Modernizr.csstransitions && !QUIRKS_FORCE,
-    FULLSCREEN = fullScreenApi.supportsFullScreen,
-    //QUIRKS = document.compatMode !== 'CSS1Compat' && IE,
+    FULLSCREEN = fullScreenApi.ok,
 
     TOUCH_TIMEOUT = 300,
     TRANSITION_DURATION = 333,
@@ -24,6 +18,8 @@ var $WINDOW = $(window),
     // Размеры на тот случай, если пользователь не укажет и брать не откуда
     WIDTH = 500,
     HEIGHT = 333,
+
+    BEZIER = bez([.1, 0, .25, 1]),
 
     X = '{{X}}',
     VIDEO_IFRAME = '<div class="fotorama__video"><iframe src="' + X +'" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></div>',
