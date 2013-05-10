@@ -114,22 +114,6 @@ module.exports = function (grunt) {
         files: {
           'PRODUCT/fotorama.min.js': 'PRODUCT/fotorama.js'
         }
-      },
-      /*test: {
-        files: {
-          '_test/uglify.min.js': '_test/uglify.js'
-        }
-      }*/
-    },
-    'closure-compiler': {
-      product: {
-        closurePath: '_compiler',
-        js: 'PRODUCT/fotorama.js',
-        jsOutputFile: 'PRODUCT/fotorama.min.js',
-        maxBuffer: 500,
-        options: {
-          compilation_level: 'SIMPLE_OPTIMIZATIONS'
-        }
       }
     }
     //zip: {
@@ -150,7 +134,6 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-jst');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-closure-compiler');
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-string-replace');
 

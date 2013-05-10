@@ -418,11 +418,10 @@ function fit ($el, measuresToFit, method) {
 
 function setStyle ($el, style) {
   var el = $el[0];
-  el.type = 'text/css';
   if (el.styleSheet){
     el.styleSheet.cssText = style;
   } else {
-    el.appendChild(document.createTextNode(style));
+    el.html(style);
   }
 }
 
