@@ -12,9 +12,7 @@
     "docpad-plugin-eco": "~2.0.2",
     "docpad-plugin-menu": "~1.0.2",
     "docpad-plugin-partials": "~2.6.2",
-    "docpad-plugin-frontend": "~1.1.0"
-  },
-  "devDependencies": {
+    "docpad-plugin-frontend": "~1.1.0",
     "grunt": "~0.4.1",
     "grunt-frontend": "~1.1.2"
   },
