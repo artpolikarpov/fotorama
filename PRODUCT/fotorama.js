@@ -836,8 +836,6 @@ function getDataFromHtml ($el) {
         _video = imgData.video,
         video = checkVideo ? findVideoId(_imgHref, _video === true) : false;
 
-    ////////////console.log('video1', video);
-
     if (video) {
       _imgHref = false;
     } else if (checkVideo) {
@@ -1123,7 +1121,7 @@ function fade ($el1, $el2, options, cssTransitions) {
       $el2
           .css(duration)
           .css(opacity0);
-    }, 5);
+    }, 4);
 
     if (options.time > 10 && (_$el1 || _$el2)) {
       if (_$el1) {
@@ -2242,6 +2240,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       if (type === 'navThumb') $frame = frameData.$wrap;
 
       function error () {
+        //console.log('error', index, src);
         // Ошибка
         $img.remove();
 
@@ -2280,6 +2279,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
 
       function loaded() {
+        //console.log('loaded', index, src);
+
         // Удачная загрузка:
         // Кешируем оригинальные размеры картинки
         var width = $img.width(),
@@ -2946,7 +2947,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     var width = measures.width,
         height = measures.height,
         ratio = measures.ratio,
-        windowHeight = $WINDOW.height() - (o_nav && !o_vertical ? $nav.height() : 0),
+        windowHeight = window.innerHeight - (o_nav && !o_vertical ? $nav.height() : 0),
         navWidth = $nav.width();
 
     if (!measureIsValid(width)) return this;
@@ -3122,7 +3123,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       setShadow($stage, result.edge);
     },
     onEnd: function(result) {
-
       setShadow($stage);
 
       if (!result.moved) {

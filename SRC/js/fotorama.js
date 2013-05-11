@@ -1136,7 +1136,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     var width = measures.width,
         height = measures.height,
         ratio = measures.ratio,
-        windowHeight = $WINDOW.height() - (o_nav && !o_vertical ? $nav.height() : 0),
+        windowHeight = window.innerHeight - (o_nav && !o_vertical ? $nav.height() : 0),
         navWidth = $nav.width();
 
     if (!measureIsValid(width)) return this;
