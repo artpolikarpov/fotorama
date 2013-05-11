@@ -1,0 +1,6 @@
+.travis*
+Makefile
+
+src/
+out/test/
+test/
