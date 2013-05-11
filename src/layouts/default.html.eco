@@ -1,0 +1,19 @@
+---
+css: "/c/style.css"
+---
+
+<html>
+<head>
+  <title><%= @document.title %></title>
+
+  <% for url in @assets('css'): %><link rel="stylesheet" href="<%= url %>" /><% end %>
+</head>
+<body>
+
+<%- @partial('menu.html.eco', {menuItems: @generateMenu(@document.url)}) %>
+
+<h1><%= @document.title %></h1>
+
+<%- @content %>
+</body>
+</html>

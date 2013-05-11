@@ -1,13 +1,22 @@
 {
-	"name": "fotorama.io",
-	"version": "0.1.0",
-	"description": "Fotorama",
-	"engines": {
-		"node": "0.10",
-		"npm": "1.2"
-	},
-	"dependencies": {
-		"docpad": "6.x"
-	},
-	"main": "node_modules/docpad/bin/docpad-server"
+  "name": "fotorama.io",
+  "version": "1.0.0",
+  "description": "Fotorama",
+  "private": true,
+  "engines": {
+    "node": "0.10",
+    "npm": "1.2"
+  },
+  "dependencies": {
+    "docpad": "6.x",
+    "docpad-plugin-eco": "~2.0.2",
+    "docpad-plugin-menu": "~1.0.2",
+    "docpad-plugin-partials": "~2.6.2",
+    "docpad-plugin-frontend": "~1.1.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-frontend": "~1.1.2"
+  },
+  "main": "node_modules/docpad/bin/docpad-server"
 }
