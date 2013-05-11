@@ -1,0 +1,69 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '--save',
+1 verbose cli   'docpad-plugin-heroku' ]
+2 info using npm@1.2.18
+3 info using node@v0.10.5
+4 verbose read json /Users/artpolikarpov/Projects/My/fotorama.io/package.json
+5 warn package.json fotorama.io@1.0.0 No README.md file found!
+6 verbose read json /Users/artpolikarpov/Projects/My/fotorama.io/node_modules/docpad/package.json
+7 verbose read json /Users/artpolikarpov/Projects/My/fotorama.io/node_modules/docpad-plugin-eco/package.json
+8 verbose read json /Users/artpolikarpov/Projects/My/fotorama.io/node_modules/docpad-plugin-frontend/package.json
+9 verbose read json /Users/artpolikarpov/Projects/My/fotorama.io/node_modules/docpad-plugin-menu/package.json
+10 verbose read json /Users/artpolikarpov/Projects/My/fotorama.io/node_modules/docpad-plugin-partials/package.json
+11 verbose read json /Users/artpolikarpov/Projects/My/fotorama.io/node_modules/grunt/package.json
+12 verbose read json /Users/artpolikarpov/Projects/My/fotorama.io/node_modules/grunt-cli/package.json
+13 verbose read json /Users/artpolikarpov/Projects/My/fotorama.io/node_modules/grunt-frontend/package.json
+14 verbose from cache /Users/artpolikarpov/Projects/My/fotorama.io/package.json
+15 verbose readDependencies using package.json deps
+16 verbose cache add [ 'docpad-plugin-heroku', null ]
+17 verbose cache add name=undefined spec="docpad-plugin-heroku" args=["docpad-plugin-heroku",null]
+18 verbose parsed url { protocol: null,
+18 verbose parsed url   slashes: null,
+18 verbose parsed url   auth: null,
+18 verbose parsed url   host: null,
+18 verbose parsed url   port: null,
+18 verbose parsed url   hostname: null,
+18 verbose parsed url   hash: null,
+18 verbose parsed url   search: null,
+18 verbose parsed url   query: null,
+18 verbose parsed url   pathname: 'docpad-plugin-heroku',
+18 verbose parsed url   path: 'docpad-plugin-heroku',
+18 verbose parsed url   href: 'docpad-plugin-heroku' }
+19 silly lockFile 4eca5f20-docpad-plugin-heroku docpad-plugin-heroku
+20 verbose lock docpad-plugin-heroku /Users/artpolikarpov/.npm/4eca5f20-docpad-plugin-heroku.lock
+21 silly lockFile 4eca5f20-docpad-plugin-heroku docpad-plugin-heroku
+22 silly lockFile 4eca5f20-docpad-plugin-heroku docpad-plugin-heroku
+23 verbose addNamed [ 'docpad-plugin-heroku', '' ]
+24 verbose addNamed [ null, '' ]
+25 silly lockFile c232fc35-docpad-plugin-heroku docpad-plugin-heroku@
+26 verbose lock docpad-plugin-heroku@ /Users/artpolikarpov/.npm/c232fc35-docpad-plugin-heroku.lock
+27 silly addNameRange { name: 'docpad-plugin-heroku', range: '', hasData: false }
+28 verbose url raw docpad-plugin-heroku
+29 verbose url resolving [ 'https://registry.npmjs.org/', './docpad-plugin-heroku' ]
+30 verbose url resolved https://registry.npmjs.org/docpad-plugin-heroku
+31 info trying registry request attempt 1 at 23:40:19
+32 http GET https://registry.npmjs.org/docpad-plugin-heroku
+33 http 404 https://registry.npmjs.org/docpad-plugin-heroku
+34 silly registry.get cb [ 404,
+34 silly registry.get   { server: 'CouchDB/1.3.0 (Erlang OTP/R15B03)',
+34 silly registry.get     date: 'Sat, 11 May 2013 19:40:20 GMT',
+34 silly registry.get     'content-type': 'application/json',
+34 silly registry.get     'content-length': '52',
+34 silly registry.get     'cache-control': 'must-revalidate' } ]
+35 silly lockFile c232fc35-docpad-plugin-heroku docpad-plugin-heroku@
+36 silly lockFile c232fc35-docpad-plugin-heroku docpad-plugin-heroku@
+37 error 404 'docpad-plugin-heroku' is not in the npm registry.
+37 error 404 You should bug the author to publish it
+37 error 404
+37 error 404 Note that you can also install from a
+37 error 404 tarball, folder, or http url, or git url.
+38 error System Darwin 12.3.0
+39 error command "node" "/usr/local/bin/npm" "install" "--save" "docpad-plugin-heroku"
+40 error cwd /Users/artpolikarpov/Projects/My/fotorama.io
+41 error node -v v0.10.5
+42 error npm -v 1.2.18
+43 error code E404
+44 verbose exit [ 1, true ]
