@@ -83,7 +83,7 @@ function moveOnTouch ($el, options) {
       $el.css(getTranslate(moveElPos, tail._pos, tail.css3));
       if (!movedFLAG) {
         movedFLAG = true;
-        //$BODY.addClass('grabbing'); TODO: Unslow
+        $BODY.addClass('grabbing');
       }
     }
 
@@ -93,7 +93,7 @@ function moveOnTouch ($el, options) {
   function onEnd (result) {
     if (controlFLAG) return;
 
-    //$BODY.removeClass('grabbing'); TODO: Unslow
+    $BODY.removeClass('grabbing');
 
     endTime = new Date().getTime();
 

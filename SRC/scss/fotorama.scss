@@ -541,7 +541,7 @@ $time: 333ms;
   //.fotorama__stage__frame--video {
   //  @include transition(background-color $time);
   //}
-  .fotorama__stage__frame, .fotorama__nav__frame {
+  .fotorama__stage__frame, .fotorama__nav__frame, .fotorama__img {
     @extend %initial-translate;
     //@extend %backface-visibility;
   }

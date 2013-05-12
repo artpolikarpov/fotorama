@@ -1159,7 +1159,6 @@ var lastEvent,
     preventEventTimeout;
 
 function extendEvent (e, touchFLAG) {
-  //console.log('extendEvent ' + e.type);
   e._x = touchFLAG ? e.touches[0].pageX : e.pageX;
   e._y = touchFLAG ? e.touches[0].pageY : e.pageY;
 }
@@ -1274,7 +1273,7 @@ function touch ($el, options) {
   function onEnd (e) {
     eventFlowFLAG = tail.control = false;
     if (!touchEnabledFLAG) return;
-    if (e && e.preventDefault) e.preventDefault();
+    e && e.preventDefault && e.preventDefault();
     preventEvent = true;
     clearTimeout(preventEventTimeout);
     preventEventTimeout = setTimeout(function () {
@@ -1393,7 +1392,7 @@ function moveOnTouch ($el, options) {
       $el.css(getTranslate(moveElPos, tail._pos, tail.css3));
       if (!movedFLAG) {
         movedFLAG = true;
-        //$BODY.addClass('grabbing');
+        $BODY.addClass('grabbing');
       }
     }
 
@@ -1403,7 +1402,7 @@ function moveOnTouch ($el, options) {
   function onEnd (result) {
     if (controlFLAG) return;
 
-    //$BODY.removeClass('grabbing');
+    $BODY.removeClass('grabbing');
 
     endTime = new Date().getTime();
 
@@ -2500,8 +2499,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * Вставляем, удаляем, сортируем точки и превьюшки:
    * */
   function navAppend ($navFrame, $navShaft, mainFLAG) {
-    //console.log('navAppend');
     if (navAppend.done) return;
+
+    console.log('navAppend');
 
     $navFrame = $navFrame
         .filter(function () {
@@ -2529,6 +2529,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (mainFLAG) {
       setNavShaftMinMaxPos();
     }
+
+    navAppend.done = true;
   }
 
   /**
@@ -2581,6 +2583,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * Обновляем навигацию
    * */
   function navUpdate () {
+    console.log('navUpdate', o_nav);
     if (o_nav === 'thumbs') {
       $navFrame = $navThumbFrame;
       navFrameKey = navThumbFrameKey;
@@ -2593,7 +2596,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     navAppend($navFrame, $navShaft, true);
 
-    navAppend.done = true;
+
 
     $navFrame.removeClass(activeClass);
     that.activeFrame[navFrameKey].addClass(activeClass);
@@ -2806,18 +2809,20 @@ jQuery.Fotorama = function ($fotorama, opts) {
     arrsUpdate();
     navUpdate();
 
-    var guessIndex = limitIndex(activeIndex + minMaxLimit(dirtyIndex - lastActiveIndex, -1, 1)),
-        cooUndefinedFLAG = typeof options.coo === 'undefined';
+    if (o_nav) {
+      var guessIndex = limitIndex(activeIndex + minMaxLimit(dirtyIndex - lastActiveIndex, -1, 1)),
+          cooUndefinedFLAG = typeof options.coo === 'undefined';
 
-    if (o_nav && (cooUndefinedFLAG || guessIndex !== activeIndex)) {
-      slideNavShaft({time: time, coo: !cooUndefinedFLAG ? options.coo : measures[_side_] / 2, guessIndex: !cooUndefinedFLAG ? guessIndex : activeIndex});
+      if (cooUndefinedFLAG || guessIndex !== activeIndex) {
+        slideNavShaft({time: time, coo: !cooUndefinedFLAG ? options.coo : measures[_side_] / 2, guessIndex: !cooUndefinedFLAG ? guessIndex : activeIndex});
+      }
     }
     if (o_nav === 'thumbs') slideThumbBorder(time);
 
     lastActiveIndex = activeIndex;
 
     return this;
-  }
+  };
 
   this.requestFullScreen = function () {
     if (!o_allowFullScreen || that.fullScreen) return this;
@@ -2853,7 +2858,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }, 5);
 
     return this;
-  }
+  };
 
   function cancelFullScreen () {
     if (!that.fullScreen) return;
@@ -3121,10 +3126,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
   stageShaftTouchTail = moveOnTouch($stageShaft, {
     onStart: onTouch,
     onMove: function (e, result) {
-      //setShadow($stage, result.edge);
+      setShadow($stage, result.edge);
     },
     onEnd: function(result) {
-      //setShadow($stage);
+      setShadow($stage);
       if (!result.moved) {
         onStageTap(result.startEvent);
         return;

@@ -5,7 +5,6 @@ var lastEvent,
     preventEventTimeout;
 
 function extendEvent (e, touchFLAG) {
-  //console.log('extendEvent ' + e.type);
   e._x = touchFLAG ? e.touches[0].pageX : e.pageX;
   e._y = touchFLAG ? e.touches[0].pageY : e.pageY;
 }
@@ -120,7 +119,7 @@ function touch ($el, options) {
   function onEnd (e) {
     eventFlowFLAG = tail.control = false;
     if (!touchEnabledFLAG) return;
-    if (e && e.preventDefault) e.preventDefault();
+    e && e.preventDefault && e.preventDefault();
     preventEvent = true;
     clearTimeout(preventEventTimeout);
     preventEventTimeout = setTimeout(function () {

@@ -29,7 +29,7 @@
   height: 100%;
 }
 
-.fotorama__wrap--css-transitions .fotorama__stage__shaft, .fotorama__wrap--css-transitions .fotorama__nav__shaft, .fotorama__wrap--css-transitions .fotorama__thumb-border, .fotorama__wrap--css-transitions .fotorama__stage__frame, .fotorama__wrap--css-transitions .fotorama__nav__frame {
+.fotorama__wrap--css-transitions .fotorama__stage__shaft, .fotorama__wrap--css-transitions .fotorama__nav__shaft, .fotorama__wrap--css-transitions .fotorama__thumb-border, .fotorama__wrap--css-transitions .fotorama__stage__frame, .fotorama__wrap--css-transitions .fotorama__nav__frame, .fotorama__wrap--css-transitions .fotorama__img {
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   -ms-transform: translate3d(0, 0, 0);

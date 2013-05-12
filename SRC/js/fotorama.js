@@ -688,8 +688,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * Вставляем, удаляем, сортируем точки и превьюшки:
    * */
   function navAppend ($navFrame, $navShaft, mainFLAG) {
-    //console.log('navAppend');
     if (navAppend.done) return;
+
+    console.log('navAppend');
 
     $navFrame = $navFrame
         .filter(function () {
@@ -717,6 +718,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (mainFLAG) {
       setNavShaftMinMaxPos();
     }
+
+    navAppend.done = true;
   }
 
   /**
@@ -769,6 +772,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * Обновляем навигацию
    * */
   function navUpdate () {
+    console.log('navUpdate', o_nav);
     if (o_nav === 'thumbs') {
       $navFrame = $navThumbFrame;
       navFrameKey = navThumbFrameKey;
@@ -781,7 +785,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     navAppend($navFrame, $navShaft, true);
 
-    navAppend.done = true;
+
 
     $navFrame.removeClass(activeClass);
     that.activeFrame[navFrameKey].addClass(activeClass);
@@ -994,18 +998,20 @@ jQuery.Fotorama = function ($fotorama, opts) {
     arrsUpdate();
     navUpdate();
 
-    var guessIndex = limitIndex(activeIndex + minMaxLimit(dirtyIndex - lastActiveIndex, -1, 1)),
-        cooUndefinedFLAG = typeof options.coo === 'undefined';
+    if (o_nav) {
+      var guessIndex = limitIndex(activeIndex + minMaxLimit(dirtyIndex - lastActiveIndex, -1, 1)),
+          cooUndefinedFLAG = typeof options.coo === 'undefined';
 
-    if (o_nav && (cooUndefinedFLAG || guessIndex !== activeIndex)) {
-      slideNavShaft({time: time, coo: !cooUndefinedFLAG ? options.coo : measures[_side_] / 2, guessIndex: !cooUndefinedFLAG ? guessIndex : activeIndex});
+      if (cooUndefinedFLAG || guessIndex !== activeIndex) {
+        slideNavShaft({time: time, coo: !cooUndefinedFLAG ? options.coo : measures[_side_] / 2, guessIndex: !cooUndefinedFLAG ? guessIndex : activeIndex});
+      }
     }
     if (o_nav === 'thumbs') slideThumbBorder(time);
 
     lastActiveIndex = activeIndex;
 
     return this;
-  }
+  };
 
   this.requestFullScreen = function () {
     if (!o_allowFullScreen || that.fullScreen) return this;
@@ -1041,7 +1047,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }, 5);
 
     return this;
-  }
+  };
 
   function cancelFullScreen () {
     if (!that.fullScreen) return;
@@ -1309,10 +1315,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
   stageShaftTouchTail = moveOnTouch($stageShaft, {
     onStart: onTouch,
     onMove: function (e, result) {
-      //setShadow($stage, result.edge); TODO: Unslow
+      setShadow($stage, result.edge);
     },
     onEnd: function(result) {
-      //setShadow($stage); TODO: Unslow
+      setShadow($stage);
       if (!result.moved) {
         onStageTap(result.startEvent);
         return;
