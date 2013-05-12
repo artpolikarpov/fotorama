@@ -3,7 +3,7 @@ module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     meta: {
-      banner: '/*!\n * <%= pkg.name %> <%= pkg.version %> | <%= pkg.license %>\n */',
+      banner: '/*!\n * <%= pkg.name %> <%= pkg.version %> | <%= pkg.license %>\n */\n',
       sass: ['SRC/scss/*'],
       js: [
         'SRC/js/intro.js',
@@ -87,7 +87,7 @@ module.exports = function (grunt) {
           'PRODUCT/fotorama.min.css': 'PRODUCT/fotorama.css'
         },
         options: {
-          banner: '<%= meta.banner %>'
+          banner: '<%= meta.banner.replace(/\\n$/, "") %>'
         }
       }
     },

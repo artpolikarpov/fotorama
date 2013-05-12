@@ -1,6 +1,7 @@
 /*!
  * Fotorama 4.0.0 | MIT License
- */(function (window, document, $, undefined) {
+ */
+(function (window, document, $, undefined) {
 
 // Underscore
 
@@ -1392,7 +1393,7 @@ function moveOnTouch ($el, options) {
       $el.css(getTranslate(moveElPos, tail._pos, tail.css3));
       if (!movedFLAG) {
         movedFLAG = true;
-        $BODY.addClass('grabbing');
+        //$BODY.addClass('grabbing');
       }
     }
 
@@ -1402,7 +1403,7 @@ function moveOnTouch ($el, options) {
   function onEnd (result) {
     if (controlFLAG) return;
 
-    $BODY.removeClass('grabbing');
+    //$BODY.removeClass('grabbing');
 
     endTime = new Date().getTime();
 
