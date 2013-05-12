@@ -1309,11 +1309,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
   stageShaftTouchTail = moveOnTouch($stageShaft, {
     onStart: onTouch,
     onMove: function (e, result) {
-      setShadow($stage, result.edge);
+      //setShadow($stage, result.edge); TODO: Unslow
     },
     onEnd: function(result) {
-      setShadow($stage);
-
+      //setShadow($stage); TODO: Unslow
       if (!result.moved) {
         onStageTap(result.startEvent);
         return;
