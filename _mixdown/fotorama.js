@@ -1956,7 +1956,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function setAutoplayInterval (interval) {
     if (interval === true) interval = '';
-    opts.autoplay = Math.max(Number(interval) || AUTOPLAY_INTERVAL, opts.transitionDuration * 3);
+    opts.autoplay = Math.max(Number(interval) || AUTOPLAY_INTERVAL, TRANSITION_DURATION * 3);
   }
 
   function addOrRemove (FLAG) {
@@ -2628,7 +2628,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   this.show = function (options) {
     if (data) {
 			var index,
-					time = opts.transitionDuration,
+					time = TRANSITION_DURATION,
 					overPos;
 
 			if (typeof options !== 'object') {
@@ -3196,16 +3196,15 @@ $.fn.fotorama = function (method) {
                   {},
 									{
 										// Настройка по умолчанию.
-										loop:false,
-										startIndex:0, // 'random' || id
-										transition:'slide', // 'crossfade' || 'dissolve'
-										keyboard:false,
-										fit:'contain', // true || 'cover' || false
-										nav:'dots', // 'thumbs' || false
-										navPosition:'bottom', // 'top'
-										hash:false,
-										allowFullScreen:false, // true || 'native'
-										transitionDuration:TRANSITION_DURATION,
+										loop: false,
+										startIndex: 0, // 'random' || id
+										transition: 'slide', // 'crossfade' || 'dissolve'
+										keyboard: false,
+										fit: 'contain', // true || 'cover' || false
+										nav: 'dots', // 'thumbs' || false
+										navPosition: 'bottom', // 'top'
+										hash: false,
+										allowFullScreen: false, // true || 'native'
 										captions:true,
 										autoplay:false,
 										stopAutoplayOnTouch:true,
