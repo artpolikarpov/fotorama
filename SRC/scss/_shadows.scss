@@ -16,7 +16,7 @@
 	@extend %no-select;
 	cursor: default;
 
-	.fotorama__wrap--css-transitions & {
+	.fotorama__wrap--css3 & {
 		@include transition(all $time);
 	}
 }

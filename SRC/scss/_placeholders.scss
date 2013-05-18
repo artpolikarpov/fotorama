@@ -69,6 +69,10 @@
   @include box-sizing(content-box);
 }
 
+%border-box {
+	@include box-sizing(border-box);
+}
+
 %hidden {
   position: absolute;
   left: -99999px;
@@ -94,6 +98,14 @@
 
 %transitionDurationZero {
   @include transition-duration(0);
+}
+
+%hover-icon {
+	&:hover {
+		//opacity: .75;
+		//@extend %transitionDurationZero;
+		//@include scale(1.1);
+	}
 }
 
 %sprite {

@@ -427,9 +427,7 @@ var _fotoramaClass = 'fotorama',
     
     wrapClass = _fotoramaClass + '__wrap',
     wrapNotReadyClass = wrapClass + '--not-ready',
-    wrapNavBeforeClass = wrapClass + '--nav-top',
-    wrapHorizontalClass = wrapClass + '--horizontal',
-    wrapCssTransitionsClass = wrapClass + '--css-transitions',
+    wrapCss3Class = wrapClass + '--css3',
     wrapVideoClass = wrapClass + '--video',
     wrapFadeClass = wrapClass + '--fade',
     wrapSlideClass = wrapClass + '--slide',
@@ -496,8 +494,7 @@ var _fotoramaClass = 'fotorama',
     videoPlayClass = videoClass + '-play',
     videoCloseClass = videoClass + '-close',
 
-    captionClass = _fotoramaClass + '__caption',
-    captionInnerClass = captionClass + '__inner';
+    captionClass = _fotoramaClass + '__caption';
 
 var $WINDOW = $(window),
     $DOCUMENT = $(document),
@@ -506,7 +503,7 @@ var $WINDOW = $(window),
 
     TOUCH = Modernizr.touch,
     QUIRKS_FORCE = document.location.hash.replace('#', '') === 'quirks',
-    CSSTR = Modernizr.csstransforms3d && Modernizr.csstransitions && !QUIRKS_FORCE,
+    CSS3 = Modernizr.csstransforms3d && Modernizr.csstransitions && !QUIRKS_FORCE,
     FULLSCREEN = fullScreenApi.ok,
 
     TOUCH_TIMEOUT = 300,
@@ -564,7 +561,7 @@ function readTransform (css, _pos) {
  * Функция для чтения актуальной позиции элемента
  * */
 function readPosition ($el, _pos) {
-  if (CSSTR) {
+  if (CSS3) {
     return Number(readTransform($el.css('transform'), _pos));
   } else {
     return Number($el.css(_pos).replace('px', ''));
@@ -577,7 +574,7 @@ function readPosition ($el, _pos) {
  * */
 function getTranslate (pos, _pos) {
   var obj = {};
-  if (CSSTR) {
+  if (CSS3) {
     obj.transform = _pos === 'left' ? 'translate3d(' + pos + 'px,0,0)' : 'translate3d(0,' + pos + 'px,0)';
   } else {
     obj[_pos] = pos;
@@ -704,7 +701,7 @@ function afterTransition ($el, fn, time) {
  * возвращает актуальную позицию
  * */
 function stop ($el, _pos) {
-  if (CSSTR) {
+  if (CSS3) {
     $el.css(getDuration(0));
     afterTransition($el, noop);
   } else {
@@ -734,7 +731,7 @@ function parseHref (href) {
 }
 
 function findVideoId (href, forceVideo) {
-  if (typeof href === 'undefined') return;
+  if (typeof href !== 'string') return href;
   href = parseHref(href);
   var id,
       type;
@@ -764,7 +761,10 @@ function findVideoId (href, forceVideo) {
   return id ? {id: id, type: type} : false;
 }
 
-function getVideoThumbs (dataFrame, data, i, api) {
+function getVideoThumbs (dataFrame, data, api) {
+	console.log('getVideoThumbs');
+
+
   var img, thumb, video = dataFrame.video;
   if (video.type === 'youtube') {
     thumb = getProtocol() + 'img.youtube.com/vi/' + video.id + '/default.jpg';
@@ -776,7 +776,7 @@ function getVideoThumbs (dataFrame, data, i, api) {
       dataType: 'jsonp',
       success: function(json){
         dataFrame.thumbsReady = true;
-        updateData(data, {img: json[0].thumbnail_large, thumb: json[0].thumbnail_small}, i, api);
+        updateData(data, {img: json[0].thumbnail_large, thumb: json[0].thumbnail_small}, dataFrame.i, api);
       }
     });
   } else {
@@ -1054,7 +1054,7 @@ function slide ($el, options) {
 
   var translate = getTranslate(elPos, options._pos);
 
-  if (CSSTR) {
+  if (CSS3) {
     $el
         .css(getDuration(options.time))
         .css(translate);
@@ -1096,7 +1096,7 @@ function fade ($el1, $el2, options) {
       .addClass(fadeFrontClass)
       .removeClass(fadeRearClass);
 
-  if (CSSTR) {
+  if (CSS3) {
     if (_$el2) {
       $el1.css(crossfadeFLAG ? opacity0 : opacity1);
     }
@@ -1901,18 +1901,21 @@ jQuery.Fotorama = function ($fotorama, opts) {
    */
   function checkForVideo () {
     $.each(data, function (i, dataFrame) {
+			console.log('checkForVideo', i, dataFrame);
+
       if (!dataFrame.i) {
 				dataFrame.i = dataFrameCount++;
-				var video = typeof dataFrame.video === 'string' && findVideoId(dataFrame.video, true);
+				var video = findVideoId(dataFrame.video, true);
 				if (video) {
 					var thumbs = {};
 					dataFrame.video = video;
 					if (!dataFrame.img && !dataFrame.thumb) {
-						thumbs = getVideoThumbs(dataFrame, data, dataFrameCount, that);
+						thumbs = getVideoThumbs(dataFrame, data, that);
+						console.log('thumbs', thumbs)
 					} else {
 						dataFrame.thumbsReady = true;
 					}
-					updateData(data, {img: thumbs.img, thumb: thumbs.thumb}, dataFrameCount, that);
+					updateData(data, {img: thumbs.img, thumb: thumbs.thumb}, dataFrame.i, that);
 				}
 			}
     });
@@ -2007,10 +2010,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
         .removeClass(hiddenClass);
 
     if (o_nav && o_navTop) {
-      //classes.add.push(wrapNavBeforeClass);
       $navWrap.insertBefore($stage);
     } else {
-      //classes.remove.push(wrapNavBeforeClass);
       $navWrap.insertAfter($stage);
     }
 
@@ -2034,9 +2035,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
 
 
-		// TODO: find better place for wrapCssTransitionsClass & wrapTouchClass
-		if (CSSTR) {
-			classes.add.push(wrapCssTransitionsClass);
+		// TODO: find better place for wrapCss3Class & wrapTouchClass
+		if (CSS3) {
+			classes.add.push(wrapCss3Class);
 		}
 
 		if (TOUCH) {
@@ -2320,10 +2321,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         }
 
         if (opts.captions && dataFrame.caption) {
-          var $caption = $('<div class="' + captionClass +'"></div>').appendTo($frame);
-          $('<div class="' + captionInnerClass +'"></div>')
-              .append(dataFrame.caption)
-              .appendTo($caption);
+          $('<div class="' + captionClass +'"></div>').append(dataFrame.caption).appendTo($frame);
         }
 
         if (dataFrame.video) {
@@ -2409,7 +2407,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       if (eq < startIndex
 					|| eq > stopIndex
-					|| callFit(thisData.$img, specialMeasures, 'cover')) return;
+					|| callFit(thisData.$img, specialMeasures, specialFit)) return;
 
 			loadFLAG && loadImg([eq], 'navThumb', specialMeasures, specialFit);
     });
@@ -2999,7 +2997,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if ($videoPlaying) {
       unloadVideo($videoPlaying, true, true);
     } else {
-      that.show({index: e.shiftKey || e[_coo] - $stage.offset()[_pos] < measures[_side_] / 3 ? '<' : '>', slow: e.altKey});
+      $wrap.toggleClass('fotorama__wrap--tap');
+      //that.show({index: e.shiftKey || e[_coo] - $stage.offset()[_pos] < measures[_side_] / 3 ? '<' : '>', slow: e.altKey});
     }
   }
 
@@ -3166,10 +3165,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 		}
   }
 
-  $WINDOW
-			.on('resize', this.resize)
-			.resize();
-
+  $WINDOW.on('resize', this.resize);
   reset();
 };
 

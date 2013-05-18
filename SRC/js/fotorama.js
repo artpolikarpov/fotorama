@@ -108,18 +108,21 @@ jQuery.Fotorama = function ($fotorama, opts) {
    */
   function checkForVideo () {
     $.each(data, function (i, dataFrame) {
+			console.log('checkForVideo', i, dataFrame);
+
       if (!dataFrame.i) {
 				dataFrame.i = dataFrameCount++;
-				var video = typeof dataFrame.video === 'string' && findVideoId(dataFrame.video, true);
+				var video = findVideoId(dataFrame.video, true);
 				if (video) {
 					var thumbs = {};
 					dataFrame.video = video;
 					if (!dataFrame.img && !dataFrame.thumb) {
-						thumbs = getVideoThumbs(dataFrame, data, dataFrameCount, that);
+						thumbs = getVideoThumbs(dataFrame, data, that);
+						console.log('thumbs', thumbs)
 					} else {
 						dataFrame.thumbsReady = true;
 					}
-					updateData(data, {img: thumbs.img, thumb: thumbs.thumb}, dataFrameCount, that);
+					updateData(data, {img: thumbs.img, thumb: thumbs.thumb}, dataFrame.i, that);
 				}
 			}
     });
@@ -214,10 +217,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
         .removeClass(hiddenClass);
 
     if (o_nav && o_navTop) {
-      //classes.add.push(wrapNavBeforeClass);
       $navWrap.insertBefore($stage);
     } else {
-      //classes.remove.push(wrapNavBeforeClass);
       $navWrap.insertAfter($stage);
     }
 
@@ -241,9 +242,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
 
 
-		// TODO: find better place for wrapCssTransitionsClass & wrapTouchClass
-		if (CSSTR) {
-			classes.add.push(wrapCssTransitionsClass);
+		// TODO: find better place for wrapCss3Class & wrapTouchClass
+		if (CSS3) {
+			classes.add.push(wrapCss3Class);
 		}
 
 		if (TOUCH) {
@@ -527,10 +528,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         }
 
         if (opts.captions && dataFrame.caption) {
-          var $caption = $('<div class="' + captionClass +'"></div>').appendTo($frame);
-          $('<div class="' + captionInnerClass +'"></div>')
-              .append(dataFrame.caption)
-              .appendTo($caption);
+          $('<div class="' + captionClass +'"></div>').append(dataFrame.caption).appendTo($frame);
         }
 
         if (dataFrame.video) {
@@ -616,7 +614,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       if (eq < startIndex
 					|| eq > stopIndex
-					|| callFit(thisData.$img, specialMeasures, 'cover')) return;
+					|| callFit(thisData.$img, specialMeasures, specialFit)) return;
 
 			loadFLAG && loadImg([eq], 'navThumb', specialMeasures, specialFit);
     });
@@ -1206,7 +1204,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if ($videoPlaying) {
       unloadVideo($videoPlaying, true, true);
     } else {
-      that.show({index: e.shiftKey || e[_coo] - $stage.offset()[_pos] < measures[_side_] / 3 ? '<' : '>', slow: e.altKey});
+      $wrap.toggleClass('fotorama__wrap--tap');
+      //that.show({index: e.shiftKey || e[_coo] - $stage.offset()[_pos] < measures[_side_] / 3 ? '<' : '>', slow: e.altKey});
     }
   }
 
@@ -1373,10 +1372,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 		}
   }
 
-  $WINDOW
-			.on('resize', this.resize)
-			.resize();
-
+  $WINDOW.on('resize', this.resize);
   reset();
 };
 

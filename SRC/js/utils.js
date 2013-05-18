@@ -23,7 +23,7 @@ function readTransform (css, _pos) {
  * Функция для чтения актуальной позиции элемента
  * */
 function readPosition ($el, _pos) {
-  if (CSSTR) {
+  if (CSS3) {
     return Number(readTransform($el.css('transform'), _pos));
   } else {
     return Number($el.css(_pos).replace('px', ''));
@@ -36,7 +36,7 @@ function readPosition ($el, _pos) {
  * */
 function getTranslate (pos, _pos) {
   var obj = {};
-  if (CSSTR) {
+  if (CSS3) {
     obj.transform = _pos === 'left' ? 'translate3d(' + pos + 'px,0,0)' : 'translate3d(0,' + pos + 'px,0)';
   } else {
     obj[_pos] = pos;
@@ -163,7 +163,7 @@ function afterTransition ($el, fn, time) {
  * возвращает актуальную позицию
  * */
 function stop ($el, _pos) {
-  if (CSSTR) {
+  if (CSS3) {
     $el.css(getDuration(0));
     afterTransition($el, noop);
   } else {
@@ -193,7 +193,7 @@ function parseHref (href) {
 }
 
 function findVideoId (href, forceVideo) {
-  if (typeof href === 'undefined') return;
+  if (typeof href !== 'string') return href;
   href = parseHref(href);
   var id,
       type;
@@ -223,7 +223,10 @@ function findVideoId (href, forceVideo) {
   return id ? {id: id, type: type} : false;
 }
 
-function getVideoThumbs (dataFrame, data, i, api) {
+function getVideoThumbs (dataFrame, data, api) {
+	console.log('getVideoThumbs');
+
+
   var img, thumb, video = dataFrame.video;
   if (video.type === 'youtube') {
     thumb = getProtocol() + 'img.youtube.com/vi/' + video.id + '/default.jpg';
@@ -235,7 +238,7 @@ function getVideoThumbs (dataFrame, data, i, api) {
       dataType: 'jsonp',
       success: function(json){
         dataFrame.thumbsReady = true;
-        updateData(data, {img: json[0].thumbnail_large, thumb: json[0].thumbnail_small}, i, api);
+        updateData(data, {img: json[0].thumbnail_large, thumb: json[0].thumbnail_small}, dataFrame.i, api);
       }
     });
   } else {

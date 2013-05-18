@@ -15,7 +15,7 @@ function slide ($el, options) {
 
   var translate = getTranslate(elPos, options._pos);
 
-  if (CSSTR) {
+  if (CSS3) {
     $el
         .css(getDuration(options.time))
         .css(translate);
@@ -57,7 +57,7 @@ function fade ($el1, $el2, options) {
       .addClass(fadeFrontClass)
       .removeClass(fadeRearClass);
 
-  if (CSSTR) {
+  if (CSS3) {
     if (_$el2) {
       $el1.css(crossfadeFLAG ? opacity0 : opacity1);
     }

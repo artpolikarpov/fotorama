@@ -10,7 +10,11 @@ $arrSize: 32px;
   opacity: 0;
   @extend %no-tap;
   @extend %no-select;
+}
 
+.fotorama__arr, .fotorama__fullscreen-icon {
+	opacity: 1;
+	@extend %hover-icon;
 }
 
 .fotorama__arr {
@@ -49,6 +53,7 @@ $arrSize: 32px;
   cursor: default;
   *display: none;
   text-shadow: none;
+	opacity: .1 !important;
 }
 
 .fotorama__fullscreen-icon {
@@ -118,11 +123,12 @@ $arrSize: 32px;
   .fotorama__video-play {
     opacity: 1;
     z-index: 11;
+		@extend %hover-icon;
   }
 }
 
-.fotorama__wrap--video {
-  .fotorama__fullscreen-icon, .fotorama__stage .fotorama__video-play, .fotorama__arr {
+.fotorama__wrap--tap, .fotorama__wrap--video {
+	.fotorama__arr, .fotorama__fullscreen-icon {
     opacity: 0 !important;
   }
   .fotorama__fullscreen-icon {
@@ -135,32 +141,31 @@ $arrSize: 32px;
   .fotorama__arr--next {
     right: -($arrSize * 1.5);
   }
-  .fotorama__video-close {
-    top: 0;
-    right: 0;
-    opacity: 1;
-  }
+
 }
 
-.fotorama__stage:hover {
-  .fotorama__arr, .fotorama__fullscreen-icon {
-    opacity: 1;
-  }
-  .fotorama__arr--disabled {
-    opacity: .1 !important;
-  }
+.fotorama__wrap--video {
+	.fotorama__stage .fotorama__video-play {
+		opacity: 0 !important;
+	}
+	.fotorama__video-close {
+		top: 0;
+		right: 0;
+		opacity: 1;
+		@extend %hover-icon;
+	}
 }
 
-.fotorama__wrap--css-transitions {
-  .fotorama__fullscreen-icon, .fotorama__video-play, .fotorama__video-close {
+.fotorama__wrap--css3 {
+	.fotorama__arr, .fotorama__fullscreen-icon, .fotorama__video-play, .fotorama__video-close {
     @include transition-property(all);
     @extend %transitionDuration;
     @extend %bezier;
   }
-  .fotorama__arr {
+/*  {
     @include transition-property(opacity, left, right);
     @extend %transitionDuration;
     @extend %bezier;
-  }
+  }*/
 }
 
