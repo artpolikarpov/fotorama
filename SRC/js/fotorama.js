@@ -91,6 +91,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       showedFLAG,
       pausedAutoplayFLAG,
       stoppedAutoplayFLAG,
+			wrapAppendedFLAG,
 
       measuresStash;
 
@@ -138,7 +139,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * Данные
    * */
   function setData () {
-    data = that.data = data || getDataFromHtml($fotorama);
+    data = that.data = data && data.length ? data : getDataFromHtml($fotorama);
     size = that.size = data.length;
 
     checkForVideo();
@@ -149,11 +150,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (!size) {
       // Если ничего нет, ничего и не показываем
       that.destroy();
-    } else {
+    } else if (!wrapAppendedFLAG) {
       // Заменяем содержимое блока:
       $fotorama
 					.html('')
 					.append($wrap);
+
+			wrapAppendedFLAG = true;
     }
   }
 
@@ -1099,10 +1102,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * Применяем любые опции после инициализации
    * */
   this.setOptions = function (options) {
-    if (data) {
-			$.extend(opts, options);
-			reset();
-		}
+		$.extend(opts, options);
+		reset();
     return this;
   };
 
@@ -1117,15 +1118,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   this.destroy = function () {
-    if (data) {
-			// Убиваем фотораму.
-			// Возвращаем исходное состояние:
-			$wrap.detach();
-			$fotorama.html(fotoramaData.urtext);
+		// Убиваем фотораму.
+		// Возвращаем исходное состояние:
+		$wrap.detach();
+		$fotorama.html(fotoramaData.urtext);
+		wrapAppendedFLAG = false;
 
-			//that.data = data = [];
-			$.Fotorama.size--;
-		}
+		that.data = data = [];
+		$.Fotorama.size--;
     return this;
   };
 
