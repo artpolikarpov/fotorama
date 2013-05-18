@@ -104,10 +104,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 		$wrap.addClass(wrapCss3Class);
 	}
 
-	if (TOUCH) {
-		$wrap.addClass(wrapTouchClass);
-	}
-
   /* Включаем фотораму */
   $.Fotorama.size++; _size++;
   $.Fotorama.api[index] = this;
@@ -1188,7 +1184,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if ($videoPlaying) {
       unloadVideo($videoPlaying, true, true);
     } else {
-      $wrap.toggleClass(wrapTapClass);
+      $wrap.toggleClass(wrapNoControlsClass);
     }
   }
 

@@ -431,8 +431,7 @@ var _fotoramaClass = 'fotorama',
     wrapVideoClass = wrapClass + '--video',
     wrapFadeClass = wrapClass + '--fade',
     wrapSlideClass = wrapClass + '--slide',
-    wrapTouchClass = wrapClass + '--touch',
-		wrapTapClass = wrapClass + '--tap',
+		wrapNoControlsClass = wrapClass + '--no-controls',
 
     stageClass = _fotoramaClass + '__stage',
     stageFrameClass = stageClass + '__frame',
@@ -1236,7 +1235,7 @@ function touch ($el, options) {
         yWin = xyDiff <= -3;
 
     if (!movedFLAG) {
-      movedFLAG = !tail.noMove && !(!xWin && !yWin);
+      movedFLAG = /*!tail.noMove && */!(!xWin && !yWin);
     }
 
     if (touchFLAG && !tail.checked) {
@@ -1896,10 +1895,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
 	if (CSS3) {
 		$wrap.addClass(wrapCss3Class);
-	}
-
-	if (TOUCH) {
-		$wrap.addClass(wrapTouchClass);
 	}
 
   /* Включаем фотораму */
@@ -2982,7 +2977,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if ($videoPlaying) {
       unloadVideo($videoPlaying, true, true);
     } else {
-      $wrap.toggleClass(wrapTapClass);
+      $wrap.toggleClass(wrapNoControlsClass);
     }
   }
 

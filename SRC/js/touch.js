@@ -94,7 +94,7 @@ function touch ($el, options) {
         yWin = xyDiff <= -3;
 
     if (!movedFLAG) {
-      movedFLAG = !tail.noMove && !(!xWin && !yWin);
+      movedFLAG = /*!tail.noMove && */!(!xWin && !yWin);
     }
 
     if (touchFLAG && !tail.checked) {
