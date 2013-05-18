@@ -432,6 +432,7 @@ var _fotoramaClass = 'fotorama',
     wrapFadeClass = wrapClass + '--fade',
     wrapSlideClass = wrapClass + '--slide',
     wrapTouchClass = wrapClass + '--touch',
+		wrapTapClass = wrapClass + '--tap',
 
     stageClass = _fotoramaClass + '__stage',
     stageFrameClass = stageClass + '__frame',
@@ -1860,7 +1861,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       o_loop,
       o_nav,
       o_navTop,
-      o_arrows,
       o_startIndex = false,
       o_allowFullScreen,
       o_nativeFullScreen,
@@ -1970,10 +1970,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (size > 1) {
       o_nav = opts.nav;
       o_navTop = opts.navPosition === 'top';
-      o_arrows = opts.arrows;
       classes.remove.push(selectClass);
+
+			$arrs.show();
+			arrsUpdate();
     } else {
-      o_nav = o_arrows = false;
+      o_nav = false;
+
+			$arrs.hide();
     }
 
     if (opts.autoplay) setAutoplayInterval(opts.autoplay);
@@ -2026,13 +2030,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     // Анимация перехода, и соответствующие классы:
     classes[addOrRemove(o_fade)].push(wrapFadeClass);
     classes[addOrRemove(!o_fade)].push(wrapSlideClass);
-
-    if (o_arrows) {
-      $arrs.show();
-      arrsUpdate();
-    } else {
-      $arrs.hide();
-    }
 
 
 		// TODO: find better place for wrapCss3Class & wrapTouchClass
@@ -2453,7 +2450,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * ОБновляем стрелки, дизаблим крайние
    * */
   function arrsUpdate () {
-		o_arrows && $arrs.each(function (i) {
+		$arrs.each(function (i) {
       $(this).toggleClass(
           arrDisabledClass,
           (!o_loop
@@ -2997,8 +2994,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if ($videoPlaying) {
       unloadVideo($videoPlaying, true, true);
     } else {
-      $wrap.toggleClass('fotorama__wrap--tap');
-      //that.show({index: e.shiftKey || e[_coo] - $stage.offset()[_pos] < measures[_side_] / 3 ? '<' : '>', slow: e.altKey});
+      $wrap.toggleClass(wrapTapClass);
     }
   }
 
@@ -3220,7 +3216,6 @@ $.fn.fotorama = function (method) {
 										data:null, // [{}, {}, {}]
 										startIndex:0, // 'random' || id
 										transition:'slide', // 'crossfade' || 'dissolve'
-										arrows:true,
 										keyboard:false,
 										fit:'contain', // true || 'cover' || false
 										nav:'dots', // 'thumbs' || false

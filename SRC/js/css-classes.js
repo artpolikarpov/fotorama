@@ -8,6 +8,7 @@ var _fotoramaClass = 'fotorama',
     wrapFadeClass = wrapClass + '--fade',
     wrapSlideClass = wrapClass + '--slide',
     wrapTouchClass = wrapClass + '--touch',
+		wrapTapClass = wrapClass + '--tap',
 
     stageClass = _fotoramaClass + '__stage',
     stageFrameClass = stageClass + '__frame',
