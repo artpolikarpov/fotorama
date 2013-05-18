@@ -764,7 +764,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function eventData (index) {
-    return data && {
+    return {
       index: index,
       frame: data[index]
     }
@@ -833,99 +833,97 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * Показываем кадр по индексу, или по кодовому символу '>' — вперёд, '<' — назад, '>>' — в конец, '<<' в начало
    * */
   this.show = function (options) {
-    if (data) {
-			var index,
-					time = TRANSITION_DURATION,
-					overPos;
+		var index,
+				time = TRANSITION_DURATION,
+				overPos;
 
-			if (typeof options !== 'object') {
-				index = options
-			} else {
-				index = options.index;
-				time = typeof options.time === 'number' ? options.time : time;
-				overPos = options.overPos;
-			}
-
-			if (options.slow) time *= 10;
-
-			if (index === '>') {
-				index = dirtyIndex + 1;
-			} else if (index === '<') {
-				index = dirtyIndex - 1;
-			} else if (index === '<<') {
-				index = 0;
-			} else if (index === '>>') {
-				index = size - 1;
-			}
-
-			if (isNaN(index)) {
-				index = getIndexFromHash(index, data, true) || activeIndex || 0;
-			}
-
-			that.activeIndex = activeIndex = o_loop ? normalizeIndex(index) : limitIndex(index);
-			prevIndex = getPrevIndex(activeIndex);
-			nextIndex = getNextIndex(activeIndex);
-
-			dirtyIndex = o_loop ? index : activeIndex;
-
-			that.activeFrame = activeFrame = data[activeIndex];
-
-			stageFramePosition([dirtyIndex]);
-			unloadVideo(false, activeFrame.i !== data[normalizeIndex(repositionIndex)].i);
-			$fotorama.trigger('fotorama:show');
-
-			function onEnd () {
-				frameDraw([activeIndex, prevIndex, nextIndex], 'stage');
-				updateFotoramaState();
-				loadImg([activeIndex, prevIndex, nextIndex], 'stage');
-				stageShaftReposition();
-
-				$fotorama.trigger('fotorama:showend');
-
-				if (opts.hash && showedFLAG) {
-					setHash(activeFrame.id || activeIndex + 1, that.eq);
-				}
-
-				releaseAutoplay();
-				changeAutoplay();
-
-				showedFLAG = true;
-			}
-
-			if (!o_fade) {
-				slide($stageShaft, {
-					pos: - getPosByIndex(dirtyIndex, measures[_side_], MARGIN, repositionIndex),
-					_pos: _pos,
-					overPos: overPos,
-					time: time,
-					onEnd: onEnd
-				});
-			} else {
-				var $activeFrame = activeFrame[stageFrameKey],
-						$prevActiveFrame = activeIndex !== lastActiveIndex ? data[lastActiveIndex][stageFrameKey] : null;
-
-				fade($activeFrame, $prevActiveFrame, {
-					time: time,
-					method: opts.transition,
-					onEnd: onEnd
-				});
-			}
-
-			arrsUpdate();
-			navUpdate();
-
-			if (o_nav) {
-				var guessIndex = limitIndex(activeIndex + minMaxLimit(dirtyIndex - lastActiveIndex, -1, 1)),
-						cooUndefinedFLAG = typeof options.coo === 'undefined';
-
-				if (cooUndefinedFLAG || guessIndex !== activeIndex) {
-					slideNavShaft({time: time, coo: !cooUndefinedFLAG ? options.coo : measures[_side_] / 2, guessIndex: !cooUndefinedFLAG ? guessIndex : activeIndex});
-				}
-			}
-			if (o_nav === 'thumbs') slideThumbBorder(time);
-
-			lastActiveIndex = activeIndex;
+		if (typeof options !== 'object') {
+			index = options
+		} else {
+			index = options.index;
+			time = typeof options.time === 'number' ? options.time : time;
+			overPos = options.overPos;
 		}
+
+		if (options.slow) time *= 10;
+
+		if (index === '>') {
+			index = dirtyIndex + 1;
+		} else if (index === '<') {
+			index = dirtyIndex - 1;
+		} else if (index === '<<') {
+			index = 0;
+		} else if (index === '>>') {
+			index = size - 1;
+		}
+
+		if (isNaN(index)) {
+			index = getIndexFromHash(index, data, true) || activeIndex || 0;
+		}
+
+		that.activeIndex = activeIndex = o_loop ? normalizeIndex(index) : limitIndex(index);
+		prevIndex = getPrevIndex(activeIndex);
+		nextIndex = getNextIndex(activeIndex);
+
+		dirtyIndex = o_loop ? index : activeIndex;
+
+		that.activeFrame = activeFrame = data[activeIndex];
+
+		stageFramePosition([dirtyIndex]);
+		unloadVideo(false, activeFrame.i !== data[normalizeIndex(repositionIndex)].i);
+		$fotorama.trigger('fotorama:show');
+
+		function onEnd () {
+			frameDraw([activeIndex, prevIndex, nextIndex], 'stage');
+			updateFotoramaState();
+			loadImg([activeIndex, prevIndex, nextIndex], 'stage');
+			stageShaftReposition();
+
+			$fotorama.trigger('fotorama:showend');
+
+			if (opts.hash && showedFLAG) {
+				setHash(activeFrame.id || activeIndex + 1, that.eq);
+			}
+
+			releaseAutoplay();
+			changeAutoplay();
+
+			showedFLAG = true;
+		}
+
+		if (!o_fade) {
+			slide($stageShaft, {
+				pos: - getPosByIndex(dirtyIndex, measures[_side_], MARGIN, repositionIndex),
+				_pos: _pos,
+				overPos: overPos,
+				time: time,
+				onEnd: onEnd
+			});
+		} else {
+			var $activeFrame = activeFrame[stageFrameKey],
+					$prevActiveFrame = activeIndex !== lastActiveIndex ? data[lastActiveIndex][stageFrameKey] : null;
+
+			fade($activeFrame, $prevActiveFrame, {
+				time: time,
+				method: opts.transition,
+				onEnd: onEnd
+			});
+		}
+
+		arrsUpdate();
+		navUpdate();
+
+		if (o_nav) {
+			var guessIndex = limitIndex(activeIndex + minMaxLimit(dirtyIndex - lastActiveIndex, -1, 1)),
+					cooUndefinedFLAG = typeof options.coo === 'undefined';
+
+			if (cooUndefinedFLAG || guessIndex !== activeIndex) {
+				slideNavShaft({time: time, coo: !cooUndefinedFLAG ? options.coo : measures[_side_] / 2, guessIndex: !cooUndefinedFLAG ? guessIndex : activeIndex});
+			}
+		}
+		if (o_nav === 'thumbs') slideThumbBorder(time);
+
+		lastActiveIndex = activeIndex;
 
     return this;
   };
@@ -1046,48 +1044,46 @@ jQuery.Fotorama = function ($fotorama, opts) {
    *
    * */
   this.resize = function (options) {
-		if (data) {
-			extendMeasures(!that.fullScreen ? options : {width: '100%', maxWidth: null, minWidth: null, height: '100%', maxHeight: null, minHeight: null});
+		extendMeasures(!that.fullScreen ? options : {width: '100%', maxWidth: null, minWidth: null, height: '100%', maxHeight: null, minHeight: null});
 
-			var time = arguments[1] || 0,
-					setFLAG = arguments[2],
-					width = measures.width,
-					height = measures.height,
-					ratio = measures.ratio,
-					windowHeight = window.innerHeight - (o_nav ? $nav.height() : 0);
+		var time = arguments[1] || 0,
+				setFLAG = arguments[2],
+				width = measures.width,
+				height = measures.height,
+				ratio = measures.ratio,
+				windowHeight = window.innerHeight - (o_nav ? $nav.height() : 0);
 
-			if (measureIsValid(width)) {
-				$wrap.css({width: width, minWidth: measures.minWidth, maxWidth: measures.maxWidth});
+		if (measureIsValid(width)) {
+			$wrap.css({width: width, minWidth: measures.minWidth, maxWidth: measures.maxWidth});
 
-				width = measures.width_ = $wrap.width();
-				height = numberFromPercent(height) / 100 * windowHeight || numberFromMeasure(height);
+			width = measures.width_ = $wrap.width();
+			height = numberFromPercent(height) / 100 * windowHeight || numberFromMeasure(height);
 
-				height = height || (ratio && width / ratio);
+			height = height || (ratio && width / ratio);
 
-				if (height) {
-					height = measures.height_ = minMaxLimit(height, numberFromPercent(measures.minHeight) / 100 * windowHeight || numberFromMeasure(measures.minHeight), numberFromPercent(measures.maxHeight) / 100 * windowHeight || numberFromMeasure(measures.maxHeight));
+			if (height) {
+				height = measures.height_ = minMaxLimit(height, numberFromPercent(measures.minHeight) / 100 * windowHeight || numberFromMeasure(measures.minHeight), numberFromPercent(measures.maxHeight) / 100 * windowHeight || numberFromMeasure(measures.maxHeight));
 
-					stageShaftReposition();
+				stageShaftReposition();
 
-					$stage
-							.addClass(stageOnlyActiveClass)
+				$stage
+						.addClass(stageOnlyActiveClass)
+						.stop()
+						.animate({width: width, height: height}, time, function () {
+							$stage.removeClass(stageOnlyActiveClass);
+						});
+
+				if (o_nav) {
+					$nav
 							.stop()
-							.animate({width: width, height: height}, time, function () {
-								$stage.removeClass(stageOnlyActiveClass);
-							});
+							.animate({width: width}, time)
+							.css({left: 0, height: 'auto'});
 
-					if (o_nav) {
-						$nav
-								.stop()
-								.animate({width: width}, time)
-								.css({left: 0, height: 'auto'});
-
-						slideNavShaft({guessIndex: activeIndex, time: time, coo: measures[_side_] / 2});
-						if (o_nav === 'thumbs' && navAppend.done) slideThumbBorder(time);
-					}
-					measuresSetFLAG = setFLAG || true;
-					ready();
+					slideNavShaft({guessIndex: activeIndex, time: time, coo: measures[_side_] / 2});
+					if (o_nav === 'thumbs' && navAppend.done) slideThumbBorder(time);
 				}
+				measuresSetFLAG = setFLAG || true;
+				ready();
 			}
 		}
 
