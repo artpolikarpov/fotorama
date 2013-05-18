@@ -1813,8 +1813,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $style = $('<style></style>').insertBefore($fotorama),
 
       $anchor = $('<div style="display: none;"></div>').insertBefore($fotorama),
-      $_wrap = $('<div></div>'),
-      $wrap = $('<div class="' + wrapClass + ' ' + wrapNotReadyClass + '"></div>').appendTo($_wrap),
+      $wrap = $('<div class="' + wrapClass + ' ' + wrapNotReadyClass + '"></div>'),
       $stage = $('<div class="' + stageClass +'"></div>').appendTo($wrap),
       stage = $stage[0],
       $stageShaft = $('<div class="' + stageShaftClass + '"></div>').appendTo($stage),
@@ -1937,7 +1936,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     } else if (!setData.called) {
       setData.called = true;
       // Заменяем содержимое блока:
-      $fotorama.html($_wrap);
+      $fotorama.html($wrap);
     }
   }
 
@@ -2573,11 +2572,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }
 
-  function resetFotoramaMargins () {
-    $_wrap.css({marginLeft: 0, marginRight: 0});
-  }
-
-  function onTouch (e) {
+  function onTouch () {
     if (opts.stopAutoplayOnTouch) {
       that.stopAutoplay();
     } else {
@@ -2821,7 +2816,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if ($videoPlaying && e.keyCode === 27) {
       e.preventDefault();
       unloadVideo($videoPlaying, true, true);
-    } else if (that.fullScreen || (opts.keyboard && !index && that.fullScreen)) {
+    } else if (that.fullScreen || (opts.keyboard && !index)) {
       if (e.keyCode === 27) {
         e.preventDefault();
         that.cancelFullScreen();
@@ -2864,8 +2859,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 					windowHeight = window.innerHeight - (o_nav ? $nav.height() : 0);
 
 			if (measureIsValid(width)) {
-				resetFotoramaMargins();
-
 				$wrap.css({width: width, minWidth: measures.minWidth, maxWidth: measures.maxWidth});
 
 				width = measures.width_ = $wrap.width();
@@ -2928,7 +2921,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (data) {
 			// Убиваем фотораму.
 			// Возвращаем исходное состояние:
-			resetFotoramaMargins();
 			$fotorama.html(fotoramaData.urtext);
 
 			that.data = data = undefined;
