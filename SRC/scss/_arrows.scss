@@ -8,7 +8,6 @@ $arrSize: 32px;
   z-index: 11;
   cursor: pointer;
   opacity: 0;
-  //@extend %empty-bg;
   @extend %no-tap;
   @extend %no-select;
 
@@ -50,29 +49,6 @@ $arrSize: 32px;
   cursor: default;
   *display: none;
   text-shadow: none;
-}
-
-.fotorama__wrap--vertical {
-  .fotorama__arr {
-    width: 100%;
-    height: $arrSize * 1.5;
-    left: 0;
-    right: 0;
-    top: auto;
-    bottom: auto;
-  }
-  .fotorama__arr--prev {
-    top: 0;
-    .fotorama__arr__arr {
-      background-position: 0 0;
-    }
-  }
-  .fotorama__arr--next {
-    bottom: 0;
-    .fotorama__arr__arr {
-      background-position: (-$arrSize) 0;
-    }
-  }
 }
 
 .fotorama__fullscreen-icon {
@@ -145,15 +121,6 @@ $arrSize: 32px;
   }
 }
 
-/////
-//.fotorama__arr--prev {
-//  left: -($arrSize * 1.5);
-//}
-//.fotorama__arr--next {
-//  right: -($arrSize * 1.5);
-//}
-/////
-
 .fotorama__wrap--video {
   .fotorama__fullscreen-icon, .fotorama__stage .fotorama__video-play, .fotorama__arr {
     opacity: 0 !important;
@@ -167,14 +134,6 @@ $arrSize: 32px;
   }
   .fotorama__arr--next {
     right: -($arrSize * 1.5);
-  }
-  &.fotorama__wrap--vertical {
-    .fotorama__arr--prev {
-      top: -($arrSize * 1.5);
-    }
-    .fotorama__arr--next {
-      bottom: -($arrSize * 1.5);
-    }
   }
   .fotorama__video-close {
     top: 0;
@@ -202,11 +161,6 @@ $arrSize: 32px;
     @include transition-property(opacity, left, right);
     @extend %transitionDuration;
     @extend %bezier;
-  }
-  &.fotorama__wrap--vertical {
-    .fotorama__arr {
-      @include transition-property(opacity, top, bottom);
-    }
   }
 }
 

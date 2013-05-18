@@ -45,10 +45,6 @@
 
 %select {
   @include experimental(user-select, text);
-  //cursor: auto;
-  //* {
-  //  cursor: auto;
-  //}
 }
 
 %backface-visibility {

@@ -1,5 +1,5 @@
 /*!
- * Fotorama 4.0.1 | MIT License
+ * Fotorama 4.0.2 | MIT License
  */
 (function (window, document, $, undefined) {
 
@@ -428,7 +428,6 @@ var _fotoramaClass = 'fotorama',
     wrapClass = _fotoramaClass + '__wrap',
     wrapNotReadyClass = wrapClass + '--not-ready',
     wrapNavBeforeClass = wrapClass + '--nav-before',
-    wrapVerticalClass = wrapClass + '--vertical',
     wrapHorizontalClass = wrapClass + '--horizontal',
     wrapCssTransitionsClass = wrapClass + '--css-transitions',
     wrapVideoClass = wrapClass + '--video',
@@ -517,6 +516,15 @@ var $WINDOW = $(window),
     MARGIN = 2,
     THUMB_SIZE = 64,
 
+		_pos = 'left',
+		_pos2 = 'top',
+		_coo = '_x',
+		_coo2 = '_y',
+		_side = 'width',
+		_side_ = _side + '_',
+		_side2 = 'height',
+		_side2_ = _side2 + '_',
+
     // Размеры на тот случай, если пользователь не укажет и брать не откуда
     WIDTH = 500,
     HEIGHT = 333,
@@ -537,27 +545,6 @@ var $WINDOW = $(window),
 function noop () {}
 
 /**
- * Ключи к координатам и размерам в зависимости от ориентации фоторамы
- * */
-function getOrientationKeys (orientation) {
-  if (orientation === 'vertical') {
-    return { _pos: 'top',
-    _pos2: 'left',
-    _coo: '_y',
-    _coo2: '_x',
-    _side: 'height',
-    _side2: 'width' }
-  } else {
-    return { _pos: 'left',
-      _pos2: 'top',
-      _coo: '_x',
-      _coo2: '_y',
-      _side: 'width',
-      _side2: 'height' }
-  }
-}
-
-/**
  * Простой лимитер
  * */
 function minMaxLimit (value, min, max) {
@@ -576,8 +563,8 @@ function readTransform (css, _pos) {
 /**
  * Функция для чтения актуальной позиции элемента
  * */
-function readPosition ($el, _pos, css3) {
-  if (CSSTR && css3) {
+function readPosition ($el, _pos) {
+  if (CSSTR) {
     return Number(readTransform($el.css('transform'), _pos));
   } else {
     return Number($el.css(_pos).replace('px', ''));
@@ -588,9 +575,9 @@ function readPosition ($el, _pos, css3) {
  * Возвращает позицию для использования в .css(), например:
  *   $el.css(getTranslate(100, 'left'));
  * */
-function getTranslate (pos, _pos, css3) {
+function getTranslate (pos, _pos) {
   var obj = {};
-  if (CSSTR && css3) {
+  if (CSSTR) {
     obj.transform = _pos === 'left' ? 'translate3d(' + pos + 'px,0,0)' : 'translate3d(0,' + pos + 'px,0)';
   } else {
     obj[_pos] = pos;
@@ -716,15 +703,15 @@ function afterTransition ($el, fn, time) {
  * Универсальная функция для остановки анимируемого объекта,
  * возвращает актуальную позицию
  * */
-function stop ($el, _pos, css3) {
-  if (CSSTR && css3) {
+function stop ($el, _pos) {
+  if (CSSTR) {
     $el.css(getDuration(0));
     afterTransition($el, noop);
   } else {
     $el.stop();
   }
-  var lockedLeft = readPosition($el, _pos, css3);
-  $el.css(getTranslate(lockedLeft, _pos, css3));
+  var lockedLeft = readPosition($el, _pos);
+  $el.css(getTranslate(lockedLeft, _pos));
   return lockedLeft;
 }
 
@@ -1054,20 +1041,20 @@ function bindNoInteraction ($el) {
  * Универсальная функция для анимирования блока (через ЦСС3 или Джейквери),
  * по одному из свойств, top или left
  * */
-function slide ($el, options, cssTransitions) {
+function slide ($el, options) {
   var elPos = Math.round(options.pos),
       onEndFn = options.onEnd || noop;
 
   if (typeof options.overPos !== 'undefined' && options.overPos !== options.pos) {
     elPos = options.overPos;
     onEndFn = function () {
-      slide($el, $.extend({}, options, {overPos: options.pos, time: Math.max(TRANSITION_DURATION, options.time / 2)}), cssTransitions)
+      slide($el, $.extend({}, options, {overPos: options.pos, time: Math.max(TRANSITION_DURATION, options.time / 2)}))
     };
   }
 
-  var translate = getTranslate(elPos, options._pos, cssTransitions);
+  var translate = getTranslate(elPos, options._pos);
 
-  if (CSSTR && cssTransitions) {
+  if (CSSTR) {
     $el
         .css(getDuration(options.time))
         .css(translate);
@@ -1081,7 +1068,7 @@ function slide ($el, options, cssTransitions) {
   }
 }
 
-function fade ($el1, $el2, options, cssTransitions) {
+function fade ($el1, $el2, options) {
   var _$el1 = $el1, _$el2 = $el2, crossfadeFLAG = options.method === 'crossfade';
   fade.$el1 = $el1 = $el1 || $($el1);
   fade.$el2 = $el2 = $el2 || $($el2);
@@ -1109,7 +1096,7 @@ function fade ($el1, $el2, options, cssTransitions) {
       .addClass(fadeFrontClass)
       .removeClass(fadeRearClass);
 
-  if (CSSTR && cssTransitions) {
+  if (CSSTR) {
     if (_$el2) {
       $el1.css(crossfadeFLAG ? opacity0 : opacity1);
     }
@@ -1254,7 +1241,7 @@ function touch ($el, options) {
     if (touchFLAG && !tail.checked) {
       if (xWin || yWin) {
         tail.checked = true;
-        movableFLAG = tail.orientation === 'horizontal' ? xWin : yWin;
+        movableFLAG = xWin;
       }
 
       if (!tail.checked || movableFLAG) {
@@ -1320,12 +1307,7 @@ function touch ($el, options) {
 function moveOnTouch ($el, options) {
   var el = $el[0],
       elData = $el.data(),
-      orientationKeys = getOrientationKeys(options.orientation),
-      tail = {
-        _coo: orientationKeys._coo,
-        _pos: orientationKeys._pos,
-        css3: options.css3
-      },
+			tail = {},
       startCoo,
       coo,
       startElPos,
@@ -1341,12 +1323,12 @@ function moveOnTouch ($el, options) {
       movedFLAG;
 
   function startTracking (e) {
-    startCoo = coo = e[tail._coo];
+    startCoo = coo = e[_coo];
 
     // Начинаем запись маршрута курсора
     moveTrack = [[new Date().getTime(), startCoo]];
 
-    startElPos = moveElPos = stop($el, tail._pos, tail.css3);
+    startElPos = moveElPos = stop($el, _pos);
 
     (options.onStart || noop).call(el, e, {pos: startElPos});
   }
@@ -1372,7 +1354,7 @@ function moveOnTouch ($el, options) {
       startTracking(e);
     }
 
-    coo = e[tail._coo];
+    coo = e[_coo];
 
     // Продолжаем запись маршрута курсора
     moveTrack.push([new Date().getTime(), coo]);
@@ -1389,7 +1371,7 @@ function moveOnTouch ($el, options) {
 
 
     if (!tail.noMove) {
-      $el.css(getTranslate(moveElPos, tail._pos, tail.css3));
+      $el.css(getTranslate(moveElPos, _pos));
       if (!movedFLAG) {
         movedFLAG = true;
         $BODY.addClass('grabbing');
@@ -1877,7 +1859,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       // Некоторые опции, которые могут измениться:
       o_loop,
-      o_vertical,
       o_nav,
       o_navBefore,
       o_arrows,
@@ -1888,16 +1869,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       o_thumbSide,
       o_thumbSide2,
       lastOptions = {},
-
-      // Ключи к ориентации Фоторамы, горизонтальной или вертикальной
-      orientation,
-      _pos,
-      _pos2,
-      _coo,
-      _side,
-      _side_,
-      _side2,
-      _side2_,
 
       // Размеры сцены:
       measures = {},
@@ -1994,7 +1965,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * */
   function setOptions () {
     o_loop = opts.loop && size > 2;
-    o_vertical = opts.orientation === 'vertical';
 
     o_fade = opts.transition === 'crossfade' || opts.transition === 'dissolve';
 
@@ -2012,30 +1982,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     if (opts.autoplay) setAutoplayInterval(opts.autoplay);
 
-    orientation = getOrientationKeys(opts.orientation);
-    _pos = orientation._pos;
-    _pos2 = orientation._pos2;
-    _coo = orientation._coo;
-    _side = orientation._side;
-    _side_ = _side + '_';
-    _side2 = orientation._side2;
-    _side2_ = _side2 + '_';
-
     o_thumbSide = numberFromMeasure(opts['thumb' + capitaliseFirstLetter(_side)]) || THUMB_SIZE;
     o_thumbSide2 = numberFromMeasure(opts['thumb' + capitaliseFirstLetter(_side2)]) || THUMB_SIZE;
-
-    // В хвостике для доступа к touch.js и moveontouch.js
-    // меняем необходимые параметры
-    stageShaftTouchTail._pos = navShaftTouchTail._pos = _pos;
-    stageShaftTouchTail._coo = navShaftTouchTail._coo = _coo;
-    stageShaftTouchTail.orientation = navShaftTouchTail.orientation = opts.orientation;
-    stageShaftTouchTail.css3 = navShaftTouchTail.css3 = opts.css3;
 
     stageNoMove();
 
     extendMeasures(opts);
 
-    setStyle($style, $.Fotorama.jst.style({thumbWidth: o_vertical ? o_thumbSide2 : o_thumbSide , thumbHeight: o_vertical ? o_thumbSide : o_thumbSide2, thumbMargin: MARGIN, stamp: stamp}));
+    setStyle($style, $.Fotorama.jst.style({thumbWidth: o_thumbSide , thumbHeight: o_thumbSide2, thumbMargin: MARGIN, stamp: stamp}));
 
     // Создаём или убираем кучу навигационных кадров под точки или превьюшки
     if (o_nav === true || o_nav === 'dots') {
@@ -2086,32 +2040,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $arrs.hide();
     }
 
-    // Переворачиваем фотораму, если нужно
-    classes[addOrRemove(o_vertical)].push(wrapVerticalClass);
-    classes[addOrRemove(!o_vertical)].push(wrapHorizontalClass);
-
-    // Если ЦСС-транзишны поддерживаются и не отменены пользователем
-    if (lastOptions.css3 !== opts.css3) {
-      if (CSSTR && opts.css3) {
-        classes.add.push(wrapCssTransitionsClass);
-
-        $stageShaft.add($navShaft).add(o_nav === 'thumbs' ? $thumbBorder : null).each(function () {
-          var $this = $(this);
-          $this
-              .css(getTranslate(Number($navShaft.css(_pos).replace('px', '')), _pos, opts.css3))
-              .css({top: 0, left: 0});
-        });
-      } else {
-        classes.remove.push(wrapCssTransitionsClass);
-
-        $stageShaft.add($navShaft).add(o_nav === 'thumbs' ? $thumbBorder : null).each(function () {
-          var $this = $(this);
-          $this
-              .css(CSSTR && lastOptions.css3 ? getTranslate(Number(readTransform($this.css('transform'), _pos)), _pos, opts.css3) : {})
-              .css({transform: 'none', transition: '0ms'});
-        });
-      }
-    }
+		classes[addOrRemove(CSSTR)].push(wrapCssTransitionsClass);
 
     if (TOUCH) {
       classes.add.push(wrapTouchClass);
@@ -2559,7 +2488,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       time: time * .9,
       pos: getNavFrameCenter(that.activeFrame[navFrameKey]),
       _pos: _pos
-    }, opts.css3);
+    });
   }
 
   function slideNavShaft(options) {
@@ -2573,7 +2502,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         onEnd: function () {
           thumbsDraw(pos, true);
         }
-      }, opts.css3);
+      });
 
       if (time) thumbsDraw(pos);
       setShadow($nav, findShadowEdge(pos, navShaftData.minPos, navShaftData.maxPos));
@@ -2621,8 +2550,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
         .removeClass(activeClass + ' ' + fadeFrontClass + ' ' + fadeRearClass);
 
     // Возвращаем шахту в начальную позицию
-    stop($stageShaft, _pos, opts.css3);
-    $stageShaft.css(getTranslate(0, _pos, opts.css3));
+    stop($stageShaft, _pos);
+    $stageShaft.css(getTranslate(0, _pos));
 
     // Показываем нужные
     stageFramePosition([activeIndex, prevIndex, nextIndex]);
@@ -2794,7 +2723,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         overPos: overPos,
         time: time,
         onEnd: onEnd
-      }, opts.css3);
+      });
     } else {
       var $activeFrame = activeFrame[stageFrameKey],
           $prevActiveFrame = activeIndex !== lastActiveIndex ? data[lastActiveIndex][stageFrameKey] : null;
@@ -2803,7 +2732,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         time: time,
         method: opts.transition,
         onEnd: onEnd
-      }, opts.css3);
+      });
     }
 
     arrsUpdate();
@@ -2953,16 +2882,12 @@ jQuery.Fotorama = function ($fotorama, opts) {
     var width = measures.width,
         height = measures.height,
         ratio = measures.ratio,
-        windowHeight = window.innerHeight - (o_nav && !o_vertical ? $nav.height() : 0),
+        windowHeight = window.innerHeight - (o_nav ? $nav.height() : 0),
         navWidth = $nav.width();
 
     if (!measureIsValid(width)) return this;
 
     resetFotoramaMargins();
-
-    if (o_vertical && o_nav) {
-      $_wrap.css('margin-' + (o_navBefore ? 'left' : 'right'), navWidth);
-    }
 
     $wrap.css({width: width, minWidth: measures.minWidth, maxWidth: measures.maxWidth});
 
@@ -2988,15 +2913,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (o_nav) {
       $nav
           .stop()
-          .animate(o_vertical ? {
-              left: o_navBefore ? -navWidth : width,
-              height: height
-            } : {
+          .animate({
               width: width
             }, time)
-          .css(o_vertical ? {
-              width: 'auto'
-            } : {
+          .css({
               left: 0,
               height: 'auto'
             });
@@ -3146,9 +3066,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     timeHigh: 1,
     friction: 2,
     select: '.' + selectClass + ', .' + selectClass + ' *',
-    $wrap: $stage,
-    orientation: opts.orientation,
-    css3: opts.css3
+    $wrap: $stage
   });
 
   // Подключаем таскание шахты в навигации
@@ -3175,7 +3093,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           _pos: _pos,
           overPos: result.overPos,
           onEnd: onEnd
-        }, opts.css3);
+        });
         thumbsDraw(result.newPos);
         setShadow($nav, findShadowEdge(result.newPos, navShaftData.minPos, navShaftData.maxPos));
       } else {
@@ -3185,9 +3103,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     timeLow:.5,
     timeHigh: 2,
     friction: 5,
-    $wrap: $nav,
-    orientation: opts.orientation,
-    css3: opts.css3
+    $wrap: $nav
   });
 
   // Клик по точкам и превьюшкам
@@ -3351,9 +3267,7 @@ $.fn.fotorama = function (method) {
   loop:false,
   data:null, // [{}, {}, {}]
   startIndex:0, // 'random' || id
-  orientation:'horizontal', // 'vertical'
   transition:'slide', // 'crossfade' || 'dissolve'
-  css3:true,
   arrows:true,
   keyboard:false,
   fit:'contain', // true || 'cover' || false

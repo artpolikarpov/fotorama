@@ -5,9 +5,7 @@
 
 $time: 333ms;
 
-.fotorama {
-  //overflow: hidden;
-}
+.fotorama {}
 
 .fullscreen {
   width: 100% !important;
@@ -25,8 +23,6 @@ $time: 333ms;
 
 .fotorama--fullscreen {
   position: absolute;
-  //width: 100%;
-  //height: 100%;
   top: 0;
   left: 0;
   right: 0;
@@ -69,12 +65,10 @@ $time: 333ms;
 .fotorama__wrap {
   -webkit-text-size-adjust: 100%;
   position: relative;
-  //overflow: hidden;
   @extend %no-select;
 }
 
 .fotorama__wrap--not-ready {
-  //@extend %select;
   * {
     visibility: hidden !important;
   }
@@ -84,7 +78,6 @@ $time: 333ms;
   overflow: hidden;
   position: relative;
   @extend %no-tap;
-  //background: rgba(150, 150, 150, .1); // js
 
   .spinner {
     position: absolute !important;
@@ -176,11 +169,9 @@ $time: 333ms;
   overflow: hidden;
 }
 
-//.fotorama__loaded--img {
-  .fotorama__img--full {
-    display: none;
-  }
-//}
+.fotorama__img--full {
+	display: none;
+}
 
 .fotorama--fullscreen .fotorama__loaded--full {
   .fotorama__img {
@@ -258,7 +249,6 @@ $time: 333ms;
   }
 }
 
-// Цвет точек: // js
 @mixin dotColor($color) {
   .fotorama__dot {
     border-color: $color;
@@ -291,64 +281,9 @@ $time: 333ms;
 
 @include dotColor(mix(black, white));
 
-.fotorama__nav--thumbs {
-  .fotorama__nav__frame {
-    &:first-child {
-      //padding-left: 0;
-    }
-    &:last-child {
-      //padding-right: 0;
-    }
-  }
-}
-
-.fotorama__wrap--horizontal {
-  .fotorama__nav {
-    left: 0 !important;
-  }
-}
-
-.fotorama__wrap--vertical {
-  .fotorama__nav {
-    position: absolute;
-    top: 0;
-    left: 0;
-    white-space: normal;
-  }
-  .fotorama__nav--thumbs {
-    .fotorama__nav__frame {
-      &:first-child {
-        padding-top: 0;
-      }
-      &:last-child {
-        padding-bottom: 0;
-      }
-    }
-  }
-  .fotorama__nav--dots {
-    width: 30px !important;
-    .fotorama__nav__frame {
-      width: 30px;
-      height: 18px;
-    }
-  }
-
-  .fotorama__dot {
-    left: 12px;
-    top: 6px;
-  }
-
-  &.fotorama__wrap--nav-before {
-    .fotorama__nav--dots {
-      //margin-left: -30px;
-    }
-  }
-}
-
 .fotorama__thumb {
   background-color: mix(mix(mix(black, white), white), white); // fuckYeah()
   background-color: transparentize(mix(black, white), .75);
-  //@include opacity(1);
   overflow: hidden;
   position: relative;
 }
@@ -359,74 +294,9 @@ $time: 333ms;
   top: 0;
   left: 0;
   border-style: solid;
-  border-color: mix(#00d1ff, #008ed6); // js
-  //border-color: #00d1ff mix(#00d1ff, #008ed6) #008ed6; // js
-  //border-color: transparentize(#00d1ff, .25) transparentize(mix(#00d1ff, #008ed6), .25) transparentize(#008ed6, .25);
+  border-color: mix(#00d1ff, #008ed6);
   @include background(linear-gradient(top left, rgba(255, 255, 255, .25), rgba(64, 64, 64, .1)));
-  //background-color: mix(rgba(255, 255, 255, .3), rgba(128, 128, 128, .15));
 }
-
-.fotorama__nav__frame.fotorama__active {
-  .fotorama__thumb {
-    //border: 1px solid;
-    //margin: -1px 0 0 -1px;
-    //border-color: #00d1ff mix(#00d1ff, #008ed6) #008ed6;
-    //background-color: mix(mix(black, white), white);
-    //background-color: transparentize(mix(black, white), .5);
-    //@include opacity(.5);
-  }
-}
-
-// Размер и отступы превьюшек // js
-//@mixin thumbSizeAndMargin($thumbWidth, $thumbHeight, $thumbMargin) {
-//  .fotorama__nav--thumbs {
-//    .fotorama__nav__frame {
-//      padding: $thumbMargin ($thumbMargin / 2);
-//      width: $thumbWidth;
-//      height: $thumbHeight;
-//    }
-//  }
-//
-//  .fotorama__thumb {
-//    width: $thumbWidth;
-//    height: $thumbHeight;
-//  }
-//
-//  .fotorama__thumb-border {
-//    width: $thumbWidth - $thumbMargin * 2;
-//    height: $thumbHeight - $thumbMargin * 2;
-//    border-width: $thumbMargin;
-//
-//    margin-top: $thumbMargin;
-//    margin-left: - ($thumbWidth / 2) + $thumbMargin / 2;
-//  }
-//
-//  .fotorama__wrap--vertical {
-//    .fotorama__nav--thumbs {
-//      width: ($thumbWidth + $thumbMargin * 2) !important;
-//      .fotorama__nav__frame {
-//        padding: ($thumbMargin / 2) $thumbMargin;
-//      }
-//    }
-//    .fotorama__thumb-border {
-//      margin-left: $thumbMargin;
-//      margin-top: - ($thumbHeight / 2) + $thumbMargin / 2;
-//    }
-//  }
-//}
-//
-//@include thumbSizeAndMargin(64px, 48px, 2px);
-
-//@media (max-width: 640px) {
-//  @include thumbSizeAndMargin(48px, 2px);
-//}
-//
-//@media (max-width: 320px) {
-//  @include thumbSizeAndMargin(32px, 2px);
-//}
-
-
-//@include dotColor(red);
 
 .fotorama__caption {
   position: absolute;
@@ -435,7 +305,6 @@ $time: 333ms;
   left: 0;
   right: 0;
   width: 100%;
-  //height: 100%;
   font-family: 'Helvetica Neue', Arial, sans-serif;
   font-size: 14px;
   line-height: 1.5;
@@ -524,12 +393,6 @@ $time: 333ms;
   }
 }
 
-.fotorama__wrap--vertical {
-  .fotorama__caption__inner {
-    min-height: 39px;
-  }
-}
-
 
 // Если разрешены ЦСС-анимации
 .fotorama__wrap--css-transitions {
@@ -538,12 +401,8 @@ $time: 333ms;
     @extend %bezier;
     @extend %transition-for-touch;
   }
-  //.fotorama__stage__frame--video {
-  //  @include transition(background-color $time);
-  //}
   .fotorama__stage__frame, .fotorama__nav__frame, .fotorama__img {
     @extend %initial-translate;
-    //@extend %backface-visibility;
   }
   .fotorama__img,
   .fotorama__html-wrap,

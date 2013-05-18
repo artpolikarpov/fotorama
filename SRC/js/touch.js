@@ -100,7 +100,7 @@ function touch ($el, options) {
     if (touchFLAG && !tail.checked) {
       if (xWin || yWin) {
         tail.checked = true;
-        movableFLAG = tail.orientation === 'horizontal' ? xWin : yWin;
+        movableFLAG = xWin;
       }
 
       if (!tail.checked || movableFLAG) {

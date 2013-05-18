@@ -1,84 +1,42 @@
 /* Тенюшки */
-.fotorama__stage, .fotorama__nav {
-  .fotorama__shadow {
-    content: "";
-    display: block;
-    position: absolute;
-    text-decoration: none;
-    top: 0;
-    bottom: 0;
-    width: 10px;
-    height: auto;
-    @extend %bezier;
-    z-index: 10;
-    *display: none !important;
-    background-repeat: no-repeat;
-    background-size: 1px 100%, 5px 100%;
-    @extend %no-select;
-    cursor: default;
-  }
+.fotorama__shadow {
+	content: "";
+	display: block;
+	position: absolute;
+	text-decoration: none;
+	top: 0;
+	bottom: 0;
+	width: 10px;
+	height: auto;
+	@extend %bezier;
+	z-index: 10;
+	*display: none !important;
+	background-repeat: no-repeat;
+	background-size: 1px 100%, 5px 100%;
+	@extend %no-select;
+	cursor: default;
 
-  .fotorama__shadow--left {
-    //@include box-shadow(rgba(0, 0, 0, 0.25) 2px 0 10px, rgba(0, 0, 0, 0.5) 0 0 1px);
-    @include background-image(linear-gradient(transparent, rgba(0, 0, 0, .3) 25%, rgba(0, 0, 0, .3) 75%, transparent), radial-gradient(0 50%, farthest-side, rgba(0, 0, 0, .5), transparent));
-    background-position: 0 0, 0 0;
-    left: -10px;
-  }
-  .fotorama__shadow--right {
-    //@include box-shadow(rgba(0, 0, 0, 0.25) -2px 0 10px, rgba(0, 0, 0, 0.5) 0 0 1px);
-    @include background-image(linear-gradient(transparent, rgba(0, 0, 0, .3) 25%, rgba(0, 0, 0, .3) 75%, transparent), radial-gradient(100% 50%, farthest-side, rgba(0, 0, 0, .5), transparent));
-    background-position: 100% 0, 100% 0;
-    right: -10px;
-  }
-  &.fotorama__shadows--left {
-    .fotorama__shadow--left {
-      left: 0;
-    }
-  }
-  &.fotorama__shadows--right {
-    .fotorama__shadow--right {
-      right: 0;
-    }
-  }
-}
-.fotorama__wrap--vertical {
-  .fotorama__stage, .fotorama__nav {
-    .fotorama__shadow {
-      top: auto;
-      left: 0;
-      right: 0;
-      width: auto;
-      height: 10px;
-      background-size: 100% 1px, 100% 5px;
-      //@include box-shadow(black, 0, 0, 10px);
-    }
-    .fotorama__shadow--left {
-      //@include box-shadow(rgba(0, 0, 0, 0.25) 0 2px 10px, rgba(0, 0, 0, 0.5) 0 0 2px);
-      @include background-image(linear-gradient(left, transparent, rgba(0, 0, 0, .3) 25%, rgba(0, 0, 0, .3) 75%, transparent), radial-gradient(50% 0, farthest-side, rgba(0, 0, 0, .5), transparent));
-      background-position: 0 0, 0 0;
-      top: -10px;
-    }
-    .fotorama__shadow--right {
-      //@include box-shadow(rgba(0, 0, 0, 0.25) 0 -2px 10px, rgba(0, 0, 0, 0.5) 0 0 2px);
-      @include background-image(linear-gradient(left, transparent, rgba(0, 0, 0, .3) 25%, rgba(0, 0, 0, .3) 75%, transparent), radial-gradient(50% 100%, farthest-side, rgba(0, 0, 0, .5), transparent));
-      background-position: 0 100%, 0 100%;
-      bottom: -10px;
-    }
-    &.fotorama__shadows--left {
-      .fotorama__shadow--left {
-        top: 0;
-      }
-    }
-    &.fotorama__shadows--right {
-      .fotorama__shadow--right {
-        bottom: 0;
-      }
-    }
-  }
+	.fotorama__wrap--css-transitions & {
+		@include transition(all $time);
+	}
 }
 
-.fotorama__wrap--css-transitions {
-  .fotorama__shadow {
-    @include transition(all $time);
-  }
+.fotorama__shadow--left {
+	@include background-image(linear-gradient(transparent, rgba(0, 0, 0, .3) 25%, rgba(0, 0, 0, .3) 75%, transparent), radial-gradient(0 50%, farthest-side, rgba(0, 0, 0, .5), transparent));
+	background-position: 0 0, 0 0;
+	left: -10px;
+	.fotorama__shadows--left & {
+		left: 0;
+	}
 }
+.fotorama__shadow--right {
+	@include background-image(linear-gradient(transparent, rgba(0, 0, 0, .3) 25%, rgba(0, 0, 0, .3) 75%, transparent), radial-gradient(100% 50%, farthest-side, rgba(0, 0, 0, .5), transparent));
+	background-position: 100% 0, 100% 0;
+	right: -10px;
+
+	.fotorama__shadows--right & {
+		right: 0;
+	}
+}
+
+

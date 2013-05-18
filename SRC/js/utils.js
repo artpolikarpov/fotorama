@@ -4,27 +4,6 @@
 function noop () {}
 
 /**
- * Ключи к координатам и размерам в зависимости от ориентации фоторамы
- * */
-function getOrientationKeys (orientation) {
-  if (orientation === 'vertical') {
-    return { _pos: 'top',
-    _pos2: 'left',
-    _coo: '_y',
-    _coo2: '_x',
-    _side: 'height',
-    _side2: 'width' }
-  } else {
-    return { _pos: 'left',
-      _pos2: 'top',
-      _coo: '_x',
-      _coo2: '_y',
-      _side: 'width',
-      _side2: 'height' }
-  }
-}
-
-/**
  * Простой лимитер
  * */
 function minMaxLimit (value, min, max) {
@@ -43,8 +22,8 @@ function readTransform (css, _pos) {
 /**
  * Функция для чтения актуальной позиции элемента
  * */
-function readPosition ($el, _pos, css3) {
-  if (CSSTR && css3) {
+function readPosition ($el, _pos) {
+  if (CSSTR) {
     return Number(readTransform($el.css('transform'), _pos));
   } else {
     return Number($el.css(_pos).replace('px', ''));
@@ -55,9 +34,9 @@ function readPosition ($el, _pos, css3) {
  * Возвращает позицию для использования в .css(), например:
  *   $el.css(getTranslate(100, 'left'));
  * */
-function getTranslate (pos, _pos, css3) {
+function getTranslate (pos, _pos) {
   var obj = {};
-  if (CSSTR && css3) {
+  if (CSSTR) {
     obj.transform = _pos === 'left' ? 'translate3d(' + pos + 'px,0,0)' : 'translate3d(0,' + pos + 'px,0)';
   } else {
     obj[_pos] = pos;
@@ -183,15 +162,15 @@ function afterTransition ($el, fn, time) {
  * Универсальная функция для остановки анимируемого объекта,
  * возвращает актуальную позицию
  * */
-function stop ($el, _pos, css3) {
-  if (CSSTR && css3) {
+function stop ($el, _pos) {
+  if (CSSTR) {
     $el.css(getDuration(0));
     afterTransition($el, noop);
   } else {
     $el.stop();
   }
-  var lockedLeft = readPosition($el, _pos, css3);
-  $el.css(getTranslate(lockedLeft, _pos, css3));
+  var lockedLeft = readPosition($el, _pos);
+  $el.css(getTranslate(lockedLeft, _pos));
   return lockedLeft;
 }
 

@@ -15,6 +15,15 @@ var $WINDOW = $(window),
     MARGIN = 2,
     THUMB_SIZE = 64,
 
+		_pos = 'left',
+		_pos2 = 'top',
+		_coo = '_x',
+		_coo2 = '_y',
+		_side = 'width',
+		_side_ = _side + '_',
+		_side2 = 'height',
+		_side2_ = _side2 + '_',
+
     // Размеры на тот случай, если пользователь не укажет и брать не откуда
     WIDTH = 500,
     HEIGHT = 333,

@@ -11,12 +11,7 @@
 function moveOnTouch ($el, options) {
   var el = $el[0],
       elData = $el.data(),
-      orientationKeys = getOrientationKeys(options.orientation),
-      tail = {
-        _coo: orientationKeys._coo,
-        _pos: orientationKeys._pos,
-        css3: options.css3
-      },
+			tail = {},
       startCoo,
       coo,
       startElPos,
@@ -32,12 +27,12 @@ function moveOnTouch ($el, options) {
       movedFLAG;
 
   function startTracking (e) {
-    startCoo = coo = e[tail._coo];
+    startCoo = coo = e[_coo];
 
     // Начинаем запись маршрута курсора
     moveTrack = [[new Date().getTime(), startCoo]];
 
-    startElPos = moveElPos = stop($el, tail._pos, tail.css3);
+    startElPos = moveElPos = stop($el, _pos);
 
     (options.onStart || noop).call(el, e, {pos: startElPos});
   }
@@ -63,7 +58,7 @@ function moveOnTouch ($el, options) {
       startTracking(e);
     }
 
-    coo = e[tail._coo];
+    coo = e[_coo];
 
     // Продолжаем запись маршрута курсора
     moveTrack.push([new Date().getTime(), coo]);
@@ -80,7 +75,7 @@ function moveOnTouch ($el, options) {
 
 
     if (!tail.noMove) {
-      $el.css(getTranslate(moveElPos, tail._pos, tail.css3));
+      $el.css(getTranslate(moveElPos, _pos));
       if (!movedFLAG) {
         movedFLAG = true;
         $BODY.addClass('grabbing');

@@ -2,20 +2,20 @@
  * Универсальная функция для анимирования блока (через ЦСС3 или Джейквери),
  * по одному из свойств, top или left
  * */
-function slide ($el, options, cssTransitions) {
+function slide ($el, options) {
   var elPos = Math.round(options.pos),
       onEndFn = options.onEnd || noop;
 
   if (typeof options.overPos !== 'undefined' && options.overPos !== options.pos) {
     elPos = options.overPos;
     onEndFn = function () {
-      slide($el, $.extend({}, options, {overPos: options.pos, time: Math.max(TRANSITION_DURATION, options.time / 2)}), cssTransitions)
+      slide($el, $.extend({}, options, {overPos: options.pos, time: Math.max(TRANSITION_DURATION, options.time / 2)}))
     };
   }
 
-  var translate = getTranslate(elPos, options._pos, cssTransitions);
+  var translate = getTranslate(elPos, options._pos);
 
-  if (CSSTR && cssTransitions) {
+  if (CSSTR) {
     $el
         .css(getDuration(options.time))
         .css(translate);
@@ -29,7 +29,7 @@ function slide ($el, options, cssTransitions) {
   }
 }
 
-function fade ($el1, $el2, options, cssTransitions) {
+function fade ($el1, $el2, options) {
   var _$el1 = $el1, _$el2 = $el2, crossfadeFLAG = options.method === 'crossfade';
   fade.$el1 = $el1 = $el1 || $($el1);
   fade.$el2 = $el2 = $el2 || $($el2);
@@ -57,7 +57,7 @@ function fade ($el1, $el2, options, cssTransitions) {
       .addClass(fadeFrontClass)
       .removeClass(fadeRearClass);
 
-  if (CSSTR && cssTransitions) {
+  if (CSSTR) {
     if (_$el2) {
       $el1.css(crossfadeFLAG ? opacity0 : opacity1);
     }
