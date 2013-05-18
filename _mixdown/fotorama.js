@@ -1977,7 +1977,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       classes.remove.push(selectClass);
     } else {
       o_nav = o_arrows = false;
-      //classes.add.push(selectClass);
     }
 
     if (opts.autoplay) setAutoplayInterval(opts.autoplay);
@@ -3100,7 +3099,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         onEnd();
       }
     },
-    timeLow:.5,
+    timeLow: .5,
     timeHigh: 2,
     friction: 5,
     $wrap: $nav
@@ -3206,15 +3205,15 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (ready.done) return;
     ready.done = true;
     $wrap.removeClass(wrapNotReadyClass);
-    $fotorama
-        .trigger('fotorama:ready');
+    $fotorama.trigger('fotorama:ready');
   }
 
-
-  $WINDOW.on('resize', this.resize);
+  $WINDOW
+			.on('resize', this.resize)
+			.resize();
 
   reset();
-}
+};
 
 var methods = {};
 
