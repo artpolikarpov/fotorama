@@ -3148,32 +3148,32 @@ jQuery.Fotorama = function ($fotorama, opts) {
   reset();
 };
 
-var methods = {};
-
-// Создаём алиасы публичных методов, для доступа к ним через $(elem).fotorama('method', argument1, argument2, argument3/*, ...*/)
-$.each('show resize load push pop shift unshift reverse sort splice setOptions requestFullScreen cancelFullScreen startAutoplay stopAutoplay playVideo stopVideo destroy'.split(' '), function (i, method) {
-  methods[method] = function () {
-    var args = arguments;
-    return this.each(function (i) {
-      if (i && (method === 'load' || method === 'push' || method === 'unshift' || method === 'splice')) return;
-      if (i && method === 'setOptions' && typeof args[0] === 'object') args[0].data = null;
-
-      var $fotorama = $(this),
-          api = $fotorama.data().api;
-
-      if (api) {
-        api[method].apply(api, args);
-      }
-    });
-  }
-});
+//var methods = {};
+//
+//// Создаём алиасы публичных методов, для доступа к ним через $(elem).fotorama('method', argument1, argument2, argument3/*, ...*/)
+//$.each('show resize load push pop shift unshift reverse sort splice setOptions requestFullScreen cancelFullScreen startAutoplay stopAutoplay playVideo stopVideo destroy'.split(' '), function (i, method) {
+//  methods[method] = function () {
+//    var args = arguments;
+//    return this.each(function (i) {
+//      if (i && (method === 'load' || method === 'push' || method === 'unshift' || method === 'splice')) return;
+//      if (i && method === 'setOptions' && typeof args[0] === 'object') args[0].data = null;
+//
+//      var $fotorama = $(this),
+//          api = $fotorama.data().api;
+//
+//      if (api) {
+//        api[method].apply(api, args);
+//      }
+//    });
+//  }
+//});
 
 // Заворачиваем в джейквери-плагин:
-$.fn.fotorama = function (method) {
-  if (methods[method]) {
-    return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-  } else {
-    var opts = method;
+$.fn.fotorama = function (opts) {
+//  if (methods[method]) {
+//    return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+//  } else {
+//    var opts = method;
 
     return this.each(function () {
       var that = this,
@@ -3205,16 +3205,16 @@ $.fn.fotorama = function (method) {
 										navPosition: 'bottom', // 'top'
 										hash: false,
 										allowFullScreen: false, // true || 'native'
-										captions:true,
-										autoplay:false,
-										stopAutoplayOnTouch:true,
+										captions: true,
+										autoplay: false,
+										stopAutoplayOnTouch: true,
 										width: null, // 500 || '100%'
 										minWidth: null,
 										maxWidth: null, // '100%'
 										height: null,
 										minHeight: null,
 										maxHeight: null,
-										ratio: null, // '16:9' || 500/333
+										ratio: null, // '16/9' || 500/333
 										thumbWidth: THUMB_SIZE,
 										thumbHeight: THUMB_SIZE
 									},
@@ -3230,7 +3230,7 @@ $.fn.fotorama = function (method) {
 				api.setOptions(opts);
 			}
     });
-  }
+//  }
 };
 
 //$.Fotorama = {};

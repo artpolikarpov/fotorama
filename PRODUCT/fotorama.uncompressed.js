@@ -431,7 +431,7 @@ var _fotoramaClass = 'fotorama',
     wrapVideoClass = wrapClass + '--video',
     wrapFadeClass = wrapClass + '--fade',
     wrapSlideClass = wrapClass + '--slide',
-    wrapTouchClass = wrapClass + '--touch',
+		wrapNoControlsClass = wrapClass + '--no-controls',
 
     stageClass = _fotoramaClass + '__stage',
     stageFrameClass = stageClass + '__frame',
@@ -494,8 +494,7 @@ var _fotoramaClass = 'fotorama',
     videoPlayClass = videoClass + '-play',
     videoCloseClass = videoClass + '-close',
 
-    captionClass = _fotoramaClass + '__caption',
-    captionInnerClass = captionClass + '__inner';
+    captionClass = _fotoramaClass + '__caption';
 
 var $WINDOW = $(window),
     $DOCUMENT = $(document),
@@ -732,7 +731,7 @@ function parseHref (href) {
 }
 
 function findVideoId (href, forceVideo) {
-  if (typeof href === 'undefined') return;
+  if (typeof href !== 'string') return href;
   href = parseHref(href);
   var id,
       type;
@@ -762,7 +761,10 @@ function findVideoId (href, forceVideo) {
   return id ? {id: id, type: type} : false;
 }
 
-function getVideoThumbs (dataFrame, data, i, api) {
+function getVideoThumbs (dataFrame, data, api) {
+	//console.log('getVideoThumbs');
+
+
   var img, thumb, video = dataFrame.video;
   if (video.type === 'youtube') {
     thumb = getProtocol() + 'img.youtube.com/vi/' + video.id + '/default.jpg';
@@ -774,7 +776,7 @@ function getVideoThumbs (dataFrame, data, i, api) {
       dataType: 'jsonp',
       success: function(json){
         dataFrame.thumbsReady = true;
-        updateData(data, {img: json[0].thumbnail_large, thumb: json[0].thumbnail_small}, i, api);
+        updateData(data, {img: json[0].thumbnail_large, thumb: json[0].thumbnail_small}, dataFrame.i, api);
       }
     });
   } else {
@@ -1233,7 +1235,7 @@ function touch ($el, options) {
         yWin = xyDiff <= -3;
 
     if (!movedFLAG) {
-      movedFLAG = !tail.noMove && !(!xWin && !yWin);
+      movedFLAG = /*!tail.noMove && */!(!xWin && !yWin);
     }
 
     if (touchFLAG && !tail.checked) {
@@ -1858,7 +1860,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       o_loop,
       o_nav,
       o_navTop,
-      o_arrows,
       o_startIndex = false,
       o_allowFullScreen,
       o_nativeFullScreen,
@@ -1883,12 +1884,18 @@ jQuery.Fotorama = function ($fotorama, opts) {
       showedFLAG,
       pausedAutoplayFLAG,
       stoppedAutoplayFLAG,
+			wrapAppendedFLAG,
 
       measuresStash;
 
   $wrap[stageFrameKey] = $('<div class="' + stageFrameClass +'"></div>');
   $wrap[navThumbFrameKey] = $('<div class="' + navFrameClass + ' ' + navFrameThumbClass + '"><div class="' + thumbClass + '"></div></div>');
   $wrap[navDotFrameKey] = $('<div class="' + navFrameClass + ' ' + navFrameDotClass + '"><div class="' + dotClass + '"></div></div>');
+
+
+	if (CSS3) {
+		$wrap.addClass(wrapCss3Class);
+	}
 
   /* Включаем фотораму */
   $.Fotorama.size++; _size++;
@@ -1901,16 +1908,17 @@ jQuery.Fotorama = function ($fotorama, opts) {
     $.each(data, function (i, dataFrame) {
       if (!dataFrame.i) {
 				dataFrame.i = dataFrameCount++;
-				var video = typeof dataFrame.video === 'string' && findVideoId(dataFrame.video, true);
+				var video = findVideoId(dataFrame.video, true);
 				if (video) {
 					var thumbs = {};
 					dataFrame.video = video;
 					if (!dataFrame.img && !dataFrame.thumb) {
-						thumbs = getVideoThumbs(dataFrame, data, dataFrameCount, that);
+						thumbs = getVideoThumbs(dataFrame, data, that);
+						//console.log('thumbs', thumbs)
 					} else {
 						dataFrame.thumbsReady = true;
 					}
-					updateData(data, {img: thumbs.img, thumb: thumbs.thumb}, dataFrameCount, that);
+					updateData(data, {img: thumbs.img, thumb: thumbs.thumb}, dataFrame.i, that);
 				}
 			}
     });
@@ -1920,7 +1928,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * Данные
    * */
   function setData () {
-    data = that.data = opts.data && typeof opts.data === 'object' ? opts.data : data || getDataFromHtml($fotorama);
+    data = that.data = data && data.length ? data : getDataFromHtml($fotorama);
     size = that.size = data.length;
 
     checkForVideo();
@@ -1931,21 +1939,24 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (!size) {
       // Если ничего нет, ничего и не показываем
       that.destroy();
-    } else if (!setData.called) {
-      setData.called = true;
+    } else if (!wrapAppendedFLAG) {
       // Заменяем содержимое блока:
-      $fotorama.html($wrap);
+      $fotorama
+					.html('')
+					.append($wrap);
+
+			wrapAppendedFLAG = true;
     }
   }
 
   function stageNoMove () {
     // Запрещаем таскать фотки
-    stageShaftTouchTail.noMove = size < 2 || $videoPlaying || o_fade;
+		stageShaftTouchTail.noMove = size < 2 || $videoPlaying || o_fade;
   }
 
   function setAutoplayInterval (interval) {
     if (interval === true) interval = '';
-    opts.autoplay = Math.max(Number(interval) || AUTOPLAY_INTERVAL, opts.transitionDuration * 3);
+    opts.autoplay = Math.max(Number(interval) || AUTOPLAY_INTERVAL, TRANSITION_DURATION * 3);
   }
 
   function addOrRemove (FLAG) {
@@ -1965,10 +1976,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (size > 1) {
       o_nav = opts.nav;
       o_navTop = opts.navPosition === 'top';
-      o_arrows = opts.arrows;
       classes.remove.push(selectClass);
+
+			$arrs.show();
+			arrsUpdate();
     } else {
-      o_nav = o_arrows = false;
+      o_nav = false;
+
+			$arrs.hide();
     }
 
     if (opts.autoplay) setAutoplayInterval(opts.autoplay);
@@ -2020,24 +2035,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     // Анимация перехода, и соответствующие классы:
     classes[addOrRemove(o_fade)].push(wrapFadeClass);
-    classes[addOrRemove(!o_fade)].push(wrapSlideClass);
-
-    if (o_arrows) {
-      $arrs.show();
-      arrsUpdate();
-    } else {
-      $arrs.hide();
-    }
-
-
-		// TODO: find better place for wrapCss3Class & wrapTouchClass
-		if (CSS3) {
-			classes.add.push(wrapCss3Class);
-		}
-
-		if (TOUCH) {
-      classes.add.push(wrapTouchClass);
-    }
+    classes[addOrRemove(!o_fade && !stageShaftTouchTail.noMove)].push(wrapSlideClass);
 
     if (krutilka.stop) {
       krutilka.stop();
@@ -2316,10 +2314,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         }
 
         if (opts.captions && dataFrame.caption) {
-          var $caption = $('<div class="' + captionClass +'"></div>').appendTo($frame);
-          $('<div class="' + captionInnerClass +'"></div>')
-              .append(dataFrame.caption)
-              .appendTo($caption);
+          $('<div class="' + captionClass +'"></div>').append(dataFrame.caption).appendTo($frame);
         }
 
         if (dataFrame.video) {
@@ -2405,7 +2400,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       if (eq < startIndex
 					|| eq > stopIndex
-					|| callFit(thisData.$img, specialMeasures, 'cover')) return;
+					|| callFit(thisData.$img, specialMeasures, specialFit)) return;
 
 			loadFLAG && loadImg([eq], 'navThumb', specialMeasures, specialFit);
     });
@@ -2451,7 +2446,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * ОБновляем стрелки, дизаблим крайние
    * */
   function arrsUpdate () {
-		o_arrows && $arrs.each(function (i) {
+		$arrs.each(function (i) {
       $(this).toggleClass(
           arrDisabledClass,
           (!o_loop
@@ -2633,7 +2628,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   this.show = function (options) {
     if (data) {
 			var index,
-					time = opts.transitionDuration,
+					time = TRANSITION_DURATION,
 					overPos;
 
 			if (typeof options !== 'object') {
@@ -2896,10 +2891,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * Применяем любые опции после инициализации
    * */
   this.setOptions = function (options) {
-    if (data) {
-			$.extend(opts, options);
-			reset();
-		}
+		$.extend(opts, options);
+		reset();
     return this;
   };
 
@@ -2914,24 +2907,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   this.destroy = function () {
-    if (data) {
-			// Убиваем фотораму.
-			// Возвращаем исходное состояние:
-			$fotorama.html(fotoramaData.urtext);
+		// Убиваем фотораму.
+		// Возвращаем исходное состояние:
+		$wrap.detach();
+		$fotorama.html(fotoramaData.urtext);
+		wrapAppendedFLAG = false;
 
-			that.data = data = undefined;
-			$.Fotorama.size--;
-		}
-    return this;
-  };
-
-  this.initialize = function (options) {
-    if (!data) {
-			// Восстанавливаем фотораму
-			fotoramaData.api = undefined;
-			$fotorama.fotorama(options);
-		}
-
+		that.data = data = [];
+		$.Fotorama.size--;
     return this;
   };
 
@@ -2990,12 +2973,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
   /**
    * Тап по сцене:
    * */
-  function onStageTap (e) {
-
+  function onStageTap () {
     if ($videoPlaying) {
       unloadVideo($videoPlaying, true, true);
     } else {
-      that.show({index: e.shiftKey || e[_coo] - $stage.offset()[_pos] < measures[_side_] / 3 ? '<' : '>', slow: e.altKey});
+      $wrap.toggleClass(wrapNoControlsClass);
     }
   }
 
@@ -3143,8 +3125,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     that[method] = function () {
       if (method !== 'load') {
         Array.prototype[method].apply(data, arguments);
-      } else if (arguments[0] && typeof arguments[0] === 'object') {
-          opts.data = arguments[0];
+      } else if (arguments[0] && typeof arguments[0] === 'object' && arguments[0].length) {
+				data = arguments[0];
       }
       reset();
       return that;
@@ -3162,46 +3144,44 @@ jQuery.Fotorama = function ($fotorama, opts) {
 		}
   }
 
-  $WINDOW
-			.on('resize', this.resize)
-			.resize();
-
+  $WINDOW.on('resize', this.resize);
   reset();
 };
 
-var methods = {};
-
-// Создаём алиасы публичных методов, для доступа к ним через $(elem).fotorama('method', argument1, argument2, argument3/*, ...*/)
-$.each('show resize load push pop shift unshift reverse sort splice setOptions requestFullScreen cancelFullScreen startAutoplay stopAutoplay playVideo stopVideo destroy'.split(' '), function (i, method) {
-  methods[method] = function () {
-    var args = arguments;
-    return this.each(function (i) {
-      if (i && (method === 'load' || method === 'push' || method === 'unshift' || method === 'splice')) return;
-      if (i && method === 'setOptions' && typeof args[0] === 'object') args[0].data = null;
-
-      var $fotorama = $(this),
-          api = $fotorama.data().api;
-
-      if (api) {
-        api[method].apply(api, args);
-      }
-    });
-  }
-});
+//var methods = {};
+//
+//// Создаём алиасы публичных методов, для доступа к ним через $(elem).fotorama('method', argument1, argument2, argument3/*, ...*/)
+//$.each('show resize load push pop shift unshift reverse sort splice setOptions requestFullScreen cancelFullScreen startAutoplay stopAutoplay playVideo stopVideo destroy'.split(' '), function (i, method) {
+//  methods[method] = function () {
+//    var args = arguments;
+//    return this.each(function (i) {
+//      if (i && (method === 'load' || method === 'push' || method === 'unshift' || method === 'splice')) return;
+//      if (i && method === 'setOptions' && typeof args[0] === 'object') args[0].data = null;
+//
+//      var $fotorama = $(this),
+//          api = $fotorama.data().api;
+//
+//      if (api) {
+//        api[method].apply(api, args);
+//      }
+//    });
+//  }
+//});
 
 // Заворачиваем в джейквери-плагин:
-$.fn.fotorama = function (method) {
-  if (methods[method]) {
-    return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-  } else {
-    var opts = method === 'initialize' ? arguments[1] : method;
+$.fn.fotorama = function (opts) {
+//  if (methods[method]) {
+//    return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+//  } else {
+//    var opts = method;
 
     return this.each(function () {
       var that = this,
           $fotorama = $(this),
-          fotoramaData = $fotorama.data();
+          fotoramaData = $fotorama.data(),
+					api = fotoramaData.api;
 
-      if (!fotoramaData.api) {
+      if (!api) {
         // Если фоторама ещё не инициализирована, включаем её:
         waitFor(function () {
           return !isHidden(that);
@@ -3216,28 +3196,25 @@ $.fn.fotorama = function (method) {
                   {},
 									{
 										// Настройка по умолчанию.
-										loop:false,
-										data:null, // [{}, {}, {}]
-										startIndex:0, // 'random' || id
-										transition:'slide', // 'crossfade' || 'dissolve'
-										arrows:true,
-										keyboard:false,
-										fit:'contain', // true || 'cover' || false
-										nav:'dots', // 'thumbs' || false
-										navPosition:'bottom', // 'top'
-										hash:false,
-										allowFullScreen:false, // true || 'native'
-										transitionDuration:TRANSITION_DURATION,
-										captions:true,
-										autoplay:false,
-										stopAutoplayOnTouch:true,
+										loop: false,
+										startIndex: 0, // 'random' || id
+										transition: 'slide', // 'crossfade' || 'dissolve'
+										keyboard: false,
+										fit: 'contain', // true || 'cover' || false
+										nav: 'dots', // 'thumbs' || false
+										navPosition: 'bottom', // 'top'
+										hash: false,
+										allowFullScreen: false, // true || 'native'
+										captions: true,
+										autoplay: false,
+										stopAutoplayOnTouch: true,
 										width: null, // 500 || '100%'
 										minWidth: null,
 										maxWidth: null, // '100%'
 										height: null,
 										minHeight: null,
 										maxHeight: null,
-										ratio: null, // '16:9' || 500/333
+										ratio: null, // '16/9' || 500/333
 										thumbWidth: THUMB_SIZE,
 										thumbHeight: THUMB_SIZE
 									},
@@ -3248,14 +3225,12 @@ $.fn.fotorama = function (method) {
                   )
               )
           );
-
-          if (typeof opts === 'object') {
-            opts.data = null;
-          }
         });
-      }
+      } else {
+				api.setOptions(opts);
+			}
     });
-  }
+//  }
 };
 
 //$.Fotorama = {};

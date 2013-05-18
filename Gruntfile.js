@@ -54,7 +54,7 @@ module.exports = function (grunt) {
       }
     },
     compass: {
-      dev: {
+			mixdown: {
         options: {
           sassDir: 'SRC/scss',
           cssDir: 'PRODUCT',
@@ -64,7 +64,7 @@ module.exports = function (grunt) {
       }
     },
     concat: {
-      mixdown: {
+      js: {
         files: {
           '_mixdown/fotorama.js': '<%= meta.js %>'
         },
@@ -72,7 +72,7 @@ module.exports = function (grunt) {
           banner: '<%= meta.banner %>'
         }
       },
-      product: {
+      css: {
         files: {
           'PRODUCT/fotorama.uncompressed.css': 'PRODUCT/fotorama.css'
         },
@@ -175,12 +175,12 @@ module.exports = function (grunt) {
   // Default task
   grunt.registerTask('default', [
 		'compass',
-		'cssmin',
 		'jst',
-		'concat:mixdown',
+		'concat:js',
 		'string-replace',
-		'concat:product',
 		'uglify',
+		'concat:css',
+		'cssmin',
 		'clean',
 		'compress'/*,
 		's3'*/

@@ -100,14 +100,6 @@
   @include transition-duration(0);
 }
 
-%hover-icon {
-	&:hover {
-		//opacity: .75;
-		//@extend %transitionDurationZero;
-		//@include scale(1.1);
-	}
-}
-
 %sprite {
   background: url('fotorama.png') no-repeat;
   @media (#{-webkit-min-device-pixel-ratio}: 1.5), (min-resolution: 144dpi) {
