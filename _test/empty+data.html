@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      margin: 0;
+    }
+    div > img { display: block; margin: 0 0 .5em; }
+
+    .fotorama__html > div {
+      font-size: 200px;
+      text-align: center;
+			position: absolute;
+			width: 100%;
+			height: 100%;
+    }
+  </style>
+  
+  <script src="jquery.js"></script>
+
+  <link rel="stylesheet" href="../PRODUCT/fotorama.css">
+  <script src="../_mixdown/fotorama.js"></script>
+</head>
+
+<body style="">
+
+
+<div class="fotorama" data-nav="false" data-loop="false" data-arrows="true" data-width=100% data-max-height="100%" data-fit=contain data-allow-full-screen="native" data-captions="true">
+</div>
+
+<script>
+  $(function () {
+    api = $('.fotorama').data('api');
+  });
+</script>
+
+</body>
+</html>

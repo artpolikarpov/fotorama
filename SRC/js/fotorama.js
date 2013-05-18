@@ -98,6 +98,15 @@ jQuery.Fotorama = function ($fotorama, opts) {
   $wrap[navThumbFrameKey] = $('<div class="' + navFrameClass + ' ' + navFrameThumbClass + '"><div class="' + thumbClass + '"></div></div>');
   $wrap[navDotFrameKey] = $('<div class="' + navFrameClass + ' ' + navFrameDotClass + '"><div class="' + dotClass + '"></div></div>');
 
+
+	if (CSS3) {
+		$wrap.addClass(wrapCss3Class);
+	}
+
+	if (TOUCH) {
+		$wrap.addClass(wrapTouchClass);
+	}
+
   /* Включаем фотораму */
   $.Fotorama.size++; _size++;
   $.Fotorama.api[index] = this;
@@ -107,8 +116,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
    */
   function checkForVideo () {
     $.each(data, function (i, dataFrame) {
-			console.log('checkForVideo', i, dataFrame);
-
       if (!dataFrame.i) {
 				dataFrame.i = dataFrameCount++;
 				var video = findVideoId(dataFrame.video, true);
@@ -131,7 +138,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * Данные
    * */
   function setData () {
-    data = that.data = opts.data && typeof opts.data === 'object' ? opts.data : data || getDataFromHtml($fotorama);
+    data = that.data = data || getDataFromHtml($fotorama);
     size = that.size = data.length;
 
     checkForVideo();
@@ -142,16 +149,17 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (!size) {
       // Если ничего нет, ничего и не показываем
       that.destroy();
-    } else if (!setData.called) {
-      setData.called = true;
+    } else {
       // Заменяем содержимое блока:
-      $fotorama.html($wrap);
+      $fotorama
+					.html('')
+					.append($wrap);
     }
   }
 
   function stageNoMove () {
     // Запрещаем таскать фотки
-    stageShaftTouchTail.noMove = size < 2 || $videoPlaying || o_fade;
+		stageShaftTouchTail.noMove = size < 2 || $videoPlaying || o_fade;
   }
 
   function setAutoplayInterval (interval) {
@@ -235,17 +243,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     // Анимация перехода, и соответствующие классы:
     classes[addOrRemove(o_fade)].push(wrapFadeClass);
-    classes[addOrRemove(!o_fade)].push(wrapSlideClass);
-
-
-		// TODO: find better place for wrapCss3Class & wrapTouchClass
-		if (CSS3) {
-			classes.add.push(wrapCss3Class);
-		}
-
-		if (TOUCH) {
-      classes.add.push(wrapTouchClass);
-    }
+    classes[addOrRemove(!o_fade && !stageShaftTouchTail.noMove)].push(wrapSlideClass);
 
     if (krutilka.stop) {
       krutilka.stop();
@@ -1122,21 +1120,12 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (data) {
 			// Убиваем фотораму.
 			// Возвращаем исходное состояние:
+			$wrap.detach();
 			$fotorama.html(fotoramaData.urtext);
 
-			that.data = data = undefined;
+			//that.data = data = [];
 			$.Fotorama.size--;
 		}
-    return this;
-  };
-
-  this.initialize = function (options) {
-    if (!data) {
-			// Восстанавливаем фотораму
-			fotoramaData.api = undefined;
-			$fotorama.fotorama(options);
-		}
-
     return this;
   };
 
@@ -1195,8 +1184,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   /**
    * Тап по сцене:
    * */
-  function onStageTap (e) {
-
+  function onStageTap () {
     if ($videoPlaying) {
       unloadVideo($videoPlaying, true, true);
     } else {
@@ -1348,8 +1336,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     that[method] = function () {
       if (method !== 'load') {
         Array.prototype[method].apply(data, arguments);
-      } else if (arguments[0] && typeof arguments[0] === 'object') {
-          opts.data = arguments[0];
+      } else if (arguments[0] && typeof arguments[0] === 'object' && arguments[0].length) {
+				data = arguments[0];
       }
       reset();
       return that;
@@ -1396,14 +1384,15 @@ $.fn.fotorama = function (method) {
   if (methods[method]) {
     return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
   } else {
-    var opts = method === 'initialize' ? arguments[1] : method;
+    var opts = method;
 
     return this.each(function () {
       var that = this,
           $fotorama = $(this),
-          fotoramaData = $fotorama.data();
+          fotoramaData = $fotorama.data(),
+					api = fotoramaData.api;
 
-      if (!fotoramaData.api) {
+      if (!api) {
         // Если фоторама ещё не инициализирована, включаем её:
         waitFor(function () {
           return !isHidden(that);
@@ -1419,7 +1408,6 @@ $.fn.fotorama = function (method) {
 									{
 										// Настройка по умолчанию.
 										loop:false,
-										data:null, // [{}, {}, {}]
 										startIndex:0, // 'random' || id
 										transition:'slide', // 'crossfade' || 'dissolve'
 										keyboard:false,
@@ -1449,12 +1437,10 @@ $.fn.fotorama = function (method) {
                   )
               )
           );
-
-          if (typeof opts === 'object') {
-            opts.data = null;
-          }
         });
-      }
+      } else {
+				api.setOptions(opts);
+			}
     });
   }
 };
