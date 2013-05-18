@@ -1116,7 +1116,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 		$fotorama.html(fotoramaData.urtext);
 		wrapAppendedFLAG = false;
 
-		that.data = data = [];
+		data = that.data = [];
 		$.Fotorama.size--;
     return this;
   };
