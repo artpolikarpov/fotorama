@@ -24,3 +24,4 @@ CVS
 .sass-cache
 
 node_modules
+*.zip

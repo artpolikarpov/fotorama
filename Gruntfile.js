@@ -74,7 +74,7 @@ module.exports = function (grunt) {
       },
       product: {
         files: {
-          'PRODUCT/fotorama.css': 'PRODUCT/fotorama.css'
+          'PRODUCT/fotorama.uncompressed.css': 'PRODUCT/fotorama.css'
         },
         options: {
           banner: '<%= meta.banner %>'
@@ -84,7 +84,7 @@ module.exports = function (grunt) {
     cssmin: {
       product: {
         files: {
-          'PRODUCT/fotorama.min.css': 'PRODUCT/fotorama.css'
+          'PRODUCT/fotorama.css': 'PRODUCT/fotorama.css'
         },
         options: {
           banner: '<%= meta.banner.replace(/\\n$/, "") %>'
@@ -94,7 +94,7 @@ module.exports = function (grunt) {
     'string-replace': {
       console: {
         files: {
-          'PRODUCT/fotorama.js': '_mixdown/fotorama.js'
+          'PRODUCT/fotorama.uncompressed.js': '_mixdown/fotorama.js'
         },
         options: {
           replacements: [
@@ -112,21 +112,51 @@ module.exports = function (grunt) {
           banner: '<%= meta.banner %>'
         },
         files: {
-          'PRODUCT/fotorama.min.js': 'PRODUCT/fotorama.js'
+          'PRODUCT/fotorama.js': 'PRODUCT/fotorama.uncompressed.js'
         }
       }
-    }
-    //zip: {
-    //'DOWNLOAD/fotorama.zip': 'PRODUCT'
-//      dev: {
-//        src: ['PRODUCT/fotorama.css', 'PRODUCT/fotorama.js', 'PRODUCT/fotorama.png', 'PRODUCT/fotorama@2x.png'],
-//        dest: 'DOWNLOAD/fotorama.uncompressed.zip'
-//      },
-//      min: {
-//        src: ['PRODUCT/fotorama.min.css', 'PRODUCT/fotorama.min.js', 'PRODUCT/fotorama.png', 'PRODUCT/fotorama@2x.png'],
-//        dest: 'DOWNLOAD/fotorama.zip'
-//      }
-    //}
+    },
+		clean: {
+			zip: ['PRODUCT/fotorama*.zip']
+		},
+		compress: {
+      product: {
+				options: {
+					archive: 'PRODUCT/fotorama-<%= pkg.version %>.zip'
+				},
+        files: [
+					{expand: true, cwd: 'PRODUCT/', src: 'fotorama.css', dest: 'fotorama-<%= pkg.version %>/'},
+					{expand: true, cwd: 'PRODUCT/', src: 'fotorama.js', dest: 'fotorama-<%= pkg.version %>/'},
+					{expand: true, cwd: 'PRODUCT/', src: 'fotorama.png', dest: 'fotorama-<%= pkg.version %>/'},
+					{expand: true, cwd: 'PRODUCT/', src: 'fotorama@2x.png', dest: 'fotorama-<%= pkg.version %>/'}
+				]
+      }
+		},
+		s3: {
+			options: {
+				bucket: 'code.fotorama.io',
+				access: 'public-read',
+				secure: false
+				/* Security credentials are in environment variables */
+			},
+			product: {
+				upload: [
+					{
+						src: 'PRODUCT/*',
+						dest: '<%= pkg.version %>/'
+					}
+				]
+			}
+		},
+
+		connect: {
+			server: {
+				options: {
+					hostname: '*',
+					port: 9001
+				}
+			}
+		}
   });
 
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -136,7 +166,23 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-string-replace');
+	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-contrib-compress');
+	grunt.loadNpmTasks('grunt-s3');
+
+	grunt.loadNpmTasks('grunt-contrib-connect');
 
   // Default task
-  grunt.registerTask('default', ['compass', 'cssmin', 'jst', 'concat:mixdown', 'string-replace', 'concat:product', 'uglify']);
+  grunt.registerTask('default', [
+		'compass',
+		'cssmin',
+		'jst',
+		'concat:mixdown',
+		'string-replace',
+		'concat:product',
+		'uglify',
+		'clean',
+		'compress'/*,
+		's3'*/
+	]);
 };

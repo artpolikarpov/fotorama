@@ -569,7 +569,7 @@ function minMaxLimit (value, min, max) {
  * возвращает величину по определённой координате (top или left)
  * */
 function readTransform (css, _pos) {
-  ////////console.log('---readTransform---', css);
+  //////////console.log('---readTransform---', css);
   return css.match(/-?\d+/g)[_pos === 'left' ? 4 : 5];
 }
 
@@ -2240,7 +2240,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       if (type === 'navThumb') $frame = frameData.$wrap;
 
       function error () {
-        console.log('error', index, src);
+        //console.log('error', index, src);
         // Ошибка
         $img.remove();
 
@@ -2279,7 +2279,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
 
       function loaded() {
-        console.log('loaded', index, src);
+        //console.log('loaded', index, src);
 
         // Удачная загрузка:
         // Кешируем оригинальные размеры картинки
@@ -2501,7 +2501,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   function navAppend ($navFrame, $navShaft, mainFLAG) {
     if (navAppend.done) return;
 
-    console.log('navAppend');
+    //console.log('navAppend');
 
     $navFrame = $navFrame
         .filter(function () {
@@ -2583,7 +2583,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * Обновляем навигацию
    * */
   function navUpdate () {
-    console.log('navUpdate', o_nav);
+    //console.log('navUpdate', o_nav);
     if (o_nav === 'thumbs') {
       $navFrame = $navThumbFrame;
       navFrameKey = navThumbFrameKey;

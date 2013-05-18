@@ -1,6 +1,6 @@
 {
   "name": "Fotorama",
-  "version": "4.0.0",
+  "version": "4.0.2",
   "license": "MIT License",
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -11,6 +11,10 @@
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-jst": "~0.5.0",
     "grunt-contrib-compass": "~0.2.0",
-    "grunt-closure-compiler": "0.0.17"
+    "grunt-closure-compiler": "0.0.17",
+    "grunt-s3": "~0.2.0-alpha.1",
+    "grunt-contrib-compress": "~0.5.0",
+    "grunt-contrib-clean": "~0.4.1",
+    "grunt-contrib-connect": "~0.3.0"
   }
 }
