@@ -66,7 +66,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       // Некоторые опции, которые могут измениться:
       o_loop,
       o_nav,
-      o_navBefore,
+      o_navTop,
       o_arrows,
       o_startIndex = false,
       o_allowFullScreen,
@@ -173,7 +173,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     if (size > 1) {
       o_nav = opts.nav;
-      o_navBefore = opts.navPosition === 'before';
+      o_navTop = opts.navPosition === 'top';
       o_arrows = opts.arrows;
       classes.remove.push(selectClass);
     } else {
@@ -213,11 +213,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
         .insertAfter($anchor)
         .removeClass(hiddenClass);
 
-    if (o_nav && o_navBefore) {
-      classes.add.push(wrapNavBeforeClass);
+    if (o_nav && o_navTop) {
+      //classes.add.push(wrapNavBeforeClass);
       $navWrap.insertBefore($stage);
     } else {
-      classes.remove.push(wrapNavBeforeClass);
+      //classes.remove.push(wrapNavBeforeClass);
       $navWrap.insertAfter($stage);
     }
 
@@ -1435,7 +1435,7 @@ $.fn.fotorama = function (method) {
 										keyboard:false,
 										fit:'contain', // true || 'cover' || false
 										nav:'dots', // 'thumbs' || false
-										navPosition:'after', // 'before'
+										navPosition:'bottom', // 'top'
 										hash:false,
 										allowFullScreen:false, // true || 'native'
 										transitionDuration:TRANSITION_DURATION,

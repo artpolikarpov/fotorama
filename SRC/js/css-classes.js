@@ -3,7 +3,7 @@ var _fotoramaClass = 'fotorama',
     
     wrapClass = _fotoramaClass + '__wrap',
     wrapNotReadyClass = wrapClass + '--not-ready',
-    wrapNavBeforeClass = wrapClass + '--nav-before',
+    wrapNavBeforeClass = wrapClass + '--nav-top',
     wrapHorizontalClass = wrapClass + '--horizontal',
     wrapCssTransitionsClass = wrapClass + '--css-transitions',
     wrapVideoClass = wrapClass + '--video',
