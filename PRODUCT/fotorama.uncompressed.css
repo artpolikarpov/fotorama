@@ -138,7 +138,7 @@
 @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
   .fotorama__arr__arr, .fotorama__fullscreen-icon, .fotorama__video-play, .fotorama__video-close {
     background: url("fotorama@2x.png") no-repeat;
-    background-size: 96px 192px;
+    background-size: 96px 160px;
   }
 }
 
@@ -487,14 +487,14 @@
   left: 0;
 }
 .fotorama__arr--prev .fotorama__arr__arr {
-  background-position: 0 -32px;
+  background-position: 0 0;
 }
 
 .fotorama__arr--next {
   right: 0;
 }
 .fotorama__arr--next .fotorama__arr__arr {
-  background-position: -32px -32px;
+  background-position: -32px 0;
 }
 
 .fotorama__arr--disabled {
@@ -509,16 +509,12 @@
   height: 32px;
   top: 0;
   right: 0;
-  background-position: 0 -64px;
+  background-position: 0 -32px;
   z-index: 20;
 }
 
 .fotorama--fullscreen .fotorama__fullscreen-icon {
-  background-position: -32px -64px;
-}
-
-.fotorama--lightbox .fotorama__fullscreen-icon {
-  background-position: -64px 0;
+  background-position: -32px -32px;
 }
 
 .fotorama__video-play {
@@ -528,15 +524,14 @@
   top: 50%;
   margin-left: -48px;
   margin-top: -48px;
-  background-position: 0 -96px;
+  background-position: 0 -64px;
 }
 
 .fotorama__stage__frame .fotorama__video-play {
   z-index: -1;
 }
 
-.fotorama__nav__frame .fotorama__video-play,
-.fotorama__lightbox-nav__frame .fotorama__video-play {
+.fotorama__nav__frame .fotorama__video-play {
   width: 32px;
   height: 32px;
   left: 50%;
