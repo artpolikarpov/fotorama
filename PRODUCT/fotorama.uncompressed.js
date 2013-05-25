@@ -2599,7 +2599,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         return frameData.state || _activeIndex !== activeIndex;
       }, function () {
         if (pausedAutoplayFLAG || _activeIndex !== activeIndex) return;
-        that.show(normalizeIndex(activeIndex + 1));
+        that.show({index: normalizeIndex(activeIndex + 1), auto: true});
       });
     }, opts.autoplay);
   }
@@ -2664,7 +2664,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
 		stageFramePosition([dirtyIndex]);
 		unloadVideo(false, activeFrame.i !== data[normalizeIndex(repositionIndex)].i);
-		$fotorama.trigger('fotorama:show');
+		$fotorama.trigger('fotorama:show', options.auto);
 
 		function onEnd () {
 			frameDraw([activeIndex, prevIndex, nextIndex], 'stage');
@@ -2672,7 +2672,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 			loadImg([activeIndex, prevIndex, nextIndex], 'stage');
 			stageShaftReposition();
 
-			$fotorama.trigger('fotorama:showend');
+			$fotorama.trigger('fotorama:showend', options.auto);
 
 			if (opts.hash && showedFLAG) {
 				setHash(activeFrame.id || activeIndex + 1, that.eq);
@@ -2909,7 +2909,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 		$fotorama.html(fotoramaData.urtext);
 		wrapAppendedFLAG = false;
 
-		that.data = data = [];
+		data = that.data = [];
 		$.Fotorama.size--;
     return this;
   };
@@ -3107,7 +3107,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       if ($videoPlaying) {
         unloadVideo($videoPlaying, true);
       }
-      that.show({index: activeIndex, time: 0});
+      that.show({index: activeIndex, time: 0, auto: true});
       that.resize();
     } else {
       that.destroy();
@@ -3218,7 +3218,6 @@ $(function () {
   // Авто-инициализация по классу
   $('.fotorama').fotorama();
 });
-
 this["$"] = this["$"] || {};
 this["$"]["Fotorama"] = this["$"]["Fotorama"] || {};
 this["$"]["Fotorama"]["jst"] = this["$"]["Fotorama"]["jst"] || {};

@@ -50,7 +50,7 @@ module.exports = function (grunt) {
       },
       js: {
         files: '<%= meta.js %>',
-        tasks: 'concat:mixdown'
+        tasks: 'concat:js'
       }
     },
     compass: {
@@ -134,7 +134,7 @@ module.exports = function (grunt) {
 		},
 		s3: {
 			options: {
-				bucket: 'code.fotorama.io',
+				bucket: 'fotorama',
 				access: 'public-read',
 				secure: false
 				/* Security credentials are in environment variables */
