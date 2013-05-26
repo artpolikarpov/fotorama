@@ -17,7 +17,7 @@
 	cursor: default;
 
 	.fotorama__wrap--css3 & {
-		@include transition(all $time);
+		//@include transition(all $time);
 	}
 }
 

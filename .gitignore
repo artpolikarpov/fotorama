@@ -2,21 +2,6 @@
 .DS_Store
 profile
 
-# xcode noise
-build/*
-*.mode1
-*.mode1v3
-*.mode2v3
-*.perspective
-*.perspectivev3
-*.pbxuser
-*.xcworkspace
-xcuserdata
-
-# svn & cvs
-.svn
-CVS
-
 # webstorm noise
 .idea
 
@@ -25,3 +10,4 @@ CVS
 
 node_modules
 *.zip
+grunt-s3.json

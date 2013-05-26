@@ -134,10 +134,11 @@ module.exports = function (grunt) {
 		},
 		s3: {
 			options: {
+				key: '<%= grunt.file.readJSON("grunt-s3.json").key %>',
+				secret: '<%= grunt.file.readJSON("grunt-s3.json").secret %>',
 				bucket: 'fotorama',
 				access: 'public-read',
 				secure: false
-				/* Security credentials are in environment variables */
 			},
 			product: {
 				upload: [
@@ -153,7 +154,8 @@ module.exports = function (grunt) {
 			server: {
 				options: {
 					hostname: '*',
-					port: 9001
+					port: 9001,
+					keepalive: true
 				}
 			}
 		}
