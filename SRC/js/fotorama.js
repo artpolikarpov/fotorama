@@ -210,7 +210,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       frameDraw(size, 'navDot');
     } else if (o_nav === 'thumbs') {
 	    setStyle($style, $.Fotorama.jst.style({thumbWidth: o_thumbSide , thumbHeight: o_thumbSide2, thumbMargin: MARGIN, stamp: stamp}));
-	    
+
       $nav
           .addClass(navThumbsClass)
           .removeClass(navDotsClass);

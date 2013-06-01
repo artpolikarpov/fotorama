@@ -1,5 +1,5 @@
 /*!
- * Fotorama 4.0.2 | MIT License
+ * Fotorama 4.0.3 | MIT License
  */
 .fotorama__stage__shaft, .fotorama__stage__frame, .fotorama__html {
   position: absolute;
@@ -135,7 +135,6 @@
 .fotorama__arr__arr, .fotorama__fullscreen-icon, .fotorama__video-play, .fotorama__video-close {
   background: url("fotorama.png") no-repeat;
 }
-
 @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
   .fotorama__arr__arr, .fotorama__fullscreen-icon, .fotorama__video-play, .fotorama__video-close {
     background: url("fotorama@2x.png") no-repeat;

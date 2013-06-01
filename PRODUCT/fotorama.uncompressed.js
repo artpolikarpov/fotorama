@@ -1,5 +1,5 @@
 /*!
- * Fotorama 4.0.2 | MIT License
+ * Fotorama 4.0.3 | MIT License
  */
 (function (window, document, $, undefined) {
 
@@ -1244,7 +1244,7 @@ function touch ($el, options) {
     preventEventTimeout = setTimeout(function () {
       preventEvent = false;
     }, 1000);
-    (options.onEnd || noop).call(el, {moved: !!movedFLAG, $target: $target, control: controlTouch, startEvent: startEvent});
+    (options.onEnd || noop).call(el, {moved: !!movedFLAG, $target: $target, control: controlTouch, startEvent: startEvent, aborted: !e});
     touchEnabledFLAG = false;
   }
 
@@ -1973,8 +1973,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     extendMeasures(opts);
 
-    setStyle($style, $.Fotorama.jst.style({thumbWidth: o_thumbSide , thumbHeight: o_thumbSide2, thumbMargin: MARGIN, stamp: stamp}));
-
     // Создаём или убираем кучу навигационных кадров под точки или превьюшки
     if (o_nav === true || o_nav === 'dots') {
       $nav
@@ -1982,6 +1980,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
           .removeClass(navThumbsClass);
       frameDraw(size, 'navDot');
     } else if (o_nav === 'thumbs') {
+	    setStyle($style, $.Fotorama.jst.style({thumbWidth: o_thumbSide , thumbHeight: o_thumbSide2, thumbMargin: MARGIN, stamp: stamp}));
+
       $nav
           .addClass(navThumbsClass)
           .removeClass(navDotsClass);
@@ -2992,16 +2992,18 @@ jQuery.Fotorama = function ($fotorama, opts) {
     onEnd: function(result) {
 			//onTouchEnd();
 
+	    //console.log('onEnd', result);
+
       setShadow($stage);
-      if (result.moved) {
+      if (result.pos !== result.newPos) {
 				var index = getIndexByPos(result.newPos, measures.w, MARGIN, repositionIndex);
 				that.show({
 					index: index,
 					time: result.time,
 					overPos: result.overPos
 				});
-      } else {
-				onStageTap(result.startEvent);
+      } else if (!result.aborted) {
+				onStageTap();
 			}
     },
     timeLow: 1,
