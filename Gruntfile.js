@@ -142,9 +142,20 @@ module.exports = function (grunt) {
 			},
 			product: {
 				upload: [
+						// Separate version to separate folder
 					{
 						src: 'PRODUCT/*',
 						dest: '<%= pkg.version %>/'
+					},
+
+						// Latest to the root
+					{
+						src: 'PRODUCT/fotorama.*',
+						dest: ''
+					},
+					{
+						src: 'PRODUCT/fotorama@2x.png',
+						dest: 'fotorama@2x.png'
 					}
 				]
 			}

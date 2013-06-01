@@ -87,7 +87,7 @@ function touch ($el, options) {
 
     extendEvent(e, touchFLAG);
 
-    var xDiff = Math.abs(e._x - startEvent._x),
+    var xDiff = Math.abs(e._x - startEvent._x), // opt _x → _pageX
         yDiff = Math.abs(e._y - startEvent._y),
         xyDiff = xDiff - yDiff,
         xWin = xyDiff >= 3,
@@ -125,7 +125,7 @@ function touch ($el, options) {
     preventEventTimeout = setTimeout(function () {
       preventEvent = false;
     }, 1000);
-    (options.onEnd || noop).call(el, {moved: !!movedFLAG, $target: $target, control: controlTouch, startEvent: startEvent});
+    (options.onEnd || noop).call(el, {moved: !!movedFLAG, $target: $target, control: controlTouch, startEvent: startEvent, aborted: !e});
     touchEnabledFLAG = false;
   }
 

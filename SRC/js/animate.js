@@ -6,19 +6,17 @@ function slide ($el, options) {
   var elPos = Math.round(options.pos),
       onEndFn = options.onEnd || noop;
 
-  if (typeof options.overPos !== 'undefined' && options.overPos !== options.pos) {
+  /*if (typeof options.overPos !== 'undefined' && options.overPos !== options.pos) {
     elPos = options.overPos;
     onEndFn = function () {
       slide($el, $.extend({}, options, {overPos: options.pos, time: Math.max(TRANSITION_DURATION, options.time / 2)}))
     };
-  }
+  }*/
 
-  var translate = getTranslate(elPos, options._pos);
+  var translate = getTranslate(elPos);
 
   if (CSS3) {
-    $el
-        .css(getDuration(options.time))
-        .css(translate);
+    $el.css($.extend(getDuration(options.time), translate));
     if (options.time > 10) {
       afterTransition($el, onEndFn, options.time);
     } else {
@@ -63,13 +61,8 @@ function fade ($el1, $el2, options) {
     }
 
     setTimeout(function () {
-      $el1
-          .css(duration)
-          .css(opacity1);
-
-      $el2
-          .css(duration)
-          .css(opacity0);
+      $el1.css($.extend(duration, opacity1))
+      $el2.css($.extend(duration, opacity0));
     }, 4);
 
     if (options.time > 10 && (_$el1 || _$el2)) {

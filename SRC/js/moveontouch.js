@@ -27,12 +27,12 @@ function moveOnTouch ($el, options) {
       movedFLAG;
 
   function startTracking (e) {
-    startCoo = coo = e[_coo];
+    startCoo = coo = e._x;
 
     // Начинаем запись маршрута курсора
     moveTrack = [[new Date().getTime(), startCoo]];
 
-    startElPos = moveElPos = stop($el, _pos);
+    startElPos = moveElPos = stop($el);
 
     (options.onStart || noop).call(el, e, {pos: startElPos});
   }
@@ -58,7 +58,7 @@ function moveOnTouch ($el, options) {
       startTracking(e);
     }
 
-    coo = e[_coo];
+    coo = e._x;
 
     // Продолжаем запись маршрута курсора
     moveTrack.push([new Date().getTime(), coo]);
@@ -75,7 +75,7 @@ function moveOnTouch ($el, options) {
 
 
     if (!tail.noMove) {
-      $el.css(getTranslate(moveElPos, _pos));
+      $el.css(getTranslate(moveElPos));
       if (!movedFLAG) {
         movedFLAG = true;
         $BODY.addClass('grabbing');
@@ -139,7 +139,7 @@ function moveOnTouch ($el, options) {
         newPos = virtualPos;
       }
 
-      if (!forwardFLAG && virtualPos > maxPos || forwardFLAG && virtualPos < minPos) {
+      /*if (!forwardFLAG && virtualPos > maxPos || forwardFLAG && virtualPos < minPos) {
         limitPos = forwardFLAG ? minPos : maxPos;
         overPos = virtualPos - limitPos;
         if (!snap) {
@@ -147,7 +147,7 @@ function moveOnTouch ($el, options) {
         }
         overPos = minMaxLimit(newPos + overPos * .03, limitPos - 50, limitPos + 50);
         time = Math.abs((moveElPos - overPos) / (speed / friction));
-      }
+      }*/
     }
 
     time *= slowFLAG ? 10 : 1;

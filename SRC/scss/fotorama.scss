@@ -147,7 +147,7 @@ $time: 333ms;
   .fotorama__stage__frame--video {
     background-color: #000;
     .fotorama__img,
-		.fotorama__html-wrap {
+		.fotorama__html {
       opacity: 0;
     }
   }
@@ -156,7 +156,12 @@ $time: 333ms;
 .fotorama__img {
 	border: 0;
   overflow: hidden;
+	//@extend %stretch;
 	@extend %stretch-for-fit;
+	//width: auto !important;
+	//height: auto !important;
+  //-webkit-backface-visibility: hidden;
+	//@include scale(.3);
 }
 
 .fotorama__img--full {
@@ -363,7 +368,7 @@ $time: 333ms;
     @extend %initial-translate;
   }
   .fotorama__img,
-  .fotorama__html-wrap,
+  .fotorama__html,
   .fotorama__wrap--fade .fotorama__stage__frame,
 	.fotorama__caption {
     @include transition(opacity $time);

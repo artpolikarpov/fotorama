@@ -135,6 +135,7 @@
 .fotorama__arr__arr, .fotorama__fullscreen-icon, .fotorama__video-play, .fotorama__video-close {
   background: url("fotorama.png") no-repeat;
 }
+
 @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
   .fotorama__arr__arr, .fotorama__fullscreen-icon, .fotorama__video-play, .fotorama__video-close {
     background: url("fotorama@2x.png") no-repeat;
@@ -259,7 +260,7 @@
   background-color: #000;
 }
 .fotorama__wrap--video .fotorama__stage__frame--video .fotorama__img,
-.fotorama__wrap--video .fotorama__stage__frame--video .fotorama__html-wrap {
+.fotorama__wrap--video .fotorama__stage__frame--video .fotorama__html {
   opacity: 0;
 }
 
@@ -427,7 +428,7 @@
 }
 
 .fotorama__wrap--css3 .fotorama__img,
-.fotorama__wrap--css3 .fotorama__html-wrap,
+.fotorama__wrap--css3 .fotorama__html,
 .fotorama__wrap--css3 .fotorama__wrap--fade .fotorama__stage__frame,
 .fotorama__wrap--css3 .fotorama__caption {
   -webkit-transition: opacity 333ms;
@@ -613,19 +614,13 @@
   background-size: 1px 100%, 5px 100%;
   cursor: default;
 }
-.fotorama__wrap--css3 .fotorama__shadow {
-  -webkit-transition: all 333ms;
-  -moz-transition: all 333ms;
-  -o-transition: all 333ms;
-  transition: all 333ms;
-}
 
 .fotorama__shadow--left {
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, transparent), color-stop(25%, rgba(0, 0, 0, 0.3)), color-stop(75%, rgba(0, 0, 0, 0.3)), color-stop(100%, transparent)), -webkit-gradient(radial, 0 50%, 0, 0 50%, 100, color-stop(0%, rgba(0, 0, 0, 0.5)), color-stop(100%, transparent));
-  background-image: -webkit-linear-gradient(transparent, rgba(0, 0, 0, 0.3) 25%, rgba(0, 0, 0, 0.3) 75%, transparent), -webkit-radial-gradient(0 50%, farthest-side, rgba(0, 0, 0, 0.5), transparent);
-  background-image: -moz-linear-gradient(transparent, rgba(0, 0, 0, 0.3) 25%, rgba(0, 0, 0, 0.3) 75%, transparent), -moz-radial-gradient(0 50%, farthest-side, rgba(0, 0, 0, 0.5), transparent);
-  background-image: -o-linear-gradient(transparent, rgba(0, 0, 0, 0.3) 25%, rgba(0, 0, 0, 0.3) 75%, transparent), -o-radial-gradient(0 50%, farthest-side, rgba(0, 0, 0, 0.5), transparent);
-  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.3) 25%, rgba(0, 0, 0, 0.3) 75%, transparent), radial-gradient(0 50%, farthest-side, rgba(0, 0, 0, 0.5), transparent);
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, transparent), color-stop(25%, rgba(0, 0, 0, 0.2)), color-stop(75%, rgba(0, 0, 0, 0.3)), color-stop(100%, transparent)), -webkit-gradient(radial, 0 50%, 0, 0 50%, 100, color-stop(0%, rgba(0, 0, 0, 0.4)), color-stop(100%, transparent));
+  background-image: -webkit-linear-gradient(transparent, rgba(0, 0, 0, 0.2) 25%, rgba(0, 0, 0, 0.3) 75%, transparent), -webkit-radial-gradient(0 50%, farthest-side, rgba(0, 0, 0, 0.4), transparent);
+  background-image: -moz-linear-gradient(transparent, rgba(0, 0, 0, 0.2) 25%, rgba(0, 0, 0, 0.3) 75%, transparent), -moz-radial-gradient(0 50%, farthest-side, rgba(0, 0, 0, 0.4), transparent);
+  background-image: -o-linear-gradient(transparent, rgba(0, 0, 0, 0.2) 25%, rgba(0, 0, 0, 0.3) 75%, transparent), -o-radial-gradient(0 50%, farthest-side, rgba(0, 0, 0, 0.4), transparent);
+  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.2) 25%, rgba(0, 0, 0, 0.3) 75%, transparent), radial-gradient(0 50%, farthest-side, rgba(0, 0, 0, 0.4), transparent);
   background-position: 0 0, 0 0;
   left: -10px;
 }
@@ -634,11 +629,11 @@
 }
 
 .fotorama__shadow--right {
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, transparent), color-stop(25%, rgba(0, 0, 0, 0.3)), color-stop(75%, rgba(0, 0, 0, 0.3)), color-stop(100%, transparent)), -webkit-gradient(radial, 100% 50%, 0, 100% 50%, 100, color-stop(0%, rgba(0, 0, 0, 0.5)), color-stop(100%, transparent));
-  background-image: -webkit-linear-gradient(transparent, rgba(0, 0, 0, 0.3) 25%, rgba(0, 0, 0, 0.3) 75%, transparent), -webkit-radial-gradient(100% 50%, farthest-side, rgba(0, 0, 0, 0.5), transparent);
-  background-image: -moz-linear-gradient(transparent, rgba(0, 0, 0, 0.3) 25%, rgba(0, 0, 0, 0.3) 75%, transparent), -moz-radial-gradient(100% 50%, farthest-side, rgba(0, 0, 0, 0.5), transparent);
-  background-image: -o-linear-gradient(transparent, rgba(0, 0, 0, 0.3) 25%, rgba(0, 0, 0, 0.3) 75%, transparent), -o-radial-gradient(100% 50%, farthest-side, rgba(0, 0, 0, 0.5), transparent);
-  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.3) 25%, rgba(0, 0, 0, 0.3) 75%, transparent), radial-gradient(100% 50%, farthest-side, rgba(0, 0, 0, 0.5), transparent);
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, transparent), color-stop(25%, rgba(0, 0, 0, 0.2)), color-stop(75%, rgba(0, 0, 0, 0.3)), color-stop(100%, transparent)), -webkit-gradient(radial, 100% 50%, 0, 100% 50%, 100, color-stop(0%, rgba(0, 0, 0, 0.4)), color-stop(100%, transparent));
+  background-image: -webkit-linear-gradient(transparent, rgba(0, 0, 0, 0.2) 25%, rgba(0, 0, 0, 0.3) 75%, transparent), -webkit-radial-gradient(100% 50%, farthest-side, rgba(0, 0, 0, 0.4), transparent);
+  background-image: -moz-linear-gradient(transparent, rgba(0, 0, 0, 0.2) 25%, rgba(0, 0, 0, 0.3) 75%, transparent), -moz-radial-gradient(100% 50%, farthest-side, rgba(0, 0, 0, 0.4), transparent);
+  background-image: -o-linear-gradient(transparent, rgba(0, 0, 0, 0.2) 25%, rgba(0, 0, 0, 0.3) 75%, transparent), -o-radial-gradient(100% 50%, farthest-side, rgba(0, 0, 0, 0.4), transparent);
+  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.2) 25%, rgba(0, 0, 0, 0.3) 75%, transparent), radial-gradient(100% 50%, farthest-side, rgba(0, 0, 0, 0.4), transparent);
   background-position: 100% 0, 100% 0;
   right: -10px;
 }

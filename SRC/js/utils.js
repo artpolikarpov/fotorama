@@ -14,19 +14,19 @@ function minMaxLimit (value, min, max) {
  * Парсит матрицу трансформации элемента,
  * возвращает величину по определённой координате (top или left)
  * */
-function readTransform (css, _pos) {
+function readTransform (css) {
   ////////console.log('---readTransform---', css);
-  return css.match(/-?\d+/g)[_pos === 'left' ? 4 : 5];
+  return css.match(/-?\d+/g)[4];
 }
 
 /**
  * Функция для чтения актуальной позиции элемента
  * */
-function readPosition ($el, _pos) {
+function readPosition ($el) {
   if (CSS3) {
-    return Number(readTransform($el.css('transform'), _pos));
+    return Number(readTransform($el.css('transform')));
   } else {
-    return Number($el.css(_pos).replace('px', ''));
+    return Number($el.css('left').replace('px', ''));
   }
 }
 
@@ -34,13 +34,12 @@ function readPosition ($el, _pos) {
  * Возвращает позицию для использования в .css(), например:
  *   $el.css(getTranslate(100, 'left'));
  * */
-function getTranslate (pos, _pos) {
+function getTranslate (pos) {
   var obj = {};
   if (CSS3) {
-    obj.transform = _pos === 'left' ? 'translate3d(' + pos + 'px,0,0)' : 'translate3d(0,' + pos + 'px,0)';
+    obj.transform = 'translate3d(' + pos + 'px,0,0)';
   } else {
-    obj[_pos] = pos;
-    obj[_pos === 'left' ? 'top' : 'left'] = 0;
+    obj.left = pos;
   }
   return obj;
 }
@@ -162,15 +161,15 @@ function afterTransition ($el, fn, time) {
  * Универсальная функция для остановки анимируемого объекта,
  * возвращает актуальную позицию
  * */
-function stop ($el, _pos) {
+function stop ($el) {
   if (CSS3) {
     $el.css(getDuration(0));
     afterTransition($el, noop);
   } else {
     $el.stop();
   }
-  var lockedLeft = readPosition($el, _pos);
-  $el.css(getTranslate(lockedLeft, _pos));
+  var lockedLeft = readPosition($el);
+  $el.css(getTranslate(lockedLeft));
   return lockedLeft;
 }
 
@@ -351,30 +350,34 @@ function waitFor (test, fn, timeout) {
  * Вписывает объект в заданные рамки тремя способами: none, contain и cover
  * */
 function fit ($el, measuresToFit, method) {
+	console.log('fit');
+
   var elData = $el.data(),
       measures = elData.measures;
 
-  if (measures && (!elData.last ||
-      elData.last.mw !== measures.width ||
-      elData.last.mh !== measures.height ||
-      elData.last.mr !== measures.ratio ||
-      elData.last.mfw !== measuresToFit.width__ ||
-      elData.last.mfh !== measuresToFit.height__ ||
-      elData.last.mm !== method)) {
+  if (measures && (!elData.l ||
+      elData.l.w !== measures.width ||
+      elData.l.h !== measures.height ||
+      elData.l.r !== measures.ratio ||
+      elData.l.W !== measuresToFit.w ||
+      elData.l.H !== measuresToFit.h ||
+      elData.l.m !== method)) {
+
+		console.log('fit execute', measures, measuresToFit);
 
     var width = measures.width,
         height = measures.height,
-        ratio = measuresToFit.width_ / measuresToFit.height_,
+        ratio = measuresToFit.w / measuresToFit.h,
         biggerRatioFLAG = measures.ratio >= ratio,
         fitFLAG = method === true,
         containFLAG = method === 'contain',
         coverFLAG = method === 'cover';
 
     if (biggerRatioFLAG && (fitFLAG || containFLAG) || !biggerRatioFLAG && coverFLAG) {
-      width = minMaxLimit(measuresToFit.width_, 0, fitFLAG ? width : Infinity);
+      width = minMaxLimit(measuresToFit.w, 0, fitFLAG ? width : Infinity);
       height = width / measures.ratio;
     } else if (biggerRatioFLAG && coverFLAG || !biggerRatioFLAG && (fitFLAG || containFLAG)) {
-      height = minMaxLimit(measuresToFit.height_, 0, fitFLAG ? height : Infinity);
+      height = minMaxLimit(measuresToFit.h, 0, fitFLAG ? height : Infinity);
       width = height * measures.ratio;
     }
 
@@ -385,13 +388,13 @@ function fit ($el, measuresToFit, method) {
       marginTop: Math.round(- height / 2)
     });
 
-    elData.last = {
-      mw: measures.width,
-      mh: measures.height,
-      mr: measures.ratio,
-      mfw: measuresToFit.width_,
-      mfh: measuresToFit.height_,
-      mm: method
+    elData.l = {
+      w: measures.width,
+      h: measures.height,
+      r: measures.ratio,
+      W: measuresToFit.w,
+      H: measuresToFit.h,
+      m: method
     }
   }
 }
@@ -425,24 +428,6 @@ function getIndexFromHash (hash, data, ok) {
   }
 
   return index;
-}
-
-function setHash (hash, eq) {
-  if (eq) return;
-
-  setHash.on = true;
-
-  location.replace(/*location.protocol
-      + '//'
-      + location.href.host
-      + location.pathname.replace(/^\/?/, '/')
-      + location.search
-      + */'#' + hash);
-
-  clearTimeout(setHash.timeout);
-  setHash.timeout = setTimeout(function () {
-    setHash.on = false;
-  }, 100);
 }
 
 function smartClick ($el, fn, _options) {

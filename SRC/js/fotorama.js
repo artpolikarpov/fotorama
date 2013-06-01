@@ -141,7 +141,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     checkForVideo();
 
     activeIndex = limitIndex(activeIndex);
-    navAppend.done = false;
+    navAppend.ok = false;
 
     if (!size) {
       // Если ничего нет, ничего и не показываем
@@ -195,14 +195,12 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     if (opts.autoplay) setAutoplayInterval(opts.autoplay);
 
-    o_thumbSide = numberFromMeasure(opts['thumb' + capitaliseFirstLetter(_side)]) || THUMB_SIZE;
-    o_thumbSide2 = numberFromMeasure(opts['thumb' + capitaliseFirstLetter(_side2)]) || THUMB_SIZE;
+    o_thumbSide = numberFromMeasure(opts.thumbWidth) || THUMB_SIZE;
+    o_thumbSide2 = numberFromMeasure(opts.thumbHeight) || THUMB_SIZE;
 
     stageNoMove();
 
     extendMeasures(opts);
-
-    setStyle($style, $.Fotorama.jst.style({thumbWidth: o_thumbSide , thumbHeight: o_thumbSide2, thumbMargin: MARGIN, stamp: stamp}));
 
     // Создаём или убираем кучу навигационных кадров под точки или превьюшки
     if (o_nav === true || o_nav === 'dots') {
@@ -211,6 +209,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
           .removeClass(navThumbsClass);
       frameDraw(size, 'navDot');
     } else if (o_nav === 'thumbs') {
+	    setStyle($style, $.Fotorama.jst.style({thumbWidth: o_thumbSide , thumbHeight: o_thumbSide2, thumbMargin: MARGIN, stamp: stamp}));
+	    
       $nav
           .addClass(navThumbsClass)
           .removeClass(navDotsClass);
@@ -290,16 +290,16 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * Параметры для таскания шахты
    * */
   function setStageShaftMinMaxPosAndSnap () {
-    stageShaftData.minPos = o_loop ? - Infinity : - getPosByIndex(size - 1, measures[_side_], MARGIN, repositionIndex);
-    stageShaftData.maxPos = o_loop? Infinity : - getPosByIndex(0, measures[_side_], MARGIN, repositionIndex);
-    stageShaftData.snap = measures[_side_] + MARGIN;
+    stageShaftData.minPos = o_loop ? - Infinity : - getPosByIndex(size - 1, measures.w, MARGIN, repositionIndex);
+    stageShaftData.maxPos = o_loop? Infinity : - getPosByIndex(0, measures.w, MARGIN, repositionIndex);
+    stageShaftData.snap = measures.w + MARGIN;
   }
 
   /**
    * Параметры для таскания шахты c точками и превьюшками
    * */
   function setNavShaftMinMaxPos () {
-    navShaftData.minPos = Math.min(0, measures[_side_] - $navShaft[_side]());
+    navShaftData.minPos = Math.min(0, measures.w - $navShaft.width());
     navShaftData.maxPos = 0;
 
     navShaftTouchTail.noMove = navShaftData.minPos === navShaftData.maxPos;
@@ -323,7 +323,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 						key = '$' + type + 'Frame',
 						$frame = dataFrame[key];
 
-				fn.call(this, i, index, dataFrame, $frame, key, $frame ? $frame.data() : undefined);
+				fn.call(this, i, index, dataFrame, $frame, key, $frame && $frame.data());
 			}
     });
   }
@@ -449,7 +449,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       function waitAndLoad () {
         waitFor(function () {
-          return !isHidden(img);
+          return !isHidden(img)/* && !touchedFLAG*/;
         }, function () {
           loaded();
         });
@@ -506,9 +506,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * */
   function frameDraw (indexes, type) {
     eachIndex(indexes, type, function (i, index, dataFrame, $frame, key, frameData) {
-      if ($frame) return;
+      console.log('frameDraw');
 
-      $frame = dataFrame[key] = $wrap[key].clone();
+			if ($frame) return;
+
+			console.log('frameDraw execute');
+
+			$frame = dataFrame[key] = $wrap[key].clone();
       frameData = $frame.data();
       frameData.data = dataFrame;
 
@@ -531,7 +535,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
               that.playVideo();
             }, {
               onStart: function (e) {
-                onTouch.call(this, e);
+                onTouchStart.call(this, e);
                 stageShaftTouchTail.control = true;
               },
               tail: stageShaftTouchTail
@@ -570,16 +574,24 @@ jQuery.Fotorama = function ($fotorama, opts) {
       if (!$frame) return;
 
       $frame
-          .css(_pos, o_fade ? 0 : getPosByIndex(index, measures[_side_], MARGIN, repositionIndex))
-          .css(_pos2, 0)
-          .css(o_fade ? {} : getDuration(0))
+          .css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, MARGIN, repositionIndex)}, o_fade && getDuration(0)))
           .fadeTo(0, o_fade && index !== activeIndex ? 0 : 1);
 
       if (!frameData.appended) {
-        frameData.appended = true;
         $frame.appendTo($stageShaft);
-        unloadVideo(dataFrame.$video);
+				frameData.appended = true;
+				unloadVideo(dataFrame.$video);
       }
+
+
+
+			///
+//			if (frameData.hidden) {
+//				$frame.show();
+//				frameData.hidden = false;
+//
+//			}
+			///
 
       var method = dataFrame.fit || opts.fit;
 
@@ -593,11 +605,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     var thumbSide = o_thumbSide + MARGIN,
         startIndex = limitIndex(getIndexByPos(pos + thumbSide, thumbSide)),
-        stopIndex = limitIndex(getIndexByPos(pos - measures[_side_]/* - thumbSide*/, thumbSide)),
+        stopIndex = limitIndex(getIndexByPos(pos - measures.w/* - thumbSide*/, thumbSide)),
         specialMeasures = {};
 
-    specialMeasures[_side_] = o_thumbSide;
-    specialMeasures[_side2_] = o_thumbSide2;
+    specialMeasures.w = o_thumbSide;
+    specialMeasures.h = o_thumbSide2;
 
     $navThumbFrame.each(function () {
       var $this = $(this),
@@ -617,7 +629,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * Вставляем, удаляем, сортируем точки и превьюшки:
    * */
   function navAppend ($navFrame, $navShaft, mainFLAG) {
-    if (!navAppend.done) {
+    if (!navAppend.ok) {
 			$navFrame = $navFrame
 					.filter(function () {
 						var actual,
@@ -645,7 +657,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 				setNavShaftMinMaxPos();
 			}
 
-			navAppend.done = true;
+			navAppend.ok = true;
 		}
   }
 
@@ -665,14 +677,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function getNavFrameCenter($navFrame) {
-    return $navFrame.position()[_pos] + (o_thumbSide) / 2
+    return $navFrame.position().left + (o_thumbSide) / 2
   }
 
   function slideThumbBorder (time) {
     slide($thumbBorder, {
       time: time * .9,
-      pos: getNavFrameCenter(that.activeFrame[navFrameKey]),
-      _pos: _pos
+      pos: getNavFrameCenter(that.activeFrame[navFrameKey])
     });
   }
 
@@ -683,7 +694,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       slide($navShaft, {
         time: time,
         pos: pos,
-        _pos: _pos,
         onEnd: function () {
           thumbsDraw(pos, true);
         }
@@ -705,9 +715,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     } else if (o_nav) {
       $navFrame = $navDotFrame;
       navFrameKey = navDotFrameKey;
-    } else {
-      return;
-    }
+    } else return;
 
     navAppend($navFrame, $navShaft, true);
     $navFrame.removeClass(activeClass);
@@ -718,22 +726,31 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * Позиционируем шахту, чтобы текущий кадр имел нулевую позицию
    * */
   function stageShaftReposition () {
-    repositionIndex = dirtyIndex = activeIndex;
+		/*if (touchedFLAG) {
+			waitFor(function () {
+				return !touchedFLAG;
+			}, stageShaftReposition, 100);
+			return;
+		}*/
+		repositionIndex = dirtyIndex = activeIndex;
 
-    var dataFrame = that.activeFrame,
-        $frame = dataFrame[stageFrameKey];
+		var dataFrame = that.activeFrame,
+				$frame = dataFrame[stageFrameKey];
 
-    if ($frame) {
+		if ($frame) {
 			// Скрываем все лишние кадры
 			$stageFrame
 					.not(that.activeFrame[stageFrameKey].addClass(activeClass))
+					//.css({display: 'none'})
+					//.hide()
+					//.data('hidden', true)
 					.detach()
 					.data('appended', false)
 					.removeClass(activeClass + ' ' + fadeFrontClass + ' ' + fadeRearClass);
 
 			// Возвращаем шахту в начальную позицию
-			stop($stageShaft, _pos);
-			$stageShaft.css(getTranslate(0, _pos));
+			stop($stageShaft);
+			$stageShaft.css(getTranslate(0));
 
 			// Показываем нужные
 			stageFramePosition([activeIndex, prevIndex, nextIndex]);
@@ -770,20 +787,32 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }
 
-  function onTouch () {
-    if (opts.stopAutoplayOnTouch) {
+  /*var touchedFLAG; */
+
+	function onTouchStart () {
+		/*clearTimeout(onTouchEnd.t);
+		touchedFLAG = 1;*/
+
+		if (opts.stopAutoplayOnTouch) {
       that.stopAutoplay();
     } else {
       pausedAutoplayFLAG = true;
     }
   }
 
+	 /*function onTouchEnd () {
+		onTouchEnd.t = setTimeout(function () {
+			touchedFLAG = 0;
+		}, 100);
+
+	}*/
+
   function releaseAutoplay () {
     pausedAutoplayFLAG = !(!$videoPlaying && !stoppedAutoplayFLAG);
   }
 
   function changeAutoplay () {
-    clearTimeout(changeAutoplay.timeout);
+    clearTimeout(changeAutoplay.t);
     if (!opts.autoplay || pausedAutoplayFLAG) {
       if (that.autoplay) {
         that.autoplay = false;
@@ -800,7 +829,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     var _activeIndex = activeIndex;
 
-    changeAutoplay.timeout = setTimeout(function () {
+    changeAutoplay.t = setTimeout(function () {
       var frameData = that.activeFrame[stageFrameKey].data();
       waitFor(function () {
         return frameData.state || _activeIndex !== activeIndex;
@@ -870,20 +899,19 @@ jQuery.Fotorama = function ($fotorama, opts) {
 		that.activeFrame = activeFrame = data[activeIndex];
 
 		stageFramePosition([dirtyIndex]);
+		frameDraw([activeIndex, prevIndex, nextIndex], 'stage'); /////
 		unloadVideo(false, activeFrame.i !== data[normalizeIndex(repositionIndex)].i);
 		$fotorama.trigger('fotorama:show', options.auto);
 
 		function onEnd () {
-			frameDraw([activeIndex, prevIndex, nextIndex], 'stage');
+			///// frameDraw([activeIndex, prevIndex, nextIndex], 'stage'); /////
 			updateFotoramaState();
 			loadImg([activeIndex, prevIndex, nextIndex], 'stage');
-			stageShaftReposition();
+			stageShaftReposition(); /////
 
 			$fotorama.trigger('fotorama:showend', options.auto);
 
-			if (opts.hash && showedFLAG) {
-				setHash(activeFrame.id || activeIndex + 1, that.eq);
-			}
+			opts.hash && showedFLAG && !that.eq && location.replace('#' + (activeFrame.id || activeIndex + 1));
 
 			releaseAutoplay();
 			changeAutoplay();
@@ -893,8 +921,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
 		if (!o_fade) {
 			slide($stageShaft, {
-				pos: - getPosByIndex(dirtyIndex, measures[_side_], MARGIN, repositionIndex),
-				_pos: _pos,
+				pos: - getPosByIndex(dirtyIndex, measures.w, MARGIN, repositionIndex),
 				overPos: overPos,
 				time: time,
 				onEnd: onEnd
@@ -918,7 +945,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 					cooUndefinedFLAG = typeof options.coo === 'undefined';
 
 			if (cooUndefinedFLAG || guessIndex !== activeIndex) {
-				slideNavShaft({time: time, coo: !cooUndefinedFLAG ? options.coo : measures[_side_] / 2, guessIndex: !cooUndefinedFLAG ? guessIndex : activeIndex});
+				slideNavShaft({time: time, coo: !cooUndefinedFLAG ? options.coo : measures.w / 2, guessIndex: !cooUndefinedFLAG ? guessIndex : activeIndex});
 			}
 		}
 		if (o_nav === 'thumbs') slideThumbBorder(time);
@@ -1056,13 +1083,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
 		if (measureIsValid(width)) {
 			$wrap.css({width: width, minWidth: measures.minWidth, maxWidth: measures.maxWidth});
 
-			width = measures.width_ = $wrap.width();
+			width = measures.w = $wrap.width();
 			height = numberFromPercent(height) / 100 * windowHeight || numberFromMeasure(height);
 
 			height = height || (ratio && width / ratio);
 
 			if (height) {
-				height = measures.height_ = minMaxLimit(height, numberFromPercent(measures.minHeight) / 100 * windowHeight || numberFromMeasure(measures.minHeight), numberFromPercent(measures.maxHeight) / 100 * windowHeight || numberFromMeasure(measures.maxHeight));
+				height = measures.h = minMaxLimit(height, numberFromPercent(measures.minHeight) / 100 * windowHeight || numberFromMeasure(measures.minHeight), numberFromPercent(measures.maxHeight) / 100 * windowHeight || numberFromMeasure(measures.maxHeight));
 
 				stageShaftReposition();
 
@@ -1077,10 +1104,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
 					$nav
 							.stop()
 							.animate({width: width}, time)
-							.css({left: 0, height: 'auto'});
+							.css({left: 0});
 
-					slideNavShaft({guessIndex: activeIndex, time: time, coo: measures[_side_] / 2});
-					if (o_nav === 'thumbs' && navAppend.done) slideThumbBorder(time);
+					slideNavShaft({guessIndex: activeIndex, time: time, coo: measures.w / 2});
+					if (o_nav === 'thumbs' && navAppend.ok) slideThumbBorder(time);
 				}
 				measuresSetFLAG = setFLAG || true;
 				ready();
@@ -1101,6 +1128,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
 
   function setShadow ($el, edge) {
+
     $el.removeClass(shadowsLeftClass + ' ' + shadowsRightClass);
 
     if (edge && !$videoPlaying) {
@@ -1186,21 +1214,25 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   // Подключаем перелистывание кадров в шахте на сцене
   stageShaftTouchTail = moveOnTouch($stageShaft, {
-    onStart: onTouch,
+    onStart: onTouchStart,
     onMove: function (e, result) {
       setShadow($stage, result.edge);
     },
     onEnd: function(result) {
+			//onTouchEnd();
+
+	    console.log('onEnd', result);
+
       setShadow($stage);
-      if (result.moved) {
-				var index = getIndexByPos(result.newPos, measures[_side_], MARGIN, repositionIndex);
+      if (result.pos !== result.newPos) {
+				var index = getIndexByPos(result.newPos, measures.w, MARGIN, repositionIndex);
 				that.show({
 					index: index,
 					time: result.time,
 					overPos: result.overPos
 				});
-      } else {
-				onStageTap(result.startEvent);
+      } else if (!result.aborted) {
+				onStageTap();
 			}
     },
     timeLow: 1,
@@ -1212,11 +1244,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   // Подключаем таскание шахты в навигации
   navShaftTouchTail = moveOnTouch($navShaft, {
-    onStart: onTouch,
+    onStart: onTouchStart,
     onMove: function (e, result) {
       setShadow($nav, result.edge);
     },
     onEnd: function (result) {
+			//onTouchEnd();
+
       function onEnd () {
         releaseAutoplay();
         changeAutoplay();
@@ -1230,7 +1264,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
         slide($navShaft, {
           time: result.time,
           pos: result.newPos,
-          _pos: _pos,
           overPos: result.overPos,
           onEnd: onEnd
         });
@@ -1249,7 +1282,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   // Клик по точкам и превьюшкам
   function onNavFrameClick (e, time) {
     var index = $(this).data().eq;
-    that.show({index: index, slow: e.altKey, coo: e[_coo] - $nav.offset()[_pos], time: time});
+    that.show({index: index, slow: e.altKey, coo: e._x - $nav.offset().left, time: time});
   }
 
   // Клик по стрелкам
@@ -1262,7 +1295,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }, {
     onStart: function (e) {
-      onTouch.call(this, e);
+      onTouchStart.call(this, e);
       stageShaftTouchTail.control = true;
     },
     tail: stageShaftTouchTail
@@ -1279,7 +1312,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     changeAutoplay();
   }, {
     onStart: function (e) {
-      onTouch.call(this, e);
+      onTouchStart.call(this, e);
       stageShaftTouchTail.control = true;
     },
     tail: stageShaftTouchTail
@@ -1292,7 +1325,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     setData();
     setOptions();
 
-    if (!ready.done) {
+    if (!ready.ok) {
       // Only first time
       if (opts.hash && location.hash) {
         opts.startIndex = getIndexFromHash(location.hash.replace(/^#/, ''), data, index === 0) || 0;
@@ -1340,8 +1373,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * Когда Фоторама готова
    * */
   function ready () {
-    if (!ready.done) {
-			ready.done = true;
+    if (!ready.ok) {
+			ready.ok = true;
 			$wrap.removeClass(wrapNotReadyClass);
 			$fotorama.trigger('fotorama:ready');
 		}
