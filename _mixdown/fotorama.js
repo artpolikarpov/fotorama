@@ -1030,12 +1030,12 @@ function slide ($el, options) {
   var elPos = Math.round(options.pos),
       onEndFn = options.onEnd || noop;
 
-  /*if (typeof options.overPos !== 'undefined' && options.overPos !== options.pos) {
+  if (typeof options.overPos !== 'undefined' && options.overPos !== options.pos) {
     elPos = options.overPos;
     onEndFn = function () {
       slide($el, $.extend({}, options, {overPos: options.pos, time: Math.max(TRANSITION_DURATION, options.time / 2)}))
     };
-  }*/
+  }
 
   var translate = getTranslate(elPos);
 
@@ -1413,7 +1413,7 @@ function moveOnTouch ($el, options) {
         newPos = virtualPos;
       }
 
-      /*if (!forwardFLAG && virtualPos > maxPos || forwardFLAG && virtualPos < minPos) {
+      if (!forwardFLAG && virtualPos > maxPos || forwardFLAG && virtualPos < minPos) {
         limitPos = forwardFLAG ? minPos : maxPos;
         overPos = virtualPos - limitPos;
         if (!snap) {
@@ -1421,7 +1421,7 @@ function moveOnTouch ($el, options) {
         }
         overPos = minMaxLimit(newPos + overPos * .03, limitPos - 50, limitPos + 50);
         time = Math.abs((moveElPos - overPos) / (speed / friction));
-      }*/
+      }
     }
 
     time *= slowFLAG ? 10 : 1;
@@ -3020,8 +3020,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       setShadow($nav, result.edge);
     },
     onEnd: function (result) {
-			//onTouchEnd();
-
       function onEnd () {
         releaseAutoplay();
         changeAutoplay();

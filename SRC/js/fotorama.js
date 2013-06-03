@@ -1249,8 +1249,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       setShadow($nav, result.edge);
     },
     onEnd: function (result) {
-			//onTouchEnd();
-
       function onEnd () {
         releaseAutoplay();
         changeAutoplay();
