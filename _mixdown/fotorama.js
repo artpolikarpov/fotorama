@@ -1,5 +1,5 @@
 /*!
- * Fotorama 4.0.3 | MIT License
+ * Fotorama 4.0.4 | MIT License
  */
 (function (window, document, $, undefined) {
 
