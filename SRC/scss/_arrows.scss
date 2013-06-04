@@ -13,6 +13,7 @@ $arrSize: 32px;
   opacity: 0;
   @extend %no-tap;
   @extend %no-select;
+	@extend %initial-translate;
 }
 
 .fotorama__arr,

@@ -1,5 +1,5 @@
 /*!
- * Fotorama 4.0.4 | MIT License
+ * Fotorama 4.0.4 | http://fotorama.io/license/
  */
 .fotorama__stage__shaft, .fotorama__stage__frame, .fotorama__html {
   position: absolute;
@@ -34,7 +34,10 @@
 .fotorama__wrap--css3 .fotorama__thumb-border, .fotorama__wrap--css3 .fotorama__stage__frame,
 .fotorama__wrap--css3 .fotorama__nav__frame,
 .fotorama__wrap--css3 .fotorama__img,
-.fotorama__wrap--css3 .fotorama__caption {
+.fotorama__wrap--css3 .fotorama__caption, .fotorama__arr,
+.fotorama__fullscreen-icon,
+.fotorama__video-play,
+.fotorama__video-close {
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   -ms-transform: translate3d(0, 0, 0);
