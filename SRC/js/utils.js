@@ -294,8 +294,8 @@ function getDataFromHtml ($el) {
 
     return {
       video: video,
-      img: _imgHref || _imgSrc || _thumbSrc,
-      thumb: _thumbSrc || _imgSrc || _imgHref,
+      img: imgData.img || _imgHref || _imgSrc || _thumbSrc,
+      thumb: imgData.thumb || _thumbSrc || _imgSrc || _imgHref,
       id: $img.attr('id')
     }
   }

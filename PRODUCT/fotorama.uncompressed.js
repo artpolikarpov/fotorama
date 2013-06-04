@@ -1,5 +1,5 @@
 /*!
- * Fotorama 4.0.6 | http://fotorama.io/license/
+ * Fotorama 4.0.7 | http://fotorama.io/license/
  */
 (function (window, document, $, undefined) {
 
@@ -732,12 +732,12 @@ function parseHref (href) {
 function findVideoId (href, forceVideo) {
   if (typeof href !== 'string') return href;
   href = parseHref(href);
+	href.host = href.host.replace(/^www./, '');
+
   var id,
       type;
 
-	//console.log('findVideoId', href, href.host);
-
-  if (href.host.match('youtube.com') && href.search) {
+  if (href.host === 'youtube.com' && href.search) {
     id = href.search.split('v=')[1];
     if (id) {
       var ampersandPosition = id.indexOf('&');
@@ -746,8 +746,7 @@ function findVideoId (href, forceVideo) {
       }
       type = 'youtube';
     }
-  } else if (href.host.match(/youtube\.com|youtu\.be/)) {
-
+  } else if (href.host === 'youtube.com' || href.host === 'youtu.be') {
     id = href.pathname.replace(/^\/(embed\/|v\/)?/, '').replace(/\/.*/, '');
     type = 'youtube';
   } else if (href.host === 'vimeo.com' || href.host === 'player.vimeo.com') {
@@ -827,23 +826,15 @@ function getDataFromHtml ($el) {
 
     if (video) {
       _imgHref = false;
-    } else if (checkVideo) {
-      video = findVideoId(_imgSrc, _video === true);
-      if (video) {
-        _imgSrc = false;
-      } else {
-        video = findVideoId(_video, _video);
-      }
+    } else {
+      video = findVideoId(_video, _video);
     }
 
     return {
       video: video,
-      img: _imgHref || _imgSrc || _thumbSrc,
-      thumb: _thumbSrc || _imgSrc || _imgHref,
-      full: $img.attr('data-full') || $child.attr('data-full'),
-      caption: $img.attr('title') || $child.attr('title'),
-      fit: imgData.fit || $child.data('fit'),
-      id: $img.attr('id') || $child.attr('id')
+      img: imgData.img || _imgHref || _imgSrc || _thumbSrc,
+      thumb: imgData.thumb || _thumbSrc || _imgSrc || _imgHref,
+      id: $img.attr('id')
     }
   }
 
@@ -851,13 +842,10 @@ function getDataFromHtml ($el) {
     var $this = $(this),
         dataFrame = $this.data();
     if ($this.is('a, img')) {
-      dataFrame = getDataFromImg($this, true);
+	    $.extend(dataFrame, getDataFromImg($this, true));
     } else if (!$this.is(':empty')) {
-      dataFrame.html = this;
-      dataFrame.caption = dataFrame.caption || $this.attr('title');
-    } else {
-      return;
-    }
+	    dataFrame.html = this;
+    } else return;
 
     data.push(dataFrame);
   });
@@ -2572,13 +2560,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       pausedAutoplayFLAG = true;
     }
   }
-
-	 /*function onTouchEnd () {
-		onTouchEnd.t = setTimeout(function () {
-			touchedFLAG = 0;
-		}, 100);
-
-	}*/
 
   function releaseAutoplay () {
     pausedAutoplayFLAG = !(!$videoPlaying && !stoppedAutoplayFLAG);

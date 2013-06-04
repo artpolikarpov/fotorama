@@ -1,5 +1,5 @@
 /*!
- * Fotorama 4.0.6 | http://fotorama.io/license/
+ * Fotorama 4.0.7 | http://fotorama.io/license/
  */
 (function (window, document, $, undefined) {
 
@@ -832,8 +832,8 @@ function getDataFromHtml ($el) {
 
     return {
       video: video,
-      img: _imgHref || _imgSrc || _thumbSrc,
-      thumb: _thumbSrc || _imgSrc || _imgHref,
+      img: imgData.img || _imgHref || _imgSrc || _thumbSrc,
+      thumb: imgData.thumb || _thumbSrc || _imgSrc || _imgHref,
       id: $img.attr('id')
     }
   }
@@ -2560,13 +2560,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       pausedAutoplayFLAG = true;
     }
   }
-
-	 /*function onTouchEnd () {
-		onTouchEnd.t = setTimeout(function () {
-			touchedFLAG = 0;
-		}, 100);
-
-	}*/
 
   function releaseAutoplay () {
     pausedAutoplayFLAG = !(!$videoPlaying && !stoppedAutoplayFLAG);

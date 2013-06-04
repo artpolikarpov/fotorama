@@ -800,13 +800,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }
 
-	 /*function onTouchEnd () {
-		onTouchEnd.t = setTimeout(function () {
-			touchedFLAG = 0;
-		}, 100);
-
-	}*/
-
   function releaseAutoplay () {
     pausedAutoplayFLAG = !(!$videoPlaying && !stoppedAutoplayFLAG);
   }
