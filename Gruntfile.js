@@ -4,23 +4,23 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
     meta: {
       banner: '/*!\n * <%= pkg.name %> <%= pkg.version %> | <%= pkg.license %>\n */\n',
-      sass: ['SRC/scss/*'],
+      sass: ['src/scss/*'],
       js: [
-        'SRC/js/intro.js',
-        'SRC/js/_.js',
-        'SRC/js/modernizr.js',
-        'SRC/js/fullscreen.js',
-        'SRC/js/bez.js',
-        'SRC/js/css-classes.js',
-        'SRC/js/basevars.js',
-        'SRC/js/utils.js',
-        'SRC/js/animate.js',
-        'SRC/js/touch.js',
-        'SRC/js/moveontouch.js',
-        'SRC/js/spin.js',
-        'SRC/js/fotorama.js',
-        'SRC/templates/compiled.js',
-        'SRC/js/outro.js'
+        'src/js/intro.js',
+        'src/js/_.js',
+        'src/js/modernizr.js',
+        'src/js/fullscreen.js',
+        'src/js/bez.js',
+        'src/js/css-classes.js',
+        'src/js/basevars.js',
+        'src/js/utils.js',
+        'src/js/animate.js',
+        'src/js/touch.js',
+        'src/js/moveontouch.js',
+        'src/js/spin.js',
+        'src/js/fotorama.js',
+        'src/templates/compiled.js',
+        'src/js/outro.js'
       ]
     },
     jst: {
@@ -28,20 +28,20 @@ module.exports = function (grunt) {
         options: {
           namespace: '$.Fotorama.jst',
           processName: function (filename) {
-            return filename.replace('SRC/templates/', '').replace(/.html$/, '').replace(/\//g, '_');
+            return filename.replace('src/templates/', '').replace(/.html$/, '').replace(/\//g, '_');
           },
           templateSettings: {
             variable: 'v'
           }
         },
         files: {
-          'SRC/templates/compiled.js': ['SRC/templates/style']
+          'src/templates/compiled.js': ['src/templates/style']
         }
       }
     },
     watch: {
       jst: {
-        files: 'SRC/templates/**/*',
+        files: 'src/templates/**/*',
         tasks: 'jst'
       },
       sass: {
@@ -51,22 +51,38 @@ module.exports = function (grunt) {
       js: {
         files: '<%= meta.js %>',
         tasks: 'concat:js'
-      }
+      },
+	    i: {
+		    files: 'src/i/*',
+		    tasks: 'copy:i'
+	    }
     },
     compass: {
 			mixdown: {
         options: {
-          sassDir: 'SRC/scss',
-          cssDir: 'PRODUCT',
+          sassDir: 'src/scss',
+          cssDir: 'product',
           noLineComments: true,
           force: true
         }
       }
     },
+	  copy: {
+		  i: {
+			  files: [
+					{
+						expand: true,
+						flatten: true,
+						src: ['src/i/*'],
+						dest: 'product/'
+					}
+				]
+		  }
+	  },
     concat: {
       js: {
         files: {
-          '_mixdown/fotorama.js': '<%= meta.js %>'
+          'product/fotorama.js': '<%= meta.js %>'
         },
         options: {
           banner: '<%= meta.banner %>'
@@ -74,7 +90,7 @@ module.exports = function (grunt) {
       },
       css: {
         files: {
-          'PRODUCT/fotorama.uncompressed.css': 'PRODUCT/fotorama.css'
+          'product/fotorama.uncompressed.css': 'product/fotorama.css'
         },
         options: {
           banner: '<%= meta.banner %>'
@@ -84,7 +100,7 @@ module.exports = function (grunt) {
     cssmin: {
       product: {
         files: {
-          'PRODUCT/fotorama.css': 'PRODUCT/fotorama.css'
+          'product/fotorama.css': 'product/fotorama.css'
         },
         options: {
           banner: '<%= meta.banner.replace(/\\n$/, "") %>'
@@ -94,7 +110,7 @@ module.exports = function (grunt) {
     'string-replace': {
       console: {
         files: {
-          'PRODUCT/fotorama.uncompressed.js': '_mixdown/fotorama.js'
+          'product/fotorama.uncompressed.js': 'product/fotorama.js'
         },
         options: {
           replacements: [
@@ -112,23 +128,23 @@ module.exports = function (grunt) {
           banner: '<%= meta.banner %>'
         },
         files: {
-          'PRODUCT/fotorama.js': 'PRODUCT/fotorama.uncompressed.js'
+          'product/fotorama.js': 'product/fotorama.uncompressed.js'
         }
       }
     },
 		clean: {
-			zip: ['PRODUCT/fotorama*.zip']
+			zip: ['product/fotorama*.zip']
 		},
 		compress: {
       product: {
 				options: {
-					archive: 'PRODUCT/fotorama-<%= pkg.version %>.zip'
+					archive: 'product/fotorama-<%= pkg.version %>.zip'
 				},
         files: [
-					{expand: true, cwd: 'PRODUCT/', src: 'fotorama.css', dest: 'fotorama-<%= pkg.version %>/'},
-					{expand: true, cwd: 'PRODUCT/', src: 'fotorama.js', dest: 'fotorama-<%= pkg.version %>/'},
-					{expand: true, cwd: 'PRODUCT/', src: 'fotorama.png', dest: 'fotorama-<%= pkg.version %>/'},
-					{expand: true, cwd: 'PRODUCT/', src: 'fotorama@2x.png', dest: 'fotorama-<%= pkg.version %>/'}
+					{expand: true, cwd: 'product/', src: 'fotorama.css', dest: 'fotorama-<%= pkg.version %>/'},
+					{expand: true, cwd: 'product/', src: 'fotorama.js', dest: 'fotorama-<%= pkg.version %>/'},
+					{expand: true, cwd: 'product/', src: 'fotorama.png', dest: 'fotorama-<%= pkg.version %>/'},
+					{expand: true, cwd: 'product/', src: 'fotorama@2x.png', dest: 'fotorama-<%= pkg.version %>/'}
 				]
       }
 		},
@@ -144,17 +160,17 @@ module.exports = function (grunt) {
 				upload: [
 						// Separate version to separate folder
 					{
-						src: 'PRODUCT/*',
+						src: 'product/*',
 						dest: '<%= pkg.version %>/'
 					},
 
 						// Latest to the root
 					{
-						src: 'PRODUCT/fotorama.*',
+						src: 'product/fotorama.*',
 						dest: ''
 					},
 					{
-						src: 'PRODUCT/fotorama@2x.png',
+						src: 'product/fotorama@2x.png',
 						dest: 'fotorama@2x.png'
 					}
 				]
@@ -175,18 +191,20 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jst');
+	grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-string-replace');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-compress');
-	grunt.loadNpmTasks('grunt-s3');
 
+	grunt.loadNpmTasks('grunt-s3');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 
   // Default task
   grunt.registerTask('default', [
+		'copy',
 		'compass',
 		'jst',
 		'concat:js',

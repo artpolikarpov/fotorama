@@ -10,4 +10,5 @@ profile
 
 node_modules
 *.zip
+product
 grunt-s3.json

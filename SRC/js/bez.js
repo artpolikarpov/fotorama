@@ -9,7 +9,6 @@
  * Copyright 2011 Robert Dallas Gray. All rights reserved.
  * Provided under the FreeBSD license: https://github.com/rdallasgray/bez/blob/master/LICENSE.txt
  */
-
 function bez(coOrdArray) {
   var encodedFuncName = "bez_" + $.makeArray(arguments).join("_").replace(".", "p");
   if (typeof $['easing'][encodedFuncName] !== "function") {

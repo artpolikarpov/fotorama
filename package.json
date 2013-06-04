@@ -15,6 +15,7 @@
     "grunt-s3": "~0.2.0-alpha.1",
     "grunt-contrib-compress": "~0.5.0",
     "grunt-contrib-clean": "~0.4.1",
-    "grunt-contrib-connect": "~0.3.0"
+    "grunt-contrib-connect": "~0.3.0",
+    "grunt-contrib-copy": "~0.4.1"
   }
 }
