@@ -1,9 +1,9 @@
 module.exports = function (grunt) {
   'use strict';
   grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
+    pkg: grunt.file.readJSON('fotorama.jquery.json'),
     meta: {
-      banner: '/*!\n * <%= pkg.name %> <%= pkg.version %> | <%= pkg.license %>\n */\n',
+      banner: '/*!\n * <%= pkg.title %> <%= pkg.version %> | <%= pkg.licenses[0].url %>\n */\n',
       sass: ['src/scss/*'],
       js: [
         'src/js/intro.js',
@@ -136,6 +136,17 @@ module.exports = function (grunt) {
 			zip: ['product/fotorama*.zip']
 		},
 		compress: {
+			uncompressed: {
+				options: {
+					archive: 'product/fotorama-<%= pkg.version %>.uncompressed.zip'
+				},
+        files: [
+					{expand: true, cwd: 'product/', src: 'fotorama.uncompressed.css', dest: 'fotorama-<%= pkg.version %>.uncompressed/'},
+					{expand: true, cwd: 'product/', src: 'fotorama.uncompressed.js', dest: 'fotorama-<%= pkg.version %>.uncompressed/'},
+					{expand: true, cwd: 'product/', src: 'fotorama.png', dest: 'fotorama-<%= pkg.version %>.uncompressed/'},
+					{expand: true, cwd: 'product/', src: 'fotorama@2x.png', dest: 'fotorama-<%= pkg.version %>.uncompressed/'}
+				]
+			},
       product: {
 				options: {
 					archive: 'product/fotorama-<%= pkg.version %>.zip'
