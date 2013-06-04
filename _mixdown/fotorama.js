@@ -1,5 +1,5 @@
 /*!
- * Fotorama 4.0.4 | http://fotorama.io/license/
+ * Fotorama 4.0.5 | http://fotorama.io/license/
  */
 (function (window, document, $, undefined) {
 
