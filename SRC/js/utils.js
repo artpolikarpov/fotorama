@@ -197,6 +197,8 @@ function findVideoId (href, forceVideo) {
   var id,
       type;
 
+	console.log('findVideoId', href, href.host);
+
   if (href.host.match('youtube.com') && href.search) {
     id = href.search.split('v=')[1];
     if (id) {
@@ -206,7 +208,8 @@ function findVideoId (href, forceVideo) {
       }
       type = 'youtube';
     }
-  } else if (href.host === 'youtube.com' || href.host === 'youtu.be') {
+  } else if (href.host.match(/youtube\.com|youtu\.be/)) {
+
     id = href.pathname.replace(/^\/(embed\/|v\/)?/, '').replace(/\/.*/, '');
     type = 'youtube';
   } else if (href.host === 'vimeo.com' || href.host === 'player.vimeo.com') {
@@ -224,7 +227,6 @@ function findVideoId (href, forceVideo) {
 
 function getVideoThumbs (dataFrame, data, api) {
 	console.log('getVideoThumbs');
-
 
   var img, thumb, video = dataFrame.video;
   if (video.type === 'youtube') {
