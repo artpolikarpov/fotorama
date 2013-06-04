@@ -732,12 +732,12 @@ function parseHref (href) {
 function findVideoId (href, forceVideo) {
   if (typeof href !== 'string') return href;
   href = parseHref(href);
+	href.host = href.host.replace(/^www./, '');
+
   var id,
       type;
 
-	console.log('findVideoId', href, href.host);
-
-  if (href.host.match('youtube.com') && href.search) {
+  if (href.host === 'youtube.com' && href.search) {
     id = href.search.split('v=')[1];
     if (id) {
       var ampersandPosition = id.indexOf('&');
@@ -746,8 +746,7 @@ function findVideoId (href, forceVideo) {
       }
       type = 'youtube';
     }
-  } else if (href.host.match(/youtube\.com|youtu\.be/)) {
-
+  } else if (href.host === 'youtube.com' || href.host === 'youtu.be') {
     id = href.pathname.replace(/^\/(embed\/|v\/)?/, '').replace(/\/.*/, '');
     type = 'youtube';
   } else if (href.host === 'vimeo.com' || href.host === 'player.vimeo.com') {
