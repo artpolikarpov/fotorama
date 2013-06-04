@@ -125,7 +125,7 @@ function touch ($el, options) {
     preventEventTimeout = setTimeout(function () {
       preventEvent = false;
     }, 1000);
-    (options.onEnd || noop).call(el, {moved: !!movedFLAG, $target: $target, control: controlTouch, startEvent: startEvent, aborted: !e});
+    (options.onEnd || noop).call(el, {moved: !!movedFLAG, $target: $target, control: controlTouch, startEvent: startEvent, aborted: !e, touch: touchFLAG});
     touchEnabledFLAG = false;
   }
 

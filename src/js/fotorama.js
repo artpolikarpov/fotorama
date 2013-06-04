@@ -1194,14 +1194,30 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }
 
+	function toggleControlsClass (FLAG) {
+		$wrap.toggleClass(wrapNoControlsClass, FLAG);
+	}
+
+	$wrap.hover(
+		function () {
+			toggleControlsClass(false);
+		}, function () {
+			toggleControlsClass(true);
+		}
+	);
+
   /**
    * Тап по сцене:
    * */
-  function onStageTap () {
+  function onStageTap (e, touch) {
     if ($videoPlaying) {
       unloadVideo($videoPlaying, true, true);
     } else {
-      $wrap.toggleClass(wrapNoControlsClass);
+	    if (touch) {
+        toggleControlsClass();
+		  } else {
+		    that.show({index: e.shiftKey || e._x - $stage.offset().left < measures.w / 3 ? '<' : '>', slow: e.altKey});
+	    }
     }
   }
 
@@ -1225,7 +1241,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 					overPos: result.overPos
 				});
       } else if (!result.aborted) {
-				onStageTap();
+				onStageTap(result.startEvent, result.touch);
 			}
     },
     timeLow: 1,
