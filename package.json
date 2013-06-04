@@ -1,6 +1,6 @@
 {
   "name": "Fotorama",
-  "version": "4.0.6",
+  "version": "4.0.7",
   "license": "http://fotorama.io/license/",
   "devDependencies": {
     "grunt": "~0.4.1",

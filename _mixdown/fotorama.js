@@ -826,23 +826,15 @@ function getDataFromHtml ($el) {
 
     if (video) {
       _imgHref = false;
-    } else if (checkVideo) {
-      video = findVideoId(_imgSrc, _video === true);
-      if (video) {
-        _imgSrc = false;
-      } else {
-        video = findVideoId(_video, _video);
-      }
+    } else {
+      video = findVideoId(_video, _video);
     }
 
     return {
       video: video,
       img: _imgHref || _imgSrc || _thumbSrc,
       thumb: _thumbSrc || _imgSrc || _imgHref,
-      full: $img.attr('data-full') || $child.attr('data-full'),
-      caption: $img.attr('title') || $child.attr('title'),
-      fit: imgData.fit || $child.data('fit'),
-      id: $img.attr('id') || $child.attr('id')
+      id: $img.attr('id')
     }
   }
 
@@ -850,13 +842,10 @@ function getDataFromHtml ($el) {
     var $this = $(this),
         dataFrame = $this.data();
     if ($this.is('a, img')) {
-      dataFrame = getDataFromImg($this, true);
+	    $.extend(dataFrame, getDataFromImg($this, true));
     } else if (!$this.is(':empty')) {
-      dataFrame.html = this;
-      dataFrame.caption = dataFrame.caption || $this.attr('title');
-    } else {
-      return;
-    }
+	    dataFrame.html = this;
+    } else return;
 
     data.push(dataFrame);
   });
