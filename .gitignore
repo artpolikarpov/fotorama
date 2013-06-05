@@ -12,3 +12,4 @@ node_modules
 *.zip
 product
 grunt-s3.json
+src/templates/compiled.js

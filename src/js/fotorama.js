@@ -1154,7 +1154,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 				return !fullScreenApi.is() || _activeIndex !== activeIndex;
 			}, function () {
 				if (_activeIndex === activeIndex) {
-					dataFrame.$video = dataFrame.$video || $(VIDEO_IFRAME.replace(X, VIDEO_IFRAME_SRC[video.type].replace(X, video.id)));
+					dataFrame.$video = dataFrame.$video || $($.Fotorama.jst.video(video));
 					dataFrame.$video.appendTo(dataFrame[stageFrameKey]);
 
 					$wrap.addClass(wrapVideoClass);

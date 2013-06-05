@@ -28,20 +28,20 @@ module.exports = function (grunt) {
         options: {
           namespace: '$.Fotorama.jst',
           processName: function (filename) {
-            return filename.replace('src/templates/', '').replace(/.html$/, '').replace(/\//g, '_');
+            return filename.replace('src/templates/', '').replace(/\.jst$/, '').replace(/\//g, '_');
           },
           templateSettings: {
             variable: 'v'
           }
         },
         files: {
-          'src/templates/compiled.js': ['src/templates/style']
+          'src/templates/compiled.js': ['src/templates/*.jst']
         }
       }
     },
     watch: {
       jst: {
-        files: 'src/templates/**/*',
+        files: 'src/templates/*.jst',
         tasks: 'jst'
       },
       sass: {
