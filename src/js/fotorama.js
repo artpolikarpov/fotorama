@@ -62,12 +62,12 @@ jQuery.Fotorama = function ($fotorama, opts) {
       lastActiveIndex,
       prevIndex,
       nextIndex,
+      startIndex = false,
 
       // Некоторые опции, которые могут измениться:
       o_loop,
       o_nav,
       o_navTop,
-      o_startIndex = false,
       o_allowFullScreen,
       o_nativeFullScreen,
       o_fade,
@@ -329,14 +329,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function setMeasures (width, height, ratio, index) {
-    if (!measuresSetFLAG || (measuresSetFLAG === '*' && index === o_startIndex)) {
+    if (!measuresSetFLAG || (measuresSetFLAG === '*' && index === startIndex)) {
       // Если размеры ещё не определены пытаемся сделать это по первой фотке
       width = measureIsValid(opts.width) || measureIsValid(width) || WIDTH;
       height = measureIsValid(opts.height) || measureIsValid(height) || HEIGHT;
       that.resize({
         width: width,
         ratio: opts.ratio || ratio || width / height
-      }, 0, index === o_startIndex ? true : '*');
+      }, 0, index === startIndex ? true : '*');
     }
   }
 
@@ -604,8 +604,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (o_nav !== 'thumbs' || isNaN(pos)) return;
 
     var thumbSide = o_thumbSide + MARGIN,
-        startIndex = limitIndex(getIndexByPos(pos + thumbSide, thumbSide)),
-        stopIndex = limitIndex(getIndexByPos(pos - measures.w/* - thumbSide*/, thumbSide)),
+        leftIndex = limitIndex(getIndexByPos(pos + thumbSide, thumbSide)),
+        rightIndex = limitIndex(getIndexByPos(pos - measures.w/* - thumbSide*/, thumbSide)),
         specialMeasures = {};
 
     specialMeasures.w = o_thumbSide;
@@ -617,8 +617,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
           eq = thisData.eq,
           specialFit = 'cover';
 
-      if (eq < startIndex
-					|| eq > stopIndex
+      if (eq < leftIndex
+					|| eq > rightIndex
 					|| callFit(thisData.$img, specialMeasures, specialFit)) return;
 
 			loadFLAG && loadImg([eq], 'navThumb', specialMeasures, specialFit);
@@ -1335,19 +1335,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (!ready.ok) {
       // Only first time
       if (opts.hash && location.hash) {
-        opts.startIndex = getIndexFromHash(location.hash.replace(/^#/, ''), data, index === 0) || 0;
+        startIndex = getIndexFromHash(location.hash.replace(/^#/, ''), data, index === 0);
       }
-
-      if (opts.startIndex === 'random') {
-        opts.startIndex = getRandomInt(0, size - 1);
-      }
-      o_startIndex = o_loop ? normalizeIndex(opts.startIndex) : limitIndex(opts.startIndex);
-      if (isNaN(o_startIndex)) {
-        var _index = getIndexFromHash(opts.startIndex, data, true);
-        o_startIndex = isNaN(_index) ? 0 : _index;
-      }
-
-      activeIndex = repositionIndex = dirtyIndex = lastActiveIndex = o_startIndex;
+      startIndex = (o_loop ? normalizeIndex(startIndex) : limitIndex(startIndex)) || 0;
+      activeIndex = repositionIndex = dirtyIndex = lastActiveIndex = startIndex;
     }
 
     if (size) {
@@ -1413,19 +1404,7 @@ $.fn.fotorama = function (opts) {
               $.extend(
                   {},
 									{
-										// Настройка по умолчанию.
-										loop: false,
-										startIndex: 0, // 'random' || id
-										transition: 'slide', // 'crossfade' || 'dissolve'
-										keyboard: false,
-										fit: 'contain', // true || 'cover' || false
-										nav: 'dots', // 'thumbs' || false
-										navPosition: 'bottom', // 'top'
-										hash: false,
-										allowFullScreen: false, // true || 'native'
-										captions: true,
-										autoplay: false,
-										stopAutoplayOnTouch: true,
+										// dimensions
 										width: null, // 500 || '100%'
 										minWidth: null,
 										maxWidth: null, // '100%'
@@ -1433,8 +1412,29 @@ $.fn.fotorama = function (opts) {
 										minHeight: null,
 										maxHeight: null,
 										ratio: null, // '16/9' || 500/333
+
+										// navigation, thumbs
+										nav: 'dots', // 'thumbs' || false
+										navPosition: 'bottom', // 'top'
 										thumbWidth: THUMB_SIZE,
-										thumbHeight: THUMB_SIZE
+										thumbHeight: THUMB_SIZE,
+
+										allowFullScreen: false, // true || 'native'
+
+										fit: 'contain', // true || 'cover' || false
+
+										transition: 'slide', // 'crossfade' || 'dissolve'
+
+										captions: true,
+
+										hash: false,
+
+										autoplay: false,
+										stopAutoplayOnTouch: true,
+
+										keyboard: false,
+
+										loop: false
 									},
                   $.extend(
                       {},
