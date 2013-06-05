@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Full window · FOTO[RA]MA</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="http://fotorama.s3.amazonaws.com/fotorama.css" rel="stylesheet">
+	<script src="http://fotorama.s3.amazonaws.com/fotorama.js"></script>
+
+
+	<!-- Just don’t want to repeat this prefix in every img[src] -->
+	<base href="http://fotorama.s3.amazonaws.com/i/macro2/">
+</head>
+
+<body style="margin: 0; overflow: hidden; background: #000; position: relative;"> <!-- Reset margins to remove any gap -->
+
+<!-- Top overlay -->
+<div style="position: absolute; top: 0; left: 0; color: #fff; padding: 5px 10px; z-index: 2;">
+	<p>Full window:<p>
+	<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div class="fotorama"
+     data-width="100%"
+     data-height="100%"></code></pre>
+</div>
+
+<!-- Fotorama -->
+<div class="fotorama"
+     data-width="100%"
+     data-height="100%">
+	<img src="16-lo.jpg" />
+	<img src="23-lo.jpg" />
+	<img src="9-lo.jpg" />
+	<img src="14-lo.jpg" />
+	<img src="15-lo.jpg" />
+</div>
+
+<!-- Bottom overlay -->
+<div style="position: absolute; bottom: 0; right: 0; color: #fff; padding: 5px 10px; z-index: 2;">
+	<!-- © -->
+	<p>Photos <a href="http://alexeilebedev.com/" style="color: #fff;">by Alexei Lebedev</a></p>
+</div>
+</body>
+</html>

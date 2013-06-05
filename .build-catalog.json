@@ -28,10 +28,17 @@
 		]
 	},
 	"/c/style.css": {
-		"md5": "07e6724f3e0b7a04e0b712400b912dc7",
-		"date": "20130511221418",
+		"md5": "456e4ad568cf4b05995874afe1db2b09",
+		"date": "20130603165257",
 		"files": [
 			"/css/style.css"
+		]
+	},
+	"/c/menu.css": {
+		"md5": "d41d8cd98f00b204e9800998ecf8427e",
+		"date": "20130512155551",
+		"files": [
+			"/css/menu.css"
 		]
 	}
 }

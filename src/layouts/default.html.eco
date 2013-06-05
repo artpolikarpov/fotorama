@@ -5,15 +5,35 @@ css: "/c/style.css"
 <html>
 <head>
   <title><%= @document.title %></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
 
-  <% for url in @assets('css'): %><link rel="stylesheet" href="<%= url %>" /><% end %>
+	<% for url in @assets('css'): %><link rel="stylesheet" href="<%= url %>" /><% end %>
+
+  <script src="/lib/jquery-1.9.1.min.js"></script>
+
+	<link rel="stylesheet" href="/lib/fotorama/fotorama.css" />
+	<script src="/lib/fotorama/fotorama.js"></script>
 </head>
-<body>
+<body id="root">
 
-<%- @partial('menu.html.eco', {menuItems: @generateMenu(@document.url)}) %>
+<% frontpage = @document.url == '/index.html' && 'frontpage' %>
 
-<h1><%= @document.title %></h1>
+<div class="header header--<%= frontpage %>">
+  <%- @partial('logo.html.eco', {link: !frontpage}) %>
+	<% if !frontpage : %>
+		<%- @partial('menu.html.eco', {menuItems: @generateMenu(@document.url)}) %>
+	<% end %>
+</div>
+
+
+<% if !frontpage : %>
+	<h1><%= @document.title %></h1>
+<% end %>
 
 <%- @content %>
+
+<%- @partial('footer.html') %>
+
 </body>
 </html>

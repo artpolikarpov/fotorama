@@ -1,0 +1,143 @@
+/*
+
+Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmail.com>
+
+*/
+
+tt, code {
+	font-family: Menlo, Monaco, Consolas, 'Courier New', monospase;
+	font-size: 14px;
+	background: rgb(255, 255, 254);
+	/*border: 1px solid rgb(200, 200, 199);*/
+	white-space: nowrap;
+	border-radius: 3px;
+	padding: 1px 3px 2px;
+}
+
+pre {
+	margin-top: 0;
+	white-space: pre;
+}
+
+pre code {
+	display: block;
+	color: #657b83;
+	line-height: 20px;
+	padding: 5px 10px 10px;
+	overflow: auto;
+	white-space: inherit;
+
+	background:
+		/* Shadow covers */
+		linear-gradient(to right, white, rgba(255,255,255,0)),
+		linear-gradient(to right, rgba(255,255,255,0), white) 100% 0,
+
+			/* Shadows */
+		radial-gradient(0 50%, farthest-side, rgba(0,0,0,.3), rgba(0,0,0,0)),
+		radial-gradient(100% 50%,farthest-side, rgba(0,0,0,.3), rgba(0,0,0,0)) 100% 0;
+	background:
+		/* Shadow covers */
+		linear-gradient(to right, white, rgba(255,255,255,0)),
+		linear-gradient(to right, rgba(255,255,255,0), white) 100% 0,
+
+			/* Shadows */
+		radial-gradient(farthest-side at 0 50%, rgba(0,0,0,.3), rgba(0,0,0,0)),
+		radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,.3), rgba(0,0,0,0)) 100% 0;
+	background-repeat: no-repeat;
+	background-color: white;
+	background-size: 40px 100%, 40px 100%, 5px 100%, 5px 100%;
+
+	/* Opera doesn't support this in the shorthand */
+	background-attachment: local, local, scroll, scroll;
+}
+
+pre .comment,
+pre .template_comment,
+pre .diff .header,
+pre .doctype,
+pre .lisp .string,
+pre .javadoc {
+	color: #93a1a1;
+	font-style: italic;
+}
+
+pre .keyword,
+pre .css .rule .keyword,
+pre .winutils,
+pre .javascript .title,
+pre .method,
+pre .addition,
+pre .css .tag,
+pre .lisp .title {
+	color: #859900;
+}
+
+pre .number,
+pre .command,
+pre .string,
+pre .tag .value,
+pre .phpdoc,
+pre .tex .formula,
+pre .regexp,
+pre .hexcolor {
+	color: #2aa198;
+}
+
+pre .title,
+pre .localvars,
+pre .function .title,
+pre .chunk,
+pre .decorator,
+pre .builtin,
+pre .built_in,
+pre .lisp .title,
+pre .identifier,
+pre .title .keymethods,
+pre .id {
+	color: #268bd2;
+}
+
+pre .tag .title,
+pre .rules .property,
+pre .django .tag .keyword {
+	font-weight: 400;
+}
+
+pre .attribute,
+pre .variable,
+pre .instancevar,
+pre .lisp .body,
+pre .smalltalk .number,
+pre .constant,
+pre .class .title,
+pre .parent,
+pre .haskell .label {
+	color: #b58900;
+}
+
+pre .preprocessor,
+pre .pi,
+pre .shebang,
+pre .symbol,
+pre .diff .change,
+pre .special,
+pre .keymethods,
+pre .attr_selector,
+pre .important,
+pre .subst,
+pre .cdata {
+	color: #cb4b16;
+}
+
+pre .deletion {
+	color: #dc322f;
+}
+
+pre .tex .formula {
+	background: #eee8d5;
+}
+
+pre mark {
+	background: #ffa;
+	color: #354b53;
+}

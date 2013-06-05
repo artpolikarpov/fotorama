@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fullscreen with big images · FOTO[RA]MA</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="http://fotorama.s3.amazonaws.com/fotorama.css" rel="stylesheet">
+	<script src="http://fotorama.s3.amazonaws.com/fotorama.js"></script>
+
+
+	<!-- Just don’t want to repeat this prefix in every img[src] -->
+	<base href="http://fotorama.s3.amazonaws.com/i/macro2/">
+</head>
+
+<body>
+
+<p>Fullscreen with separate images:<p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div class="fotorama"
+     data-allow-full-screen="native">
+  &lt;img src="1_thumb.jpg" <mark>data-full="1_full.jpg"</mark>>
+&lt;/div></code></pre>
+
+<p>Click icon at the top-right.</p>
+
+<!-- Fotorama -->
+<div class="fotorama"
+     data-width="800"
+     data-height="600"
+     data-allow-full-screen="native">
+	<img src="16-lo.jpg" data-full="16.jpg" />
+	<img src="23-lo.jpg" data-full="23.jpg" />
+	<img src="9-lo.jpg" data-full="9.jpg" />
+	<img src="14-lo.jpg" data-full="14.jpg" />
+	<img src="15-lo.jpg" data-full="15.jpg" />
+</div>
+
+<!-- © -->
+<p>Photos <a href="http://alexeilebedev.com/">by Alexei Lebedev</a></p>
+</body>
+</html>

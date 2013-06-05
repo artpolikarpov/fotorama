@@ -1,0 +1,6 @@
+---
+layout: "default"
+---
+
+<%- @partial('documents' + @document.url) %>
+<%- @content %>

@@ -1,0 +1,138 @@
+<html>
+<head>
+  <title>Video</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+
+	<link rel="stylesheet" href="/20130603165257/c/style.css" />
+
+  <script src="/lib/jquery-1.9.1.min.js"></script>
+
+	<link rel="stylesheet" href="/lib/fotorama/fotorama.css" />
+	<script src="/lib/fotorama/fotorama.js"></script>
+</head>
+<body id="root">
+
+
+
+<div class="header header--false">
+  <div class="logo">
+  <a href="/">
+  <span class="fo">Fo</span><span class="to">to</span><span class="ra">ra<i><i></i><i></i><i class="a"></i><i></i></i></span><span class="ma">ma</span>
+  </a>
+</div>
+	
+		
+
+<ul class="menu">
+  
+  <li>
+  
+  <a href="/set-up/">Set up</a>
+  
+  
+  </li>
+  
+  <li class="selected">
+  
+  <a href="/use/">Use</a>
+  
+  
+  
+<ul class="menu">
+  
+  <li>
+  
+  <a href="/use/dimensions/">Dimensions</a>
+  
+  
+  </li>
+  
+  <li>
+  
+  <a href="/use/thumbnails/">Thumbnails</a>
+  
+  
+  </li>
+  
+  <li>
+  
+  <a href="/use/fullscreen/">Fullscreen</a>
+  
+  
+  </li>
+  
+  <li class="selected">
+  
+  <span>Video</span>
+  
+  
+  </li>
+  
+</ul>
+
+  
+  </li>
+  
+  <li>
+  
+  <a href="/get-help/">Get help</a>
+  
+  
+  </li>
+  
+  <li>
+  
+  <a href="/donate/">Donate</a>
+  
+  
+  </li>
+  
+</ul>
+
+	
+</div>
+
+
+
+	<h1>Video</h1>
+
+
+<p>To add video from YouTube or Vimeo just link to the video page:</p>
+<pre><code><span class='xml'><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"fotorama"</span>></span>
+  <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"http://youtube.com/watch?v=C3lWwBslWqg"</span>></span>Desert Rose<span class="tag">&lt;/<span class="title">a</span>></span>
+  <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"http://vimeo.com/61527416"</span>></span>Celestial Dynamics<span class="tag">&lt;/<span class="title">a</span>></span>
+<span class="tag">&lt;/<span class="title">div</span>></span></span></code></pre>
+<p class="after-pre"><code>&lt;&gt;</code> <a href="/&lt;&gt;/video.html">Video</a></p>
+
+<p>Fotorama will automatically fetch the splash images. Link format is not strict — <code>http://youtu.be/C3lWwBslWqg</code> and <code>http://player.vimeo.com/video/61527416</code> are good too.</p>
+<p>Show another splash:</p>
+<pre><code><span class='xml'><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"fotorama"</span>></span>
+  <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"http://youtube.com/watch?v=C3lWwBslWqg"</span>></span>
+    <span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"desert-rose.jpg"</span>></span>
+  <span class="tag">&lt;/<span class="title">a</span>></span>
+<span class="tag">&lt;/<span class="title">div</span>></span></span></code></pre>
+<p>Add a separate thumbnail using this formula:</p>
+<pre><code><span class='xml'><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"fotorama"</span> <span class="attribute">data-nav</span>=<span class="value">"thumbs"</span>></span>
+  <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"http://youtube.com/watch?v=C3lWwBslWqg"</span> <span class="attribute">data-img</span>=<span class="value">"desert-rose.jpg"</span>></span>
+    <span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"desert-rose_thumb.jpg"</span>></span>
+  <span class="tag">&lt;/<span class="title">a</span>></span>
+<span class="tag">&lt;/<span class="title">div</span>></span></span></code></pre>
+<p>You can also add any video if you have iframe link and previews. Here are the Dailymotion videos:</p>
+<pre><code><span class='xml'><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"fotorama"</span>></span>
+  <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"http://dailymotion.com/embed/video/xxgmlg?autoplay=1"</span>
+     <span class="attribute">data-video</span>=<span class="value">"true"</span>></span>
+      <span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"xxgmlg_preview.jpg"</span>></span>
+  <span class="tag">&lt;/<span class="title">a</span>></span>
+  <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"http://dailymotion.com/embed/video/xu4jqv?autoplay=1"</span>
+     <span class="attribute">data-video</span>=<span class="value">"true"</span>></span>
+      <span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"xu4jqv_preview.jpg"</span>></span>
+  <span class="tag">&lt;/<span class="title">a</span>></span>
+<span class="tag">&lt;/<span class="title">div</span>></span></span></code></pre>
+<p class="after-pre"><code>&lt;&gt;</code> <a href="/&lt;&gt;/video-custom.html">Custom video</a></p>
+
+
+<div class="footer">© 2011—2013, Artem Polikarpov</div>
+
+</body>
+</html>

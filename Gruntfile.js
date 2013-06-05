@@ -28,7 +28,7 @@ module.exports = function(grunt) {
         css: {
           src: './src/files/css',
           dest: './out/c'
-        },
+        }
 
         // JS subtask: works pretty much the same as default
         // `min` task:

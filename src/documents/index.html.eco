@@ -1,0 +1,21 @@
+---
+title: "Fotorama"
+layout: "default"
+---
+
+<%- @partial('fotorama.html.eco', {images: @getDocument().getAssociatedFiles('lebedev-tibet/full').toJSON(), by: '<a href="http://alexeilebedev.com/">by Alexei Lebedev</a>'}) %>
+
+<h1>Fotorama</h1>
+<p class="lead">A simple, stunning, powerful Javascript gallery. Licensed <a href="/license/">under the <abbr>MIT</abbr></a>.</p>
+
+<% renderMenu = (items) => %>
+	<% for item in items: %>
+		<% if item.url.match(/set-up/): %>
+			<h2><%= item.title %></h2>
+		<%- @partial('documents' + item.url + 'index.html.md') %>
+		<% else: %>
+			<h2><a href="<%= item.url %>"><%= item.title %></a></h2>
+		<% end %>
+	<% end %>
+<% end %>
+<%= renderMenu @generateMenu(@document.url) %>

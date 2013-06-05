@@ -1,0 +1,125 @@
+<html>
+<head>
+  <title>Thumbnails</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+
+	<link rel="stylesheet" href="/20130603165257/c/style.css" />
+
+  <script src="/lib/jquery-1.9.1.min.js"></script>
+
+	<link rel="stylesheet" href="/lib/fotorama/fotorama.css" />
+	<script src="/lib/fotorama/fotorama.js"></script>
+</head>
+<body id="root">
+
+
+
+<div class="header header--false">
+  <div class="logo">
+  <a href="/">
+  <span class="fo">Fo</span><span class="to">to</span><span class="ra">ra<i><i></i><i></i><i class="a"></i><i></i></i></span><span class="ma">ma</span>
+  </a>
+</div>
+	
+		
+
+<ul class="menu">
+  
+  <li>
+  
+  <a href="/set-up/">Set up</a>
+  
+  
+  </li>
+  
+  <li class="selected">
+  
+  <a href="/use/">Use</a>
+  
+  
+  
+<ul class="menu">
+  
+  <li>
+  
+  <a href="/use/dimensions/">Dimensions</a>
+  
+  
+  </li>
+  
+  <li class="selected">
+  
+  <span>Thumbnails</span>
+  
+  
+  </li>
+  
+  <li>
+  
+  <a href="/use/fullscreen/">Fullscreen</a>
+  
+  
+  </li>
+  
+  <li>
+  
+  <a href="/use/video/">Video</a>
+  
+  
+  </li>
+  
+</ul>
+
+  
+  </li>
+  
+  <li>
+  
+  <a href="/get-help/">Get help</a>
+  
+  
+  </li>
+  
+  <li>
+  
+  <a href="/donate/">Donate</a>
+  
+  
+  </li>
+  
+</ul>
+
+	
+</div>
+
+
+
+	<h1>Thumbnails</h1>
+
+
+<p>Change navigation style from iPhone-style dots to thumbnails by adding <code>data-nav=&quot;thumbs&quot;</code> attribute:</p>
+<pre><code><span class='xml'><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"fotorama"</span>
+     <span class="attribute">data-nav</span>=<span class="value">"thumbs"</span>></span>
+  <span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"1.jpg"</span>></span>
+  <span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"2.jpg"</span>></span>
+  <span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"3.jpg"</span>></span>
+<span class="tag">&lt;/<span class="title">div</span>></span></span></code></pre>
+<p>For better performance with thumbnails, have smaller images ready and include them in <abbr>HTML</abbr>. Like so:</p>
+<pre><code><span class='xml'><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"fotorama"</span>
+     <span class="attribute">data-nav</span>=<span class="value">"thumbs"</span>></span>
+  <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"1.jpg"</span>></span><span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"1_thumb.jpg"</span>></span><span class="tag">&lt;/<span class="title">a</span>></span>
+  <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"2.jpg"</span>></span><span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"2_thumb.jpg"</span>></span><span class="tag">&lt;/<span class="title">a</span>></span>
+  <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"3.jpg"</span>></span><span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"3_thumb.jpg"</span>></span><span class="tag">&lt;/<span class="title">a</span>></span>
+<span class="tag">&lt;/<span class="title">div</span>></span></span></code></pre>
+<p class="after-pre"><code>&lt;&gt;</code> <a href="/&lt;&gt;/thumbnails.html">Thumbnails</a></p>
+
+<p>By default, thumbnail is 64×64 square. Adjust this with <code>data-thumb-width</code> and <code>data-thumb-height</code> attributes.</p>
+<p>Fotorama will automatically generate the missing thumbnails.</p>
+
+
+
+<div class="footer">© 2011—2013, Artem Polikarpov</div>
+
+</body>
+</html>

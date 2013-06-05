@@ -1,0 +1,44 @@
+.menu {
+  display: inline-block;
+  vertical-align: bottom;
+  font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+  line-height: 36px;
+  list-style: none;
+  margin: 0 0 27px;
+  padding: 0;
+}
+
+.menu > li {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.menu > li + li:before {
+	content: ' · ';
+}
+
+.menu > li > .menu {
+  line-height: 20px;
+  display: block;
+  margin-top: -5px;
+  margin-left: 0;
+  margin-bottom: 0;
+  position: absolute;
+}
+
+.menu > li > .menu > li {
+  margin-left: 0;
+}
+
+.menu > li > .menu > li:before,
+.menu > li > .menu > li > span,
+.menu > li > .menu > li > a {
+  display: none;
+}
+
+
+.menu > li > .menu > li.selected > a {
+  display: inline;
+}

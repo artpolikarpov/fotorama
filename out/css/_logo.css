@@ -1,0 +1,71 @@
+.logo {
+  display: inline-block;
+  vertical-align: bottom;
+  font-size: 24px;
+  line-height: 36px;
+	font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 30px;
+	margin-right: 20px;
+  -webkit-backface-visibility: hidden;
+}
+
+.header--frontpage .logo {
+  padding-right: 17px; /* 33px — center 'RA', 0 — center whole word */
+	margin-right: 0;
+}
+
+.logo > span, .logo > a > span {
+  display: inline-block;
+  padding-top: 1px;
+}
+
+.logo .ra {
+  border: 2px solid #333;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 0 -8px 0 -9px;
+  background: rgba(244, 244, 243, .75);
+	box-shadow: 0 0 10px rgba(0,0,0,.2);
+  position: relative;
+  z-index: 2;
+}
+
+.logo .ra > i {
+  position: absolute;
+  white-space: nowrap;
+  width: 100%;
+  left: 0;
+  top: 39px;
+  padding: 3px 0;
+  text-align: center;
+}
+
+.logo .ra > i > i {
+  display: inline-block;
+  width: 2px;
+  height: 2px;
+  border: 1px solid #333;
+  border-radius: 2px;
+  margin: 0 2px;
+}
+
+.logo .ra > i > i.a {
+  background: #333;
+}
+
+.header .logo > a, .header .logo > a:visited {
+  text-decoration: none;
+  border: none;
+  color: #333;
+}
+
+.logo > a:hover .ra,
+.logo > a:hover .ra > i > i {
+  border-color: rgb(170,0,0);
+}
+
+.logo > a:hover .ra > i > i.a {
+  background: rgb(170,0,0);
+}
