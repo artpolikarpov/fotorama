@@ -12,7 +12,7 @@ var $WINDOW = $(window),
     TRANSITION_DURATION = 333,
     SPINNER_COLOR = '#777',
     AUTOPLAY_INTERVAL = 5000,
-    MARGIN = 10,
+    MARGIN = 2,
     THUMB_SIZE = 64,
 
     // Размеры на тот случай, если пользователь не укажет и брать не откуда

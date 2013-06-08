@@ -451,26 +451,26 @@ function preventDefault (e) {
   e.preventDefault();
 }
 
-function stopPropagation (e) {
-  e.stopPropagation();
-}
+//function stopPropagation (e) {
+//  e.stopPropagation();
+//}
+//
+//function noInteraction () {
+//  return false;
+//}
 
-function noInteraction () {
-  return false;
-}
-
-function bindNoInteraction ($el) {
-  return $el.each(function () {
-    $(this)
-        .off('mousedown mousemove mouseup')
-        .on('mousedown mousemove mouseup', noInteraction);
-    if (TOUCH) {
-      this.removeEventListener('touchstart', noInteraction);
-      this.removeEventListener('touchmove', noInteraction);
-      this.removeEventListener('touchend', noInteraction);
-      this.addEventListener('touchstart', noInteraction);
-      this.addEventListener('touchmove', noInteraction);
-      this.addEventListener('touchend', noInteraction);
-    }
-  });
-}
+//function bindNoInteraction ($el) {
+//  return $el.each(function () {
+//    $(this)
+//        .off('mousedown mousemove mouseup')
+//        .on('mousedown mousemove mouseup', noInteraction);
+//    if (TOUCH) {
+//      this.removeEventListener('touchstart', noInteraction);
+//      this.removeEventListener('touchmove', noInteraction);
+//      this.removeEventListener('touchend', noInteraction);
+//      this.addEventListener('touchstart', noInteraction);
+//      this.addEventListener('touchmove', noInteraction);
+//      this.addEventListener('touchend', noInteraction);
+//    }
+//  });
+//}

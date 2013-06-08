@@ -42,8 +42,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
       stageShaftData = $stageShaft.data(),
       navShaftData = $navShaft.data(),
 
-      $shadows = bindNoInteraction($('<div class="' + shadowClass + ' ' + shadowLeftClass + '"></div><div class="' + shadowClass + ' ' + shadowRightClass + '"></div>').appendTo($stage)),
-      $navShadows = bindNoInteraction($shadows.clone().appendTo($nav)),
+      $shadows = /*bindNoInteraction(*/$('<div class="' + shadowClass + ' ' + shadowLeftClass + '"></div><div class="' + shadowClass + ' ' + shadowRightClass + '"></div>').appendTo($stage)/*)*/,
+      $navShadows = /*bindNoInteraction(*/$shadows.clone().appendTo($nav)/*)*/,
 
       $thumbBorder = $('<div class="' + thumbBorderClass + '"></div>').appendTo($navShaft),
 
