@@ -1,0 +1,56 @@
+worker_processes  4;
+daemon            off;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  logs/access.log  main;
+    error_log   logs/error.log  notice;
+
+
+    sendfile    on;
+    tcp_nopush  on;
+
+    keepalive_timeout  65;
+
+
+    gzip  on;
+
+
+    include       mime.types;
+    default_type  application/octet-stream;
+
+
+    server {
+        server_name  localhost;
+        listen       <%= ENV['PORT'] %>;
+
+
+        root  <%= ENV['HOME'] %>/www;
+
+
+        index  index.html index.htm index.xhtml index.php;
+
+        try_files $uri $uri/ index.php;
+
+
+        location ~ \.php {
+            include         fastcgi.conf;
+            fastcgi_pass    unix:/tmp/php-fpm.sck;
+        }
+
+        location ~ /\. {
+            deny            all;
+            access_log      off;
+            log_not_found   off;
+        }
+    }
+}
