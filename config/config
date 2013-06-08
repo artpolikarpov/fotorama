@@ -12,7 +12,7 @@ CUSTOM_DIR="config"
 
 ROOT_FILES="Procfile"
 
-INDEX_FILES="index.html index.htm index.xhtml index.php"
+INDEX_FILES=".gitignore"
 WWW_DIR="out"
 
 
