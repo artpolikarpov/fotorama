@@ -1,4 +1,4 @@
-It is easy to install Fotorama:
+<p></p>
 
 ```xml
 <!-- 1. Link to the newest jQuery, -->
@@ -10,9 +10,9 @@ It is easy to install Fotorama:
 
 <!-- 2. Add images to <div class="fotorama"></div>. -->
 <div class="fotorama">
-	<img src="1.jpg">
-	<img src="2.jpg">
-	<img src="3.jpg">
+  <img src="1.jpg">
+  <img src="2.jpg">
+  <img src="3.jpg">
 </div>
 
 <!-- 3. Enjoy! -->

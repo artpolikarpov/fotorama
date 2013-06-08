@@ -1,4 +1,4 @@
-Wrap images with `<div class="fotorama">` and you’ll get a basic fotorama:
+Wrap images with `<div class="fotorama">` to get a basic fotorama:
 
 	<div class="fotorama">
 	  <img src="1.jpg">
@@ -6,4 +6,4 @@ Wrap images with `<div class="fotorama">` and you’ll get a basic fotorama:
 	  <img src="3.jpg">
 	</div>
 
-<p class="after-pre">`<>` [Basic](/<>/basic.html)</p>
+<p class="after-pre">Example: [Basic](/<>/basic.html)</p>

@@ -5,11 +5,11 @@ To add video from YouTube or Vimeo just link to the video page:
 	  <a href="http://vimeo.com/61527416">Celestial Dynamics</a>
 	</div>
 
-<p class="after-pre">`<>` [Video](/<>/video.html)</p>
+<p class="after-pre">Example: [Video](/<>/video.html)</p>
 
-Fotorama will automatically fetch the splash images. Link format is not strict — `http://youtu.be/C3lWwBslWqg` and `http://player.vimeo.com/video/61527416` are good too.
+Fotorama will automatically fetch the splash images. Link format is not strict — `http://youtu.be/C3lWwBslWqg` and `http://player.vimeo.com/video/61527416` are both good.
 
-Show another splash:
+For a custom splash image:
 
 	<div class="fotorama">
 	  <a href="http://youtube.com/watch?v=C3lWwBslWqg">
@@ -38,4 +38,4 @@ You can also add any video if you have iframe link and previews. Here are the Da
 	  </a>
 	</div>
 
-<p class="after-pre">`<>` [Custom video](/<>/video-custom.html)</p>
+<p class="after-pre">Example: [Custom video](/<>/video-custom.html)</p>

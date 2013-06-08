@@ -1,4 +1,4 @@
-Allow fotorama to enter fullscreen using `data-allow-full-screen` attribute:
+Allow fotorama to enter fullscreen using `data-allow-full-screen`:
 
 	<div class="fotorama"
 	     data-allow-full-screen="true">
@@ -7,9 +7,9 @@ Allow fotorama to enter fullscreen using `data-allow-full-screen` attribute:
 	  <img src="3.jpg">
 	</div>
 
-This will show icon at the top-right that toggles the fullscreen.
+This will show an icon at the top-right that toggles the fullscreen.
 
-To use modern Fullscreen <abbr>API</abbr> set `data-allow-full-screen` to `native`:
+To use modern Fullscreen <abbr>API</abbr>, set `data-allow-full-screen` to `native`:
 
 	<div class="fotorama"
 	     data-allow-full-screen="native">
@@ -18,9 +18,9 @@ To use modern Fullscreen <abbr>API</abbr> set `data-allow-full-screen` to `nativ
 	  <img src="3.jpg">
 	</div>
 
-<p class="after-pre">`<>` [Fullscreen](/<>/fullscreen.html)</p>
+<p class="after-pre">Example: [Fullscreen](/<>/fullscreen.html)</p>
 
-Add a separate image for fullscreen using `data-full` attribute:
+Add a separate image for fullscreen using `data-full`:
 
 	<div class="fotorama"
 	     data-allow-full-screen="native">
@@ -29,4 +29,4 @@ Add a separate image for fullscreen using `data-full` attribute:
 	  <img src="3.jpg" data-full="3_full.jpg">
 	</div>
 
-<p class="after-pre">`<>` [Fullscreen with big images](/<>/fullscreen-big.html)</p>
+<p class="after-pre">Example: [Fullscreen with big images](/<>/fullscreen-big.html)</p>

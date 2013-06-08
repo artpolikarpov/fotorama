@@ -1,4 +1,4 @@
-Change navigation style from iPhone-style dots to thumbnails by adding `data-nav="thumbs"` attribute:
+Change navigation style from iPhone-style dots to thumbnails by adding `data-nav="thumbs"`:
 
 	<div class="fotorama"
 	     data-nav="thumbs">
@@ -16,8 +16,8 @@ For better performance with thumbnails, have smaller images ready and include th
 	  <a href="3.jpg"><img src="3_thumb.jpg"></a>
 	</div>
 
-<p class="after-pre">`<>` [Thumbnails](/<>/thumbnails.html)</p>
+<p class="after-pre">Example: [Thumbnails](/<>/thumbnails.html)</p>
 
-By default, thumbnail is 64×64 square. Adjust this with `data-thumb-width` and `data-thumb-height` attributes.
+By default, thumbnail is a 64×64 square. Adjust this with `data-thumb-width` and `data-thumb-height`.
 
 Fotorama will automatically generate the missing thumbnails.

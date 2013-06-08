@@ -19,11 +19,9 @@ css: "/c/style.css"
 
 <% frontpage = @document.url == '/index.html' && 'frontpage' %>
 
-<div class="header header--<%= frontpage %>">
+<div class="header">
   <%- @partial('logo.html.eco', {link: !frontpage}) %>
-	<% if !frontpage : %>
-		<%- @partial('menu.html.eco', {menuItems: @generateMenu(@document.url)}) %>
-	<% end %>
+	<%- @partial('menu.html.eco', {menuItems: @generateMenu(@document.url)}) %>
 </div>
 
 
