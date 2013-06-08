@@ -1,15 +1,16 @@
-.fotorama<%= v.stamp %> .fotorama__nav--thumbs .fotorama__nav__frame {
-padding:<%= v.thumbMargin %>px <%= v.thumbMargin / 2 %>px;
+.fotorama<%= v.stamp %> .fotorama__nav--thumbs .fotorama__nav__frame{
+padding:<%= v.thumbMargin %>px;
+padding-left:0;
 width:<%= v.thumbWidth %>px;
 height:<%= v.thumbHeight %>px}
-.fotorama<%= v.stamp %> .fotorama__thumb {
+.fotorama<%= v.stamp %> .fotorama__nav--thumbs .fotorama__nav__frame:last-child{
+padding-right:0}
+.fotorama<%= v.stamp %> .fotorama__thumb{
 width:<%= v.thumbWidth %>px;
 height:<%= v.thumbHeight %>px}
-.fotorama<%= v.stamp %> .fotorama__thumb-border {
+.fotorama<%= v.stamp %> .fotorama__thumb-border{
 width:<%= v.thumbWidth - v.thumbMargin * 2 %>px;
 height:<%= v.thumbHeight - v.thumbMargin * 2 %>px;
 border-width:<%= v.thumbMargin %>px;
 margin-top:<%= v.thumbMargin %>px;
-margin-left:<%= - v.thumbWidth / 2 + v.thumbMargin / 2 %>px}
-.fotorama<%= v.stamp %> .fotorama__wrap--vertical .fotorama__nav--thumbs {
-width:<%= v.thumbWidth + v.thumbMargin * 2 %>px}
+margin-left:<%= - v.thumbWidth / 2 %>px}
