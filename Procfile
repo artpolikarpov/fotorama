@@ -1,1 +1,1 @@
-web: node_modules/docpad/bin/docpad-server
+# web: node_modules/docpad/bin/docpad-server
