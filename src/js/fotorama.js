@@ -1121,7 +1121,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
 
   function setShadow ($el, edge) {
-
     $el.removeClass(shadowsLeftClass + ' ' + shadowsRightClass);
 
     if (edge && !$videoPlaying) {
@@ -1228,12 +1227,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
       setShadow($stage, result.edge);
     },
     onEnd: function(result) {
-			//onTouchEnd();
-
-	    console.log('onEnd', result);
-
       setShadow($stage);
-      if (result.pos !== result.newPos) {
+
+	    if (result.moved || (result.touch && result.pos !== result.newPos)) {
 				var index = getIndexByPos(result.newPos, measures.w, MARGIN, repositionIndex);
 				that.show({
 					index: index,
