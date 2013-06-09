@@ -378,6 +378,7 @@ $time: 333ms;
 
 .fotorama__select {
   @extend %select;
+	cursor: auto;
 }
 
 .fotorama__no-select {
