@@ -1417,7 +1417,7 @@ $.fn.fotorama = function (opts) {
 
 										allowFullScreen: false, // true || 'native'
 
-										fit: 'contain', // true || 'cover' || false
+										fit: 'contain', // 'cover' || 'scale-down' || false
 
 										transition: 'slide', // 'crossfade' || 'dissolve'
 

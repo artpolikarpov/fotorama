@@ -359,7 +359,7 @@ function fit ($el, measuresToFit, method) {
         height = measures.height,
         ratio = measuresToFit.w / measuresToFit.h,
         biggerRatioFLAG = measures.ratio >= ratio,
-        fitFLAG = method === true,
+        fitFLAG = method === 'scale-down',
         containFLAG = method === 'contain',
         coverFLAG = method === 'cover';
 
