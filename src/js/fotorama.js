@@ -193,6 +193,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 			$arrs.hide();
     }
 
+	  classes[addOrRemove(size > 1)].push('fotorama__wrap--navigation');
+
     if (opts.autoplay) setAutoplayInterval(opts.autoplay);
 
     o_thumbSide = numberFromMeasure(opts.thumbWidth) || THUMB_SIZE;
