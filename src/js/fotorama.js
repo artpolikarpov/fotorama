@@ -175,9 +175,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * Options on the fly
    * */
   function setOptions () {
-    o_loop = opts.loop && size > 2;
-
     o_fade = opts.transition === 'crossfade' || opts.transition === 'dissolve';
+
+	  o_loop = opts.loop && (size > 2 || o_fade);
 
     var classes = {add: [], remove: []};
 
@@ -926,7 +926,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 			var $activeFrame = activeFrame[stageFrameKey],
 					$prevActiveFrame = activeIndex !== lastActiveIndex ? data[lastActiveIndex][stageFrameKey] : null;
 
-			fade($activeFrame, $prevActiveFrame, {
+			fade($activeFrame, $prevActiveFrame, $stageFrame, {
 				time: time,
 				method: opts.transition,
 				onEnd: onEnd

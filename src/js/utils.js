@@ -15,8 +15,8 @@ function minMaxLimit (value, min, max) {
  * возвращает величину по определённой координате (top или left)
  * */
 function readTransform (css) {
-  ////////console.log('---readTransform---', css);
-  return css.match(/-?\d+/g)[4];
+  console.log('---readTransform---', css);
+  return css && css.match(/-?\d+/g)[4];
 }
 
 /**
@@ -136,25 +136,27 @@ function afterTransition ($el, fn, time) {
   var done,
       elData = $el.data();
 
-  elData.transProp = $el.css('transition-property');
-  elData.onEndFn = function () {
-    done = true;
-    fn.call(this);
-  };
+	if (elData) {
+	  elData.transProp = $el.css('transition-property');
+	  elData.onEndFn = function () {
+	    done = true;
+	    fn.call(this);
+	  };
 
-  bindTransitionEnd($el);
+	  bindTransitionEnd($el);
 
-  clearTimeout(elData.transTimeout);
+	  clearTimeout(elData.transTimeout);
 
-  if (!time) return;
+	  if (!time) return;
 
-  elData.transTimeout = setTimeout(function () {
-    // Если не сработал нативный transitionend (а такое бывает),
-    // через таймаут вызываем onEndFn насильно:
-    if (done) return;
-    $el.data().onEndFn = noop;
-    fn.call($el[0]);
-  }, time * 1.1);
+	  elData.transTimeout = setTimeout(function () {
+	    // Если не сработал нативный transitionend (а такое бывает),
+	    // через таймаут вызываем onEndFn насильно:
+	    if (done) return;
+	    $el.data().onEndFn = noop;
+	    fn.call($el[0]);
+	  }, time * 1.1);
+	}
 }
 
 /**
@@ -168,9 +170,12 @@ function stop ($el) {
   } else {
     $el.stop();
   }
-  var lockedLeft = readPosition($el);
-  $el.css(getTranslate(lockedLeft));
-  return lockedLeft;
+	if ($el.length) {
+		console.log('$el.length', $el);
+	  var lockedLeft = readPosition($el);
+	  $el.css(getTranslate(lockedLeft));
+	  return lockedLeft;
+	}
 }
 
 /**

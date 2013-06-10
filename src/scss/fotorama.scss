@@ -116,9 +116,9 @@ $time: 333ms;
 
 .fotorama__wrap--fade {
   .fotorama__stage__frame {
-    left: -9999px;
-    top: -9999px;
-    opacity: 0;
+    //left: -9999px;
+    //top: -9999px;
+    //opacity: 0;
   }
   .fotorama__stage__frame.fotorama__active {
     opacity: 1;
@@ -141,7 +141,7 @@ $time: 333ms;
 }
 
 .fotorama__stage__frame.fotorama__active {
-  z-index: 10;
+  z-index: 8;
 }
 
 .fotorama__wrap--video {
@@ -371,8 +371,9 @@ $time: 333ms;
   }
   .fotorama__img,
   .fotorama__html,
-  .fotorama__wrap--fade .fotorama__stage__frame,
+  .fotorama__stage__frame,
 	.fotorama__caption {
+	  @include transition-timing-function(linear);
     @include transition(opacity $time);
   }
 }
