@@ -346,11 +346,11 @@ function fit ($el, measuresToFit, method) {
       measures = elData.measures;
 
   if (measures && (!elData.l ||
-      elData.l.w !== measures.width ||
-      elData.l.h !== measures.height ||
+      elData.l.W !== measures.width ||
+      elData.l.H !== measures.height ||
       elData.l.r !== measures.ratio ||
-      elData.l.W !== measuresToFit.w ||
-      elData.l.H !== measuresToFit.h ||
+      elData.l.w !== measuresToFit.w ||
+      elData.l.h !== measuresToFit.h ||
       elData.l.m !== method)) {
 
 		console.log('fit execute', measures, measuresToFit);
@@ -379,11 +379,11 @@ function fit ($el, measuresToFit, method) {
     });
 
     elData.l = {
-      w: measures.width,
-      h: measures.height,
+      W: measures.width,
+      H: measures.height,
       r: measures.ratio,
-      W: measuresToFit.w,
-      H: measuresToFit.h,
+      w: measuresToFit.w,
+      h: measuresToFit.h,
       m: method
     }
   }
