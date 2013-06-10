@@ -1,6 +1,7 @@
 jQuery.Fotorama = function ($fotorama, opts) {
+  this.options = opts;
 
-  $HTML = $HTML || $('html');
+	$HTML = $HTML || $('html');
   $BODY = $BODY || $('body');
 
   // Блок-спутник для загрузки в нём фотографий и проверки размеров,
@@ -1393,7 +1394,6 @@ $.fn.fotorama = function (opts) {
         waitFor(function () {
           return !isHidden(that);
         }, function () {
-          fotoramaData.urtext = $fotorama.html();
           fotoramaData.api = new $.Fotorama($fotorama,
               /* Иерархия приоритета опций, выше — приоритетней:
                * 1. Дата-атрибуты (<div data-loop="true"></div>)
@@ -1409,7 +1409,7 @@ $.fn.fotorama = function (opts) {
 										height: null,
 										minHeight: null,
 										maxHeight: null,
-										ratio: null, // '16/9' || 500/333
+										ratio: null, // '16/9' || 500/333 || 1.5
 
 										// navigation, thumbs
 										nav: 'dots', // 'thumbs' || false
@@ -1419,7 +1419,7 @@ $.fn.fotorama = function (opts) {
 
 										allowFullScreen: false, // true || 'native'
 
-										fit: 'contain', // 'cover' || 'scale-down' || false
+										fit: 'contain', // 'cover' || 'scale-down' || 'none'
 
 										transition: 'slide', // 'crossfade' || 'dissolve'
 
@@ -1441,6 +1441,7 @@ $.fn.fotorama = function (opts) {
                   )
               )
           );
+          fotoramaData.urtext = $fotorama.html();
         });
       } else {
 				api.setOptions(opts);
