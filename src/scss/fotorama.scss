@@ -80,7 +80,7 @@ $time: 333ms;
 .fotorama__stage__shaft {
   @extend %stretch;
   @extend %no-tap;
-	.fotorama__wrap--navigation & {
+	.fotorama__wrap--navigation.fotorama__wrap--fade & {
     cursor: pointer;
 	}
 }
