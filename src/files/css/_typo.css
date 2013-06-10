@@ -21,35 +21,47 @@ ol {
   margin-top: 0;
 }
 
-p + ul, p + ol, p + pre, pre + .after-pre {
+p + ul, p + ol, p + pre, pre + .after-pre, p + .fotorama-wrap, p + .image {
 	margin-top: -.5em;
 	margin-left: 40px;
 	margin-bottom: 1.5em;
 	padding-left: 0;
 }
 
+body .fotorama-wrap, body .image {
+	margin-left: 0;
+}
+
 pre + .after-pre {
 	margin-top: -1em;
 }
 
-a, .header a:visited, h2 a:visited {
+a, .header a:visited, h2 a:visited,
+a u, .header a:visited u, h2 a:visited u {
   text-decoration: none;
   border-bottom: 1px solid;
   color: rgb(3, 112, 154);
   border-color: rgba(3, 112, 154, .3);
 }
 
-a:visited {
+a.no-u {
+	border-bottom: none;
+}
+
+a:visited,
+a:visited u {
 	color: rgb(85, 26, 139);
 	border-color: rgba(85, 26, 139, .3);
 }
 
-#root a:hover {
+#root a:hover,
+#root a:hover u {
   color: rgb(170, 0, 0);
   border-color: rgba(170, 0, 0, .3);
 }
 
-#root .selected > a {
+#root .selected > a,
+#root .selected > a u {
 	color: rgb(170, 0, 0);
 	border-color: rgb(170, 0, 0);
 }

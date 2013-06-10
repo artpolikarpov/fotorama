@@ -5,7 +5,12 @@ To add video from YouTube or Vimeo just link to the video page:
 	  <a href="http://vimeo.com/61527416">Celestial Dynamics</a>
 	</div>
 
-<p class="after-pre">Example: [Video](/<>/video.html)</p>
+_Video example (<a href="/<>/video.html" target="_blank">new window</a>):_
+
+<div class="fotorama-wrap"><div class="fotorama" data-width="700" data-ratio="700/426" data-max-width="100%">
+	<a href="http://youtube.com/watch?v=C3lWwBslWqg">Desert Rose</a>
+	<a href="http://vimeo.com/61527416">Celestial Dynamics</a>
+</div></div>
 
 Fotorama will automatically fetch the splash images. Link format is not strict — `http://youtu.be/C3lWwBslWqg` and `http://player.vimeo.com/video/61527416` are both good.
 
@@ -25,6 +30,7 @@ Add a separate thumbnail using this formula:
 	  </a>
 	</div>
 
+## Custom video
 You can also add any video if you have iframe link and previews. Here are the Dailymotion videos:
 
 	<div class="fotorama">
@@ -38,4 +44,4 @@ You can also add any video if you have iframe link and previews. Here are the Da
 	  </a>
 	</div>
 
-<p class="after-pre">Example: [Custom video](/<>/video-custom.html)</p>
+<p class="after-pre">_Example: <a href="/<>/video-custom.html" target="_blank">Custom video</a>_</p>

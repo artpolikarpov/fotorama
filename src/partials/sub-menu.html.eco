@@ -5,9 +5,9 @@
 	<% for item in item.children: %>
   <li <% if item.state: %>class="selected"<% end %>>
   <% if item.state != 'current': %>
-  <a href="<%= item.url %>"><%= item.title %></a>
+  <a href="<%= item.url %>"><%- item.title %></a>
   <% else: %>
-  <span><%= item.title %></span>
+  <span><%- item.title %></span>
   <% end %>
   </li>
 	<% end %>

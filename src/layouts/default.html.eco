@@ -4,16 +4,27 @@ css: "/c/style.css"
 
 <html>
 <head>
-  <title><%= @document.title %></title>
+  <title><%= @document.headTitle || @document.title %></title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
 
 	<% for url in @assets('css'): %><link rel="stylesheet" href="<%= url %>" /><% end %>
 
-  <script src="/lib/jquery-1.9.1.min.js"></script>
+  <% if process.env.NODE_ENV: %>
+		<!-- jQuery, -->
+		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 
-	<link rel="stylesheet" href="/lib/fotorama/fotorama.css" />
-	<script src="/lib/fotorama/fotorama.js"></script>
+		<!-- Fotorama -->
+		<link  href="http://fotorama.s3.amazonaws.com/fotorama.css" rel="stylesheet">
+		<script src="http://fotorama.s3.amazonaws.com/fotorama.js"></script>
+	<% else: %>
+		<!-- jQuery, -->
+		<script src="/lib/jquery-1.9.1.min.js"></script>
+
+		<!-- Fotorama -->
+		<link  href="/lib/fotorama/fotorama.css" rel="stylesheet">
+		<script src="/lib/fotorama/fotorama.js"></script>
+	<% end %>
 </head>
 <body id="root">
 
@@ -26,7 +37,7 @@ css: "/c/style.css"
 
 
 <% if !frontpage : %>
-	<h1><%= @document.title %></h1>
+	<h1><%- @document.title %></h1>
 <% end %>
 
 <%- @content %>

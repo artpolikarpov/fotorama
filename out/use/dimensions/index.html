@@ -4,12 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
 
-	<link rel="stylesheet" href="/20130603165257/c/style.css" />
+	<link rel="stylesheet" href="/20130610155832/c/style.css" />
 
-  <script src="/lib/jquery-1.9.1.min.js"></script>
+  
+		<!-- jQuery, -->
+		<script src="/lib/jquery-1.9.1.min.js"></script>
 
-	<link rel="stylesheet" href="/lib/fotorama/fotorama.css" />
-	<script src="/lib/fotorama/fotorama.js"></script>
+		<!-- Fotorama -->
+		<link  href="/lib/fotorama/fotorama.css" rel="stylesheet">
+		<script src="/lib/fotorama/fotorama.js"></script>
+	
 </head>
 <body id="root">
 
@@ -68,6 +72,20 @@
   
   </li>
   
+  <li>
+  
+  <a href="/use/html/">&lt;abbr&gt;HTML&lt;/abbr&gt;</a>
+  
+  
+  </li>
+  
+  <li>
+  
+  <a href="/use/fit/">Fit</a>
+  
+  
+  </li>
+  
 </ul>
 
   
@@ -105,6 +123,7 @@ To reserve the space on the page before the first image is loaded, use <code>dat
   <span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"2.jpg"</span>></span>
   <span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"3.jpg"</span>></span>
 <span class="tag">&lt;/<span class="title">div</span>></span></span></code></pre>
+<h2>Responsive</h2>
 <p>To make fotorama responsive, define width in percents and aspect ratio:</p>
 <pre><code><span class='xml'><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"fotorama"</span>
      <span class="attribute">data-width</span>=<span class="value">"100%"</span>
@@ -115,7 +134,16 @@ To reserve the space on the page before the first image is loaded, use <code>dat
   <span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"2.jpg"</span>></span>
   <span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"3.jpg"</span>></span>
 <span class="tag">&lt;/<span class="title">div</span>></span></span></code></pre>
-<p class="after-pre">Example: <a href="/&lt;&gt;/responsive.html">Responsive</a></p>
+<p><em>Responsive example (<a href="/<>/responsive.html" target="_blank">new window</a>):</em></p>
+<div class="fotorama-wrap"><div class="fotorama"
+     data-width="100%"
+     data-ratio="800/600">
+    <img src="http://fotorama.s3.amazonaws.com/i/macro2/16-lo.jpg" />
+    <img src="http://fotorama.s3.amazonaws.com/i/macro2/17-lo.jpg" />
+    <img src="http://fotorama.s3.amazonaws.com/i/macro2/9-lo.jpg" />
+    <img src="http://fotorama.s3.amazonaws.com/i/macro2/12-lo.jpg" />
+    <img src="http://fotorama.s3.amazonaws.com/i/macro2/18-lo.jpg" />
+</div></div>
 
 <p>Constrain fotorama’s size to a certain range with <code>data-min-width</code>, <code>data-max-width</code>, <code>data-min-height</code>, and <code>data-max-height</code>:</p>
 <pre><code><span class='xml'><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"fotorama"</span>
@@ -129,7 +157,7 @@ To reserve the space on the page before the first image is loaded, use <code>dat
   <span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"2.jpg"</span>></span>
   <span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"3.jpg"</span>></span>
 <span class="tag">&lt;/<span class="title">div</span>></span></span></code></pre>
-<p class="after-pre">Example: <a href="/&lt;&gt;/constrained.html">Constrained</a></p>
+<p class="after-pre"><em>Example: <a href="/<>/constrained.html" target="_blank">Constrained</a></em></p>
 
 <p>Relative height is calculated based on inner height of the window. A height of 100% covers the entire browser window:</p>
 <pre><code><span class='xml'><span class="tag">&lt;<span class="title">body</span> <span class="attribute">style</span>=<span class="value">"margin: 0;"</span>></span>
@@ -143,7 +171,7 @@ To reserve the space on the page before the first image is loaded, use <code>dat
   <span class="tag">&lt;/<span class="title">div</span>></span>
 
 <span class="tag">&lt;/<span class="title">body</span>></span></span></code></pre>
-<p class="after-pre">Example: <a href="/&lt;&gt;/full-window.html">Full window</a></p>
+<p class="after-pre"><em>Example: <a href="/<>/full-window.html">Full window</a></em></p>
 
 
 <div class="footer">© 2011—2013, Artem Polikarpov</div>

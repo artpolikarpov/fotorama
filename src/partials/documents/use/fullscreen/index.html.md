@@ -9,6 +9,22 @@ Allow fotorama to enter fullscreen using `data-allow-full-screen`:
 
 This will show an icon at the top-right that toggles the fullscreen.
 
+_Fullscreen example (<a href="/<>/fullscreen.html" target="_blank">new window</a>):_
+
+<div class="fotorama-wrap"><div class="fotorama"
+     data-width="400"
+     data-ratio="400/300"
+     data-max-width="100%"
+     data-fit="cover"
+     data-allow-full-screen="true">
+	<img src="http://fotorama.s3.amazonaws.com/i/macro2/9-lo.jpg" />
+	<img src="http://fotorama.s3.amazonaws.com/i/macro2/23-lo.jpg" />
+	<img src="http://fotorama.s3.amazonaws.com/i/macro2/14-lo.jpg" />
+	<img src="http://fotorama.s3.amazonaws.com/i/macro2/15-lo.jpg" />
+	<img src="http://fotorama.s3.amazonaws.com/i/macro2/16-lo.jpg" />
+</div></div>
+
+## Native fullscreen
 To use modern Fullscreen <abbr>API</abbr>, set `data-allow-full-screen` to `native`:
 
 	<div class="fotorama"
@@ -18,8 +34,22 @@ To use modern Fullscreen <abbr>API</abbr>, set `data-allow-full-screen` to `nati
 	  <img src="3.jpg">
 	</div>
 
-<p class="after-pre">Example: [Fullscreen](/<>/fullscreen.html)</p>
+_Native fullscreen example (<a href="/<>/fullscreen-native.html" target="_blank">new window</a>):_
 
+<div class="fotorama-wrap"><div class="fotorama"
+     data-width="400"
+     data-ratio="400/300"
+     data-max-width="100%"
+     data-fit="cover"
+     data-allow-full-screen="native">
+	<img src="http://fotorama.s3.amazonaws.com/i/macro2/9-lo.jpg" />
+	<img src="http://fotorama.s3.amazonaws.com/i/macro2/23-lo.jpg" />
+	<img src="http://fotorama.s3.amazonaws.com/i/macro2/14-lo.jpg" />
+	<img src="http://fotorama.s3.amazonaws.com/i/macro2/15-lo.jpg" />
+	<img src="http://fotorama.s3.amazonaws.com/i/macro2/16-lo.jpg" />
+</div></div>
+
+## Big images
 Add a separate image for fullscreen using `data-full`:
 
 	<div class="fotorama"
@@ -29,4 +59,4 @@ Add a separate image for fullscreen using `data-full`:
 	  <img src="3.jpg" data-full="3_full.jpg">
 	</div>
 
-<p class="after-pre">Example: [Fullscreen with big images](/<>/fullscreen-big.html)</p>
+<p class="after-pre">_Example: <a href="/<>/fullscreen-big.html" target="_blank">Fullscreen with big images</a>_</p>

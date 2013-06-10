@@ -9,6 +9,7 @@ To reserve the space on the page before the first image is loaded, use `data-wid
 	  <img src="3.jpg">
 	</div>
 
+## Responsive
 To make fotorama responsive, define width in percents and aspect ratio:
 
 	<div class="fotorama"
@@ -21,7 +22,17 @@ To make fotorama responsive, define width in percents and aspect ratio:
 	  <img src="3.jpg">
 	</div>
 
-<p class="after-pre">Example: [Responsive](/<>/responsive.html)</p>
+_Responsive example (<a href="/<>/responsive.html" target="_blank">new window</a>):_
+
+<div class="fotorama-wrap"><div class="fotorama"
+     data-width="100%"
+     data-ratio="800/600">
+	<img src="http://fotorama.s3.amazonaws.com/i/macro2/16-lo.jpg" />
+	<img src="http://fotorama.s3.amazonaws.com/i/macro2/17-lo.jpg" />
+	<img src="http://fotorama.s3.amazonaws.com/i/macro2/9-lo.jpg" />
+	<img src="http://fotorama.s3.amazonaws.com/i/macro2/12-lo.jpg" />
+	<img src="http://fotorama.s3.amazonaws.com/i/macro2/18-lo.jpg" />
+</div></div>
 
 Constrain fotorama’s size to a certain range with `data-min-width`, `data-max-width`, `data-min-height`, and `data-max-height`:
 
@@ -37,7 +48,7 @@ Constrain fotorama’s size to a certain range with `data-min-width`, `data-max-
 	  <img src="3.jpg">
 	</div>
 
-<p class="after-pre">Example: [Constrained](/<>/constrained.html)</p>
+<p class="after-pre">_Example: <a href="/<>/constrained.html" target="_blank">Constrained</a>_</p>
 
 Relative height is calculated based on inner height of the window. A height of 100% covers the entire browser window:
 
@@ -53,4 +64,4 @@ Relative height is calculated based on inner height of the window. A height of 1
 
 	</body>
 
-<p class="after-pre">Example: [Full window](/<>/full-window.html)</p>
+<p class="after-pre">_Example: <a href="/<>/full-window.html">Full window</a>_</p>

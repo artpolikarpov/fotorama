@@ -1,0 +1,16 @@
+.fit-example {
+	overflow: hidden;
+	margin-right: -10px;
+}
+
+.fit-example .fotorama {
+	border: 1px solid #777;
+	width: 240px;
+	height: 180px;
+	float: left;
+	margin: 0 10px 10px 0;
+}
+
+.fit-example .fotorama__caption {
+	opacity: 1 !important;
+}

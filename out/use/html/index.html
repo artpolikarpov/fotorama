@@ -1,0 +1,189 @@
+<html>
+<head>
+  <title>HTML</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+
+	<link rel="stylesheet" href="/20130610155832/c/style.css" />
+
+  
+		<!-- jQuery, -->
+		<script src="/lib/jquery-1.9.1.min.js"></script>
+
+		<!-- Fotorama -->
+		<link  href="/lib/fotorama/fotorama.css" rel="stylesheet">
+		<script src="/lib/fotorama/fotorama.js"></script>
+	
+</head>
+<body id="root">
+
+
+
+<div class="header">
+  <div class="logo">
+  <a href="/">
+  <span class="fo">Fo</span><span class="to">to</span><span class="ra">ra<i><i></i><i></i><i class="a"></i><i></i></i></span><span class="ma">ma</span>
+  </a>
+</div>
+	
+
+<ul class="menu">
+  
+  <li>
+  
+  <a href="/set-up/">Set up</a>
+  
+  
+  </li>
+  
+  <li class="selected">
+  
+  <a href="/use/">Use</a>
+  
+  
+  
+<ul class="menu">
+  
+  <li>
+  
+  <a href="/use/dimensions/">Dimensions</a>
+  
+  
+  </li>
+  
+  <li>
+  
+  <a href="/use/thumbnails/">Thumbnails</a>
+  
+  
+  </li>
+  
+  <li>
+  
+  <a href="/use/fullscreen/">Fullscreen</a>
+  
+  
+  </li>
+  
+  <li>
+  
+  <a href="/use/video/">Video</a>
+  
+  
+  </li>
+  
+  <li class="selected">
+  
+  <span>&lt;abbr&gt;HTML&lt;/abbr&gt;</span>
+  
+  
+  </li>
+  
+  <li>
+  
+  <a href="/use/fit/">Fit</a>
+  
+  
+  </li>
+  
+</ul>
+
+  
+  </li>
+  
+  <li>
+  
+  <a href="/get-help/">Get help</a>
+  
+  
+  </li>
+  
+  <li>
+  
+  <a href="/donate/">Donate</a>
+  
+  
+  </li>
+  
+</ul>
+
+</div>
+
+
+
+	<h1><abbr>HTML</abbr></h1>
+
+
+<style type="text/css">
+    .fotorama .any {
+        text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+        font-family: Georgia, serif;
+        font-size: 72px;
+        text-align: center;
+        height: 100%;
+        box-sizing: border-box;
+        padding-top: 100px;
+        line-height: normal;
+    }
+
+    .fotorama .inverse {
+        color: #fff;
+        text-shadow: 0 1px 0 #000;
+    }
+</style>
+
+<p>Show custom <abbr>HTML</abbr>:</p>
+<pre><code><span class='xml'><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"fotorama"</span>></span>
+  <span class="tag">&lt;<span class="title">div</span>></span>One<span class="tag">&lt;/<span class="title">div</span>></span>
+  <span class="tag">&lt;<span class="title">div</span>></span><span class="tag">&lt;<span class="title">strong</span>></span>Two<span class="tag">&lt;/<span class="title">strong</span>></span><span class="tag">&lt;/<span class="title">div</span>></span>
+  <span class="tag">&lt;<span class="title">div</span>></span><span class="tag">&lt;<span class="title">em</span>></span>Three<span class="tag">&lt;/<span class="title">em</span>></span><span class="tag">&lt;/<span class="title">div</span>></span>
+<span class="tag">&lt;/<span class="title">div</span>></span></span></code></pre>
+<p>Work with links, divs, tables, paragraphs and more. Write the <abbr>CSS</abbr> for embedded blocks yourselves.</p>
+<p><em>Custom <abbr>HTML</abbr> example (<a href="/<>/html.html" target="_blank">new window</a>):</em></p>
+<div class="fotorama-wrap"><div class="fotorama" data-width="500" data-height="281" data-max-width="100%">
+    <div class="any" style="background: rgba(255, 0, 0, .1);">One</div>
+    <div class="any" style="background: rgba(0, 255, 0, .1);"><strong>Two</strong></div>
+    <div class="any" style="background: rgba(0, 0, 255, .1);"><em>Three</em></div>
+</div></div>
+
+<h2>Selectable text</h2>
+<p>Make text selectable with <code>fotorama__select</code> class:</p>
+<pre><code><span class='xml'><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"fotorama"</span>></span>
+  <span class="tag">&lt;<span class="title">div</span>></span><span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"fotorama__select"</span>></span>One<span class="tag">&lt;/<span class="title">span</span>></span><span class="tag">&lt;/<span class="title">div</span>></span>
+  <span class="tag">&lt;<span class="title">div</span>></span><span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">"fotorama__select"</span>></span>Two<span class="tag">&lt;/<span class="title">strong</span>></span><span class="tag">&lt;/<span class="title">div</span>></span>
+  <span class="tag">&lt;<span class="title">div</span>></span><span class="tag">&lt;<span class="title">em</span> <span class="attribute">class</span>=<span class="value">"fotorama__select"</span>></span>Three<span class="tag">&lt;/<span class="title">em</span>></span><span class="tag">&lt;/<span class="title">div</span>></span>
+<span class="tag">&lt;/<span class="title">div</span>></span></span></code></pre>
+<p><em>Selectable text example (<a href="/<>/html-selectable.html" target="_blank">new window</a>):</em></p>
+<div class="fotorama-wrap"><div class="fotorama" data-width="500" data-height="281" data-max-width="100%">
+    <div class="any" style="background: rgba(255, 0, 0, .1);"><span class="fotorama__select">One</span></div>
+    <div class="any" style="background: rgba(0, 255, 0, .1);"><strong class="fotorama__select">Two</strong></div>
+    <div class="any" style="background: rgba(0, 0, 255, .1);"><em class="fotorama__select">Three</em></div>
+</div></div>
+
+<h2>Thumbnails</h2>
+<p>To define a thumbnail for such frame, use <code>data-thumb</code>:</p>
+<pre><code><span class='xml'><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"fotorama"</span>></span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">data-thumb</span>=<span class="value">"1_thumb.jpg"</span>></span>One<span class="tag">&lt;/<span class="title">div</span>></span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">data-thumb</span>=<span class="value">"2_thumb.jpg"</span>></span><span class="tag">&lt;<span class="title">strong</span>></span>Two<span class="tag">&lt;/<span class="title">strong</span>></span><span class="tag">&lt;/<span class="title">div</span>></span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">data-thumb</span>=<span class="value">"3_thumb.jpg"</span>></span><span class="tag">&lt;<span class="title">em</span>></span>Three<span class="tag">&lt;/<span class="title">em</span>></span><span class="tag">&lt;/<span class="title">div</span>></span>
+<span class="tag">&lt;/<span class="title">div</span>></span></span></code></pre>
+<h2>Images</h2>
+<p>Combine with the fotorama images using <code>data-img</code>:</p>
+<pre><code><span class='xml'><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"fotorama"</span>></span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">data-img</span>=<span class="value">"1.jpg"</span>></span>One<span class="tag">&lt;/<span class="title">div</span>></span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">data-img</span>=<span class="value">"2.jpg"</span>></span><span class="tag">&lt;<span class="title">strong</span>></span>Two<span class="tag">&lt;/<span class="title">strong</span>></span><span class="tag">&lt;/<span class="title">div</span>></span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">data-img</span>=<span class="value">"3.jpg"</span>></span><span class="tag">&lt;<span class="title">em</span>></span>Three<span class="tag">&lt;/<span class="title">em</span>></span><span class="tag">&lt;/<span class="title">div</span>></span>
+<span class="tag">&lt;/<span class="title">div</span>></span></span></code></pre>
+<p><em>Custom <abbr>HTML</abbr> with the fotorama images (<a href="/<>/html-with-images.html" target="_blank">new window</a>):</em></p>
+<div class="fotorama-wrap"><div class="fotorama" data-width="500" data-height="281" data-max-width="100%" data-fit="cover">
+    <div data-img="http://fotorama.s3.amazonaws.com/i/macro2/9-lo.jpg" class="any inverse">One</div>
+    <div data-img="http://fotorama.s3.amazonaws.com/i/macro2/15-lo.jpg" class="any inverse"><strong>Two</strong></div>
+    <div data-img="http://fotorama.s3.amazonaws.com/i/macro2/16-lo.jpg" class="any inverse"><em>Three</em></div>
+</div></div>
+
+
+
+<div class="footer">© 2011—2013, Artem Polikarpov</div>
+
+</body>
+</html>

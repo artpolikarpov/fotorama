@@ -4,12 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
 
-	<link rel="stylesheet" href="/20130603165257/c/style.css" />
+	<link rel="stylesheet" href="/20130610155832/c/style.css" />
 
-  <script src="/lib/jquery-1.9.1.min.js"></script>
+  
+		<!-- jQuery, -->
+		<script src="/lib/jquery-1.9.1.min.js"></script>
 
-	<link rel="stylesheet" href="/lib/fotorama/fotorama.css" />
-	<script src="/lib/fotorama/fotorama.js"></script>
+		<!-- Fotorama -->
+		<link  href="/lib/fotorama/fotorama.css" rel="stylesheet">
+		<script src="/lib/fotorama/fotorama.js"></script>
+	
 </head>
 <body id="root">
 
@@ -68,6 +72,20 @@
   
   </li>
   
+  <li>
+  
+  <a href="/use/html/">&lt;abbr&gt;HTML&lt;/abbr&gt;</a>
+  
+  
+  </li>
+  
+  <li>
+  
+  <a href="/use/fit/">Fit</a>
+  
+  
+  </li>
+  
 </ul>
 
   
@@ -101,7 +119,11 @@
   <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"http://youtube.com/watch?v=C3lWwBslWqg"</span>></span>Desert Rose<span class="tag">&lt;/<span class="title">a</span>></span>
   <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"http://vimeo.com/61527416"</span>></span>Celestial Dynamics<span class="tag">&lt;/<span class="title">a</span>></span>
 <span class="tag">&lt;/<span class="title">div</span>></span></span></code></pre>
-<p class="after-pre">Example: <a href="/&lt;&gt;/video.html">Video</a></p>
+<p><em>Video example (<a href="/<>/video.html" target="_blank">new window</a>):</em></p>
+<div class="fotorama-wrap"><div class="fotorama" data-width="700" data-ratio="700/426" data-max-width="100%">
+    <a href="http://youtube.com/watch?v=C3lWwBslWqg">Desert Rose</a>
+    <a href="http://vimeo.com/61527416">Celestial Dynamics</a>
+</div></div>
 
 <p>Fotorama will automatically fetch the splash images. Link format is not strict — <code>http://youtu.be/C3lWwBslWqg</code> and <code>http://player.vimeo.com/video/61527416</code> are both good.</p>
 <p>For a custom splash image:</p>
@@ -116,6 +138,7 @@
     <span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"desert-rose_thumb.jpg"</span>></span>
   <span class="tag">&lt;/<span class="title">a</span>></span>
 <span class="tag">&lt;/<span class="title">div</span>></span></span></code></pre>
+<h2>Custom video</h2>
 <p>You can also add any video if you have iframe link and previews. Here are the Dailymotion videos:</p>
 <pre><code><span class='xml'><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"fotorama"</span>></span>
   <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"http://dailymotion.com/embed/video/xxgmlg?autoplay=1"</span>
@@ -127,7 +150,7 @@
       <span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"xu4jqv_preview.jpg"</span>></span>
   <span class="tag">&lt;/<span class="title">a</span>></span>
 <span class="tag">&lt;/<span class="title">div</span>></span></span></code></pre>
-<p class="after-pre">Example: <a href="/&lt;&gt;/video-custom.html">Custom video</a></p>
+<p class="after-pre"><em>Example: <a href="/<>/video-custom.html" target="_blank">Custom video</a></em></p>
 
 
 <div class="footer">© 2011—2013, Artem Polikarpov</div>
