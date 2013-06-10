@@ -131,6 +131,10 @@ $arrSize: 32px;
 	.fotorama__fullscreen-icon {
     opacity: 0 !important;
   }
+}
+
+.fotorama__wrap--slide.fotorama__wrap--no-controls,
+.fotorama__wrap--video {
   .fotorama__fullscreen-icon {
     top: -$arrSize;
     right: -$arrSize;
@@ -141,7 +145,6 @@ $arrSize: 32px;
   .fotorama__arr--next {
     right: -($arrSize * 1.5);
   }
-
 }
 
 .fotorama__wrap--video {
@@ -165,4 +168,3 @@ $arrSize: 32px;
     @extend %bezier;
   }
 }
-
