@@ -1,6 +1,5 @@
 jQuery.Fotorama = function ($fotorama, opts) {
-  this.options = opts;
-
+  //this.options = opts;
 	$HTML = $HTML || $('html');
   $BODY = $BODY || $('body');
 
@@ -1395,6 +1394,7 @@ $.fn.fotorama = function (opts) {
         waitFor(function () {
           return !isHidden(that);
         }, function () {
+	        fotoramaData.urtext = $fotorama.html();
           fotoramaData.api = new $.Fotorama($fotorama,
               /* Иерархия приоритета опций, выше — приоритетней:
                * 1. Дата-атрибуты (<div data-loop="true"></div>)
@@ -1442,7 +1442,6 @@ $.fn.fotorama = function (opts) {
                   )
               )
           );
-          fotoramaData.urtext = $fotorama.html();
         });
       } else {
 				api.setOptions(opts);
