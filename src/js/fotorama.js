@@ -1085,7 +1085,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 			height = height || (ratio && width / ratio);
 
 			if (height) {
-				height = measures.h = minMaxLimit(height, numberFromPercent(measures.minHeight) / 100 * windowHeight || numberFromMeasure(measures.minHeight), numberFromPercent(measures.maxHeight) / 100 * windowHeight || numberFromMeasure(measures.maxHeight));
+				width = Math.round(width);
+				height = measures.h = Math.round(minMaxLimit(height, numberFromPercent(measures.minHeight) / 100 * windowHeight || numberFromMeasure(measures.minHeight), numberFromPercent(measures.maxHeight) / 100 * windowHeight || numberFromMeasure(measures.maxHeight)));
 
 				stageShaftReposition();
 
