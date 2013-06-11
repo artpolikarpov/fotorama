@@ -19,3 +19,4 @@ CVS
 
 .idea/
 out/
+.build-catalog.json
