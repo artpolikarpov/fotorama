@@ -3,11 +3,11 @@ $(function () {
 		var $this = $(this),
 				api = $($this.attr('data-fotorama')).data('api');
 
-		if (!api) return;
+		if (api) {
+			$this.addClass('active inverse')
+					.siblings().removeClass('active inverse');
 
-		$this.addClass('active')
-				.siblings().removeClass('active');
-
-		api.setOptions({transition: $this.text().toLowerCase()});
+			api.setOptions({transition: $this.text().toLowerCase()});
+		}
 	});
 });
