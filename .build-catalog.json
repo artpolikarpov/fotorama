@@ -28,8 +28,8 @@
 		]
 	},
 	"/c/style.css": {
-		"md5": "c9d70228f1561629ab5d487c1925a876",
-		"date": "20130611090656",
+		"md5": "195f90ea6b6b34ee672737c2645ac50a",
+		"date": "20130611165614",
 		"files": [
 			"/css/style.css"
 		]
@@ -43,11 +43,11 @@
 	},
 	"/j/script.js": {
 		"md5": "e010549f4229a354a8e1ba22c9a1e334",
-		"date": "20130611085743",
+		"date": "20130611165614",
 		"files": [
 			{
 				"file": "/js/transition-switch.js",
-				"md5": "283f8b6d05ccf477cb6339d1577dabb6"
+				"md5": "ac2baff5b8fdf548cf3044f25bbd3f15"
 			}
 		]
 	}

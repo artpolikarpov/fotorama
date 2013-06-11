@@ -53,7 +53,8 @@ module.exports = function(grunt) {
 				secret: '<%= grunt.file.readJSON("grunt-s3.json").secret %>',
 				bucket: 'fotorama',
 				access: 'public-read',
-				secure: false
+				secure: false,
+				headers: {'Cache-Control': 'max-age=2592000'}
 			},
 			product: {
 				upload: [
