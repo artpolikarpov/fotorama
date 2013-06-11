@@ -28,6 +28,7 @@ _Transition example (<a href="/<>/transition.html" target="_blank">new window</a
 	<a href="http://fotorama.s3.amazonaws.com/i/macro2/24-lo.jpg"></a>
 </div></div>
 
+## Dissolve
 There is one more transition, `dissolve`. This variation of fade is perfect to demonstrate pictures with the identical fragments.
 
 _Dissolve example (<a href="/<>/dissolve.html" target="_blank">new window</a>):_
