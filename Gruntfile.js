@@ -226,7 +226,7 @@ module.exports = function (grunt) {
 			  failOnError: true
 		  },
 		  push: {
-			  command: 'git push origin --tags',
+			  command: 'git push --tags --progress origin master:master',
 			  stdout: true,
 			  stderr: true,
 			  failOnError: true
