@@ -1,6 +1,6 @@
 {
 	"name": "Fotorama",
-	"version": "4.0.12",
+	"version": "4.0.13",
 	"devDependencies": {
 		"grunt": "~0.4.1",
 		"grunt-string-replace": "~0.2.4",
