@@ -40,6 +40,7 @@ docpadConfig = {
 			server.get /^\/\d+\/(c|j)\//, (req, res, next) ->
 				req.url = req.url.replace /^\/\d+\//, '/'
 				next()
+	maxAge: false
 }
 
 # Export the DocPad Configuration
