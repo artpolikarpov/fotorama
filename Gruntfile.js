@@ -39,17 +39,43 @@ module.exports = function(grunt) {
 		          'src/files/js/*.js'
 	          ]
 
-	//          'out/js/f2.js': [
+	//          'out/j/f2.js': [
 	//            'src/js/fileC.js',
 	//            'src/js/fileD.js'
 	//          ]
 	        }
         }
       }
-    }
+    },
+	  s3: {
+			options: {
+				key: '<%= grunt.file.readJSON("grunt-s3.json").key %>',
+				secret: '<%= grunt.file.readJSON("grunt-s3.json").secret %>',
+				bucket: 'fotorama',
+				access: 'public-read',
+				secure: false
+			},
+			product: {
+				upload: [
+					// css
+					{
+						src: 'out/c/*',
+						dest: 'c/'
+					},
+
+					// js
+					{
+						src: 'out/j/*',
+						dest: 'j/'
+					}
+				]
+			}
+		}
   });
 
-  grunt.loadNpmTasks('grunt-frontend');
 
-  grunt.registerTask('default', ['frontend']);
+  grunt.loadNpmTasks('grunt-frontend');
+	grunt.loadNpmTasks('grunt-s3');
+
+  grunt.registerTask('default', process.env.NODE_ENV ? ['frontend', 's3'] : ['frontend']);
 };

@@ -27,8 +27,10 @@ js: "/j/script.js"
 		<script src="/lib/jquery-1.9.1.min.js"></script>
 	<% end %>
 
-	<% for url in @assets('css'): %><link rel="stylesheet" href="<%= url %>" /><% end %>
-	<% for url in @assets('js'): %><script src="<%= url %>"></script><% end %>
+	<% s3 = (url) -> return if process.env.NODE_ENV then ('http://fotorama.s3.amazonaws.com' + (url.replace /\/(\d+)\/(.*)$/, '/$2?$1')) else url %>
+
+	<% for url in @assets('css'): %><link rel="stylesheet" href="<%= s3 url %>" /><% end %>
+	<% for url in @assets('js'): %><script src="<%= s3 url %>"></script><% end %>
 
   <% if process.env.NODE_ENV: %>
 		<!-- Fotorama -->
