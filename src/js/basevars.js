@@ -3,9 +3,8 @@ var $WINDOW = $(window),
     $HTML,
     $BODY,
 
-    TOUCH = Modernizr.touch,
     QUIRKS_FORCE = document.location.hash.replace('#', '') === 'quirks',
-    CSS3 = Modernizr.csstransforms3d && Modernizr.csstransitions && !QUIRKS_FORCE,
+    CSS3 = Modernizr.csstransforms3d && !QUIRKS_FORCE,
     FULLSCREEN = fullScreenApi.ok,
 
     TOUCH_TIMEOUT = 300,

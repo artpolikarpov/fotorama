@@ -130,7 +130,7 @@ function touch ($el, options) {
   }
 
 
-  if (TOUCH) {
+  if ('touchstart' in document) {
     el.addEventListener('touchstart', onStart);
     el.addEventListener('touchmove', onMove);
     el.addEventListener('touchend', onEnd);

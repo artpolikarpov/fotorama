@@ -42,7 +42,7 @@ module.exports = function (grunt) {
     watch: {
       jst: {
         files: 'src/templates/*.jst',
-        tasks: 'jst'
+        tasks: ['jst', 'string-replace:jst']
       },
       sass: {
         files: '<%= meta.sass %>',
@@ -108,6 +108,23 @@ module.exports = function (grunt) {
       }
     },
     'string-replace': {
+	    jst: {
+		    files: {
+			    'src/templates/compiled.js': 'src/templates/compiled.js'
+		    },
+		    options: {
+			    replacements: [
+            {
+              pattern: /this\[\"(\$)\"\]/g,
+              replacement: "$"
+            },
+				    {
+					    pattern: /\[\"([a-z]+)\"\]/gi,
+					    replacement: ".$1"
+				    }
+          ]
+		    }
+	    },
       console: {
         files: {
           'product/fotorama.uncompressed.js': 'product/fotorama.js'
@@ -255,7 +272,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-shell');
 
-	var defaultTask = 'copy compass jst concat:js string-replace:console uglify concat:css cssmin clean compress';
+	var defaultTask = 'copy compass jst string-replace:jst concat:js string-replace:console uglify concat:css cssmin clean compress';
 
   // Compile
   grunt.registerTask('default', defaultTask.split(' '));
