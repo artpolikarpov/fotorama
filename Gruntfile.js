@@ -213,6 +213,12 @@ module.exports = function (grunt) {
 		},
 
 	  shell: {
+		  commit: {
+			  command: 'git commit fotorama.jquery.json -m \'Tagging the <%= pkg.version %> release\'',
+			  stdout: true,
+			  stderr: true,
+			  failOnError: true
+		  },
 		  tag: {
 			  command: 'git tag <%= pkg.version %>',
 			  stdout: true,
