@@ -14,7 +14,8 @@ Using the image’s intrinsic dimensions.
 
 Select fit for the whole fotorama and override it for a single image with `data-fit`:
 
-	<div class="fotorama" data-fit="cover">
+	<div class="fotorama"
+	     data-fit="cover">
 	  <img src="1.jpg">
 	  <img src="2.jpg" data-fit="contain">
 	  <img src="3.jpg">
@@ -29,16 +30,16 @@ The 200×300 frog:
 
 <div class="fotorama-wrap fit-example">
 <div class="fotorama" data-width="240" data-ratio="240/180" data-max-width="100%" data-fit="contain">
-	<img src="http://fotorama.s3.amazonaws.com/i/fit/frog.png" data-caption="contain">
+	<a href="http://fotorama.s3.amazonaws.com/i/fit/frog.png" data-caption="contain"></a>
 </div>
 <div class="fotorama" data-width="240" data-ratio="240/180" data-max-width="100%" data-fit="cover">
-	<img src="http://fotorama.s3.amazonaws.com/i/fit/frog.png" data-caption="cover">
+	<a href="http://fotorama.s3.amazonaws.com/i/fit/frog.png" data-caption="cover"></a>
 </div>
 <div class="fotorama" data-width="240" data-ratio="240/180" data-max-width="100%" data-fit="scale-down">
-	<img src="http://fotorama.s3.amazonaws.com/i/fit/frog.png" data-caption="scale-down">
+	<a href="http://fotorama.s3.amazonaws.com/i/fit/frog.png" data-caption="scale-down"></a>
 </div>
 <div class="fotorama" data-width="240" data-ratio="240/180" data-max-width="100%" data-fit="none">
-	<img src="http://fotorama.s3.amazonaws.com/i/fit/frog.png" data-caption="none">
+	<a href="http://fotorama.s3.amazonaws.com/i/fit/frog.png" data-caption="none"></a>
 </div>
 </div>
 
@@ -50,15 +51,15 @@ The 200×125 elephant:
 
 <div class="fotorama-wrap fit-example">
 <div class="fotorama" data-width="240" data-ratio="240/180" data-max-width="100%" data-fit="contain">
-	<img src="http://fotorama.s3.amazonaws.com/i/fit/elephant.png" data-caption="contain">
+	<a href="http://fotorama.s3.amazonaws.com/i/fit/elephant.png" data-caption="contain"></a>
 </div>
 <div class="fotorama" data-width="240" data-ratio="240/180" data-max-width="100%" data-fit="cover">
-	<img src="http://fotorama.s3.amazonaws.com/i/fit/elephant.png" data-caption="cover">
+	<a href="http://fotorama.s3.amazonaws.com/i/fit/elephant.png" data-caption="cover"></a>
 </div>
 <div class="fotorama" data-width="240" data-ratio="240/180" data-max-width="100%" data-fit="scale-down">
-	<img src="http://fotorama.s3.amazonaws.com/i/fit/elephant.png" data-caption="scale-down">
+	<a href="http://fotorama.s3.amazonaws.com/i/fit/elephant.png" data-caption="scale-down"></a>
 </div>
 <div class="fotorama" data-width="240" data-ratio="240/180" data-max-width="100%" data-fit="none">
-	<img src="http://fotorama.s3.amazonaws.com/i/fit/elephant.png" data-caption="none">
+	<a href="http://fotorama.s3.amazonaws.com/i/fit/elephant.png" data-caption="none"></a>
 </div>
 </div>

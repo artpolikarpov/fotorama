@@ -13,15 +13,15 @@ _Fullscreen example (<a href="/<>/fullscreen.html" target="_blank">new window</a
 
 <div class="fotorama-wrap"><div class="fotorama"
      data-width="400"
-     data-ratio="400/300"
+     data-ratio="3/2"
      data-max-width="100%"
      data-fit="cover"
      data-allow-full-screen="true">
-	<img src="http://fotorama.s3.amazonaws.com/i/macro2/9-lo.jpg" />
-	<img src="http://fotorama.s3.amazonaws.com/i/macro2/23-lo.jpg" />
-	<img src="http://fotorama.s3.amazonaws.com/i/macro2/14-lo.jpg" />
-	<img src="http://fotorama.s3.amazonaws.com/i/macro2/15-lo.jpg" />
-	<img src="http://fotorama.s3.amazonaws.com/i/macro2/16-lo.jpg" />
+	<a href="http://fotorama.s3.amazonaws.com/i/macro2/9-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/macro2/23-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/macro2/14-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/macro2/15-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/macro2/16-lo.jpg"></a>
 </div></div>
 
 ## Native fullscreen
@@ -38,15 +38,15 @@ _Native fullscreen example (<a href="/<>/fullscreen-native.html" target="_blank"
 
 <div class="fotorama-wrap"><div class="fotorama"
      data-width="400"
-     data-ratio="400/300"
+     data-ratio="3/2"
      data-max-width="100%"
      data-fit="cover"
      data-allow-full-screen="native">
-	<img src="http://fotorama.s3.amazonaws.com/i/macro2/9-lo.jpg" />
-	<img src="http://fotorama.s3.amazonaws.com/i/macro2/23-lo.jpg" />
-	<img src="http://fotorama.s3.amazonaws.com/i/macro2/14-lo.jpg" />
-	<img src="http://fotorama.s3.amazonaws.com/i/macro2/15-lo.jpg" />
-	<img src="http://fotorama.s3.amazonaws.com/i/macro2/16-lo.jpg" />
+	<a href="http://fotorama.s3.amazonaws.com/i/macro2/9-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/macro2/23-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/macro2/14-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/macro2/15-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/macro2/16-lo.jpg"></a>
 </div></div>
 
 ## Big images

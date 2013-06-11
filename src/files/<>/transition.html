@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Transition · FOTO[RA]MA</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="http://fotorama.s3.amazonaws.com/fotorama.css" rel="stylesheet">
+	<script src="http://fotorama.s3.amazonaws.com/fotorama.js"></script>
+</head>
+
+<body>
+
+<p>Transition:<p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div class="fotorama"
+     <mark>data-transition="crossfade"</mark>></code></pre>
+
+<!-- Transition switches -->
+<style>
+	.switch {
+		border-bottom: 1px dashed;
+		cursor: pointer;
+	}
+	.switch.active {
+		color: #fff;
+		background-color: #333;
+		border-bottom: none;
+		border-radius: 3px;
+		padding: 2px 4px;
+		margin: 0 -4px;
+		cursor: default;
+	}
+</style>
+<script>
+	$(function () {
+		var fotoramaApi = $('#transition').data('api');
+
+		$('.switch').on('click', function () {
+			var $this = $(this);
+			$this.addClass('active')
+					.siblings().removeClass('active');
+
+			fotoramaApi.setOptions({transition: $this.text().toLowerCase()});
+		});
+	});
+</script>
+<p class="switch-group">
+	<span class="switch active">Slide</span>
+	&nbsp;
+	<span class="switch">Crossfade</span>
+</p>
+
+<!-- Just don’t want to repeat this prefix in every img[src] -->
+<base href="http://fotorama.s3.amazonaws.com/i/macro2/">
+
+<!-- Fotorama -->
+<div class="fotorama"
+     id="transition"
+     data-width="700"
+     data-ratio="3/2"
+     data-max-width="100%"
+     data-fit="cover">
+	<a href="10-lo.jpg"></a>
+	<a href="11-lo.jpg"></a>
+	<a href="13-lo.jpg"></a>
+	<a href="19-lo.jpg"></a>
+	<a href="24-lo.jpg"></a>
+</div>
+
+<!-- © -->
+<p>Photos <a href="http://alexeilebedev.com/">by Alexei Lebedev</a></p>
+</body>
+</html>

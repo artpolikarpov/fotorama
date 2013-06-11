@@ -1,5 +1,6 @@
 ---
 css: "/c/style.css"
+js: "/j/script.js"
 ---
 
 <html>
@@ -8,19 +9,22 @@ css: "/c/style.css"
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
 
-	<% for url in @assets('css'): %><link rel="stylesheet" href="<%= url %>" /><% end %>
-
-  <% if process.env.NODE_ENV: %>
+	<% if process.env.NODE_ENV: %>
 		<!-- jQuery, -->
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<% else: %>
+		<!-- jQuery, -->
+		<script src="/lib/jquery-1.9.1.min.js"></script>
+	<% end %>
 
+	<% for url in @assets('css'): %><link rel="stylesheet" href="<%= url %>" /><% end %>
+	<% for url in @assets('js'): %><script src="<%= url %>"></script><% end %>
+
+  <% if process.env.NODE_ENV: %>
 		<!-- Fotorama -->
 		<link  href="http://fotorama.s3.amazonaws.com/fotorama.css" rel="stylesheet">
 		<script src="http://fotorama.s3.amazonaws.com/fotorama.js"></script>
 	<% else: %>
-		<!-- jQuery, -->
-		<script src="/lib/jquery-1.9.1.min.js"></script>
-
 		<!-- Fotorama -->
 		<link  href="/lib/fotorama/fotorama.css" rel="stylesheet">
 		<script src="/lib/fotorama/fotorama.js"></script>

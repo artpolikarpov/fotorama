@@ -1,0 +1,193 @@
+<html>
+<head>
+  <title>Transition</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+
+	
+		<!-- jQuery, -->
+		<script src="/lib/jquery-1.9.1.min.js"></script>
+	
+
+	<link rel="stylesheet" href="/20130611090656/c/style.css" />
+	<script src="/20130611085743/j/script.js"></script>
+
+  
+		<!-- Fotorama -->
+		<link  href="/lib/fotorama/fotorama.css" rel="stylesheet">
+		<script src="/lib/fotorama/fotorama.js"></script>
+	
+</head>
+<body id="root">
+
+
+
+<div class="header">
+  <div class="logo">
+  <a href="/">
+  <span class="fo">Fo</span><span class="to">to</span><span class="ra">ra<i><i></i><i></i><i class="a"></i><i></i></i></span><span class="ma">ma</span>
+  </a>
+</div>
+	
+
+<ul class="menu">
+  
+  <li>
+  
+  <a href="/set-up/">Set up</a>
+  
+  
+  </li>
+  
+  <li class="selected">
+  
+  <a href="/use/">Use</a>
+  
+  
+  
+<ul class="menu">
+  
+  <li>
+  
+  <a href="/use/lazy-load/">Lazy load</a>
+  
+  
+  </li>
+  
+  <li>
+  
+  <a href="/use/dimensions/">Dimensions</a>
+  
+  
+  </li>
+  
+  <li>
+  
+  <a href="/use/thumbnails/">Thumbnails</a>
+  
+  
+  </li>
+  
+  <li>
+  
+  <a href="/use/fullscreen/">Fullscreen</a>
+  
+  
+  </li>
+  
+  <li>
+  
+  <a href="/use/video/">Video</a>
+  
+  
+  </li>
+  
+  <li>
+  
+  <a href="/use/html/">&lt;abbr&gt;HTML&lt;/abbr&gt;</a>
+  
+  
+  </li>
+  
+  <li>
+  
+  <a href="/use/fit/">Fit</a>
+  
+  
+  </li>
+  
+  <li class="selected">
+  
+  <span>Transition</span>
+  
+  
+  </li>
+  
+  <li>
+  
+  <a href="/use/captions/">Captions</a>
+  
+  
+  </li>
+  
+</ul>
+
+  
+  </li>
+  
+  <li>
+  
+  <a href="/get-help/">Get help</a>
+  
+  
+  </li>
+  
+  <li>
+  
+  <a href="/donate/">Donate</a>
+  
+  
+  </li>
+  
+</ul>
+
+</div>
+
+
+
+	<h1>Transition</h1>
+
+
+<p>Define what transition to use — <code>slide</code> or <code>crossfade</code> — using <code>data-transition</code>:</p>
+<pre><code><span class='xml'><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"fotorama"</span>
+     <span class="attribute">data-transition</span>=<span class="value">"crossfade"</span>></span>
+  <span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"1.jpg"</span>></span>
+  <span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"2.jpg"</span>></span>
+  <span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"3.jpg"</span>></span>
+<span class="tag">&lt;/<span class="title">div</span>></span></span></code></pre>
+<p><em>Transition example (<a href="/<>/transition.html" target="_blank">new window</a>):</em></p>
+<p class="switch-group">
+    <span class="switch js-transition-switch active" data-fotorama="#transition">Slide</span>
+    &nbsp;
+    <span class="switch js-transition-switch" data-fotorama="#transition">Crossfade</span>
+</p>
+
+<div class="fotorama-wrap"><div class="fotorama"
+     id="transition"
+     data-width="700"
+     data-ratio="3/2"
+     data-max-width="100%"
+     data-fit="cover">
+    <a href="http://fotorama.s3.amazonaws.com/i/macro2/10-lo.jpg"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/macro2/11-lo.jpg"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/macro2/13-lo.jpg"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/macro2/19-lo.jpg"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/macro2/24-lo.jpg"></a>
+</div></div>
+
+<p>There is one more transition, <code>dissolve</code>. This variation of fade is perfect to demonstrate pictures with the identical fragments.</p>
+<p><em>Dissolve example (<a href="/<>/dissolve.html" target="_blank">new window</a>):</em></p>
+<p class="switch-group">
+    <span class="switch js-transition-switch active" data-fotorama="#dissolve">Dissolve</span>
+    &nbsp;
+    <span class="switch js-transition-switch" data-fotorama="#dissolve">Crossfade</span>
+</p>
+
+<div class="fotorama-wrap"><div class="fotorama"
+     id="dissolve"
+     data-transition="dissolve"
+     data-width="700"
+     data-ratio="700/467"
+     data-max-width="100%"
+     data-fit="cover"
+     data-loop="true">
+    <a href="http://fotorama.s3.amazonaws.com/i/orion-art/5-a.jpg"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/orion-art/5-b.jpg"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/orion-art/5-c.jpg"></a>
+</div></div>
+
+
+<div class="footer">© 2011—2013, Artem Polikarpov</div>
+
+</body>
+</html>

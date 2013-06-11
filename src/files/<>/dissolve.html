@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dissolve · FOTO[RA]MA</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="http://fotorama.s3.amazonaws.com/fotorama.css" rel="stylesheet">
+	<script src="http://fotorama.s3.amazonaws.com/fotorama.js"></script>
+</head>
+
+<body>
+
+<p>Fade:<p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div class="fotorama"
+     <mark>data-transition="dissolve"</mark>></code></pre>
+
+<!-- Transition switches -->
+<style>
+	.switch {
+		border-bottom: 1px dashed;
+		cursor: pointer;
+	}
+	.switch.active {
+		color: #fff;
+		background-color: #333;
+		border-bottom: none;
+		border-radius: 3px;
+		padding: 2px 4px;
+		margin: 0 -4px;
+		cursor: default;
+	}
+</style>
+<script>
+	$(function () {
+		var fotoramaApi = $('#dissolve').data('api');
+
+		$('.switch').on('click', function () {
+			var $this = $(this);
+			$this.addClass('active')
+					.siblings().removeClass('active');
+
+			fotoramaApi.setOptions({transition: $this.text().toLowerCase()});
+		});
+	});
+</script>
+<p class="switch-group">
+	<span class="switch active">Dissolve</span>
+	&nbsp;
+	<span class="switch">Crossfade</span>
+</p>
+
+<!-- Just don’t want to repeat this prefix in every img[src] -->
+<base href="http://fotorama.s3.amazonaws.com/i/orion-art/">
+
+<!-- Fotorama -->
+<div class="fotorama"
+     id="dissolve"
+     data-transition="dissolve"
+     data-width="700"
+     data-ratio="700/467"
+     data-max-width="100%"
+     data-fit="cover"
+     data-loop="true">
+	<a href="5-a.jpg"></a>
+	<a href="5-b.jpg"></a>
+	<a href="5-c.jpg"></a>
+</div>
+
+<!-- © -->
+<p>Photos <a href="http://orion-art.com/">by Orion Art</a></p>
+</body>
+</html>

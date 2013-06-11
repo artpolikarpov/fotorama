@@ -28,8 +28,8 @@
 		]
 	},
 	"/c/style.css": {
-		"md5": "f8d3921a762f891f978406baf9e4f563",
-		"date": "20130610155832",
+		"md5": "c9d70228f1561629ab5d487c1925a876",
+		"date": "20130611090656",
 		"files": [
 			"/css/style.css"
 		]
@@ -39,6 +39,16 @@
 		"date": "20130512155551",
 		"files": [
 			"/css/menu.css"
+		]
+	},
+	"/j/script.js": {
+		"md5": "e010549f4229a354a8e1ba22c9a1e334",
+		"date": "20130611085743",
+		"files": [
+			{
+				"file": "/js/transition-switch.js",
+				"md5": "283f8b6d05ccf477cb6339d1577dabb6"
+			}
 		]
 	}
 }

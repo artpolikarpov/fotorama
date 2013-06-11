@@ -1,0 +1,1 @@
+$(function(){$(".js-transition-switch").on("click",function(){var t=$(this),a=$(t.attr("data-fotorama")).data("api");a&&(t.addClass("active").siblings().removeClass("active"),a.setOptions({transition:t.text().toLowerCase()}))})});
