@@ -1,9 +1,9 @@
 module.exports = function (grunt) {
   'use strict';
   grunt.initConfig({
-    pkg: grunt.file.readJSON('fotorama.jquery.json'),
+    pkg: grunt.file.readJSON('package.json'),
     meta: {
-      banner: '/*!\n * <%= pkg.title %> <%= pkg.version %> | <%= pkg.licenses[0].url %>\n */\n',
+      banner: '/*!\n * <%= pkg.name %> <%= pkg.version %> | http://fotorama.io/license/\n */\n',
       sass: ['src/scss/*'],
       js: [
         'src/js/intro.js',
@@ -120,7 +120,20 @@ module.exports = function (grunt) {
             }
           ]
         }
-      }
+      },
+	    version: {
+		    files: {
+			    'fotorama.jquery.json': 'fotorama.jquery.json'
+		    },
+		    options: {
+			    replacements: [
+				    {
+					    pattern: /\d+.\d+.\d+/g,
+					    replacement: '<%= pkg.version %>'
+				    }
+			    ]
+		    }
+	    }
     },
     uglify: {
       product: {
@@ -197,7 +210,28 @@ module.exports = function (grunt) {
 					keepalive: true
 				}
 			}
-		}
+		},
+
+	  shell: {
+		  tag: {
+			  command: 'git tag <%= pkg.version %>',
+			  stdout: true,
+			  stderr: true,
+			  failOnError: true
+		  },
+		  push: {
+			  command: 'git push origin --tags',
+			  stdout: true,
+			  stderr: true,
+			  failOnError: true
+		  },
+		  publish: {
+			  command: 'heroku config:add FOTORAMA_VERSION=<%= pkg.version %>',
+			  stdout: true,
+			  stderr: true,
+			  failOnError: true
+		  }
+	  }
   });
 
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -213,19 +247,13 @@ module.exports = function (grunt) {
 
 	grunt.loadNpmTasks('grunt-s3');
 	grunt.loadNpmTasks('grunt-contrib-connect');
+	grunt.loadNpmTasks('grunt-shell');
 
-  // Default task
-  grunt.registerTask('default', [
-		'copy',
-		'compass',
-		'jst',
-		'concat:js',
-		'string-replace',
-		'uglify',
-		'concat:css',
-		'cssmin',
-		'clean',
-		'compress'/*,
-		's3'*/
-	]);
+	var defaultTask = 'copy compass jst concat:js string-replace:console uglify concat:css cssmin clean compress';
+
+  // Compile
+  grunt.registerTask('default', defaultTask.split(' '));
+
+	// Publish, will fail without secret details ;-)
+	grunt.registerTask('publish', (defaultTask + ' ' + 's3 string-replace:version shell').split(' '));
 };
