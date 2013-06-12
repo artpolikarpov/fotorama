@@ -158,8 +158,8 @@ $arrSize: 32px;
 	.fotorama__fullscreen-icon,
 	.fotorama__video-play,
 	.fotorama__video-close {
-    @include transition-property(all);
-    @extend %transitionDuration;
-    @extend %bezier;
+    @include transition(all $time);
+    //@extend %transitionDuration;
+    //////@extend %bezier;
   }
 }

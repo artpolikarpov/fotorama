@@ -36,7 +36,7 @@
 }
 
 %transition-for-touch {
-  @include transition(transform 0ms);
+  @include transition(transform 0ms cubic-bezier(.1, .25, .25, 1));
 }
 
 %bezier {

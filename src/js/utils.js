@@ -452,9 +452,13 @@ function smartClick ($el, fn, _options) {
   });
 }
 
-function preventDefault (e) {
-  e.preventDefault();
+function div (classes, child) {
+	return '<div class="' + classes + '">' + (child || '') +'</div>';
 }
+
+//function preventDefault (e) {
+//  e.preventDefault();
+//}
 
 //function stopPropagation (e) {
 //  e.stopPropagation();

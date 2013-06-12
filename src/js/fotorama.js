@@ -19,18 +19,18 @@ jQuery.Fotorama = function ($fotorama, opts) {
       // Скелет разметки будущей фоторамы:
       $style = $('<style></style>').insertBefore($fotorama),
 
-      $anchor = $('<div style="display: none;"></div>').insertBefore($fotorama),
-      $wrap = $('<div class="' + wrapClass + ' ' + wrapNotReadyClass + '"></div>'),
-      $stage = $('<div class="' + stageClass +'"></div>').appendTo($wrap),
+      $anchor = $(div(hiddenClass)).insertBefore($fotorama),
+      $wrap = $(div(wrapClass + ' ' + wrapNotReadyClass)),
+      $stage = $(div(stageClass)).appendTo($wrap),
       stage = $stage[0],
-      $stageShaft = $('<div class="' + stageShaftClass + '"></div>').appendTo($stage),
+      $stageShaft = $(div(stageShaftClass)).appendTo($stage),
       $stageFrame = $(),
-      $arrPrev = $('<div class="' + arrClass + ' ' + arrPrevClass +'"><div class="' + arrArrClass + '"></div></div>'),
-      $arrNext = $('<div class="' + arrClass + ' ' + arrNextClass + '"><div class="' + arrArrClass + '"></div></div>'),
+      $arrPrev = $(div(arrClass + ' ' + arrPrevClass, div(arrArrClass))),
+      $arrNext = $(div(arrClass + ' ' + arrNextClass, div(arrArrClass))),
       $arrs = $arrPrev.add($arrNext).appendTo($stage),
-      $navWrap = $('<div class="' + navWrapClass + '"></div>'),
-      $nav = $('<div class="' + navClass + '"></div>').appendTo($navWrap),
-      $navShaft = $('<div class="' + navShaftClass +'"></div>').appendTo($nav),
+      $navWrap = $(div(navWrapClass)),
+      $nav = $(div(navClass)).appendTo($navWrap),
+      $navShaft = $(div(navShaftClass)).appendTo($nav),
       $navFrame,
       $navDotFrame = $(),
       $navThumbFrame = $(),
@@ -42,15 +42,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
       stageShaftData = $stageShaft.data(),
       navShaftData = $navShaft.data(),
 
-      $shadows = /*bindNoInteraction(*/$('<div class="' + shadowClass + ' ' + shadowLeftClass + '"></div><div class="' + shadowClass + ' ' + shadowRightClass + '"></div>').appendTo($stage)/*)*/,
+      $shadows = /*bindNoInteraction(*/$(div(shadowClass + ' ' + shadowLeftClass) + div(shadowClass + ' ' + shadowRightClass)).appendTo($stage)/*)*/,
       $navShadows = /*bindNoInteraction(*/$shadows.clone().appendTo($nav)/*)*/,
 
-      $thumbBorder = $('<div class="' + thumbBorderClass + '"></div>').appendTo($navShaft),
+      $thumbBorder = $(div(thumbBorderClass)).appendTo($navShaft),
 
-      $fullscreenIcon = $('<div class="' + fullscreenIconClass + '"></div>'),
-      $videoPlay = $('<div class="' + videoPlayClass + '"></div>'),
-      $videoClose = $('<div class="' + videoCloseClass + '"></div>').appendTo($stage),
-
+      $fullscreenIcon = $(div(fullscreenIconClass)),
+      $videoPlay = $(div(videoPlayClass)),
+      $videoClose = $(div(videoCloseClass)).appendTo($stage),
 
       $videoPlaying,
 
@@ -80,7 +79,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       measuresSetFLAG,
 
       // Крутилка:
-      krutilka = {},
+      //krutilka = {},
 
       stageShaftTouchTail = {},
       navShaftTouchTail = {},
@@ -95,9 +94,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       measuresStash;
 
-  $wrap[stageFrameKey] = $('<div class="' + stageFrameClass +'"></div>');
-  $wrap[navThumbFrameKey] = $('<div class="' + navFrameClass + ' ' + navFrameThumbClass + '"><div class="' + thumbClass + '"></div></div>');
-  $wrap[navDotFrameKey] = $('<div class="' + navFrameClass + ' ' + navFrameDotClass + '"><div class="' + dotClass + '"></div></div>');
+  $wrap[stageFrameKey] = $(div(stageFrameClass));
+  $wrap[navThumbFrameKey] = $(div(navFrameClass + ' ' + navFrameThumbClass, div(thumbClass)));
+  $wrap[navDotFrameKey] = $(div(navFrameClass + ' ' + navFrameDotClass, div(dotClass)));
 
 
 	if (CSS3) {
@@ -246,10 +245,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     classes[addOrRemove(o_fade)].push(wrapFadeClass);
     classes[addOrRemove(!o_fade && !stageShaftTouchTail.noMove)].push(wrapSlideClass);
 
-//    if (krutilka.stop) {
-//      krutilka.stop();
-//    }
-    //krutilka = new Spinner({length: 8, radius: 6, width: 2, color: SPINNER_COLOR, rotate: 15});
+		ooooStop();
 
     // Одним скопом удаляем и добавляем классы:
     $wrap
@@ -491,12 +487,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
     var $frame = that.activeFrame[stageFrameKey];
 
     if ($frame && !$frame.data().state) {
-//			krutilka
-//					.stop()
-//					.spin($frame[0]);
+			ooooStart($frame);
 			$frame.on('f:load f:error', function () {
 				$frame.off('f:load f:error');
-				//krutilka.stop();
+				ooooStop();
 			});
 		}
   }

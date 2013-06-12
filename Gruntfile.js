@@ -17,8 +17,7 @@ module.exports = function (grunt) {
         'src/js/animate.js',
         'src/js/touch.js',
         'src/js/moveontouch.js',
-		    'src/js/krutilka.js',
-        //'src/js/spin.js',
+		    'src/js/oooo.js',
         'src/js/fotorama.js',
         'src/templates/compiled.js',
         'src/js/outro.js'

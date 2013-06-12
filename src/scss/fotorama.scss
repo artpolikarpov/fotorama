@@ -71,12 +71,6 @@ $time: 333ms;
   overflow: hidden;
   position: relative;
   @extend %no-tap;
-
-  .spinner {
-    position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-  }
 }
 
 .fotorama__stage__shaft {
@@ -353,8 +347,8 @@ $time: 333ms;
   @extend %hidden;
 }
 
-// Spinner
-.fotorama__spin {
+// oooo
+.fotorama__oooo {
 	$size: 6px;
 	$margin: 4px;
 	@extend %center;
@@ -374,14 +368,14 @@ $time: 333ms;
 	&:before {
 		left: -($size + $margin);
 	}
-	> .fotorama__spin {
+	.fotorama__oooo {
 		margin-left: $size * 1.5 + $margin * 2;
 	}
 }
-.fotorama__spin--1:before,
-.fotorama__spin--2:after,
-.fotorama__spin--3 > .fotorama__spin:before,
-.fotorama__spin--4 > .fotorama__spin:after {
+.fotorama__oooo--1:before,
+.fotorama__oooo--2:after,
+.fotorama__oooo--3 .fotorama__oooo:before,
+.fotorama__oooo--4 .fotorama__oooo:after {
 	background-color: mix(black, white);
 }
 
@@ -391,7 +385,7 @@ $time: 333ms;
 	.fotorama__nav__shaft,
 	.fotorama__thumb-border {
     @extend %initial-translate;
-    @extend %bezier;
+    //@extend %bezier;
     @extend %transition-for-touch;
   }
   .fotorama__stage__frame,
@@ -404,8 +398,7 @@ $time: 333ms;
   .fotorama__html,
   .fotorama__stage__frame,
 	.fotorama__caption {
-	  @include transition-timing-function(linear);
-    @include transition(opacity $time);
+    @include transition(opacity $time linear);
   }
 }
 

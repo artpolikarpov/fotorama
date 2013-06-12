@@ -70,4 +70,6 @@ var _fotoramaClass = 'fotorama',
     videoPlayClass = videoClass + '-play',
     videoCloseClass = videoClass + '-close',
 
-    captionClass = _fotoramaClass + '__caption';
+    captionClass = _fotoramaClass + '__caption',
+
+		ooooClass = _fotoramaClass + '__oooo';
