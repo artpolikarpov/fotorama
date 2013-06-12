@@ -34,8 +34,8 @@ js: "/j/script.js"
 
   <% if process.env.NODE_ENV: %>
 		<!-- Fotorama -->
-		<link  href="http://fotorama.s3.amazonaws.com/fotorama.css" rel="stylesheet">
-		<script src="http://fotorama.s3.amazonaws.com/fotorama.js"></script>
+		<link  href="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.css" rel="stylesheet">
+		<script src="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.js"></script>
 	<% else: %>
 		<!-- Fotorama -->
 		<link  href="/lib/fotorama/fotorama.css" rel="stylesheet">
