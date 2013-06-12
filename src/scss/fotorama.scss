@@ -10,6 +10,8 @@ $time: 333ms;
 .fullscreen {
   width: 100% !important;
   height: 100% !important;
+	max-width: 100% !important;
+	max-height: 100% !important;
   overflow: hidden !important;
   margin: 0 !important;
   padding: 0 !important;
@@ -300,20 +302,19 @@ $time: 333ms;
   z-index: 11;
   bottom: 0;
   left: 0;
-	opacity: .9;
   max-width: 100%;
   font-family: 'Helvetica Neue', Arial, sans-serif;
   font-size: 14px;
   line-height: 1.5;
   color: #000;
-	text-shadow: 0 1px 0 #fff;
+/*	text-shadow: 0 1px 0 #fff;*/
   background-color: #fff;
-
+	background-color: rgba(#fff, .9);
 
 	@extend %border-box;
 	padding: 5px 10px;
 
-	h1, h2, h3, h4, h5, h6 {
+/*	h1, h2, h3, h4, h5, h6 {
 		margin: 0 0 .1em;
 	}
 	h1 {
@@ -341,10 +342,9 @@ $time: 333ms;
       color: #333;
       border-color: rgba(#333, .5);
     }
-  }
+  }*/
 
 	.fotorama__wrap--no-controls & {
-		//@include transition-delay(1s);
 		opacity: 0;
 	}
 }
@@ -353,6 +353,37 @@ $time: 333ms;
   @extend %hidden;
 }
 
+// Spinner
+.fotorama__spin {
+	$size: 6px;
+	$margin: 4px;
+	@extend %center;
+	width: $size;
+	height: $size;
+	margin-left: -($size + $margin/2);
+	margin-top: -$size/2;
+	&:before, &:after {
+		content: '';
+		position: absolute;
+		width: $size;
+		height: $size;
+		border-radius: $size;
+		background-color: mix(mix(black, white), white);
+		background-color: rgba(mix(black, white), .5);
+	}
+	&:before {
+		left: -($size + $margin);
+	}
+	> .fotorama__spin {
+		margin-left: $size * 1.5 + $margin * 2;
+	}
+}
+.fotorama__spin--1:before,
+.fotorama__spin--2:after,
+.fotorama__spin--3 > .fotorama__spin:before,
+.fotorama__spin--4 > .fotorama__spin:after {
+	background-color: mix(black, white);
+}
 
 // Если разрешены ЦСС-анимации
 .fotorama__wrap--css3 {

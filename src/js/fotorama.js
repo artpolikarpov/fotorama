@@ -246,10 +246,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
     classes[addOrRemove(o_fade)].push(wrapFadeClass);
     classes[addOrRemove(!o_fade && !stageShaftTouchTail.noMove)].push(wrapSlideClass);
 
-    if (krutilka.stop) {
-      krutilka.stop();
-    }
-    krutilka = new Spinner({length: 8, radius: 6, width: 2, color: SPINNER_COLOR, rotate: 15});
+//    if (krutilka.stop) {
+//      krutilka.stop();
+//    }
+    //krutilka = new Spinner({length: 8, radius: 6, width: 2, color: SPINNER_COLOR, rotate: 15});
 
     // Одним скопом удаляем и добавляем классы:
     $wrap
@@ -491,12 +491,12 @@ jQuery.Fotorama = function ($fotorama, opts) {
     var $frame = that.activeFrame[stageFrameKey];
 
     if ($frame && !$frame.data().state) {
-			krutilka
-					.stop()
-					.spin($frame[0]);
+//			krutilka
+//					.stop()
+//					.spin($frame[0]);
 			$frame.on('f:load f:error', function () {
 				$frame.off('f:load f:error');
-				krutilka.stop();
+				//krutilka.stop();
 			});
 		}
   }
@@ -1125,11 +1125,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function setShadow ($el, edge) {
     $el.removeClass(shadowsLeftClass + ' ' + shadowsRightClass);
-
-    if (edge && !$videoPlaying) {
-      $el
-          .addClass(edge.replace(/^|\s/g, ' ' + shadowsClass + '--'));
-    }
+    edge && !$videoPlaying && $el.addClass(edge.replace(/^|\s/g, ' ' + shadowsClass + '--'));
   }
 
   this.destroy = function () {

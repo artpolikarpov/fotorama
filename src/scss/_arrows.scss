@@ -87,12 +87,6 @@ $arrSize: 32px;
   background-position: 0 (-$arrSize*2);
 }
 
-.fotorama__stage__frame {
-  .fotorama__video-play {
-    z-index: -1;
-  }
-}
-
 .fotorama__nav__frame {
   .fotorama__video-play {
     width: $arrSize;
@@ -150,6 +144,7 @@ $arrSize: 32px;
 .fotorama__wrap--video {
 	.fotorama__stage .fotorama__video-play {
 		opacity: 0 !important;
+		z-index: -1;
 	}
 	.fotorama__video-close {
 		top: 0;
