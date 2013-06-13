@@ -1,4 +1,4 @@
-Browsers load image even if it’s removed with JavaScript. All images in example below will be downloaded right away:
+Browsers load images even if they are removed with JavaScript. All images in the example below will be downloaded right away:
 
 	<div class="fotorama">
 	  <img src="1.jpg">

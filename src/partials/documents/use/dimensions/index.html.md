@@ -26,12 +26,12 @@ _Responsive example (<a href="/<>/responsive.html" target="_blank">new window</a
 
 <div class="fotorama-wrap"><div class="fotorama"
      data-width="100%"
-     data-ratio="800/600">
-	<a href="http://fotorama.s3.amazonaws.com/i/macro2/16-lo.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/macro2/17-lo.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/macro2/9-lo.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/macro2/12-lo.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/macro2/18-lo.jpg"></a>
+     data-ratio="3/2">
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/7.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/26.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/22-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/8-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/19.jpg"></a>
 </div></div>
 
 Constrain fotorama’s size to a certain range with `data-min-width`, `data-max-width`, `data-min-height`, and `data-max-height`:

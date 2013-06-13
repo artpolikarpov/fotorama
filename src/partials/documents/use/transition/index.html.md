@@ -1,4 +1,4 @@
-Define what transition to use — `slide` or `crossfade` — using `data-transition`:
+Define which transition to use — `slide` or `crossfade` — using `data-transition`:
 
 	<div class="fotorama"
 	     data-transition="crossfade">
@@ -21,15 +21,15 @@ _Transition example (<a href="/<>/transition.html" target="_blank">new window</a
      data-ratio="3/2"
      data-max-width="100%"
      data-fit="cover">
-	<a href="http://fotorama.s3.amazonaws.com/i/macro2/10-lo.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/macro2/11-lo.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/macro2/13-lo.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/macro2/19-lo.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/macro2/24-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/10-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/11-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/13-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/19-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/4-lo.jpg"></a>
 </div></div>
 
 ## Dissolve
-There is one more transition, `dissolve`. This variation of fade is perfect to demonstrate pictures with the identical fragments.
+There is one more transition, `dissolve`. This variation of fade is perfect for demonstrating images with the identical fragments.
 
 _Dissolve example (<a href="/<>/dissolve.html" target="_blank">new window</a>):_
 

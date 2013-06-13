@@ -72,7 +72,7 @@ Combine with the fotorama images using `data-img`:
 _Custom <abbr>HTML</abbr> with the fotorama images (<a href="/<>/html-with-images.html" target="_blank">new window</a>):_
 
 <div class="fotorama-wrap"><div class="fotorama" data-width="500" data-height="281" data-max-width="100%" data-fit="cover">
-	<div data-img="http://fotorama.s3.amazonaws.com/i/macro2/9-lo.jpg" class="any inverse">One</div>
-	<div data-img="http://fotorama.s3.amazonaws.com/i/macro2/15-lo.jpg" class="any inverse"><strong>Two</strong></div>
-	<div data-img="http://fotorama.s3.amazonaws.com/i/macro2/16-lo.jpg" class="any inverse"><em>Three</em></div>
+	<div data-img="http://fotorama.s3.amazonaws.com/i/okonechnikov/19-lo.jpg" class="any inverse">One</div>
+	<div data-img="http://fotorama.s3.amazonaws.com/i/okonechnikov/20-lo.jpg" class="any inverse"><strong>Two</strong></div>
+	<div data-img="http://fotorama.s3.amazonaws.com/i/okonechnikov/30-lo.jpg" class="any inverse"><em>Three</em></div>
 </div></div>

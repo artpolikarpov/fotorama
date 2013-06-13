@@ -23,7 +23,7 @@ Fotorama’s <abbr>CDN</abbr> is provided by <a href="http://aws.amazon.com/s3/"
 <pre><code class="xml">&lt;link  href="<a href="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.css"><strong>http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.css</strong></a>" rel="stylesheet"> <span class="comment">&lt;!-- 13 KB --></span>
 &lt;script src="<a href="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.js"><strong>http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.js</strong></a>">&lt;/script> <span class="comment">&lt;!-- 28 KB --></span></code></pre>
 
-Or download zipped Fotorama, unpack and host it on your server if you want:
+Or download zipped, unpack and host it on your server if you want:
 
 <a href="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama-<%= process.env.FOTORAMA_VERSION %>.zip" class="download"><strong>fotorama-<%= process.env.FOTORAMA_VERSION %>.zip</strong></a>
 

@@ -12,16 +12,16 @@ This will show an icon at the top-right that toggles the fullscreen.
 _Fullscreen example (<a href="/<>/fullscreen.html" target="_blank">new window</a>):_
 
 <div class="fotorama-wrap"><div class="fotorama"
-     data-width="400"
+     data-width="500"
      data-ratio="3/2"
      data-max-width="100%"
      data-fit="cover"
      data-allow-full-screen="true">
-	<a href="http://fotorama.s3.amazonaws.com/i/macro2/9-lo.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/macro2/23-lo.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/macro2/14-lo.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/macro2/15-lo.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/macro2/16-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/9-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/23-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/14-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/15-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/16-lo.jpg"></a>
 </div></div>
 
 ## Native fullscreen
@@ -37,16 +37,16 @@ To use modern Fullscreen <abbr>API</abbr>, set `data-allow-full-screen` to `nati
 _Native fullscreen example (<a href="/<>/fullscreen-native.html" target="_blank">new window</a>):_
 
 <div class="fotorama-wrap"><div class="fotorama"
-     data-width="400"
+     data-width="500"
      data-ratio="3/2"
      data-max-width="100%"
      data-fit="cover"
      data-allow-full-screen="native">
-	<a href="http://fotorama.s3.amazonaws.com/i/macro2/9-lo.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/macro2/23-lo.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/macro2/14-lo.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/macro2/15-lo.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/macro2/16-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/9-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/23-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/14-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/15-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/16-lo.jpg"></a>
 </div></div>
 
 ## Big images
