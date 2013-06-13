@@ -2,7 +2,7 @@
 css: "/c/style.css"
 js: "/j/script.js"
 ---
-
+<!DOCTYPE html>
 <html>
 <head>
   <title><%= @document.headTitle || @document.title %></title>
@@ -51,14 +51,15 @@ js: "/j/script.js"
 	<%- @partial('menu.html.eco', {menuItems: @generateMenu(@document.url)}) %>
 </div>
 
+<div class="content">
+	<% if !frontpage : %>
+		<h1><%- @document.title %></h1>
+	<% end %>
 
-<% if !frontpage : %>
-	<h1><%- @document.title %></h1>
-<% end %>
+	<%- @content %>
 
-<%- @content %>
-
-<%- @partial('footer.html') %>
+	<%- @partial('footer.html') %>
+</div>
 
 </body>
 </html>

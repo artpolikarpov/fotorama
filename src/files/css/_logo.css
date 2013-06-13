@@ -1,5 +1,7 @@
 .logo {
   display: inline-block;
+	*display: inline;
+	*zoom: 1;
   vertical-align: bottom;
   font-size: 24px;
   line-height: 36px;
@@ -26,10 +28,14 @@
   padding-left: 10px;
   padding-right: 10px;
   margin: 0 -8px 0 -9px;
-  background: rgba(240, 240, 239, .75);
+  background: rgba(255, 255, 255, .75);
 	box-shadow: 0 0 10px rgba(0,0,0,.2);
   position: relative;
   z-index: 2;
+
+	*padding: 0;
+	*margin: 0;
+	*border: none;
 }
 
 .logo .ra > i {
@@ -39,7 +45,9 @@
   left: 0;
   top: 39px;
   padding: 3px 0;
+	line-height: 0;
   text-align: center;
+	*display: none;
 }
 
 .logo .ra > i > i {
@@ -53,6 +61,10 @@
 
 .logo .ra > i > i.a {
   background: #333;
+}
+
+.header .logo a {
+	cursor: pointer;
 }
 
 .header .logo > a, .header .logo > a:visited {

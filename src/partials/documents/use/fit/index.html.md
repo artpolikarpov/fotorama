@@ -1,18 +1,18 @@
-There are 4 ways to fit an image into a fotorama.
+There are 4&nbsp;ways to&nbsp;fit an&nbsp;image into a&nbsp;fotorama.
 
 **`contain`**<br>
-_Default method._ Stretching the image to be fully displayed while fitting within the fotorama.
+_Default method._ Stretching the image to&nbsp;be&nbsp;fully displayed while fitting within the fotorama.
 
 **`cover`**<br>
-Stretching and cropping the image to completely cover the fotorama.
+Stretching and cropping the image to&nbsp;completely cover the fotorama.
 
 **`scale-down`**<br>
-Stretching the image if it is bigger than the fotorama.
+Stretching the image if&nbsp;it&nbsp;is&nbsp;bigger than the fotorama.
 
 **`none`**<br>
 Using the image’s own dimensions.
 
-Select fit for the whole fotorama and override it for a single image with `data-fit`:
+Select fit for the whole fotorama and override it&nbsp;for a&nbsp;single image with `data-fit`:
 
 	<div class="fotorama"
 	     data-fit="cover">

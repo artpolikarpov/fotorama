@@ -5,11 +5,12 @@ menuOrder: 2
 ---
 
 ## Customize
-Fotorama’s default settings are good, so there’s no need to mess with them. Still, you can fine-tune:
-
+Fotorama’s default settings are good, so there’s no need to mess with them. Still, you can fine-tune:
 <%- @partial('sub-menu.html.eco', {menuItems: @generateMenu(@document.url)}) %>
 
-## Go depper
-Download the uncompressed, [development Fotorama <%= process.env.FOTORAMA_VERSION %>](http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama-<%= process.env.FOTORAMA_VERSION %>.uncompressed.zip).
+Fotorama has a great <abbr>API</abbr>. Docs are comming soon.
 
-Have a look [at the source code](http://github.com/artpolikarpov/fotorama).
+## Go depper
+Download the uncompressed, [development Fotorama <%= process.env.FOTORAMA_VERSION %>](http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama-<%= process.env.FOTORAMA_VERSION %>.uncompressed.zip).
+
+Have a look [at the source code](http://github.com/artpolikarpov/fotorama).

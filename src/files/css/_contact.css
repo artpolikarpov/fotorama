@@ -1,0 +1,13 @@
+.contact, .contact .text {
+	overflow: hidden;
+	position: relative;
+	*zoom: 1;
+	max-width: 700px;
+}
+
+.contact .avatar {
+	float: left;
+	margin: 0 1em 2em 0;
+	border-radius: 3px;
+	background-color: #eee;
+}

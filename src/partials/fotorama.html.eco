@@ -1,4 +1,4 @@
-<div class="fotorama" data-width="100%" data-ratio="1.5" data-max-height="100%" data-nav="thumbs" data-fit="cover" data-allow-full-screen="native" data-thumb-width="72" data-thumb-height="48">
+<div class="fotorama" data-width="100%" data-ratio="1.5" data-hash="true" data-max-height="100%" data-nav="thumbs" data-fit="cover" data-allow-full-screen="native" data-thumb-width="72" data-thumb-height="48">
   <% for image in @images: %>
     <a href="<%= image.url %>"><img src="<%= image.url.replace('/full', '/thumbs') %>" /></a>
   <% end %>

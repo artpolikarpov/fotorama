@@ -1,4 +1,4 @@
-Define which transition to use — `slide` or `crossfade` — using `data-transition`:
+Define which transition to&nbsp;use&nbsp;&mdash; `slide` or `crossfade` &mdash; using `data-transition`:
 
 	<div class="fotorama"
 	     data-transition="crossfade">
@@ -29,7 +29,7 @@ _Transition example (<a href="/<>/transition.html" target="_blank">new window</a
 </div></div>
 
 ## Dissolve
-There is one more transition, `dissolve`. This variation of fade is perfect for demonstrating images with the identical fragments.
+There is&nbsp;one more transition, `dissolve`. This variation of&nbsp;fade is&nbsp;perfect for demonstrating images with the identical fragments.
 
 _Dissolve example (<a href="/<>/dissolve.html" target="_blank">new window</a>):_
 

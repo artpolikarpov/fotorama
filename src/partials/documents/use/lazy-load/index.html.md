@@ -1,4 +1,4 @@
-Browsers load images even if they are removed with JavaScript. All images in the example below will be downloaded right away:
+Browsers load images even if&nbsp;they are removed with JavaScript. All images in&nbsp;the example below will be&nbsp;downloaded right away:
 
 	<div class="fotorama">
 	  <img src="1.jpg">
@@ -6,7 +6,7 @@ Browsers load images even if they are removed with JavaScript. All images in the
 	  <img src="3.jpg">
 	</div>
 
-If you don’t worry about browsers with no JavaScript, turn on lazy loading by altering your <abbr>HTML</abbr>:
+If&nbsp;you don&rsquo;t worry about browsers with no&nbsp;JavaScript, turn on&nbsp;lazy loading by&nbsp;altering your <abbr>HTML</abbr>:
 
 	<div class="fotorama">
 	  <a href="1.jpg"></a>

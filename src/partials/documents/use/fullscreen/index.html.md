@@ -1,4 +1,4 @@
-Allow fotorama to enter fullscreen using `data-allow-full-screen`:
+Allow fotorama to&nbsp;enter fullscreen using `data-allow-full-screen`:
 
 	<div class="fotorama"
 	     data-allow-full-screen="true">
@@ -7,7 +7,7 @@ Allow fotorama to enter fullscreen using `data-allow-full-screen`:
 	  <img src="3.jpg">
 	</div>
 
-This will show an icon at the top-right that toggles the fullscreen.
+This will show an&nbsp;icon at&nbsp;the top-right that toggles the fullscreen.
 
 _Fullscreen example (<a href="/<>/fullscreen.html" target="_blank">new window</a>):_
 
@@ -25,7 +25,7 @@ _Fullscreen example (<a href="/<>/fullscreen.html" target="_blank">new window</a
 </div></div>
 
 ## Native fullscreen
-To use modern Fullscreen <abbr>API</abbr>, set `data-allow-full-screen` to `native`:
+To&nbsp;use modern Fullscreen <abbr>API</abbr>, set `data-allow-full-screen` to `native`:
 
 	<div class="fotorama"
 	     data-allow-full-screen="native">
@@ -42,15 +42,15 @@ _Native fullscreen example (<a href="/<>/fullscreen-native.html" target="_blank"
      data-max-width="100%"
      data-fit="cover"
      data-allow-full-screen="native">
-	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/9-lo.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/23-lo.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/14-lo.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/15-lo.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/16-lo.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/9-lo.jpg" data-full="http://fotorama.s3.amazonaws.com/i/okonechnikov/9.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/23-lo.jpg" data-full="http://fotorama.s3.amazonaws.com/i/okonechnikov/23.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/14-lo.jpg" data-full="http://fotorama.s3.amazonaws.com/i/okonechnikov/14.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/15-lo.jpg" data-full="http://fotorama.s3.amazonaws.com/i/okonechnikov/15.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/16-lo.jpg" data-full="http://fotorama.s3.amazonaws.com/i/okonechnikov/16.jpg"></a>
 </div></div>
 
 ## Big images
-Add a separate image for fullscreen using `data-full`:
+Add a&nbsp;separate image for fullscreen using `data-full`:
 
 	<div class="fotorama"
 	     data-allow-full-screen="native">
@@ -58,5 +58,3 @@ Add a separate image for fullscreen using `data-full`:
 	  <img src="2.jpg" data-full="2_full.jpg">
 	  <img src="3.jpg" data-full="3_full.jpg">
 	</div>
-
-<p class="after-pre">_Example: <a href="/<>/fullscreen-big.html" target="_blank">Fullscreen with big images</a>_</p>

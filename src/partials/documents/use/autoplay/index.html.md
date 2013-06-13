@@ -1,37 +1,32 @@
-Change navigation style from iPhone-style dots to&nbsp;thumbnails by&nbsp;adding `data-nav=&quot;thumbs&quot;`:
+Let Fotorama play photos automatically using `data-autoplay="true"`:
 
 	<div class="fotorama"
-	     data-nav="thumbs">
+	     data-autoplay="true">
 	  <img src="1.jpg">
 	  <img src="2.jpg">
 	  <img src="3.jpg">
 	</div>
 
-For better performance with thumbnails, have smaller images ready and include them in&nbsp;<abbr>HTML</abbr>. Like&nbsp;so:
+By&nbsp;default, a&nbsp;pause between images is&nbsp;5&nbsp;seconds. Set any interval in&nbsp;milliseconds, for example, 7&nbsp;seconds: `data-autoplay="7000"`.
 
-	<div class="fotorama"
-	     data-nav="thumbs">
-	  <a href="1.jpg"><img src="1_thumb.jpg"></a>
-	  <a href="2.jpg"><img src="2_thumb.jpg"></a>
-	  <a href="3.jpg"><img src="3_thumb.jpg"></a>
-	</div>
-
-_Thumbnails example (<a href="/<>/thumbnails.html#" target="_blank">new window</a>):_
+*Autoplay example (<a href="/<>/autoplay.html" target="_blank">new window</a>):*
 
 <div class="fotorama-wrap"><div class="fotorama"
-     data-width="500"
+     data-autoplay="true"
+     data-width="700"
      data-ratio="3/2"
      data-max-width="100%"
      data-nav="thumbs">
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/1-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/1-thumb.jpg"></a>
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/2-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/2-thumb.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/3-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/3-thumb.jpg"></a>
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/4-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/4-thumb.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/5-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/5-thumb.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/6-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/6-thumb.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/7-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/7-thumb.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/8-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/8-thumb.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/9-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/9-thumb.jpg"></a>
-	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/10-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/10-thumb.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/25-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/25-thumb.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/26-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/26-thumb.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/27-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/27-thumb.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/28-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/28-thumb.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/29-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/29-thumb.jpg"></a>
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/30-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/30-thumb.jpg"></a>
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/11-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/11-thumb.jpg"></a>
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/12-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/12-thumb.jpg"></a>
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/13-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/13-thumb.jpg"></a>
@@ -48,8 +43,4 @@ _Thumbnails example (<a href="/<>/thumbnails.html#" target="_blank">new window</
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/19-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/19-thumb.jpg"></a>
 </div></div>
 
-By&nbsp;default, thumbnail is&nbsp;a&nbsp;64&times;64&nbsp;square. Adjust this with `data-thumb-width` and `data-thumb-height`.
-
-Fotorama will automatically generate the missing thumbnails.
-
-<!--To move navigation line on top, use `data-nav-position="top"`. Hide navigation with `data-nav="false"`.-->
+The show will stop on&nbsp;touch. Disable this with `data-stop-autoplay-on-touch="false"`.

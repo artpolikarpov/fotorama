@@ -52,7 +52,7 @@ _Selectable text example (<a href="/<>/html-selectable.html" target="_blank">new
 </div></div>
 
 ## Thumbnails
-To define a thumbnail for such frame, use `data-thumb`:
+To&nbsp;define a&nbsp;thumbnail for such frame, use `data-thumb`:
 
 	<div class="fotorama">
 	  <div data-thumb="1_thumb.jpg">One</div>
@@ -61,7 +61,7 @@ To define a thumbnail for such frame, use `data-thumb`:
 	</div>
 
 ## Images
-Combine with the fotorama images using `data-img`:
+Combine with the fotorama images using `data-img`:
 
 	<div class="fotorama">
 	  <div data-img="1.jpg">One</div>

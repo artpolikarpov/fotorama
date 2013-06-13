@@ -1,5 +1,7 @@
 .menu {
   display: inline-block;
+	*display: inline;
+	*zoom: 1;
   vertical-align: bottom;
   font-size: 11px;
 	text-transform: uppercase;
@@ -10,8 +12,11 @@
   padding: 0;
 }
 
-.menu > li {
+.menu li {
   display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	*margin-right: 10px;
   white-space: nowrap;
 }
 
@@ -19,7 +24,7 @@
 	content: ' · ';
 }
 
-.menu > li > .menu {
+.menu li .menu {
   line-height: 20px;
   display: block;
   margin-top: -5px;
@@ -28,17 +33,17 @@
   position: absolute;
 }
 
-.menu > li > .menu > li {
+.menu li .menu li {
   margin-left: 0;
 }
 
-.menu > li > .menu > li:before,
-.menu > li > .menu > li > span,
-.menu > li > .menu > li > a {
+.menu li .menu li:before,
+.menu li .menu li span,
+.menu li .menu li a {
   display: none;
 }
 
 
-.menu > li > .menu > li.selected > a {
+.menu li .menu li.selected a {
   display: inline;
 }

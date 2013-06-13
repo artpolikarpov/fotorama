@@ -3,7 +3,7 @@
 	cursor: pointer;
 }
 
-.switch.active {
+.switch.active, .key {
 	color: #fff;
 	background-color: #555;
 	text-shadow: 0 -1px 0 #000;
@@ -12,4 +12,14 @@
 	padding: 2px 4px;
 	margin: 0 -4px;
 	cursor: default;
+}
+
+.key {
+	cursor: pointer;
+	margin: 0;
+	position: relative;
+}
+
+.key:active {
+	top: 1px;
 }

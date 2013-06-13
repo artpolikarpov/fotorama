@@ -1,5 +1,5 @@
-Fotorama’s dimensions are the dimensions of the first image. Other pictures are scaled proportionally to fit.
-To reserve the space on the page before the first image is loaded, use `data-width` and `data-height`:
+Fotorama’s dimensions are the dimensions of&nbsp;the first image. Other pictures are scaled proportionally to&nbsp;fit.
+To&nbsp;reserve the space on&nbsp;the page before the first image is&nbsp;loaded, use `data-width` and `data-height`:
 
 	<div class="fotorama"
 	     data-width="800"
@@ -10,7 +10,7 @@ To reserve the space on the page before the first image is loaded, use `data-wid
 	</div>
 
 ## Responsive
-To make fotorama responsive, define width in percents and aspect ratio:
+To&nbsp;make fotorama responsive, define width in&nbsp;percents and aspect ratio:
 
 	<div class="fotorama"
 	     data-width="100%"
@@ -34,7 +34,7 @@ _Responsive example (<a href="/<>/responsive.html" target="_blank">new window</a
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/19.jpg"></a>
 </div></div>
 
-Constrain fotorama’s size to a certain range with `data-min-width`, `data-max-width`, `data-min-height`, and `data-max-height`:
+Constrain fotorama’s size to&nbsp;a&nbsp;certain range with `data-min-width`, `data-max-width`, `data-min-height`, and `data-max-height`:
 
 	<div class="fotorama"
 	     data-width="100%"
@@ -50,7 +50,7 @@ Constrain fotorama’s size to a certain range with `data-min-width`, `data-max-
 
 <p class="after-pre">_Example: <a href="/<>/constrained.html" target="_blank">Constrained</a>_</p>
 
-Relative height is calculated based on inner height of the window. A height of 100% covers the entire browser window:
+Relative height is&nbsp;calculated based on&nbsp;inner height of&nbsp;the window. A&nbsp;height of&nbsp;100% covers the entire browser window:
 
 	<body style="margin: 0;">
 
