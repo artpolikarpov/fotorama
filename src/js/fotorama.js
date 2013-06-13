@@ -120,7 +120,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 					dataFrame.video = video;
 					if (!dataFrame.img && !dataFrame.thumb) {
 						thumbs = getVideoThumbs(dataFrame, data, that);
-						console.log('thumbs', thumbs)
+						//console.log('thumbs', thumbs)
 					} else {
 						dataFrame.thumbsReady = true;
 					}
@@ -210,7 +210,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           .removeClass(navThumbsClass);
       frameDraw(size, 'navDot');
     } else if (o_nav === 'thumbs') {
-	    setStyle($style, $.Fotorama.jst.style({w: o_thumbSide , h: o_thumbSide2, m: MARGIN, s: stamp}));
+	    setStyle($style, $.Fotorama.jst.style({w: o_thumbSide , h: o_thumbSide2, m: MARGIN, s: stamp, q: !COMPAT}));
 
       $nav
           .addClass(navThumbsClass)
@@ -363,18 +363,18 @@ jQuery.Fotorama = function ($fotorama, opts) {
       if (type === 'navThumb') $frame = frameData.$wrap;
 
       function error () {
-        console.log('error', index, src);
+        //console.log('error', index, src);
         // Ошибка
         $img.remove();
 
         $.Fotorama.cache[src] = 'error';
 
         // Попытаемся загрузить запасную картинку, если она есть:
-        if ((!dataFrame.html || type !== 'stage') && dummy && dummy !== src) {
+        if ((!dataFrame.$html || type !== 'stage') && dummy && dummy !== src) {
           dataFrame[srcKey] = src = dummy;
           loadImg([index], type, specialMeasures, specialFit, true);
         } else {
-          if (src && !frameData.html) {
+          if (src && !frameData.$html) {
             $frame
                 .trigger('f:error')
                 .removeClass(loadingClass)
@@ -402,7 +402,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
 
       function loaded() {
-        console.log('loaded', index, src);
+        //console.log('loaded', index, src);
 
         // Удачная загрузка:
         // Кешируем оригинальные размеры картинки
@@ -502,11 +502,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * */
   function frameDraw (indexes, type) {
     eachIndex(indexes, type, function (i, index, dataFrame, $frame, key, frameData) {
-      console.log('frameDraw');
+      //console.log('frameDraw');
 
 			if ($frame) return;
 
-			console.log('frameDraw execute');
+			//console.log('frameDraw execute');
 
 			$frame = dataFrame[key] = $wrap[key].clone();
       frameData = $frame.data();
@@ -514,7 +514,12 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       if (type === 'stage') {
         // Сцена
+
+	      ////console.log('dataFrame.html', $(dataFrame.html).html());
+
         if (dataFrame.html) {
+	        var $html = $(dataFrame.html).html(dataFrame._html); // Because of IE
+
           $('<div class="' + htmlClass +'"></div>')
               .append(dataFrame.html)
               .appendTo($frame);
@@ -562,6 +567,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 		return $img && $img.length && fit($img, measuresToFit, method);
   }
 
+
   /**
    * Позиционируем и показываем кадры с определённым индексом.
    * */
@@ -570,8 +576,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
       if (!$frame) return;
 
       $frame
-          .css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, MARGIN, repositionIndex)}, o_fade && getDuration(0)))
-          .fadeTo(0, o_fade && index !== activeIndex ? 0 : 1);
+          .css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, MARGIN, repositionIndex)}, o_fade && getDuration(0)));
+          //.fadeTo(0, o_fade && index !== activeIndex ? 0 : 1);
 
       if (!frameData.appended) {
         $frame.appendTo($stageShaft);
@@ -704,7 +710,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * Обновляем навигацию
    * */
   function navUpdate () {
-    console.log('navUpdate', o_nav);
+    //console.log('navUpdate', o_nav);
     if (o_nav === 'thumbs') {
       $navFrame = $navThumbFrame;
       navFrameKey = navThumbFrameKey;

@@ -15,7 +15,7 @@ function minMaxLimit (value, min, max) {
  * возвращает величину по определённой координате (top или left)
  * */
 function readTransform (css) {
-  console.log('---readTransform---', css);
+  //console.log('---readTransform---', css);
   return css && css.match(/-?\d+/g)[4];
 }
 
@@ -171,7 +171,7 @@ function stop ($el) {
     $el.stop();
   }
 	if ($el.length) {
-		console.log('$el.length', $el);
+		//console.log('$el.length', $el);
 	  var lockedLeft = readPosition($el);
 	  $el.css(getTranslate(lockedLeft));
 	  return lockedLeft;
@@ -199,12 +199,14 @@ function parseHref (href) {
 function findVideoId (href, forceVideo) {
   if (typeof href !== 'string') return href;
   href = parseHref(href);
-	href.host = href.host.replace(/^www./, '');
+
+	// href.host = href.host.replace(/^www./, '').replace(/:80$/, '');
 
   var id,
       type;
 
-  if (href.host === 'youtube.com' && href.search) {
+  if (href.host.match(/youtube\.com/) && href.search) {
+	  console.log();
     id = href.search.split('v=')[1];
     if (id) {
       var ampersandPosition = id.indexOf('&');
@@ -213,13 +215,15 @@ function findVideoId (href, forceVideo) {
       }
       type = 'youtube';
     }
-  } else if (href.host === 'youtube.com' || href.host === 'youtu.be') {
+  } else if (href.host.match(/youtube\.com|youtu\.be/)) {
     id = href.pathname.replace(/^\/(embed\/|v\/)?/, '').replace(/\/.*/, '');
     type = 'youtube';
-  } else if (href.host === 'vimeo.com' || href.host === 'player.vimeo.com') {
+  } else if (href.host.match(/vimeo\.com/)) {
     type = 'vimeo';
     id = href.pathname.replace(/^\/(video\/)?/, '').replace(/\/.*/, '');
   }
+
+	console.log('id, type ', id, type);
 
   if ((!id || !type) && forceVideo) {
     id = href.href;
@@ -230,7 +234,7 @@ function findVideoId (href, forceVideo) {
 }
 
 function getVideoThumbs (dataFrame, data, api) {
-	console.log('getVideoThumbs');
+	//console.log('getVideoThumbs');
 
   var img, thumb, video = dataFrame.video;
   if (video.type === 'youtube') {
@@ -312,6 +316,7 @@ function getDataFromHtml ($el) {
 	    $.extend(dataFrame, getDataFromImg($this, true));
     } else if (!$this.is(':empty')) {
 	    dataFrame.html = this;
+	    dataFrame._html = $this.html(); // Because of IE
     } else return;
 
     data.push(dataFrame);
@@ -355,7 +360,7 @@ function setHash (hash) {
  * Вписывает объект в заданные рамки тремя способами: none, contain и cover
  * */
 function fit ($el, measuresToFit, method) {
-	console.log('fit');
+	//console.log('fit');
 
   var elData = $el.data(),
       measures = elData.measures;
@@ -368,7 +373,7 @@ function fit ($el, measuresToFit, method) {
       elData.l.h !== measuresToFit.h ||
       elData.l.m !== method)) {
 
-		console.log('fit execute', measures, measuresToFit);
+		//console.log('fit execute', measures, measuresToFit);
 
     var width = measures.width,
         height = measures.height,

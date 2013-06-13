@@ -70,7 +70,6 @@ $time: 333ms;
 .fotorama__stage {
   overflow: hidden;
   position: relative;
-  @extend %no-tap;
 }
 
 .fotorama__stage__shaft {
@@ -85,6 +84,9 @@ $time: 333ms;
   .fotorama__stage__shaft {
     @extend %grab-cursor;
   }
+	.fotorama__stage__frame {
+		opacity: 1 !important;
+	}
 }
 
 .grabbing * {
@@ -145,7 +147,7 @@ $time: 333ms;
     background-color: #000;
     .fotorama__img,
 		.fotorama__html {
-      opacity: 0;
+      @include opacity(0);
     }
   }
 }
@@ -289,6 +291,7 @@ $time: 333ms;
   border-style: solid;
   border-color: mix(#00d1ff, #008ed6);
   @include background(linear-gradient(top left, rgba(255, 255, 255, .25), rgba(64, 64, 64, .1)));
+	@extend %content-box;
 }
 
 .fotorama__caption {
@@ -383,11 +386,7 @@ $time: 333ms;
 .fotorama__wrap--css3 {
   .fotorama__stage__shaft,
 	.fotorama__nav__shaft,
-	.fotorama__thumb-border {
-    @extend %initial-translate;
-    //@extend %bezier;
-    @extend %transition-for-touch;
-  }
+	.fotorama__thumb-border,
   .fotorama__stage__frame,
 	.fotorama__nav__frame,
 	.fotorama__img,

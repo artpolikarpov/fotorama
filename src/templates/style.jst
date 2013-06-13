@@ -9,8 +9,8 @@ padding-right:0}
 width:<%= v.w %>px;
 height:<%= v.h %>px}
 .fotorama<%= v.s %> .fotorama__thumb-border{
-width:<%= v.w - v.m * 2 %>px;
-height:<%= v.h - v.m * 2 %>px;
+width:<%= v.w - v.m * (v.q ? 0 : 2) %>px;
+height:<%= v.h - v.m * (v.q ? 0 : 2) %>px;
 border-width:<%= v.m %>px;
 margin-top:<%= v.m %>px;
 margin-left:<%= - v.w / 2 %>px}
