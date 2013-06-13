@@ -3,11 +3,12 @@
 	position: relative;
 	*zoom: 1;
 	max-width: 700px;
+	margin-bottom: 2em;
 }
 
 .contact .avatar {
 	float: left;
-	margin: 0 1em 2em 0;
+	margin: 0 1em 0 0;
 	border-radius: 3px;
 	background-color: #eee;
 }
