@@ -1,9 +1,12 @@
+.contact {
+	margin-bottom: 1em;
+}
+
 .contact, .contact .text {
 	overflow: hidden;
 	position: relative;
 	*zoom: 1;
 	max-width: 700px;
-	margin-bottom: 2em;
 }
 
 .contact .avatar {
