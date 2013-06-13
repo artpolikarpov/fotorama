@@ -7,7 +7,7 @@ layout: "default"
 
 <h1>Fotorama</h1>
 
-<p class="lead">A simple, stunning, powerful Javascript gallery. Licensed <a href="/license/">under the <abbr>MIT</abbr></a>.</p>
+<p class="lead">A simple, stunning, powerful jQuery gallery. Licensed <a href="/license/">under the <abbr>MIT</abbr></a>.</p>
 
 <% renderMenu = (items) => %>
 	<% for item in items: %>
