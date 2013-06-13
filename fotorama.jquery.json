@@ -2,7 +2,7 @@
 	"name": "fotorama",
 	"version": "4.1.0",
 	"title": "Fotorama",
-	"description": "A simple, stunning, powerful Javascript gallery.",
+	"description": "A simple, stunning, powerful jQuery gallery.",
 	"keywords": [
 		"gallery",
 		"ui",
