@@ -42,8 +42,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
       stageShaftData = $stageShaft.data(),
       navShaftData = $navShaft.data(),
 
-      $shadows = /*bindNoInteraction(*/$(div(shadowClass + ' ' + shadowLeftClass) + div(shadowClass + ' ' + shadowRightClass)).appendTo($stage)/*)*/,
-      $navShadows = /*bindNoInteraction(*/$shadows.clone().appendTo($nav)/*)*/,
+      //$shadows = /*bindNoInteraction(*/$(div(shadowClass + ' ' + shadowLeftClass) + div(shadowClass + ' ' + shadowRightClass)).appendTo($stage)/*)*/,
+      ///*$navShadows = *//*bindNoInteraction(*//*$shadows.clone().appendTo($nav)*//*)*//*,*/
 
       $thumbBorder = $(div(thumbBorderClass)).appendTo($navShaft),
 
@@ -900,7 +900,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
 			$fotorama.trigger('fotorama:showend', options.auto);
 
-			opts.hash && showedFLAG && !that.eq && location.replace('#' + (activeFrame.id || activeIndex + 1));
+			opts.hash && showedFLAG && !that.eq && setHash(activeFrame.id || activeIndex + 1);
 
 			releaseAutoplay();
 			changeAutoplay();

@@ -1,17 +1,18 @@
-var $oooo = $(div(ooooClass, div(ooooClass))),
+var $oooo = $(div('', div(ooooClass))),
 		ooooInterval,
-		$ooooFrame = 0;
+		ooooStep = function () {
+			$oooo.attr('class', ooooClass + ' ' + ooooClass + '--' + ooooI);
+			ooooI++;
+			if (ooooI > 4) ooooI = 0;
+		},
+		ooooI;
 
 function ooooStart ($el) {
 	ooooStop(true);
-
 	$oooo.appendTo($el);
-
-	ooooInterval = setInterval(function () {
-		$oooo.attr('class', ooooClass + ' ' + ooooClass + '--' + $ooooFrame);
-		$ooooFrame++;
-		if ($ooooFrame > 4) $ooooFrame = 0;
-	}, 200);
+	ooooI = 0;
+	ooooStep();
+	ooooInterval = setInterval(ooooStep, 200);
 }
 
 function ooooStop (leave) {

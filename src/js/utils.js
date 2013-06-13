@@ -341,6 +341,16 @@ function waitFor (test, fn, timeout) {
   }
 }
 
+
+function setHash (hash) {
+  location.replace(location.protocol
+      + '//'
+      + location.host
+      + location.pathname.replace(/^\/?/, '/')
+      + location.search
+      + '#' + hash);
+}
+
 /**
  * Вписывает объект в заданные рамки тремя способами: none, contain и cover
  * */
