@@ -77,6 +77,14 @@ module.exports = function (grunt) {
 						dest: 'product/'
 					}
 				]
+		  },
+		  example: {
+			  files: [
+				  {
+					  src: 'src/example/example.html',
+					  dest: 'product/example.html'
+				  }
+			  ]
 		  }
 	  },
     concat: {
@@ -185,7 +193,8 @@ module.exports = function (grunt) {
 					{expand: true, cwd: 'product/', src: 'fotorama.css', dest: 'fotorama-<%= pkg.version %>/'},
 					{expand: true, cwd: 'product/', src: 'fotorama.js', dest: 'fotorama-<%= pkg.version %>/'},
 					{expand: true, cwd: 'product/', src: 'fotorama.png', dest: 'fotorama-<%= pkg.version %>/'},
-					{expand: true, cwd: 'product/', src: 'fotorama@2x.png', dest: 'fotorama-<%= pkg.version %>/'}
+					{expand: true, cwd: 'product/', src: 'fotorama@2x.png', dest: 'fotorama-<%= pkg.version %>/'},
+		      {expand: true, cwd: 'product/', src: 'example.html', dest: 'fotorama-<%= pkg.version %>/'}
 				]
       }
 		},

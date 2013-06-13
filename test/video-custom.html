@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Custom Video · FOTO[RA]MA</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.9.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../product/fotorama.css" rel="stylesheet">
+	<script src="../product/fotorama.js"></script>
+</head>
+
+<body>
+
+<p>Custom video:</p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div class="fotorama">
+  &lt;a <mark>href="http://dailymotion.com/embed/video/xxgmlg?autoplay=1"</mark>
+     <mark>data-video="true"</mark>>
+    &lt;img src="preview.jpg">
+  &lt;/a>
+&lt;/div></code></pre>
+
+<!-- Just don’t want to repeat this prefix in every img[src] -->
+<base href="i/dailymotion/">
+
+<!-- Fotorama -->
+<div class="fotorama" data-width="700" data-ratio="700/426" data-max-width="100%">
+	<a href="http://dailymotion.com/embed/video/xu4jqv?autoplay=1" data-video="true">
+		<img src="xxgmlg.jpg">
+	</a>
+	<a href="http://dailymotion.com/embed/video/xxgmlg?autoplay=1" data-video="true">
+		<img src="xu4jqv.jpg">
+	</a>
+</div>
+
+</body>
+</html>

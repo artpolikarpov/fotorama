@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Selectable text · FOTO[RA]MA</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.9.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../product/fotorama.css" rel="stylesheet">
+	<script src="../product/fotorama.js"></script>
+
+	<!-- Just don’t want to repeat this prefix in every img[src] -->
+	<base href="i/okonechnikov/">
+</head>
+
+<body>
+
+<!-- Style for custom HTML -->
+<style type="text/css">
+	.fotorama .any {
+		text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+		font-family: Georgia, serif;
+		font-size: 72px;
+		text-align: center;
+		height: 181px;
+		padding-top: 100px;
+	}
+</style>
+
+<p>Selectable text with <tt>.fotorama__select</tt>:</p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div class="fotorama">
+  &lt;div>&lt;span <mark>class="fotorama__select"</mark>>One&lt;/span>&lt;/div>
+&lt;/div></code></pre>
+
+<!-- Fotorama -->
+<div class="fotorama" data-width="500" data-height="281" data-max-width="100%">
+	<div class="any" style="background: rgba(255, 0, 0, .1);"><span class="fotorama__select">One</span></div>
+	<div class="any" style="background: rgba(0, 255, 0, .1);"><strong class="fotorama__select">Two</strong></div>
+	<div class="any" style="background: rgba(0, 0, 255, .1);"><em class="fotorama__select">Three</em></div>
+</div>
+
+</body>
+</html>

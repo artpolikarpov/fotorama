@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Constrained fotorama · FOTO[RA]MA</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.9.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../product/fotorama.css" rel="stylesheet">
+	<script src="../product/fotorama.js"></script>
+
+
+	<!-- Just don’t want to repeat this prefix in every img[src] -->
+	<base href="i/okonechnikov/">
+</head>
+
+<body>
+
+<p>Constrained fotorama:<p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div class="fotorama"
+     data-width="100%"
+     data-ratio="700/467"
+     <mark>data-min-width="400"</mark>
+     <mark>data-max-width="1000"</mark>
+     <mark>data-min-height="300"</mark>
+     <mark>data-max-height="100%"</mark>></code></pre>
+
+<p>Resize the browser.</p>
+
+<!-- Fotorama -->
+<div class="fotorama"
+     data-width="100%"
+     data-ratio="700/467"
+     data-min-width="400"
+     data-max-width="1000"
+     data-min-height="300"
+     data-max-height="100%">
+	<a href="17-lo.jpg"></a>
+	<a href="16-lo.jpg"></a>
+	<a href="9-lo.jpg"></a>
+	<a href="12-lo.jpg"></a>
+	<a href="18-lo.jpg"></a>
+</div>
+
+<!-- © -->
+<p>Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
+</body>
+</html>
