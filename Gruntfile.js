@@ -263,7 +263,9 @@ module.exports = function (grunt) {
 			  stderr: true,
 			  failOnError: true
 		  }
-	  }
+	  },
+
+	  jasmine: grunt.file.readJSON('test/specs/specs.json')
   });
 
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -274,6 +276,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-string-replace');
+	grunt.loadNpmTasks('grunt-contrib-jasmine');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-compress');
 
@@ -281,7 +284,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-shell');
 
-	var defaultTask = 'copy compass jst string-replace:jst concat:js string-replace:console uglify concat:css cssmin clean compress';
+	var defaultTask = 'copy compass jst string-replace:jst concat:js string-replace:console concat:css jasmine uglify cssmin jasmine clean compress';
 
   // Compile
   grunt.registerTask('default', defaultTask.split(' '));

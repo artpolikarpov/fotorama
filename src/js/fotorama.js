@@ -1,5 +1,6 @@
 jQuery.Fotorama = function ($fotorama, opts) {
-  //this.options = opts;
+  this.options = opts;
+
 	$HTML = $HTML || $('html');
   $BODY = $BODY || $('body');
 
@@ -763,7 +764,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function extendMeasures (options) {
 		options && $.extend(measures, {
-      width: options.width,
+      width: options.width || measures.width,
       height: options.height,
       minWidth: options.minWidth,
       maxWidth: options.maxWidth,
@@ -970,7 +971,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
 				$fotorama
 						.addClass(fullscreenClass)
-						.css({top: 0})
 						.appendTo($BODY)
 						.trigger('fotorama:fullscreenenter');
 

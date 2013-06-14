@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fotorama test</title>
+
+  <link rel="stylesheet" type="text/css" href="jasmine-1.2.0/jasmine.css">
+  <script type="text/javascript" src="jasmine-1.2.0/jasmine.js"></script>
+  <script type="text/javascript" src="jasmine-1.2.0/jasmine-html.js"></script>
+
+  <!-- Tests -->
+  <script>
+    describe('Fotorama', function () {
+	    var $fotorama, fotorama;
+
+	    beforeEach(function() {
+		    $fotorama = $fotorama || $('#fotorama');
+		    fotorama = fotorama || $fotorama.data('fotorama');
+		  });
+
+      it('$.fn.fotorama is here', function () {
+        expect($.fn.fotorama).toBeDefined();
+      });
+	    it('it’s initialized', function () {
+		    expect(fotorama).toBeDefined();
+		    expect(fotorama).toEqual(jasmine.any(Object));
+	    });
+	    it('all elements are here', function () {
+		    expect($('.fotorama__load').size()).toEqual(1);
+				expect($('.fotorama__wrap', $fotorama).size()).toEqual(1);
+		    expect($('.fotorama__stage', $fotorama).size()).toEqual(1);
+		    expect($('.fotorama__stage__shaft', $fotorama).size()).toEqual(1);
+		    expect($('.fotorama__nav', $fotorama).size()).toEqual(1);
+		    expect($('.fotorama__nav__shaft', $fotorama).size()).toEqual(1);
+		    expect($('.fotorama__arr', $fotorama).size()).toEqual(2);
+		    expect($('.fotorama__stage__frame', $fotorama).size()).toEqual(2);
+		    expect($('.fotorama__nav__frame', $fotorama).size()).toEqual(fotorama.size);
+	    });
+	    it('dimensions are correct', function () {
+		    var $stage = $('.fotorama__stage', $fotorama);
+
+		    expect($stage.width()).toEqual(700);
+		    expect($stage.height()).toEqual(467);
+	    });
+    });
+
+  </script>
+
+  <!-- What to test -->
+  <script src="jquery/jquery-1.10.1.min.js"></script>
+  <script src="../product/fotorama.js"></script>
+	<link rel="stylesheet" href="../product/fotorama.css"/>
+
+  <!-- Jasmine initialization (why it here?) -->
+  <script type="text/javascript">
+    (function() {
+      var jasmineEnv = jasmine.getEnv();
+      jasmineEnv.updateInterval = 1000;
+
+      var htmlReporter = new jasmine.HtmlReporter();
+
+      jasmineEnv.addReporter(htmlReporter);
+
+      jasmineEnv.specFilter = function(spec) {
+        return htmlReporter.specFilter(spec);
+      };
+
+      var currentWindowOnload = window.onload;
+
+      window.onload = function() {
+        if (currentWindowOnload) {
+          currentWindowOnload();
+        }
+        execJasmine();
+      };
+
+      function execJasmine() {
+        jasmineEnv.execute();
+      }
+    })();
+  </script>
+
+</head>
+<body>
+
+<!-- Fotorama -->
+<div class="fotorama" id="fotorama"><img src="i/okonechnikov/1-lo.jpg"><img src="i/okonechnikov/2-lo.jpg"><img src="i/okonechnikov/9-lo.jpg"><img src="i/okonechnikov/6-lo.jpg"><img src="i/okonechnikov/5-lo.jpg"></div>
+
+</body>
+</html>
