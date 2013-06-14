@@ -1,4 +1,4 @@
-Change navigation style from iPhone-style dots to&nbsp;thumbnails by&nbsp;adding `data-nav=&quot;thumbs&quot;`:
+Change navigation style from iPhone-style dots to&nbsp;thumbnails by&nbsp;adding `data-nav="thumbs"`:
 
 	<div class="fotorama"
 	     data-nav="thumbs">

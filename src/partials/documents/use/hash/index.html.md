@@ -1,4 +1,4 @@
-Attribute `data-hash=&quot;true&quot;` lets the page change its <abbr>URL</abbr> upon switching images. To&nbsp;send a&nbsp;link to&nbsp;a&nbsp;specific photo to&nbsp;a&nbsp;friend :-)
+Attribute `data-hash="true"` lets the page change its <abbr>URL</abbr> upon switching images. To&nbsp;send a&nbsp;link to&nbsp;a&nbsp;specific photo to&nbsp;a&nbsp;friend :-)
 
 Takes the frame number or&nbsp;the `id`:
 

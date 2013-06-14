@@ -1,4 +1,4 @@
-Turn on&nbsp;keyboard navigation with the arrows by&nbsp;adding `data-keyboard=&quot;true&quot;`:
+Turn on&nbsp;keyboard navigation with the arrows by&nbsp;adding `data-keyboard="true"`:
 
 	<div class="fotorama"
 	     data-keyboard="true">
