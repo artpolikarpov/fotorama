@@ -48,6 +48,7 @@ js: "/j/script.js"
 
 <div class="header">
   <%- @partial('logo.html.eco', {link: !frontpage}) %>
+
 	<%- @partial('menu.html.eco', {menuItems: @generateMenu(@document.url)}) %>
 </div>
 
@@ -57,9 +58,10 @@ js: "/j/script.js"
 	<% end %>
 
 	<%- @content %>
-
-	<%- @partial('footer.html') %>
 </div>
+
+<%- @partial('footer.html') %>
+
 
 </body>
 </html>

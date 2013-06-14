@@ -1,8 +1,8 @@
 <p></p>
 
 ```xml
-<!-- 1. Link to the newest jQuery, -->
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<!-- 1. Link to the jQuery, -->
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 
 <!-- fotorama.css & fotorama.js. -->
 <link  href="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.css" rel="stylesheet">

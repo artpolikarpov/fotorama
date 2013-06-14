@@ -30,16 +30,16 @@ pre code {
 
 	background:
 		/* Shadow covers */
-		linear-gradient(to right, white, white 5px, rgba(255,255,255,0)),
-		linear-gradient(to right, rgba(255,255,255,0), white 45px, white) 100% 0,
+		linear-gradient(to right, white, rgba(255,255,255,0)),
+		linear-gradient(to right, rgba(255,255,255,0), white) 100% 0,
 
 			/* Shadows */
 		radial-gradient(0 50%, farthest-side, rgba(0,0,0,.4), rgba(0,0,0,0)),
 		radial-gradient(100% 50%,farthest-side, rgba(0,0,0,.4), rgba(0,0,0,0)) 100% 0;
 	background:
 		/* Shadow covers */
-		linear-gradient(to right, white, white 5px, rgba(255,255,255,0)),
-		linear-gradient(to right, rgba(255,255,255,0), white 45px, white) 100% 0,
+		linear-gradient(to right, white, rgba(255,255,255,0)),
+		linear-gradient(to right, rgba(255,255,255,0), white) 100% 0,
 
 			/* Shadows */
 		radial-gradient(farthest-side at 0 50%, rgba(0,0,0,.4), rgba(0,0,0,0)),

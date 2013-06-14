@@ -2,5 +2,12 @@
   margin-top: 50px;
   margin-bottom: 10px;
   font-size: 14px;
+}
+
+.footer > p {
 	opacity: .6;
+}
+
+.footer .social-likes {
+	margin-bottom: 10px;
 }
