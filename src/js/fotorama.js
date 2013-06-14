@@ -105,7 +105,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   /* Включаем фотораму */
   $.Fotorama.size++; _size++;
-  $.Fotorama.api[index] = this;
+  // $.Fotorama.fotorama[index] = this;
 
   /**
    * Есть ли видео?
@@ -1383,15 +1383,15 @@ $.fn.fotorama = function (opts) {
       var that = this,
           $fotorama = $(this),
           fotoramaData = $fotorama.data(),
-					api = fotoramaData.api;
+					fotorama = fotoramaData.fotorama;
 
-      if (!api) {
+      if (!fotorama) {
         // Если фоторама ещё не инициализирована, включаем её:
         waitFor(function () {
           return !isHidden(that);
         }, function () {
 	        fotoramaData.urtext = $fotorama.html();
-          fotoramaData.api = new $.Fotorama($fotorama,
+          fotoramaData.fotorama = new $.Fotorama($fotorama,
               /* Иерархия приоритета опций, выше — приоритетней:
                * 1. Дата-атрибуты (<div data-loop="true"></div>)
                * 2. Массив опций при инициализации ($('div').fotorama({loop: false}))
@@ -1440,7 +1440,7 @@ $.fn.fotorama = function (opts) {
           );
         });
       } else {
-				api.setOptions(opts);
+				fotorama.setOptions(opts);
 			}
     });
 //  }
@@ -1453,7 +1453,7 @@ $.Fotorama.cache = {};
 
 var _size = 0;
 $.Fotorama.size = 0;
-$.Fotorama.api = [];
+// $.Fotorama.fotorama = [];
 
 // Когда DOM готов:
 $(function () {
