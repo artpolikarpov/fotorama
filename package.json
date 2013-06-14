@@ -17,7 +17,6 @@
     "grunt-contrib-connect": "~0.3.0",
     "grunt-contrib-copy": "~0.4.1",
     "grunt-shell": "~0.2.2",
-    "grunt-contrib-jasmine": "~0.4.2",
-    "grunt-jasmine-html-spec-runner": "~0.2.5"
+    "grunt-contrib-jasmine": "~0.4.2"
   }
 }
