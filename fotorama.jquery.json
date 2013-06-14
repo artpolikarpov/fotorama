@@ -1,6 +1,6 @@
 {
 	"name": "fotorama",
-	"version": "4.1.2",
+	"version": "4.1.3",
 	"title": "Fotorama",
 	"description": "A simple, stunning, powerful jQuery gallery.",
 	"keywords": [
@@ -35,7 +35,7 @@
 	"bugs": "https://github.com/artpolikarpov/fotorama/issues",
 	"homepage": "http://fotorama.io/",
 	"docs": "http://fotorama.io/use/",
-	"download": "http://fotorama.s3.amazonaws.com/4.1.2/fotorama-4.1.2.zip",
+	"download": "http://fotorama.s3.amazonaws.com/4.1.3/fotorama-4.1.3.zip",
 	"dependencies": {
 		"jquery": ">=1.9"
 	}
