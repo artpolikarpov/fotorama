@@ -5,7 +5,7 @@ To&nbsp;add video from YouTube or&nbsp;Vimeo just link to&nbsp;the video page:
 	  <a href="http://vimeo.com/61527416">Celestial Dynamics</a>
 	</div>
 
-_Video example (<a href="/<>/video.html" target="_blank">new window</a>):_
+_Video example (<a href="/examples/video.html" target="_blank">new window</a>):_
 
 <div class="fotorama-wrap"><div class="fotorama" data-width="700" data-ratio="700/426" data-max-width="100%">
 	<a href="http://youtube.com/watch?v=C3lWwBslWqg">Desert Rose</a>
@@ -44,4 +44,4 @@ You can also add any video if&nbsp;you have iframe link and previews. Here are t
 	  </a>
 	</div>
 
-<p class="after-pre">_Example: <a href="/<>/video-custom.html" target="_blank">Custom video</a>_</p>
+<p class="after-pre">_Example: <a href="/examples/video-custom.html" target="_blank">Custom video</a>_</p>

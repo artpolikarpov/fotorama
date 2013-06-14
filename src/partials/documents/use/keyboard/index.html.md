@@ -7,7 +7,7 @@ Turn on&nbsp;keyboard navigation with the arrows by&nbsp;adding `data-keyboard=&
 	  <img src="3.jpg">
 	</div>
 
-*Keyboard example (<a href="/<>/keyboard.html" target="_blank">new window</a>):*
+*Keyboard example (<a href="/examples/keyboard.html" target="_blank">new window</a>):*
 
 <p>Press <strong class="key js-arrow" data-fotorama="#keyboard" data-show="<">←</strong> and <strong class="key js-arrow" data-fotorama="#keyboard" data-show=">">→</strong> on the keyboard:</p>
 

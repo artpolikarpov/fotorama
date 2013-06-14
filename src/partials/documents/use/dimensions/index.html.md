@@ -22,7 +22,7 @@ To&nbsp;make fotorama responsive, define width in&nbsp;percents and aspect ratio
 	  <img src="3.jpg">
 	</div>
 
-_Responsive example (<a href="/<>/responsive.html" target="_blank">new window</a>):_
+_Responsive example (<a href="/examples/responsive.html" target="_blank">new window</a>):_
 
 <div class="fotorama-wrap"><div class="fotorama"
      data-width="100%"
@@ -48,7 +48,7 @@ Constrain fotorama’s size to&nbsp;a&nbsp;certain range with `data-min-width`, 
 	  <img src="3.jpg">
 	</div>
 
-<p class="after-pre">_Example: <a href="/<>/constrained.html" target="_blank">Constrained</a>_</p>
+<p class="after-pre">_Example: <a href="/examples/constrained.html" target="_blank">Constrained</a>_</p>
 
 Relative height is&nbsp;calculated based on&nbsp;inner height of&nbsp;the window. A&nbsp;height of&nbsp;100% covers the entire browser window:
 
@@ -64,4 +64,4 @@ Relative height is&nbsp;calculated based on&nbsp;inner height of&nbsp;the window
 
 	</body>
 
-<p class="after-pre">_Example: <a href="/<>/full-window.html">Full window</a>_</p>
+<p class="after-pre">_Example: <a href="/examples/full-window.html">Full window</a>_</p>

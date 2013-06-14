@@ -7,7 +7,7 @@ Loop the last and the first frame for seamless transition using `data-loop="true
 	  <img src="3.jpg">
 	</div>
 
-_Loop example (<a href="/<>/loop.html" target="_blank">new window</a>):_
+_Loop example (<a href="/examples/loop.html" target="_blank">new window</a>):_
 
 <div class="fotorama-wrap"><div class="fotorama"
      data-width="700"

@@ -26,7 +26,7 @@ Show custom <abbr>HTML</abbr>:
 
 Work with links, divs, tables, paragraphs and more. Write the <abbr>CSS</abbr> for embedded blocks yourselves.
 
-_Custom <abbr>HTML</abbr> example (<a href="/<>/html.html" target="_blank">new window</a>):_
+_Custom <abbr>HTML</abbr> example (<a href="/examples/html.html" target="_blank">new window</a>):_
 
 <div class="fotorama-wrap"><div class="fotorama" data-width="500" data-height="281" data-max-width="100%">
 	<div class="any" style="background: rgba(255, 0, 0, .1);">One</div>
@@ -43,7 +43,7 @@ Make text selectable with `fotorama__select` class:
 	  <div><em class="fotorama__select">Three</em></div>
 	</div>
 
-_Selectable text example (<a href="/<>/html-selectable.html" target="_blank">new window</a>):_
+_Selectable text example (<a href="/examples/html-selectable.html" target="_blank">new window</a>):_
 
 <div class="fotorama-wrap"><div class="fotorama" data-width="500" data-height="281" data-max-width="100%">
 	<div class="any" style="background: rgba(255, 0, 0, .1);"><span class="fotorama__select">One</span></div>
@@ -69,7 +69,7 @@ Combine with the fotorama images using `data-img`:
 	  <div data-img="3.jpg"><em>Three</em></div>
 	</div>
 
-_Custom <abbr>HTML</abbr> with the fotorama images (<a href="/<>/html-with-images.html" target="_blank">new window</a>):_
+_Custom <abbr>HTML</abbr> with the fotorama images (<a href="/examples/html-with-images.html" target="_blank">new window</a>):_
 
 <div class="fotorama-wrap"><div class="fotorama" data-width="500" data-height="281" data-max-width="100%" data-fit="cover">
 	<div data-img="http://fotorama.s3.amazonaws.com/i/okonechnikov/19-lo.jpg" class="any inverse">One</div>

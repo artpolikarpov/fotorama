@@ -1,4 +1,4 @@
-The [MIT License](http://en.wikipedia.org/wiki/MIT_License) places almost no&nbsp;restrictions on&nbsp;what you can do&nbsp;with a&nbsp;Fotorama:
+The [<abbr>MIT</abbr> License](http://en.wikipedia.org/wiki/MIT_License) places almost no&nbsp;restrictions on&nbsp;what you can do&nbsp;with a&nbsp;Fotorama:
 
 <pre><code>© 2011—2013 Artem Polikarpov
 http://fotorama.io/

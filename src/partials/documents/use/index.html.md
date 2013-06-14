@@ -6,4 +6,4 @@ Wrap images with `<div class="fotorama">` to&nbsp;get a&nbsp;basic fotorama:
 	  <img src="3.jpg">
 	</div>
 
-<p class="after-pre">_Example: <a href="/<>/basic.html" target="_blank">Basic</a>_</p>
+<p class="after-pre">_Example: <a href="/examples/basic.html" target="_blank">Basic</a>_</p>

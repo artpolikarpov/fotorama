@@ -7,7 +7,7 @@ Define which transition to&nbsp;use&nbsp;&mdash; `slide` or `crossfade` &mdash; 
 	  <img src="3.jpg">
 	</div>
 
-_Transition example (<a href="/<>/transition.html" target="_blank">new window</a>):_
+_Transition example (<a href="/examples/transition.html" target="_blank">new window</a>):_
 
 <p class="switch-group">
 	<span class="switch js-transition-switch active" data-fotorama="#transition">Slide</span>
@@ -31,7 +31,7 @@ _Transition example (<a href="/<>/transition.html" target="_blank">new window</a
 ## Dissolve
 There is&nbsp;one more transition, `dissolve`. This variation of&nbsp;fade is&nbsp;perfect for demonstrating images with the identical fragments.
 
-_Dissolve example (<a href="/<>/dissolve.html" target="_blank">new window</a>):_
+_Dissolve example (<a href="/examples/dissolve.html" target="_blank">new window</a>):_
 
 <p class="switch-group">
 	<span class="switch js-transition-switch active" data-fotorama="#dissolve">Dissolve</span>

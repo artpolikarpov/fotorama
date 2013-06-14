@@ -16,7 +16,7 @@ For better performance with thumbnails, have smaller images ready and include th
 	  <a href="3.jpg"><img src="3_thumb.jpg"></a>
 	</div>
 
-_Thumbnails example (<a href="/<>/thumbnails.html#" target="_blank">new window</a>):_
+_Thumbnails example (<a href="/examples/thumbnails.html#" target="_blank">new window</a>):_
 
 <div class="fotorama-wrap"><div class="fotorama"
      data-width="500"

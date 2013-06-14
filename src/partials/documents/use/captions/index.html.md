@@ -6,7 +6,7 @@ Add a captions using `data-caption`:
 	  <img src="3.jpg" data-caption="Three">
 	</div>
 
-_Captions example (<a href="/<>/captions.html" target="_blank">new window</a>):_
+_Captions example (<a href="/examples/captions.html" target="_blank">new window</a>):_
 
 <div class="fotorama-wrap"><div class="fotorama"
      data-width="500"

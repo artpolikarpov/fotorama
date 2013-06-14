@@ -9,7 +9,7 @@ Takes the frame number or&nbsp;the `id`:
 	  <img src="3.jpg" id="three">
 	</div>
 
-_Hash example (<a href="/<>/hash.html" target="_blank">new window</a>):_
+_Hash example (<a href="/examples/hash.html" target="_blank">new window</a>):_
 
 <div class="fotorama-wrap"><div class="fotorama"
      data-hash="true"

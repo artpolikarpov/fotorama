@@ -9,7 +9,7 @@ Let Fotorama play photos automatically using `data-autoplay="true"`:
 
 By&nbsp;default, a&nbsp;pause between images is&nbsp;5&nbsp;seconds. Set any interval in&nbsp;milliseconds, for example, 7&nbsp;seconds: `data-autoplay="7000"`.
 
-*Autoplay example (<a href="/<>/autoplay.html" target="_blank">new window</a>):*
+*Autoplay example (<a href="/examples/autoplay.html" target="_blank">new window</a>):*
 
 <div class="fotorama-wrap"><div class="fotorama"
      data-autoplay="true"

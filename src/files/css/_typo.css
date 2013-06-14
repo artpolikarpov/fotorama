@@ -84,6 +84,11 @@ a:visited u {
 	border-color: rgb(170, 0, 0);
 }
 
+a:active {
+	position: relative;
+	top: 1px;
+}
+
 abbr {
 	font-size: 95%;
 	letter-spacing: .1em;
