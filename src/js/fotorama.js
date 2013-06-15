@@ -1458,5 +1458,5 @@ $.Fotorama.size = 0;
 // Когда DOM готов:
 $(function () {
   // Авто-инициализация по классу
-  $('.fotorama').fotorama();
+  $('.' + _fotoramaClass + ':not([data-auto="false"])').fotorama();
 });
