@@ -1,4 +1,12 @@
-document.write('<div class="fotorama" id="fotorama"><img src="test/i/okonechnikov/1-lo.jpg"><img src="test/i/okonechnikov/2-lo.jpg"><img src="test/i/okonechnikov/9-lo.jpg"><img src="test/i/okonechnikov/6-lo.jpg"><img src="test/i/okonechnikov/5-lo.jpg"></div>')
+document.write(
+	'<div class="fotorama" id="fotorama">' +
+		'<img src="test/i/okonechnikov/1-lo.jpg">' +
+		'<img src="test/i/okonechnikov/2-lo.jpg">' +
+		'<img src="test/i/okonechnikov/9-lo.jpg">' +
+		'<img src="test/i/okonechnikov/6-lo.jpg">' +
+		'<img src="test/i/okonechnikov/5-lo.jpg">' +
+	'</div>'
+);
 
 describe('Fotorama', function () {
 	var $fotorama, fotorama;
