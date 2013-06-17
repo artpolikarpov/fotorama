@@ -1,7 +1,7 @@
 # Fotorama source
 
-There is nothing for non-coders. Take the latest and ready-to-use Fotorama on its website:
-http://fotorama.io/set-up
+There is nothing for non-coders. Take the latest and ready-to-use Fotorama on its website:<br>
+> **http://fotorama.io/set-up**
 
 ## How to build
 First, ensure that you have the latest [Node.js](http://nodejs.org/) and [npm](http://npmjs.org/) installed.
