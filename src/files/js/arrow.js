@@ -4,8 +4,8 @@ $(function () {
 
 		var $this = $(this),
 				data = $this.data(),
-				api = $(data.fotorama).data('api');
+				fotorama = $(data.fotorama).data('fotorama');
 
-		api.show({index: data.show, slow: e.altKey});
+		fotorama.show({index: data.show, slow: e.altKey});
 	});
 });
