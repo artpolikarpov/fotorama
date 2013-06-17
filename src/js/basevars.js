@@ -19,3 +19,6 @@ var $WINDOW = $(window),
     HEIGHT = 333,
 
     BEZIER = bez([.1, 0, .25, 1]);
+
+
+console.log('Modernizr.csstransforms3d', Modernizr.csstransforms3d);

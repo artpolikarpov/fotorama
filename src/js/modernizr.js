@@ -192,12 +192,13 @@ var Modernizr = (function (window, document, undefined) {
 
 		var ret = !!testPropsAll('perspective');
 
-		if (ret && 'webkitPerspective' in docElement.style) {
-
-			injectElementWithStyles('@media (transform-3d),(-webkit-transform-3d){#modernizr{left:9px;position:absolute;height:3px;}}', function (node, rule) {
-				ret = node.offsetLeft === 9 && node.offsetHeight === 3;
-			});
-		}
+// Chrome fails that test, ignore
+//		if (ret && 'webkitPerspective' in docElement.style) {
+//
+//			injectElementWithStyles('@media (transform-3d),(-webkit-transform-3d){#modernizr{left:9px;position:absolute;height:3px;}}', function (node, rule) {
+//				ret = node.offsetLeft === 9 && node.offsetHeight === 3;
+//			});
+//		}
 		return ret;
 	};
 
