@@ -6,6 +6,6 @@ $(function () {
 				data = $this.data(),
 				fotorama = $(data.fotorama).data('fotorama');
 
-		fotorama.show({index: data.show, slow: e.altKey});
+		fotorama && fotorama.show({index: data.show, slow: e.altKey});
 	});
 });

@@ -37,7 +37,7 @@
 </style>
 <script>
 	$(function () {
-		var fotoramaApi = $('#transition').data('api');
+		var fotorama = $('#transition').data('fotorama');
 
 		$('.switch').on('click', function (e) {
 			e.preventDefault();
@@ -46,7 +46,7 @@
 			$this.addClass('active')
 					.siblings().removeClass('active');
 
-			fotoramaApi.setOptions({transition: $this.text().toLowerCase()});
+			fotorama && fotorama.setOptions({transition: $this.text().toLowerCase()});
 		});
 	});
 </script>

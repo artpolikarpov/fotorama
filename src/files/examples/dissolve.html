@@ -37,14 +37,14 @@
 </style>
 <script>
 	$(function () {
-		var fotoramaApi = $('#dissolve').data('api');
+		var fotorama = $('#dissolve').data('fotorama');
 
 		$('.switch').on('click', function () {
 			var $this = $(this);
 			$this.addClass('active')
 					.siblings().removeClass('active');
 
-			fotoramaApi.setOptions({transition: $this.text().toLowerCase()});
+			fotorama && fotorama.setOptions({transition: $this.text().toLowerCase()});
 		});
 	});
 </script>
