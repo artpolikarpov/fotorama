@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Events</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.9.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../product/fotorama.css" rel="stylesheet">
+	<script src="../product/fotorama.js"></script>
+</head>
+
+<body>
+
+<script>
+$(function () {
+	var $number = $('#number');
+
+	$('#var-n-events')
+			.on('fotorama:show fotorama:load', function (e, fotorama, extra) {
+				console.log(e.type, fotorama, extra);
+				$number.text((fotorama.activeIndex + 1) + '/' + fotorama.size);
+			})
+			.fotorama();
+});
+</script>
+
+<p>Vars and events:</p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>$('#fotorama').on('fotorama:show', function (e, fotorama) {
+  $number.text(<mark>(fotorama.activeIndex + 1) + '/' + fotorama.size</mark>);
+});</code></pre>
+
+<p style="margin-bottom: .5em;">Current frame: <mark id="number"></mark></p>
+
+<!-- Just don’t want to repeat this prefix in every img[src] -->
+<base href="i/okonechnikov/">
+
+<!-- Fotorama -->
+<div class="fotorama"
+     data-auto="false"
+     id="var-n-events"
+     data-keyboard="true"
+     data-width="700"
+     data-ratio="3/2"
+     data-max-width="100%">
+	<a href="15-lo.jpg">15</a>
+	<a href="23-lo.jpg">23</a>
+	<a href="12-lo.jpg">12</a>
+	<a href="16-lo.jpg">16</a>
+	<a href="18-lo.jpg">18</a>
+</div>
+
+<!-- © -->
+<p>Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
+</body>
+</html>

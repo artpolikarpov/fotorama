@@ -384,6 +384,10 @@ $time: 333ms;
 
 // Если разрешены ЦСС-анимации
 .fotorama__wrap--css3 {
+	.fotorama__stage__shaft,
+	.fotorama__nav__shaft {
+		@extend %transition-for-touch;
+	}
   .fotorama__stage__shaft,
 	.fotorama__nav__shaft,
 	.fotorama__thumb-border,

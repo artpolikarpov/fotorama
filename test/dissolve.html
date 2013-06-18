@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Dissolve · FOTO[RA]MA</title>
+	<title>Dissolve</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 
@@ -37,14 +37,14 @@
 </style>
 <script>
 	$(function () {
-		var fotoramaApi = $('#dissolve').data('api');
+		var fotorama = $('#dissolve').data('fotorama');
 
 		$('.switch').on('click', function () {
 			var $this = $(this);
 			$this.addClass('active')
 					.siblings().removeClass('active');
 
-			fotoramaApi.setOptions({transition: $this.text().toLowerCase()});
+			fotorama.setOptions({transition: $this.text().toLowerCase()});
 		});
 	});
 </script>

@@ -6,6 +6,20 @@
 			"specs": "test/specs/basic.js"
 		}
 	},
+	"initialization": {
+		"src": ["test/jquery/jquery-1.10.1.min.js", "product/fotorama.js"],
+		"options": {
+			"styles": "product/fotorama.css",
+			"specs": "test/specs/initialization.js"
+		}
+	},
+	"events-n-methods": {
+		"src": ["test/jquery/jquery-1.10.1.min.js", "product/fotorama.js"],
+		"options": {
+			"styles": "product/fotorama.css",
+			"specs": "test/specs/events-n-methods.js"
+		}
+	},
 	"fullscreen": {
 		"src": ["test/jquery/jquery-1.10.1.min.js", "product/fotorama.js"],
 		"options": {

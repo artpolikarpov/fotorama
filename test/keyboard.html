@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Keyboard · FOTO[RA]MA</title>
+	<title>Keyboard</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 
@@ -42,9 +42,9 @@ $(function () {
 
 		var $this = $(this),
 				data = $this.data(),
-				api = $(data.fotorama).data('api');
+				fotorama = $(data.fotorama).data('fotorama');
 
-		api.show({index: data.show, slow: e.altKey});
+		fotorama && fotorama.show({index: data.show, slow: e.altKey});
 	});
 });
 </script>

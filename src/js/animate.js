@@ -18,7 +18,7 @@ function slide ($el, options) {
   if (CSS3) {
     $el.css($.extend(getDuration(options.time), translate));
     if (options.time > 10) {
-      afterTransition($el, onEndFn, options.time);
+      afterTransition($el, 'transform', onEndFn, options.time);
     } else {
       onEndFn();
     }
@@ -69,8 +69,8 @@ function fade ($el1, $el2, $frames, options) {
 	  crossfadeFLAG && $el2.css($.extend(duration, opacity0));
 
     if (options.time > 10 && (_$el1 || _$el2)) {
-      afterTransition($el1, onEndFn, options.time);
-      afterTransition($el2, onEndFn, options.time);
+      afterTransition($el1, 'opacity', onEndFn, options.time);
+      afterTransition($el2, 'opacity', onEndFn, options.time);
     } else {
       onEndFn();
     }
@@ -84,7 +84,7 @@ function fade ($el1, $el2, $frames, options) {
     }
 
     $el1.fadeTo(options.time, 1, onEndFn);
-	  crossfadeFLAG && $el2.fadeTo(options.time, 0, onEndFn);
+	  crossfadeFLAG && $el2.fadeTo(options.time, 0);
 
     if (!_$el1 && !_$el2) onEndFn();
   }

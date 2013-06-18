@@ -1,6 +1,4 @@
 jQuery.Fotorama = function ($fotorama, opts) {
-  this.options = opts;
-
 	$HTML = $HTML || $('html');
   $BODY = $BODY || $('body');
 
@@ -105,7 +103,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
 	}
 
   /* Включаем фотораму */
-  $.Fotorama.size++; _size++;
+	fotoramaData.fotorama = this;
+  that.options = opts;
+  _size++;
   // $.Fotorama.fotorama[index] = this;
 
   /**
@@ -135,7 +135,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * Данные
    * */
   function setData () {
-    data = that.data = data && data.length ? data : getDataFromHtml($fotorama);
+    data = that.data = data || getDataFromHtml($fotorama);
     size = that.size = data.length;
 
     checkForVideo();
@@ -145,12 +145,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     if (!size) {
       // Если ничего нет, ничего и не показываем
-      that.destroy();
+      //that.destroy();
     } else if (!wrapAppendedFLAG) {
       // Заменяем содержимое блока:
       $fotorama
 					.html('')
 					.append($wrap);
+
+	    $.Fotorama.size++;
 
 			wrapAppendedFLAG = true;
     }
@@ -163,7 +165,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function setAutoplayInterval (interval) {
     if (interval === true) interval = '';
-    opts.autoplay = Math.max(Number(interval) || AUTOPLAY_INTERVAL, TRANSITION_DURATION * 3);
+    opts.autoplay = Math.max(Number(interval) || AUTOPLAY_INTERVAL, TRANSITION_DURATION * 1.5);
   }
 
   function addOrRemove (FLAG) {
@@ -202,7 +204,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     stageNoMove();
 
-    extendMeasures(opts);
+    extendMeasures(opts, true);
 
     // Создаём или убираем кучу навигационных кадров под точки или превьюшки
     if (o_nav === true || o_nav === 'dots') {
@@ -363,6 +365,15 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       if (type === 'navThumb') $frame = frameData.$wrap;
 
+	    function triggerTriggerEvent (event) {
+		    var _index = normalizeIndex(index);
+		    triggerEvent(event, {
+		      index: _index,
+			    src: src,
+		      frame: data[_index]
+		    });
+	    }
+
       function error () {
         //console.log('error', index, src);
         // Ошибка
@@ -380,12 +391,15 @@ jQuery.Fotorama = function ($fotorama, opts) {
                 .trigger('f:error')
                 .removeClass(loadingClass)
                 .addClass(errorClass);
+
+	          triggerTriggerEvent('error');
           } else if (type === 'stage') {
             $frame
                 .trigger('f:load')
                 .removeClass(loadingClass + ' ' + errorClass)
                 .addClass(loadedClass);
 
+	          triggerTriggerEvent('load');
             setMeasures();
           }
 
@@ -436,7 +450,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
               .addClass(loadedClass + ' ' + (fullFLAG ? loadedFullClass : loadedImgClass));
 
           if (type === 'stage') {
-            $fotorama.trigger('fotorama:load', eventData(normalizeIndex(index)));
+            triggerTriggerEvent('load');
           }
         }, 5);
       }
@@ -762,28 +776,43 @@ jQuery.Fotorama = function ($fotorama, opts) {
 		}
   }
 
-  function extendMeasures (options) {
+  function extendMeasures (options, optsLeave) {
 		options && $.extend(measures, {
-      width: options.width || measures.width,
-      height: options.height,
-      minWidth: options.minWidth,
-      maxWidth: options.maxWidth,
-      minHeight: options.minHeight,
-      maxHeight: options.maxHeight,
-      ratio: (function (_ratio) {
-        if (!_ratio) return;
-        var ratio = Number(_ratio);
-        if (!isNaN(ratio)) {
-          return ratio;
-        } else {
-          ratio = _ratio.split('/');
-          return Number(ratio[0] / ratio[1]) || undefined;
-        }
-      })(options.ratio)
-    });
+	      width: options.width || measures.width,
+	      height: options.height,
+	      minWidth: options.minWidth,
+	      maxWidth: options.maxWidth,
+	      minHeight: options.minHeight,
+	      maxHeight: options.maxHeight,
+	      ratio: (function (_ratio) {
+	        if (!_ratio) return;
+	        var ratio = Number(_ratio);
+	        if (!isNaN(ratio)) {
+	          return ratio;
+	        } else {
+	          ratio = _ratio.split('/');
+	          return Number(ratio[0] / ratio[1]) || undefined;
+	        }
+	      })(options.ratio)
+	    })
+	  && !optsLeave && $.extend(opts, {
+	      width: measures.width,
+	      height: measures.height,
+	      minWidth: measures.minWidth,
+	      maxWidth: measures.maxWidth,
+	      minHeight: measures.minHeight,
+	      maxHeight: measures.maxHeight,
+	      ratio: measures.ratio
+	    });
+  }
+
+	function triggerEvent (event, extra) {
+		console.log('triggerEvent', event, extra);
+    $fotorama.trigger(_fotoramaClass + ':' + event, [that, extra]);
   }
 
   function eventData (index) {
+	  console.log('eventData', index);
     return {
       index: index,
       frame: data[index]
@@ -812,7 +841,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (!opts.autoplay || pausedAutoplayFLAG) {
       if (that.autoplay) {
         that.autoplay = false;
-        $fotorama.trigger('fotorama:stopautoplay');
+        triggerEvent('stopautoplay');
       }
 
       return;
@@ -820,7 +849,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     if (!that.autoplay) {
       that.autoplay = true;
-      $fotorama.trigger('fotorama:startautoplay');
+      triggerEvent('startautoplay');
     }
 
     var _activeIndex = activeIndex;
@@ -831,13 +860,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
         return frameData.state || _activeIndex !== activeIndex;
       }, function () {
         if (pausedAutoplayFLAG || _activeIndex !== activeIndex) return;
-        that.show({index: normalizeIndex(activeIndex + 1), auto: true});
+        that.show({index: normalizeIndex(activeIndex + 1)});
       });
     }, opts.autoplay);
   }
 
 
-  this.startAutoplay = function (interval) {
+  that.startAutoplay = function (interval) {
     if (that.autoplay) return this;
     pausedAutoplayFLAG = stoppedAutoplayFLAG = false;
     setAutoplayInterval(interval || opts.autoplay);
@@ -846,7 +875,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     return this;
   }
 
-  this.stopAutoplay = function () {
+  that.stopAutoplay = function () {
     if (that.autoplay) {
 			pausedAutoplayFLAG = stoppedAutoplayFLAG = true;
 			changeAutoplay();
@@ -857,13 +886,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
   /**
    * Показываем кадр по индексу, или по кодовому символу '>' — вперёд, '<' — назад, '>>' — в конец, '<<' в начало
    * */
-  this.show = function (options) {
+  that.show = function (options) {
 		var index,
 				time = TRANSITION_DURATION,
 				overPos;
 
 		if (typeof options !== 'object') {
-			index = options
+			index = options;
+			options = {};
 		} else {
 			index = options.index;
 			time = typeof options.time === 'number' ? options.time : time;
@@ -897,7 +927,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 		stageFramePosition([dirtyIndex]);
 		frameDraw([activeIndex, prevIndex, nextIndex], 'stage'); /////
 		unloadVideo(false, activeFrame.i !== data[normalizeIndex(repositionIndex)].i);
-		$fotorama.trigger('fotorama:show', options.auto);
+		triggerEvent('show', options.touch);
 
 		function onEnd () {
 			///// frameDraw([activeIndex, prevIndex, nextIndex], 'stage'); /////
@@ -905,7 +935,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 			loadImg([activeIndex, prevIndex, nextIndex], 'stage');
 			stageShaftReposition(); /////
 
-			$fotorama.trigger('fotorama:showend', options.auto);
+			triggerEvent('showend', options.touch);
 
 			opts.hash && showedFLAG && !that.eq && setHash(activeFrame.id || activeIndex + 1);
 
@@ -951,7 +981,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     return this;
   };
 
-  this.requestFullScreen = function () {
+  that.requestFullScreen = function () {
     if (o_allowFullScreen && !that.fullScreen) {
 			that.fullScreen = true;
 
@@ -971,8 +1001,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
 				$fotorama
 						.addClass(fullscreenClass)
-						.appendTo($BODY)
-						.trigger('fotorama:fullscreenenter');
+						.appendTo($BODY);
 
 				measuresStash = $.extend({}, measures);
 
@@ -981,6 +1010,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 				that.resize();
 				loadImg([activeIndex, prevIndex, nextIndex], 'stage');
 			}, 5);
+
+	    triggerEvent('fullscreenenter');
 		}
 
     return this;
@@ -998,8 +1029,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
 			$fotorama
 					.removeClass(fullscreenClass)
-					.insertAfter($anchor)
-					.trigger('fotorama:fullscreenexit');
+					.insertAfter($anchor);
+
+	    triggerEvent('fullscreenexit');
 
 			measures = $.extend({}, measuresStash);
 
@@ -1012,7 +1044,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 		}
   }
 
-  this.cancelFullScreen = function () {
+  that.cancelFullScreen = function () {
     if (o_nativeFullScreen && fullScreenApi.is()) {
       fullScreenApi.cancel(document);
     } else {
@@ -1040,10 +1072,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
         that.cancelFullScreen();
       } else if (e.keyCode === 39 || (e.keyCode === 40 && that.fullScreen)) {
 				e.preventDefault();
-				that.show({index: '>', slow: e.altKey});
+				that.show({index: '>', slow: e.altKey, touch: true});
       } else if (e.keyCode === 37 || (e.keyCode === 38 && that.fullScreen)) {
         e.preventDefault();
-        that.show({index: '<', slow: e.altKey});
+        that.show({index: '<', slow: e.altKey, touch: true});
       }
     }
   });
@@ -1065,7 +1097,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * @param {Number} options.time
    *
    * */
-  this.resize = function (options) {
+  that.resize = function (options) {
+	  if (!data) return;
+
 		extendMeasures(!that.fullScreen ? options : {width: '100%', maxWidth: null, minWidth: null, height: '100%', maxHeight: null, minHeight: null});
 
 		var time = arguments[1] || 0,
@@ -1111,12 +1145,12 @@ jQuery.Fotorama = function ($fotorama, opts) {
 		}
 
     return this;
-  }
+  };
 
   /**
    * Применяем любые опции после инициализации
    * */
-  this.setOptions = function (options) {
+  that.setOptions = function (options) {
 		$.extend(opts, options);
 		reset();
     return this;
@@ -1128,19 +1162,18 @@ jQuery.Fotorama = function ($fotorama, opts) {
     edge && !$videoPlaying && $el.addClass(edge.replace(/^|\s/g, ' ' + shadowsClass + '--'));
   }
 
-  this.destroy = function () {
-		// Убиваем фотораму.
-		// Возвращаем исходное состояние:
-		$wrap.detach();
+  that.destroy = function () {
+	  console.log('destroy');
+		that.stopAutoplay();
+	  $wrap.detach();
 		$fotorama.html(fotoramaData.urtext);
 		wrapAppendedFLAG = false;
-
-		data = that.data = [];
+		data = that.data = null;
 		$.Fotorama.size--;
     return this;
   };
 
-  this.playVideo = function () {
+  that.playVideo = function () {
     var dataFrame = that.activeFrame,
         video = dataFrame.video,
         _activeIndex = activeIndex;
@@ -1159,7 +1192,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 					$videoPlaying = dataFrame.$video;
 					stageShaftTouchTail.noMove = true;
 
-					$fotorama.trigger('fotorama:loadvideo');
+					triggerEvent('loadvideo');
 				}
 			});
 		}
@@ -1167,7 +1200,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     return this;
   };
 
-  this.stopVideo = function () {
+  that.stopVideo = function () {
     unloadVideo($videoPlaying, true, true);
     return this;
   };
@@ -1183,7 +1216,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     if ($video) {
       $video.remove();
-      $fotorama.trigger('fotorama:unloadvideo');
+      triggerEvent('unloadvideo');
     }
 
     if (releaseAutoplayFLAG) {
@@ -1214,7 +1247,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 	    if (touch) {
         toggleControlsClass();
 		  } else {
-		    that.show({index: e.shiftKey || e._x - $stage.offset().left < measures.w / 3 ? '<' : '>', slow: e.altKey});
+		    that.show({index: e.shiftKey || e._x - $stage.offset().left < measures.w / 3 ? '<' : '>', slow: e.altKey, touch: true});
 	    }
     }
   }
@@ -1233,7 +1266,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 				that.show({
 					index: index,
 					time: result.time,
-					overPos: result.overPos
+					overPos: result.overPos,
+					touch: true
 				});
       } else if (!result.aborted) {
 				onStageTap(result.startEvent, result.touch);
@@ -1284,7 +1318,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   // Клик по точкам и превьюшкам
   function onNavFrameClick (e, time) {
     var index = $(this).data().eq;
-    that.show({index: index, slow: e.altKey, coo: e._x - $nav.offset().left, time: time});
+    that.show({index: index, slow: e.altKey, touch: true, coo: e._x - $nav.offset().left, time: time});
   }
 
   // Клик по стрелкам
@@ -1293,7 +1327,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if ($videoPlaying) {
       unloadVideo($videoPlaying, true, true);
     } else {
-      that.show({index: $arrs.index(this) ? '>' : '<', slow: e.altKey});
+      that.show({index: $arrs.index(this) ? '>' : '<', slow: e.altKey, touch: true});
     }
   }, {
     onStart: function (e) {
@@ -1340,7 +1374,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       if ($videoPlaying) {
         unloadVideo($videoPlaying, true);
       }
-      that.show({index: activeIndex, time: 0, auto: true});
+      that.show({index: activeIndex, time: 0});
       that.resize();
     } else {
       that.destroy();
@@ -1351,7 +1385,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * Создаём пачку методов для добавления и удаления кадров на лету
    * */
   $.each('load push pop shift unshift reverse sort splice'.split(' '), function (i, method) {
-    that[method] = function () {
+	  that[method] = function () {
+      data = data || [];
       if (method !== 'load') {
         Array.prototype[method].apply(data, arguments);
       } else if (arguments[0] && typeof arguments[0] === 'object' && arguments[0].length) {
@@ -1369,11 +1404,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (!ready.ok) {
 			ready.ok = true;
 			$wrap.removeClass(wrapNotReadyClass);
-			$fotorama.trigger('fotorama:ready');
+			triggerEvent('ready');
 		}
   }
 
-  $WINDOW.on('resize', this.resize);
+  $WINDOW.on('resize', that.resize);
   reset();
 };
 
@@ -1391,7 +1426,7 @@ $.fn.fotorama = function (opts) {
           return !isHidden(that);
         }, function () {
 	        fotoramaData.urtext = $fotorama.html();
-          fotoramaData.fotorama = new $.Fotorama($fotorama,
+          new $.Fotorama($fotorama,
               /* Иерархия приоритета опций, выше — приоритетней:
                * 1. Дата-атрибуты (<div data-loop="true"></div>)
                * 2. Массив опций при инициализации ($('div').fotorama({loop: false}))

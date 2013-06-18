@@ -8,7 +8,7 @@ document.write(
 	'</div>'
 );
 
-describe('Fotorama', function () {
+describe('Basic', function () {
 	var $fotorama, fotorama;
 
 	beforeEach(function () {

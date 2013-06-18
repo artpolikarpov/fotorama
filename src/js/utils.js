@@ -77,9 +77,9 @@ function measureIsValid (value) {
   return !!numberFromMeasure(value) || !!numberFromMeasure(value, '%') ? value : false;
 }
 
-function capitaliseFirstLetter (string) {
+/*function capitaliseFirstLetter (string) {
   return string && string.charAt(0).toUpperCase() + string.slice(1);
-}
+}*/
 
 /**
  * Позиция по индексу
@@ -95,17 +95,16 @@ function getIndexByPos (pos, side, margin, baseIndex) {
   return - Math.round(pos / (side + (margin || 0)) - (baseIndex || 0));
 }
 
-function getRandomInt (min, max) {
+/*function getRandomInt (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+}*/
 
 
 /**
  * Слушаем событие transitionend,
  * выполняем заданный колбек
  * */
-function bindTransitionEnd ($el) {
-
+function bindTransitionEnd ($el, property) {
   var elData = $el.data();
 
   if (elData.transEnd) return;
@@ -119,12 +118,7 @@ function bindTransitionEnd ($el) {
         transition: 'transitionend'
       };
   el.addEventListener(transitionEndEvent[Modernizr.prefixed('transition')], function (e) {
-    var transProp = elData.transProp;
-    if (transProp.match(e.propertyName) || transProp.match('all')) {
-      elData.transProp = transProp.replace(e.propertyName, '');
-
-      elData.onEndFn.call(this);
-    }
+	  e.propertyName.match(property) && elData.onEndFn.call(this);
   });
   elData.transEnd = true;
 }
@@ -132,18 +126,17 @@ function bindTransitionEnd ($el) {
 /**
  * Присваивание колбека для выполнения после завершения анимации
  * */
-function afterTransition ($el, fn, time) {
+function afterTransition ($el, property, fn, time) {
   var done,
       elData = $el.data();
 
 	if (elData) {
-	  elData.transProp = $el.css('transition-property');
 	  elData.onEndFn = function () {
-	    done = true;
-	    fn.call(this);
+		  done || fn.call(this);
+		  done = true;
 	  };
 
-	  bindTransitionEnd($el);
+	  bindTransitionEnd($el, property);
 
 	  clearTimeout(elData.transTimeout);
 
@@ -153,7 +146,7 @@ function afterTransition ($el, fn, time) {
 	    // Если не сработал нативный transitionend (а такое бывает),
 	    // через таймаут вызываем onEndFn насильно:
 	    if (done) return;
-	    $el.data().onEndFn = noop;
+		  $el.data().onEndFn = noop;
 	    fn.call($el[0]);
 	  }, time * 1.1);
 	}

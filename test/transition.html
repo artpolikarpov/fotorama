@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Transition · FOTO[RA]MA</title>
+	<title>Transition</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 
@@ -37,7 +37,7 @@
 </style>
 <script>
 	$(function () {
-		var fotoramaApi = $('#transition').data('api');
+		var fotorama = $('#transition').data('fotorama');
 
 		$('.switch').on('click', function (e) {
 			e.preventDefault();
@@ -46,7 +46,7 @@
 			$this.addClass('active')
 					.siblings().removeClass('active');
 
-			fotoramaApi.setOptions({transition: $this.text().toLowerCase()});
+			fotorama.setOptions({transition: $this.text().toLowerCase()});
 		});
 	});
 </script>

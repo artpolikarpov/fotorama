@@ -19,13 +19,6 @@
 		"name": "Artem Polikarpov",
 		"url": "https://github.com/artpolikarpov/"
 	},
-	"maintainers": [
-		{
-			"name": "Artem Polikarpov",
-			"email": "fotoramajs@gmail.com",
-			"url": "http://fotorama.io/"
-		}
-	],
 	"licenses": [
 		{
 			"type": "MIT",
