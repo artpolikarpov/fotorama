@@ -20,8 +20,8 @@ $(function () {
 	var $number = $('#number');
 
 	$('#var-n-events')
-			.on('fotorama:show fotorama:load', function (e, fotorama, extra) {
-				console.log(e.type, fotorama, extra);
+			.on('fotorama:show', function (e, fotorama, direct) {
+				console.log(e.type, direct);
 				$number.text((fotorama.activeIndex + 1) + '/' + fotorama.size);
 			})
 			.fotorama();

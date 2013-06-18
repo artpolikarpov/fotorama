@@ -927,7 +927,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 		stageFramePosition([dirtyIndex]);
 		frameDraw([activeIndex, prevIndex, nextIndex], 'stage'); /////
 		unloadVideo(false, activeFrame.i !== data[normalizeIndex(repositionIndex)].i);
-		triggerEvent('show', options.touch);
+		triggerEvent('show', options.direct);
 
 		function onEnd () {
 			///// frameDraw([activeIndex, prevIndex, nextIndex], 'stage'); /////
@@ -935,7 +935,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 			loadImg([activeIndex, prevIndex, nextIndex], 'stage');
 			stageShaftReposition(); /////
 
-			triggerEvent('showend', options.touch);
+			triggerEvent('showend', options.direct);
 
 			opts.hash && showedFLAG && !that.eq && setHash(activeFrame.id || activeIndex + 1);
 
@@ -1072,10 +1072,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
         that.cancelFullScreen();
       } else if (e.keyCode === 39 || (e.keyCode === 40 && that.fullScreen)) {
 				e.preventDefault();
-				that.show({index: '>', slow: e.altKey, touch: true});
+				that.show({index: '>', slow: e.altKey, direct: true});
       } else if (e.keyCode === 37 || (e.keyCode === 38 && that.fullScreen)) {
         e.preventDefault();
-        that.show({index: '<', slow: e.altKey, touch: true});
+        that.show({index: '<', slow: e.altKey, direct: true});
       }
     }
   });
@@ -1247,7 +1247,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 	    if (touch) {
         toggleControlsClass();
 		  } else {
-		    that.show({index: e.shiftKey || e._x - $stage.offset().left < measures.w / 3 ? '<' : '>', slow: e.altKey, touch: true});
+		    that.show({index: e.shiftKey || e._x - $stage.offset().left < measures.w / 3 ? '<' : '>', slow: e.altKey, direct: true});
 	    }
     }
   }
@@ -1267,7 +1267,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 					index: index,
 					time: result.time,
 					overPos: result.overPos,
-					touch: true
+					direct: true
 				});
       } else if (!result.aborted) {
 				onStageTap(result.startEvent, result.touch);
@@ -1318,7 +1318,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   // Клик по точкам и превьюшкам
   function onNavFrameClick (e, time) {
     var index = $(this).data().eq;
-    that.show({index: index, slow: e.altKey, touch: true, coo: e._x - $nav.offset().left, time: time});
+    that.show({index: index, slow: e.altKey, direct: true, coo: e._x - $nav.offset().left, time: time});
   }
 
   // Клик по стрелкам
@@ -1327,7 +1327,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if ($videoPlaying) {
       unloadVideo($videoPlaying, true, true);
     } else {
-      that.show({index: $arrs.index(this) ? '>' : '<', slow: e.altKey, touch: true});
+      that.show({index: $arrs.index(this) ? '>' : '<', slow: e.altKey, direct: true});
     }
   }, {
     onStart: function (e) {
