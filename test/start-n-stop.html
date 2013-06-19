@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Autoplay</title>
+	<title>Start & stop</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 
@@ -15,18 +15,59 @@
 
 <body>
 
-<p>Autoplay:<p>
-<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div class="fotorama"
-     <mark>data-autoplay="true"</mark>></code></pre>
+<p>Start & stop:<p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>var fotorama = $('#start-n-stop').data('fotorama');
+$('#start').on('click', function () {
+  fotorama.startAutoplay(3000);
+});
+$('#stop').on('click', function () {
+  fotorama.stopAutoplay();
+});</code></pre>
 
-<p>The show stops on&nbsp;touch. Change this with <code>data-stop-autoplay-on-touch="false"</code>.</p>
+<style type="text/css">
+	input[type="button"] {
+		font-size: 16px;
+	}
+</style>
+
+<script>
+	$(function () {
+		var $fotorama = $('#start-n-stop'),
+				fotorama = $fotorama.data('fotorama'),
+				$thumbBorder = $('.fotorama__thumb-border', $fotorama),
+				thumbBorderColor = $thumbBorder.css('border-color'),
+				thumbBackground = $thumbBorder.css('background'),
+				$start = $('#start'),
+				$stop = $('#stop');
+
+		// Visual response
+		$fotorama.on('fotorama:startautoplay fotorama:stopautoplay', function (e, fotorama) {
+			$start.attr('disabled', !!fotorama.autoplay);
+			$thumbBorder.css({
+				borderColor: fotorama.autoplay ? 'rgb(0, 220, 0)' : thumbBorderColor,
+				background: fotorama.autoplay ? 'rgba(0, 220, 0, .25)' : thumbBackground
+			});
+		});
+
+		// API calls
+		$start.on('click', function () {
+			fotorama.startAutoplay(3000);
+		});
+		$stop.on('click', function () {
+			fotorama.stopAutoplay();
+		});
+	});
+</script>
 
 <!-- Just don’t want to repeat this prefix in every img[src] -->
 <base href="i/okonechnikov/">
 
+<p style="margin-bottom: .5em;"><input type="button" value="&#9654; Start" id="start" /> <input type="button" value="Stop" id="stop" /></p>
+
 <!-- Fotorama -->
 <div class="fotorama"
-     data-autoplay="true"
+     id="start-n-stop"
+     data-stop-autoplay-on-touch="false"
      data-width="700"
      data-ratio="3/2"
      data-max-width="100%"
