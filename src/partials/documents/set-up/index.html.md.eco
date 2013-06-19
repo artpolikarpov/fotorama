@@ -2,11 +2,11 @@
 
 ```xml
 <!-- 1. Link to the jQuery, -->
-<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script> <!-- 93 KB -->
 
 <!-- fotorama.css & fotorama.js. -->
-<link  href="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.css" rel="stylesheet">
-<script src="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.js"></script>
+<link  href="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.css" rel="stylesheet"> <!-- 13 KB -->
+<script src="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.js"></script> <!-- 28 KB -->
 
 <!-- 2. Add images to <div class="fotorama"></div>. -->
 <div class="fotorama">
@@ -18,12 +18,11 @@
 <!-- 3. Enjoy! -->
 ```
 
-Fotorama’s <abbr>CDN</abbr> is&nbsp;provided by&nbsp;<a href="http://aws.amazon.com/s3/">Amazon&nbsp;S3</a>, feel free to&nbsp;use&nbsp;it:
-
-<pre><code class="xml">&lt;link  href="<a href="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.css"><strong>http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.css</strong></a>" rel="stylesheet"> <span class="comment">&lt;!-- 13 KB --></span>
-&lt;script src="<a href="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.js"><strong>http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.js</strong></a>">&lt;/script> <span class="comment">&lt;!-- 28 KB --></span></code></pre>
+Fotorama’s <abbr>CDN</abbr> is&nbsp;provided by&nbsp;Amazon&nbsp;S3, feel free to&nbsp;use&nbsp;it.
 
 Or&nbsp;download zipped, unpack and host it&nbsp;on&nbsp;your server if&nbsp;you want:
 
 <a href="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama-<%= process.env.FOTORAMA_VERSION %>.zip" class="download"><strong>fotorama-<%= process.env.FOTORAMA_VERSION %>.zip</strong></a>
+
+<!--<p class="after-pre">Read <a href="/set-up/changelog/">the changelog</a>.</p>-->
 

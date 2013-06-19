@@ -39,7 +39,7 @@ ol {
 	color: #aaa;
 }
 
-p + ul, p + ol, p + pre, pre + .after-pre, p + .fotorama-wrap, p + .image {
+p + ul, p + ol, p + pre, .after-pre, p + .fotorama-wrap, p + .image {
 	margin-top: -.5em;
 	margin-left: 40px;
 	margin-bottom: 1.5em;

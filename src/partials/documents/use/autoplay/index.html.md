@@ -43,4 +43,4 @@ By&nbsp;default, a&nbsp;pause between images is&nbsp;5&nbsp;seconds. Set any int
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/19-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/19-thumb.jpg"></a>
 </div></div>
 
-The show will stop on&nbsp;touch. Disable this with `data-stop-autoplay-on-touch="false"`.
+The show stops on&nbsp;touch. Change this with `data-stop-autoplay-on-touch="false"`.
