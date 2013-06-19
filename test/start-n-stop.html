@@ -44,8 +44,8 @@ $('#stop').on('click', function () {
 		$fotorama.on('fotorama:startautoplay fotorama:stopautoplay', function (e, fotorama) {
 			$start.attr('disabled', !!fotorama.autoplay);
 			$thumbBorder.css({
-				borderColor: fotorama.autoplay ? 'rgb(0, 220, 0)' : thumbBorderColor,
-				background: fotorama.autoplay ? 'rgba(0, 220, 0, .25)' : thumbBackground
+				borderColor: fotorama.autoplay ? 'rgb(0, 200, 0)' : thumbBorderColor,
+				background: fotorama.autoplay ? 'rgba(100, 200, 100, .25)' : thumbBackground
 			});
 		});
 
