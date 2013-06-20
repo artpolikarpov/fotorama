@@ -10,7 +10,7 @@ Fotorama’s default settings are good, so there’s no need to mess with the
 
 Fotorama has a great <abbr>API</abbr>. Docs are comming soon.
 
-## Go depper
+## Go deeper
 Download the uncompressed, [development Fotorama <%= process.env.FOTORAMA_VERSION %>](http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama-<%= process.env.FOTORAMA_VERSION %>.uncompressed.zip).
 
 Have a look [at the source code](http://github.com/artpolikarpov/fotorama).
