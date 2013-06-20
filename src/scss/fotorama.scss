@@ -19,11 +19,6 @@ $time: 333ms;
   background: #000;
 }
 
-.lightbox {
-  overflow: hidden !important;
-  position: static !important;
-}
-
 .fotorama--fullscreen {
   position: absolute;
   top: 0 !important;
@@ -39,20 +34,6 @@ $time: 333ms;
   .fotorama__stage,
   .fotorama__nav {
     background: #000;
-  }
-}
-
-.fotorama--lightbox {
-  background: none;
-  .fotorama__stage,
-  .fotorama__nav {
-    background-color: #000;
-    background-color: rgba(#000, .85);
-  }
-  .fotorama__stage {
-    .fotorama__img img {
-      @include box-shadow(0 0 25px rgba(#000, .25));
-    }
   }
 }
 
