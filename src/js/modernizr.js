@@ -89,7 +89,7 @@ var Modernizr = (function (window, document, undefined) {
 
 
 	if (!Function.prototype.bind) {
-		Function.prototype.bind = function bind(that) {
+		Function.prototype.bind = function bind (that) {
 
 			var target = this;
 
@@ -131,23 +131,23 @@ var Modernizr = (function (window, document, undefined) {
 		};
 	}
 
-	function setCss(str) {
+	function setCss (str) {
 		mStyle.cssText = str;
 	}
 
-	function setCssAll(str1, str2) {
+	function setCssAll (str1, str2) {
 		return setCss(prefixes.join(str1 + ';') + ( str2 || '' ));
 	}
 
-	function is(obj, type) {
+	function is (obj, type) {
 		return typeof obj === type;
 	}
 
-	function contains(str, substr) {
+	function contains (str, substr) {
 		return !!~('' + str).indexOf(substr);
 	}
 
-	function testProps(props, prefixed) {
+	function testProps (props, prefixed) {
 		for (var i in props) {
 			var prop = props[i];
 			if (!contains(prop, "-") && mStyle[prop] !== undefined) {
@@ -157,7 +157,7 @@ var Modernizr = (function (window, document, undefined) {
 		return false;
 	}
 
-	function testDOMProps(props, obj, elem) {
+	function testDOMProps (props, obj, elem) {
 		for (var i in props) {
 			var item = obj[props[i]];
 			if (item !== undefined) {
@@ -174,7 +174,7 @@ var Modernizr = (function (window, document, undefined) {
 		return false;
 	}
 
-	function testPropsAll(prop, prefixed, elem) {
+	function testPropsAll (prop, prefixed, elem) {
 
 		var ucProp = prop.charAt(0).toUpperCase() + prop.slice(1),
 				props = (prop + ' ' + cssomPrefixes.join(ucProp + ' ') + ucProp).split(' ');

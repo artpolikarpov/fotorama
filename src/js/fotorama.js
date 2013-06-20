@@ -1,119 +1,119 @@
 jQuery.Fotorama = function ($fotorama, opts) {
 	$HTML = $HTML || $('html');
-  $BODY = $BODY || $('body');
+	$BODY = $BODY || $('body');
 
-  // Блок-спутник для загрузки в нём фотографий и проверки размеров,
-  // прямо в фотораме это не всегда удобно делать:
-  $.Fotorama.$load = $.Fotorama.$load || $('<div class="' + loadClass+ '"></div>').appendTo($BODY);
+	// Блок-спутник для загрузки в нём фотографий и проверки размеров,
+	// прямо в фотораме это не всегда удобно делать:
+	$.Fotorama.$load = $.Fotorama.$load || $('<div class="' + loadClass + '"></div>').appendTo($BODY);
 
-  var that = this,
-      index = _size,
-      stamp = new Date().getTime(),
-      fotorama = $fotorama.addClass(_fotoramaClass + stamp)[0],
-      data,
-      dataFrameCount = 1,
-      fotoramaData = $fotorama.data(),
-      size,
+	var that = this,
+			index = _size,
+			stamp = new Date().getTime(),
+			fotorama = $fotorama.addClass(_fotoramaClass + stamp)[0],
+			data,
+			dataFrameCount = 1,
+			fotoramaData = $fotorama.data(),
+			size,
 
-      // Скелет разметки будущей фоторамы:
-      $style = $('<style></style>').insertBefore($fotorama),
+	// Скелет разметки будущей фоторамы:
+			$style = $('<style></style>').insertBefore($fotorama),
 
-      $anchor = $(div(hiddenClass)).insertBefore($fotorama),
-      $wrap = $(div(wrapClass + ' ' + wrapNotReadyClass)),
-      $stage = $(div(stageClass)).appendTo($wrap),
-      stage = $stage[0],
-      $stageShaft = $(div(stageShaftClass)).appendTo($stage),
-      $stageFrame = $(),
-      $arrPrev = $(div(arrClass + ' ' + arrPrevClass, div(arrArrClass))),
-      $arrNext = $(div(arrClass + ' ' + arrNextClass, div(arrArrClass))),
-      $arrs = $arrPrev.add($arrNext).appendTo($stage),
-      $navWrap = $(div(navWrapClass)),
-      $nav = $(div(navClass)).appendTo($navWrap),
-      $navShaft = $(div(navShaftClass)).appendTo($nav),
-      $navFrame,
-      $navDotFrame = $(),
-      $navThumbFrame = $(),
-      stageFrameKey = '$stageFrame',
-      navFrameKey,
-      navDotFrameKey = '$navDotFrame',
-      navThumbFrameKey = '$navThumbFrame',
+			$anchor = $(div(hiddenClass)).insertBefore($fotorama),
+			$wrap = $(div(wrapClass + ' ' + wrapNotReadyClass)),
+			$stage = $(div(stageClass)).appendTo($wrap),
+			stage = $stage[0],
+			$stageShaft = $(div(stageShaftClass)).appendTo($stage),
+			$stageFrame = $(),
+			$arrPrev = $(div(arrClass + ' ' + arrPrevClass, div(arrArrClass))),
+			$arrNext = $(div(arrClass + ' ' + arrNextClass, div(arrArrClass))),
+			$arrs = $arrPrev.add($arrNext).appendTo($stage),
+			$navWrap = $(div(navWrapClass)),
+			$nav = $(div(navClass)).appendTo($navWrap),
+			$navShaft = $(div(navShaftClass)).appendTo($nav),
+			$navFrame,
+			$navDotFrame = $(),
+			$navThumbFrame = $(),
+			stageFrameKey = '$stageFrame',
+			navFrameKey,
+			navDotFrameKey = '$navDotFrame',
+			navThumbFrameKey = '$navThumbFrame',
 
-      stageShaftData = $stageShaft.data(),
-      navShaftData = $navShaft.data(),
+			stageShaftData = $stageShaft.data(),
+			navShaftData = $navShaft.data(),
 
-      //$shadows = /*bindNoInteraction(*/$(div(shadowClass + ' ' + shadowLeftClass) + div(shadowClass + ' ' + shadowRightClass)).appendTo($stage)/*)*/,
-      ///*$navShadows = *//*bindNoInteraction(*//*$shadows.clone().appendTo($nav)*//*)*//*,*/
+	//$shadows = /*bindNoInteraction(*/$(div(shadowClass + ' ' + shadowLeftClass) + div(shadowClass + ' ' + shadowRightClass)).appendTo($stage)/*)*/,
+	///*$navShadows = *//*bindNoInteraction(*//*$shadows.clone().appendTo($nav)*//*)*//*,*/
 
-      $thumbBorder = $(div(thumbBorderClass)).appendTo($navShaft),
+			$thumbBorder = $(div(thumbBorderClass)).appendTo($navShaft),
 
-      $fullscreenIcon = $(div(fullscreenIconClass)),
-      $videoPlay = $(div(videoPlayClass)),
-      $videoClose = $(div(videoCloseClass)).appendTo($stage),
+			$fullscreenIcon = $(div(fullscreenIconClass)),
+			$videoPlay = $(div(videoPlayClass)),
+			$videoClose = $(div(videoCloseClass)).appendTo($stage),
 
-      $videoPlaying,
+			$videoPlaying,
 
-      // Индексы на все случаи:
-      activeIndex = false,
-      activeFrame,
-      repositionIndex,
-      dirtyIndex,
-      lastActiveIndex,
-      prevIndex,
-      nextIndex,
-      startIndex = false,
+	// Индексы на все случаи:
+			activeIndex = false,
+			activeFrame,
+			repositionIndex,
+			dirtyIndex,
+			lastActiveIndex,
+			prevIndex,
+			nextIndex,
+			startIndex = false,
 
-      // Некоторые опции, которые могут измениться:
-      o_loop,
-      o_nav,
-      o_navTop,
-      o_allowFullScreen,
-      o_nativeFullScreen,
-      o_fade,
-      o_thumbSide,
-      o_thumbSide2,
-      lastOptions = {},
+	// Некоторые опции, которые могут измениться:
+			o_loop,
+			o_nav,
+			o_navTop,
+			o_allowFullScreen,
+			o_nativeFullScreen,
+			o_fade,
+			o_thumbSide,
+			o_thumbSide2,
+			lastOptions = {},
 
-      // Размеры сцены:
-      measures = {},
-      measuresSetFLAG,
+	// Размеры сцены:
+			measures = {},
+			measuresSetFLAG,
 
-      // Крутилка:
-      //krutilka = {},
+	// Крутилка:
+	//krutilka = {},
 
-      stageShaftTouchTail = {},
-      navShaftTouchTail = {},
+			stageShaftTouchTail = {},
+			navShaftTouchTail = {},
 
-      // Разные вспомогательные переменнные:
-      scrollTop,
-      scrollLeft,
-      showedFLAG,
-      pausedAutoplayFLAG,
-      stoppedAutoplayFLAG,
+	// Разные вспомогательные переменнные:
+			scrollTop,
+			scrollLeft,
+			showedFLAG,
+			pausedAutoplayFLAG,
+			stoppedAutoplayFLAG,
 			wrapAppendedFLAG,
 
-      measuresStash;
+			measuresStash;
 
-  $wrap[stageFrameKey] = $(div(stageFrameClass));
-  $wrap[navThumbFrameKey] = $(div(navFrameClass + ' ' + navFrameThumbClass, div(thumbClass)));
-  $wrap[navDotFrameKey] = $(div(navFrameClass + ' ' + navFrameDotClass, div(dotClass)));
+	$wrap[stageFrameKey] = $(div(stageFrameClass));
+	$wrap[navThumbFrameKey] = $(div(navFrameClass + ' ' + navFrameThumbClass, div(thumbClass)));
+	$wrap[navDotFrameKey] = $(div(navFrameClass + ' ' + navFrameDotClass, div(dotClass)));
 
 
 	if (CSS3) {
 		$wrap.addClass(wrapCss3Class);
 	}
 
-  /* Включаем фотораму */
+	/* Включаем фотораму */
 	fotoramaData.fotorama = this;
-  that.options = opts;
-  _size++;
-  // $.Fotorama.fotorama[index] = this;
+	that.options = opts;
+	_size++;
+	// $.Fotorama.fotorama[index] = this;
 
-  /**
-   * Есть ли видео?
-   */
-  function checkForVideo () {
-    $.each(data, function (i, dataFrame) {
-      if (!dataFrame.i) {
+	/**
+	 * Есть ли видео?
+	 */
+	function checkForVideo () {
+		$.each(data, function (i, dataFrame) {
+			if (!dataFrame.i) {
 				dataFrame.i = dataFrameCount++;
 				var video = findVideoId(dataFrame.video, true);
 				if (video) {
@@ -128,478 +128,477 @@ jQuery.Fotorama = function ($fotorama, opts) {
 					updateData(data, {img: thumbs.img, thumb: thumbs.thumb}, dataFrame.i, that);
 				}
 			}
-    });
-  }
+		});
+	}
 
-  /**
-   * Данные
-   * */
-  function setData () {
-    data = that.data = data || getDataFromHtml($fotorama);
-    size = that.size = data.length;
+	/**
+	 * Данные
+	 * */
+	function setData () {
+		data = that.data = data || getDataFromHtml($fotorama);
+		size = that.size = data.length;
 
-    checkForVideo();
+		checkForVideo();
 
-    activeIndex = limitIndex(activeIndex);
-    navAppend.ok = false;
+		activeIndex = limitIndex(activeIndex);
+		navAppend.ok = false;
 
-    if (!size) {
-      // Если ничего нет, ничего и не показываем
-      //that.destroy();
-    } else if (!wrapAppendedFLAG) {
-      // Заменяем содержимое блока:
-      $fotorama
+		if (!size) {
+			// Если ничего нет, ничего и не показываем
+			//that.destroy();
+		} else if (!wrapAppendedFLAG) {
+			// Заменяем содержимое блока:
+			$fotorama
 					.html('')
 					.append($wrap);
 
-	    $.Fotorama.size++;
+			$.Fotorama.size++;
 
 			wrapAppendedFLAG = true;
-    }
-  }
+		}
+	}
 
-  function stageNoMove () {
-    // Запрещаем таскать фотки
+	function stageNoMove () {
+		// Запрещаем таскать фотки
 		stageShaftTouchTail.noMove = size < 2 || $videoPlaying || o_fade;
-  }
+	}
 
-  function setAutoplayInterval (interval) {
-    if (interval === true) interval = '';
-    opts.autoplay = Math.max(Number(interval) || AUTOPLAY_INTERVAL, TRANSITION_DURATION * 1.5);
-  }
+	function setAutoplayInterval (interval) {
+		if (interval === true) interval = '';
+		opts.autoplay = Math.max(Number(interval) || AUTOPLAY_INTERVAL, TRANSITION_DURATION * 1.5);
+	}
 
-  function addOrRemove (FLAG) {
-    return FLAG ? 'add' : 'remove';
-  }
+	function addOrRemove (FLAG) {
+		return FLAG ? 'add' : 'remove';
+	}
 
-  /**
-   * Options on the fly
-   * */
-  function setOptions () {
-    o_fade = opts.transition === 'crossfade' || opts.transition === 'dissolve';
+	/**
+	 * Options on the fly
+	 * */
+	function setOptions () {
+		o_fade = opts.transition === 'crossfade' || opts.transition === 'dissolve';
 
-	  o_loop = opts.loop && (size > 2 || o_fade);
+		o_loop = opts.loop && (size > 2 || o_fade);
 
-    var classes = {add: [], remove: []};
+		var classes = {add: [], remove: []};
 
-    if (size > 1) {
-      o_nav = opts.nav;
-      o_navTop = opts.navPosition === 'top';
-      classes.remove.push(selectClass);
+		if (size > 1) {
+			o_nav = opts.nav;
+			o_navTop = opts.navPosition === 'top';
+			classes.remove.push(selectClass);
 
 			$arrs.show();
 			arrsUpdate();
-    } else {
-      o_nav = false;
+		} else {
+			o_nav = false;
 
 			$arrs.hide();
-    }
+		}
 
-	  classes[addOrRemove(size > 1)].push('fotorama__wrap--navigation');
+		classes[addOrRemove(size > 1)].push('fotorama__wrap--navigation');
 
-    if (opts.autoplay) setAutoplayInterval(opts.autoplay);
+		if (opts.autoplay) setAutoplayInterval(opts.autoplay);
 
-    o_thumbSide = numberFromMeasure(opts.thumbWidth) || THUMB_SIZE;
-    o_thumbSide2 = numberFromMeasure(opts.thumbHeight) || THUMB_SIZE;
+		o_thumbSide = numberFromMeasure(opts.thumbWidth) || THUMB_SIZE;
+		o_thumbSide2 = numberFromMeasure(opts.thumbHeight) || THUMB_SIZE;
 
-    stageNoMove();
+		stageNoMove();
 
-    extendMeasures(opts, true);
+		extendMeasures(opts, true);
 
-    // Создаём или убираем кучу навигационных кадров под точки или превьюшки
-    if (o_nav === true || o_nav === 'dots') {
-      $nav
-          .addClass(navDotsClass)
-          .removeClass(navThumbsClass);
-      frameDraw(size, 'navDot');
-    } else if (o_nav === 'thumbs') {
-	    setStyle($style, $.Fotorama.jst.style({w: o_thumbSide , h: o_thumbSide2, m: MARGIN, s: stamp, q: !COMPAT}));
+		// Создаём или убираем кучу навигационных кадров под точки или превьюшки
+		if (o_nav === true || o_nav === 'dots') {
+			$nav
+					.addClass(navDotsClass)
+					.removeClass(navThumbsClass);
+			frameDraw(size, 'navDot');
+		} else if (o_nav === 'thumbs') {
+			setStyle($style, $.Fotorama.jst.style({w: o_thumbSide, h: o_thumbSide2, m: MARGIN, s: stamp, q: !COMPAT}));
 
-      $nav
-          .addClass(navThumbsClass)
-          .removeClass(navDotsClass);
+			$nav
+					.addClass(navThumbsClass)
+					.removeClass(navDotsClass);
 
-      frameDraw(size, 'navThumb');
-    } else {
-      o_nav = false;
-      $nav.removeClass(navThumbsClass + ' ' + navDotsClass);
-    }
+			frameDraw(size, 'navThumb');
+		} else {
+			o_nav = false;
+			$nav.removeClass(navThumbsClass + ' ' + navDotsClass);
+		}
 
-    o_allowFullScreen = opts.allowFullScreen;
-    $fotorama
-        .insertAfter($anchor)
-        .removeClass(hiddenClass);
+		o_allowFullScreen = opts.allowFullScreen;
+		$fotorama
+				.insertAfter($anchor)
+				.removeClass(hiddenClass);
 
-    if (o_nav && o_navTop) {
-      $navWrap.insertBefore($stage);
-    } else {
-      $navWrap.insertAfter($stage);
-    }
+		if (o_nav && o_navTop) {
+			$navWrap.insertBefore($stage);
+		} else {
+			$navWrap.insertAfter($stage);
+		}
 
-    if (o_allowFullScreen) {
-      $fullscreenIcon.appendTo($stage);
-      o_nativeFullScreen = FULLSCREEN && o_allowFullScreen === 'native';
-    } else {
-      $fullscreenIcon.detach();
-      o_nativeFullScreen = false;
-    }
+		if (o_allowFullScreen) {
+			$fullscreenIcon.appendTo($stage);
+			o_nativeFullScreen = FULLSCREEN && o_allowFullScreen === 'native';
+		} else {
+			$fullscreenIcon.detach();
+			o_nativeFullScreen = false;
+		}
 
-    // Анимация перехода, и соответствующие классы:
-    classes[addOrRemove(o_fade)].push(wrapFadeClass);
-    classes[addOrRemove(!o_fade && !stageShaftTouchTail.noMove)].push(wrapSlideClass);
+		// Анимация перехода, и соответствующие классы:
+		classes[addOrRemove(o_fade)].push(wrapFadeClass);
+		classes[addOrRemove(!o_fade && !stageShaftTouchTail.noMove)].push(wrapSlideClass);
 
 		ooooStop();
 
-    // Одним скопом удаляем и добавляем классы:
-    $wrap
-        .addClass(classes.add.join(' '))
-        .removeClass(classes.remove.join(' '));
+		// Одним скопом удаляем и добавляем классы:
+		$wrap
+				.addClass(classes.add.join(' '))
+				.removeClass(classes.remove.join(' '));
 
-    lastOptions = $.extend({}, opts);
-  }
+		lastOptions = $.extend({}, opts);
+	}
 
 
-  /**
-   * Нормализуем индекс, например -2 при 5 фотках будет 3, а 11 — 1 :-)
-   * */
-  function normalizeIndex (index) {
-    return index < 0 ? (size + (index % size)) % size : index >= size ? index % size : index;
-  }
+	/**
+	 * Нормализуем индекс, например -2 при 5 фотках будет 3, а 11 — 1 :-)
+	 * */
+	function normalizeIndex (index) {
+		return index < 0 ? (size + (index % size)) % size : index >= size ? index % size : index;
+	}
 
-  /**
-   * Ограничиваем индекс
-   * */
-  function limitIndex (index) {
-    return minMaxLimit(index, 0, size - 1);
-  }
+	/**
+	 * Ограничиваем индекс
+	 * */
+	function limitIndex (index) {
+		return minMaxLimit(index, 0, size - 1);
+	}
 
-  /**
-   * Предыдущий индекс от текущего
-   * */
-  function getPrevIndex (index) {
-    return index > 0 || o_loop ? index - 1 : false;
-  }
+	/**
+	 * Предыдущий индекс от текущего
+	 * */
+	function getPrevIndex (index) {
+		return index > 0 || o_loop ? index - 1 : false;
+	}
 
-  /**
-   * Следующий индекс от текущего
-   * */
-  function getNextIndex (index) {
-    return index < size - 1 || o_loop ? index + 1 : false;
-  }
+	/**
+	 * Следующий индекс от текущего
+	 * */
+	function getNextIndex (index) {
+		return index < size - 1 || o_loop ? index + 1 : false;
+	}
 
-  /**
-   * Параметры для таскания шахты
-   * */
-  function setStageShaftMinMaxPosAndSnap () {
-    stageShaftData.minPos = o_loop ? - Infinity : - getPosByIndex(size - 1, measures.w, MARGIN, repositionIndex);
-    stageShaftData.maxPos = o_loop? Infinity : - getPosByIndex(0, measures.w, MARGIN, repositionIndex);
-    stageShaftData.snap = measures.w + MARGIN;
-  }
+	/**
+	 * Параметры для таскания шахты
+	 * */
+	function setStageShaftMinMaxPosAndSnap () {
+		stageShaftData.minPos = o_loop ? -Infinity : -getPosByIndex(size - 1, measures.w, MARGIN, repositionIndex);
+		stageShaftData.maxPos = o_loop ? Infinity : -getPosByIndex(0, measures.w, MARGIN, repositionIndex);
+		stageShaftData.snap = measures.w + MARGIN;
+	}
 
-  /**
-   * Параметры для таскания шахты c точками и превьюшками
-   * */
-  function setNavShaftMinMaxPos () {
-    navShaftData.minPos = Math.min(0, measures.w - $navShaft.width());
-    navShaftData.maxPos = 0;
+	/**
+	 * Параметры для таскания шахты c точками и превьюшками
+	 * */
+	function setNavShaftMinMaxPos () {
+		navShaftData.minPos = Math.min(0, measures.w - $navShaft.width());
+		navShaftData.maxPos = 0;
 
-    navShaftTouchTail.noMove = navShaftData.minPos === navShaftData.maxPos;
-  }
+		navShaftTouchTail.noMove = navShaftData.minPos === navShaftData.maxPos;
+	}
 
-  /**
-   * Итератор для груповой работы с кадрами
-   * Принимает как массив индексов для перебора [1, 0, 2],
-   * так и диапазон массива, например, если indexes равно 3,
-   * будут перебраны индексы 0, 1 и 2.
-   * */
-  function eachIndex(indexes, type, fn) {
-    if (typeof indexes === 'number') {
-      indexes = new Array(indexes);
-      var rangeFLAG = true;
-    }
-    return $.each(indexes, function (i, index) {
-      if (rangeFLAG) index = i;
-      if (typeof(index) === 'number') {
+	/**
+	 * Итератор для груповой работы с кадрами
+	 * Принимает как массив индексов для перебора [1, 0, 2],
+	 * так и диапазон массива, например, если indexes равно 3,
+	 * будут перебраны индексы 0, 1 и 2.
+	 * */
+	function eachIndex (indexes, type, fn) {
+		if (typeof indexes === 'number') {
+			indexes = new Array(indexes);
+			var rangeFLAG = true;
+		}
+		return $.each(indexes, function (i, index) {
+			if (rangeFLAG) index = i;
+			if (typeof(index) === 'number') {
 				var dataFrame = data[normalizeIndex(index)],
 						key = '$' + type + 'Frame',
 						$frame = dataFrame[key];
 
 				fn.call(this, i, index, dataFrame, $frame, key, $frame && $frame.data());
 			}
-    });
-  }
+		});
+	}
 
-  function setMeasures (width, height, ratio, index) {
-    if (!measuresSetFLAG || (measuresSetFLAG === '*' && index === startIndex)) {
-      // Если размеры ещё не определены пытаемся сделать это по первой фотке
-      width = measureIsValid(opts.width) || measureIsValid(width) || WIDTH;
-      height = measureIsValid(opts.height) || measureIsValid(height) || HEIGHT;
-      that.resize({
-        width: width,
-        ratio: opts.ratio || ratio || width / height
-      }, 0, index === startIndex ? true : '*');
-    }
-  }
+	function setMeasures (width, height, ratio, index) {
+		if (!measuresSetFLAG || (measuresSetFLAG === '*' && index === startIndex)) {
+			// Если размеры ещё не определены пытаемся сделать это по первой фотке
+			width = measureIsValid(opts.width) || measureIsValid(width) || WIDTH;
+			height = measureIsValid(opts.height) || measureIsValid(height) || HEIGHT;
+			that.resize({
+				width: width,
+				ratio: opts.ratio || ratio || width / height
+			}, 0, index === startIndex ? true : '*');
+		}
+	}
 
-  /**
-   * Загружает картинки
-   * */
-  function loadImg(indexes, type, specialMeasures, specialFit, again) {
-    eachIndex(indexes, type, function (i, index, dataFrame, $frame, key, frameData) {
+	/**
+	 * Загружает картинки
+	 * */
+	function loadImg (indexes, type, specialMeasures, specialFit, again) {
+		eachIndex(indexes, type, function (i, index, dataFrame, $frame, key, frameData) {
 
-      if (!$frame) return;
+			if (!$frame) return;
 
-      var fullFLAG = that.fullScreen && dataFrame.full && !frameData.$full && type === 'stage';
+			var fullFLAG = that.fullScreen && dataFrame.full && !frameData.$full && type === 'stage';
 
-      if (frameData.$img && !again && !fullFLAG) return;
+			if (frameData.$img && !again && !fullFLAG) return;
 
-      var img = new Image(),
-          $img = $(img),
-          imgData = $img.data();
+			var img = new Image(),
+					$img = $(img),
+					imgData = $img.data();
 
-      frameData[fullFLAG ? '$full' : '$img'] = $img;
+			frameData[fullFLAG ? '$full' : '$img'] = $img;
 
-      var srcKey = type === 'stage' ? (fullFLAG ? 'full' : 'img') : 'thumb',
-          src = dataFrame[srcKey],
-          dummy = fullFLAG ? null : dataFrame[type === 'stage' ? 'thumb' : 'img'];
+			var srcKey = type === 'stage' ? (fullFLAG ? 'full' : 'img') : 'thumb',
+					src = dataFrame[srcKey],
+					dummy = fullFLAG ? null : dataFrame[type === 'stage' ? 'thumb' : 'img'];
 
-      if (type === 'navThumb') $frame = frameData.$wrap;
+			if (type === 'navThumb') $frame = frameData.$wrap;
 
-	    function triggerTriggerEvent (event) {
-		    var _index = normalizeIndex(index);
-		    triggerEvent(event, {
-		      index: _index,
-			    src: src,
-		      frame: data[_index]
-		    });
-	    }
+			function triggerTriggerEvent (event) {
+				var _index = normalizeIndex(index);
+				triggerEvent(event, {
+					index: _index,
+					src: src,
+					frame: data[_index]
+				});
+			}
 
-      function error () {
-        //console.log('error', index, src);
-        // Ошибка
-        $img.remove();
+			function error () {
+				//console.log('error', index, src);
+				// Ошибка
+				$img.remove();
 
-        $.Fotorama.cache[src] = 'error';
+				$.Fotorama.cache[src] = 'error';
 
-        // Попытаемся загрузить запасную картинку, если она есть:
-        if ((!dataFrame.$html || type !== 'stage') && dummy && dummy !== src) {
-          dataFrame[srcKey] = src = dummy;
-          loadImg([index], type, specialMeasures, specialFit, true);
-        } else {
-          if (src && !frameData.$html) {
-            $frame
-                .trigger('f:error')
-                .removeClass(loadingClass)
-                .addClass(errorClass);
+				// Попытаемся загрузить запасную картинку, если она есть:
+				if ((!dataFrame.$html || type !== 'stage') && dummy && dummy !== src) {
+					dataFrame[srcKey] = src = dummy;
+					loadImg([index], type, specialMeasures, specialFit, true);
+				} else {
+					if (src && !frameData.$html) {
+						$frame
+								.trigger('f:error')
+								.removeClass(loadingClass)
+								.addClass(errorClass);
 
-	          triggerTriggerEvent('error');
-          } else if (type === 'stage') {
-            $frame
-                .trigger('f:load')
-                .removeClass(loadingClass + ' ' + errorClass)
-                .addClass(loadedClass);
+						triggerTriggerEvent('error');
+					} else if (type === 'stage') {
+						$frame
+								.trigger('f:load')
+								.removeClass(loadingClass + ' ' + errorClass)
+								.addClass(loadedClass);
 
-	          triggerTriggerEvent('load');
-            setMeasures();
-          }
+						triggerTriggerEvent('load');
+						setMeasures();
+					}
 
-          // Записываем в кеш, что картинка загрузилась:
-          frameData.state = 'error';
+					// Записываем в кеш, что картинка загрузилась:
+					frameData.state = 'error';
 
-          if (size > 1 && !dataFrame.html && !dataFrame.deleted && !dataFrame.video && !fullFLAG) {
-            // Ни одной картинки не удалось загрузить,
-            // удаляем кадр совсем из фоторамы,
-            // если он не последний, и в нём нет ХТМЛ
-            dataFrame.deleted = true;
-            that.splice(index, 1);
-          }
-        }
-      }
+					if (size > 1 && !dataFrame.html && !dataFrame.deleted && !dataFrame.video && !fullFLAG) {
+						// Ни одной картинки не удалось загрузить,
+						// удаляем кадр совсем из фоторамы,
+						// если он не последний, и в нём нет ХТМЛ
+						dataFrame.deleted = true;
+						that.splice(index, 1);
+					}
+				}
+			}
 
-      function loaded() {
-        //console.log('loaded', index, src);
+			function loaded () {
+				//console.log('loaded', index, src);
 
-        // Удачная загрузка:
-        // Кешируем оригинальные размеры картинки
-        var width = $img.width(),
-            height = $img.height(),
-            ratio = width / height;
+				// Удачная загрузка:
+				// Кешируем оригинальные размеры картинки
+				var width = $img.width(),
+						height = $img.height(),
+						ratio = width / height;
 
-        imgData.measures = {
-          width: width,
-          height: height,
-          ratio: ratio
-        };
+				imgData.measures = {
+					width: width,
+					height: height,
+					ratio: ratio
+				};
 
-        setMeasures(width, height, ratio, index);
+				setMeasures(width, height, ratio, index);
 
-        $img
-            .off('load error')
-            .addClass(imgClass + (fullFLAG ? ' ' + imgFullClass : ''))
-            .prependTo($frame);
+				$img
+						.off('load error')
+						.addClass(imgClass + (fullFLAG ? ' ' + imgFullClass : ''))
+						.prependTo($frame);
 
-        fit($img, specialMeasures || measures, specialFit || dataFrame.fit || opts.fit);
+				fit($img, specialMeasures || measures, specialFit || dataFrame.fit || opts.fit);
 
-        $.Fotorama.cache[src] = 'loaded';
-        frameData.state = 'loaded';
+				$.Fotorama.cache[src] = 'loaded';
+				frameData.state = 'loaded';
 
-        setTimeout(function () {
-          $frame
-              .trigger('f:load')
-              .removeClass(loadingClass + ' ' + errorClass)
-              .addClass(loadedClass + ' ' + (fullFLAG ? loadedFullClass : loadedImgClass));
+				setTimeout(function () {
+					$frame
+							.trigger('f:load')
+							.removeClass(loadingClass + ' ' + errorClass)
+							.addClass(loadedClass + ' ' + (fullFLAG ? loadedFullClass : loadedImgClass));
 
-          if (type === 'stage') {
-            triggerTriggerEvent('load');
-          }
-        }, 5);
-      }
+					if (type === 'stage') {
+						triggerTriggerEvent('load');
+					}
+				}, 5);
+			}
 
-      if (!src) {
-        error();
-        return;
-      }
+			if (!src) {
+				error();
+				return;
+			}
 
-      function waitAndLoad () {
-        waitFor(function () {
-          return !isHidden(img)/* && !touchedFLAG*/;
-        }, function () {
-          loaded();
-        });
-      }
+			function waitAndLoad () {
+				waitFor(function () {
+					return !isHidden(img)/* && !touchedFLAG*/;
+				}, function () {
+					loaded();
+				});
+			}
 
-      if (!$.Fotorama.cache[src]) {
-        $.Fotorama.cache[src] = '*';
+			if (!$.Fotorama.cache[src]) {
+				$.Fotorama.cache[src] = '*';
 
-        $img
-            .on('load', waitAndLoad)
-            .on('error', error);
-      } else {
-        // Возьмём из кеша
-        (function justWait () {
-          if ($.Fotorama.cache[src] === 'error') {
-            // Ошибка
-            error();
-          } else if ($.Fotorama.cache[src] === 'loaded') {
-            // Усхпех
-            waitAndLoad();
-          } else {
-            // Ждём
-            setTimeout(justWait, 100);
-          }
-        })();
-      }
+				$img
+						.on('load', waitAndLoad)
+						.on('error', error);
+			} else {
+				// Возьмём из кеша
+				(function justWait () {
+					if ($.Fotorama.cache[src] === 'error') {
+						// Ошибка
+						error();
+					} else if ($.Fotorama.cache[src] === 'loaded') {
+						// Усхпех
+						waitAndLoad();
+					} else {
+						// Ждём
+						setTimeout(justWait, 100);
+					}
+				})();
+			}
 
-      img.src = src;
-      $img.appendTo($.Fotorama.$load);
-    });
-  }
+			img.src = src;
+			$img.appendTo($.Fotorama.$load);
+		});
+	}
 
-  /**
-   * Проверяет статус активной картинки, если надо показывает крутилку
-   * */
-  function updateFotoramaState () {
-    var $frame = that.activeFrame[stageFrameKey];
+	/**
+	 * Проверяет статус активной картинки, если надо показывает крутилку
+	 * */
+	function updateFotoramaState () {
+		var $frame = that.activeFrame[stageFrameKey];
 
-    if ($frame && !$frame.data().state) {
+		if ($frame && !$frame.data().state) {
 			ooooStart($frame);
 			$frame.on('f:load f:error', function () {
 				$frame.off('f:load f:error');
 				ooooStop();
 			});
 		}
-  }
+	}
 
-  /**
-   * Отрисовываем кадр (на сцене или в навигации), загружаем изображение, если требуется, оборачиваем в див.
-   * @param {Array} indexes Массив индексов
-   * @param {String} type Кадр для сцены — 'stage', для навигации — 'nav'
-   * */
-  function frameDraw (indexes, type) {
-    eachIndex(indexes, type, function (i, index, dataFrame, $frame, key, frameData) {
-      //console.log('frameDraw');
+	/**
+	 * Отрисовываем кадр (на сцене или в навигации), загружаем изображение, если требуется, оборачиваем в див.
+	 * @param {Array} indexes Массив индексов
+	 * @param {String} type Кадр для сцены — 'stage', для навигации — 'nav'
+	 * */
+	function frameDraw (indexes, type) {
+		eachIndex(indexes, type, function (i, index, dataFrame, $frame, key, frameData) {
+			//console.log('frameDraw');
 
 			if ($frame) return;
 
 			//console.log('frameDraw execute');
 
 			$frame = dataFrame[key] = $wrap[key].clone();
-      frameData = $frame.data();
-      frameData.data = dataFrame;
+			frameData = $frame.data();
+			frameData.data = dataFrame;
 
-      if (type === 'stage') {
-        // Сцена
+			if (type === 'stage') {
+				// Сцена
 
-	      ////console.log('dataFrame.html', $(dataFrame.html).html());
+				////console.log('dataFrame.html', $(dataFrame.html).html());
 
-        if (dataFrame.html) {
-	        var $html = $(dataFrame.html).html(dataFrame._html); // Because of IE
+				if (dataFrame.html) {
+					var $html = $(dataFrame.html).html(dataFrame._html); // Because of IE
 
-          $('<div class="' + htmlClass +'"></div>')
-              .append(dataFrame.html)
-              .appendTo($frame);
-        }
+					$('<div class="' + htmlClass + '"></div>')
+							.append(dataFrame.html)
+							.appendTo($frame);
+				}
 
-        if (opts.captions && dataFrame.caption) {
-          $('<div class="' + captionClass +'"></div>').append(dataFrame.caption).appendTo($frame);
-        }
+				if (opts.captions && dataFrame.caption) {
+					$('<div class="' + captionClass + '"></div>').append(dataFrame.caption).appendTo($frame);
+				}
 
-        if (dataFrame.video) {
-          var $oneVideoPlay = $videoPlay.clone();
+				if (dataFrame.video) {
+					var $oneVideoPlay = $videoPlay.clone();
 
-          smartClick($oneVideoPlay, function () {
-              that.playVideo();
-            }, {
-              onStart: function (e) {
-                onTouchStart.call(this, e);
-                stageShaftTouchTail.control = true;
-              },
-              tail: stageShaftTouchTail
-            }
-          );
+					smartClick($oneVideoPlay, function () {
+								that.playVideo();
+							}, {
+								onStart: function (e) {
+									onTouchStart.call(this, e);
+									stageShaftTouchTail.control = true;
+								},
+								tail: stageShaftTouchTail
+							}
+					);
 
-          $frame
-              .addClass(stageFrameVideoClass)
-              .append($oneVideoPlay);
-        }
+					$frame
+							.addClass(stageFrameVideoClass)
+							.append($oneVideoPlay);
+				}
 
-        $stageFrame = $stageFrame.add($frame);
-      } else if (type === 'navDot') {
-        // Точки
+				$stageFrame = $stageFrame.add($frame);
+			} else if (type === 'navDot') {
+				// Точки
 
-        $navDotFrame = $navDotFrame.add($frame);
-      } else if (type === 'navThumb') {
-        frameData.$wrap = $frame.children(':first');
-        $navThumbFrame = $navThumbFrame.add($frame);
-        if (dataFrame.video) {
-          $frame.append($videoPlay.clone());
-        }
-      }
-    });
-  }
+				$navDotFrame = $navDotFrame.add($frame);
+			} else if (type === 'navThumb') {
+				frameData.$wrap = $frame.children(':first');
+				$navThumbFrame = $navThumbFrame.add($frame);
+				if (dataFrame.video) {
+					$frame.append($videoPlay.clone());
+				}
+			}
+		});
+	}
 
-  function callFit ($img, measuresToFit, method) {
+	function callFit ($img, measuresToFit, method) {
 		return $img && $img.length && fit($img, measuresToFit, method);
-  }
+	}
 
 
-  /**
-   * Позиционируем и показываем кадры с определённым индексом.
-   * */
-  function stageFramePosition (indexes) {
-    eachIndex(indexes, 'stage', function (i, index, dataFrame, $frame, key, frameData) {
-      if (!$frame) return;
+	/**
+	 * Позиционируем и показываем кадры с определённым индексом.
+	 * */
+	function stageFramePosition (indexes) {
+		eachIndex(indexes, 'stage', function (i, index, dataFrame, $frame, key, frameData) {
+			if (!$frame) return;
 
-      $frame
-          .css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, MARGIN, repositionIndex)}, o_fade && getDuration(0)));
-          //.fadeTo(0, o_fade && index !== activeIndex ? 0 : 1);
+			$frame
+					.css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, MARGIN, repositionIndex)}, o_fade && getDuration(0)));
+			//.fadeTo(0, o_fade && index !== activeIndex ? 0 : 1);
 
-      if (!frameData.appended) {
-        $frame.appendTo($stageShaft);
+			if (!frameData.appended) {
+				$frame.appendTo($stageShaft);
 				frameData.appended = true;
 				unloadVideo(dataFrame.$video);
-      }
-
+			}
 
 
 			///
@@ -610,43 +609,43 @@ jQuery.Fotorama = function ($fotorama, opts) {
 //			}
 			///
 
-      var method = dataFrame.fit || opts.fit;
+			var method = dataFrame.fit || opts.fit;
 
-      callFit(frameData.$img, measures, method);
-      callFit(frameData.$full, measures, method);
-    });
-  }
+			callFit(frameData.$img, measures, method);
+			callFit(frameData.$full, measures, method);
+		});
+	}
 
-  function thumbsDraw (pos, loadFLAG) {
-    if (o_nav !== 'thumbs' || isNaN(pos)) return;
+	function thumbsDraw (pos, loadFLAG) {
+		if (o_nav !== 'thumbs' || isNaN(pos)) return;
 
-    var thumbSide = o_thumbSide + MARGIN,
-        leftIndex = limitIndex(getIndexByPos(pos + thumbSide, thumbSide)),
-        rightIndex = limitIndex(getIndexByPos(pos - measures.w/* - thumbSide*/, thumbSide)),
-        specialMeasures = {};
+		var thumbSide = o_thumbSide + MARGIN,
+				leftIndex = limitIndex(getIndexByPos(pos + thumbSide, thumbSide)),
+				rightIndex = limitIndex(getIndexByPos(pos - measures.w/* - thumbSide*/, thumbSide)),
+				specialMeasures = {};
 
-    specialMeasures.w = o_thumbSide;
-    specialMeasures.h = o_thumbSide2;
+		specialMeasures.w = o_thumbSide;
+		specialMeasures.h = o_thumbSide2;
 
-    $navThumbFrame.each(function () {
-      var $this = $(this),
-          thisData = $this.data(),
-          eq = thisData.eq,
-          specialFit = 'cover';
+		$navThumbFrame.each(function () {
+			var $this = $(this),
+					thisData = $this.data(),
+					eq = thisData.eq,
+					specialFit = 'cover';
 
-      if (eq < leftIndex
+			if (eq < leftIndex
 					|| eq > rightIndex
 					|| callFit(thisData.$img, specialMeasures, specialFit)) return;
 
 			loadFLAG && loadImg([eq], 'navThumb', specialMeasures, specialFit);
-    });
-  }
+		});
+	}
 
-  /**
-   * Вставляем, удаляем, сортируем точки и превьюшки:
-   * */
-  function navAppend ($navFrame, $navShaft, mainFLAG) {
-    if (!navAppend.ok) {
+	/**
+	 * Вставляем, удаляем, сортируем точки и превьюшки:
+	 * */
+	function navAppend ($navFrame, $navShaft, mainFLAG) {
+		if (!navAppend.ok) {
 			$navFrame = $navFrame
 					.filter(function () {
 						var actual,
@@ -676,79 +675,79 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
 			navAppend.ok = true;
 		}
-  }
+	}
 
-  /**
-   * ОБновляем стрелки, дизаблим крайние
-   * */
-  function arrsUpdate () {
+	/**
+	 * ОБновляем стрелки, дизаблим крайние
+	 * */
+	function arrsUpdate () {
 		$arrs.each(function (i) {
-      $(this).toggleClass(
-          arrDisabledClass,
-          (!o_loop
-              && ((activeIndex === 0 && i === 0)
-              || (activeIndex === size - 1 && i === 1)))
-          && !$videoPlaying
-      );
-    });
-  }
+			$(this).toggleClass(
+					arrDisabledClass,
+					(!o_loop
+							&& ((activeIndex === 0 && i === 0)
+							|| (activeIndex === size - 1 && i === 1)))
+							&& !$videoPlaying
+			);
+		});
+	}
 
-  function getNavFrameCenter($navFrame) {
-    return $navFrame.position().left + (o_thumbSide) / 2
-  }
+	function getNavFrameCenter ($navFrame) {
+		return $navFrame.position().left + (o_thumbSide) / 2
+	}
 
-  function slideThumbBorder (time) {
-    slide($thumbBorder, {
-      time: time * .9,
-      pos: getNavFrameCenter(that.activeFrame[navFrameKey])
-    });
-  }
+	function slideThumbBorder (time) {
+		slide($thumbBorder, {
+			time: time * .9,
+			pos: getNavFrameCenter(that.activeFrame[navFrameKey])
+		});
+	}
 
-  function slideNavShaft(options) {
-    if (data[options.guessIndex][navFrameKey]) {
-      var pos = minMaxLimit(options.coo - getNavFrameCenter(data[options.guessIndex][navFrameKey]), navShaftData.minPos, navShaftData.maxPos),
-          time = options.time * .9;
-      slide($navShaft, {
-        time: time,
-        pos: pos,
-        onEnd: function () {
-          thumbsDraw(pos, true);
-        }
-      });
+	function slideNavShaft (options) {
+		if (data[options.guessIndex][navFrameKey]) {
+			var pos = minMaxLimit(options.coo - getNavFrameCenter(data[options.guessIndex][navFrameKey]), navShaftData.minPos, navShaftData.maxPos),
+					time = options.time * .9;
+			slide($navShaft, {
+				time: time,
+				pos: pos,
+				onEnd: function () {
+					thumbsDraw(pos, true);
+				}
+			});
 
-      if (time) thumbsDraw(pos);
-      setShadow($nav, findShadowEdge(pos, navShaftData.minPos, navShaftData.maxPos));
+			if (time) thumbsDraw(pos);
+			setShadow($nav, findShadowEdge(pos, navShaftData.minPos, navShaftData.maxPos));
 		}
-  }
+	}
 
-  /**
-   * Обновляем навигацию
-   * */
-  function navUpdate () {
-    //console.log('navUpdate', o_nav);
-    if (o_nav === 'thumbs') {
-      $navFrame = $navThumbFrame;
-      navFrameKey = navThumbFrameKey;
-    } else if (o_nav) {
-      $navFrame = $navDotFrame;
-      navFrameKey = navDotFrameKey;
-    } else return;
+	/**
+	 * Обновляем навигацию
+	 * */
+	function navUpdate () {
+		//console.log('navUpdate', o_nav);
+		if (o_nav === 'thumbs') {
+			$navFrame = $navThumbFrame;
+			navFrameKey = navThumbFrameKey;
+		} else if (o_nav) {
+			$navFrame = $navDotFrame;
+			navFrameKey = navDotFrameKey;
+		} else return;
 
-    navAppend($navFrame, $navShaft, true);
-    $navFrame.removeClass(activeClass);
-    that.activeFrame[navFrameKey].addClass(activeClass);
-  }
+		navAppend($navFrame, $navShaft, true);
+		$navFrame.removeClass(activeClass);
+		that.activeFrame[navFrameKey].addClass(activeClass);
+	}
 
-  /**
-   * Позиционируем шахту, чтобы текущий кадр имел нулевую позицию
-   * */
-  function stageShaftReposition () {
+	/**
+	 * Позиционируем шахту, чтобы текущий кадр имел нулевую позицию
+	 * */
+	function stageShaftReposition () {
 		/*if (touchedFLAG) {
-			waitFor(function () {
-				return !touchedFLAG;
-			}, stageShaftReposition, 100);
-			return;
-		}*/
+		 waitFor(function () {
+		 return !touchedFLAG;
+		 }, stageShaftReposition, 100);
+		 return;
+		 }*/
 		repositionIndex = dirtyIndex = activeIndex;
 
 		var dataFrame = that.activeFrame,
@@ -758,9 +757,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
 			// Скрываем все лишние кадры
 			$stageFrame
 					.not(that.activeFrame[stageFrameKey].addClass(activeClass))
-					//.css({display: 'none'})
-					//.hide()
-					//.data('hidden', true)
+				//.css({display: 'none'})
+				//.hide()
+				//.data('hidden', true)
 					.detach()
 					.data('appended', false)
 					.removeClass(activeClass + ' ' + fadeFrontClass + ' ' + fadeRearClass);
@@ -774,119 +773,119 @@ jQuery.Fotorama = function ($fotorama, opts) {
 			setStageShaftMinMaxPosAndSnap();
 			setNavShaftMinMaxPos();
 		}
-  }
+	}
 
-  function extendMeasures (options, optsLeave) {
+	function extendMeasures (options, optsLeave) {
 		options && $.extend(measures, {
-	      width: options.width || measures.width,
-	      height: options.height,
-	      minWidth: options.minWidth,
-	      maxWidth: options.maxWidth,
-	      minHeight: options.minHeight,
-	      maxHeight: options.maxHeight,
-	      ratio: (function (_ratio) {
-	        if (!_ratio) return;
-	        var ratio = Number(_ratio);
-	        if (!isNaN(ratio)) {
-	          return ratio;
-	        } else {
-	          ratio = _ratio.split('/');
-	          return Number(ratio[0] / ratio[1]) || undefined;
-	        }
-	      })(options.ratio)
-	    })
-	  && !optsLeave && $.extend(opts, {
-	      width: measures.width,
-	      height: measures.height,
-	      minWidth: measures.minWidth,
-	      maxWidth: measures.maxWidth,
-	      minHeight: measures.minHeight,
-	      maxHeight: measures.maxHeight,
-	      ratio: measures.ratio
-	    });
-  }
+			width: options.width || measures.width,
+			height: options.height,
+			minWidth: options.minWidth,
+			maxWidth: options.maxWidth,
+			minHeight: options.minHeight,
+			maxHeight: options.maxHeight,
+			ratio: (function (_ratio) {
+				if (!_ratio) return;
+				var ratio = Number(_ratio);
+				if (!isNaN(ratio)) {
+					return ratio;
+				} else {
+					ratio = _ratio.split('/');
+					return Number(ratio[0] / ratio[1]) || undefined;
+				}
+			})(options.ratio)
+		})
+				&& !optsLeave && $.extend(opts, {
+			width: measures.width,
+			height: measures.height,
+			minWidth: measures.minWidth,
+			maxWidth: measures.maxWidth,
+			minHeight: measures.minHeight,
+			maxHeight: measures.maxHeight,
+			ratio: measures.ratio
+		});
+	}
 
 	function triggerEvent (event, extra) {
 		console.log('triggerEvent', event, extra);
-    $fotorama.trigger(_fotoramaClass + ':' + event, [that, extra]);
-  }
+		$fotorama.trigger(_fotoramaClass + ':' + event, [that, extra]);
+	}
 
-  function eventData (index) {
-	  console.log('eventData', index);
-    return {
-      index: index,
-      frame: data[index]
-    }
-  }
+	function eventData (index) {
+		console.log('eventData', index);
+		return {
+			index: index,
+			frame: data[index]
+		}
+	}
 
-  /*var touchedFLAG; */
+	/*var touchedFLAG; */
 
 	function onTouchStart () {
 		/*clearTimeout(onTouchEnd.t);
-		touchedFLAG = 1;*/
+		 touchedFLAG = 1;*/
 
 		if (opts.stopAutoplayOnTouch) {
-      that.stopAutoplay();
-    } else {
-      pausedAutoplayFLAG = true;
-    }
-  }
+			that.stopAutoplay();
+		} else {
+			pausedAutoplayFLAG = true;
+		}
+	}
 
-  function releaseAutoplay () {
-    pausedAutoplayFLAG = !(!$videoPlaying && !stoppedAutoplayFLAG);
-  }
+	function releaseAutoplay () {
+		pausedAutoplayFLAG = !(!$videoPlaying && !stoppedAutoplayFLAG);
+	}
 
-  function changeAutoplay () {
-    clearTimeout(changeAutoplay.t);
-    if (!opts.autoplay || pausedAutoplayFLAG) {
-      if (that.autoplay) {
-        that.autoplay = false;
-        triggerEvent('stopautoplay');
-      }
+	function changeAutoplay () {
+		clearTimeout(changeAutoplay.t);
+		if (!opts.autoplay || pausedAutoplayFLAG) {
+			if (that.autoplay) {
+				that.autoplay = false;
+				triggerEvent('stopautoplay');
+			}
 
-      return;
-    }
+			return;
+		}
 
-    if (!that.autoplay) {
-      that.autoplay = true;
-      triggerEvent('startautoplay');
-    }
+		if (!that.autoplay) {
+			that.autoplay = true;
+			triggerEvent('startautoplay');
+		}
 
-    var _activeIndex = activeIndex;
+		var _activeIndex = activeIndex;
 
-    changeAutoplay.t = setTimeout(function () {
-      var frameData = that.activeFrame[stageFrameKey].data();
-      waitFor(function () {
-        return frameData.state || _activeIndex !== activeIndex;
-      }, function () {
-        if (pausedAutoplayFLAG || _activeIndex !== activeIndex) return;
-        that.show({index: normalizeIndex(activeIndex + 1)});
-      });
-    }, opts.autoplay);
-  }
+		changeAutoplay.t = setTimeout(function () {
+			var frameData = that.activeFrame[stageFrameKey].data();
+			waitFor(function () {
+				return frameData.state || _activeIndex !== activeIndex;
+			}, function () {
+				if (pausedAutoplayFLAG || _activeIndex !== activeIndex) return;
+				that.show({index: normalizeIndex(activeIndex + 1)});
+			});
+		}, opts.autoplay);
+	}
 
 
-  that.startAutoplay = function (interval) {
-    if (that.autoplay) return this;
-    pausedAutoplayFLAG = stoppedAutoplayFLAG = false;
-    setAutoplayInterval(interval || opts.autoplay);
-    changeAutoplay();
+	that.startAutoplay = function (interval) {
+		if (that.autoplay) return this;
+		pausedAutoplayFLAG = stoppedAutoplayFLAG = false;
+		setAutoplayInterval(interval || opts.autoplay);
+		changeAutoplay();
 
-    return this;
-  }
+		return this;
+	}
 
-  that.stopAutoplay = function () {
-    if (that.autoplay) {
+	that.stopAutoplay = function () {
+		if (that.autoplay) {
 			pausedAutoplayFLAG = stoppedAutoplayFLAG = true;
 			changeAutoplay();
 		}
-    return this;
-  };
+		return this;
+	};
 
-  /**
-   * Показываем кадр по индексу, или по кодовому символу '>' — вперёд, '<' — назад, '>>' — в конец, '<<' в начало
-   * */
-  that.show = function (options) {
+	/**
+	 * Показываем кадр по индексу, или по кодовому символу '>' — вперёд, '<' — назад, '>>' — в конец, '<<' в начало
+	 * */
+	that.show = function (options) {
 		var index,
 				time = TRANSITION_DURATION,
 				overPos;
@@ -947,7 +946,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
 		if (!o_fade) {
 			slide($stageShaft, {
-				pos: - getPosByIndex(dirtyIndex, measures.w, MARGIN, repositionIndex),
+				pos: -getPosByIndex(dirtyIndex, measures.w, MARGIN, repositionIndex),
 				overPos: overPos,
 				time: time,
 				onEnd: onEnd
@@ -978,11 +977,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
 		lastActiveIndex = activeIndex;
 
-    return this;
-  };
+		return this;
+	};
 
-  that.requestFullScreen = function () {
-    if (o_allowFullScreen && !that.fullScreen) {
+	that.requestFullScreen = function () {
+		if (o_allowFullScreen && !that.fullScreen) {
 			that.fullScreen = true;
 
 			scrollTop = $WINDOW.scrollTop();
@@ -1011,14 +1010,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
 				loadImg([activeIndex, prevIndex, nextIndex], 'stage');
 			}, 5);
 
-	    triggerEvent('fullscreenenter');
+			triggerEvent('fullscreenenter');
 		}
 
-    return this;
-  };
+		return this;
+	};
 
-  function cancelFullScreen () {
-    if (that.fullScreen) {
+	function cancelFullScreen () {
+		if (that.fullScreen) {
 			that.fullScreen = false;
 
 			if (FULLSCREEN) {
@@ -1031,7 +1030,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 					.removeClass(fullscreenClass)
 					.insertAfter($anchor);
 
-	    triggerEvent('fullscreenexit');
+			triggerEvent('fullscreenexit');
 
 			measures = $.extend({}, measuresStash);
 
@@ -1042,63 +1041,63 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
 			$WINDOW.scrollLeft(scrollLeft).scrollTop(scrollTop);
 		}
-  }
+	}
 
-  that.cancelFullScreen = function () {
-    if (o_nativeFullScreen && fullScreenApi.is()) {
-      fullScreenApi.cancel(document);
-    } else {
-      cancelFullScreen();
-    }
+	that.cancelFullScreen = function () {
+		if (o_nativeFullScreen && fullScreenApi.is()) {
+			fullScreenApi.cancel(document);
+		} else {
+			cancelFullScreen();
+		}
 
-    return this;
-  };
+		return this;
+	};
 
-  if (document.addEventListener) {
-    document.addEventListener(fullScreenApi.event, function () {
-      if (!fullScreenApi.is() && !$videoPlaying) {
-        cancelFullScreen();
-      }
-    });
-  }
+	if (document.addEventListener) {
+		document.addEventListener(fullScreenApi.event, function () {
+			if (!fullScreenApi.is() && !$videoPlaying) {
+				cancelFullScreen();
+			}
+		});
+	}
 
-  $DOCUMENT.on('keydown', function (e) {
-    if ($videoPlaying && e.keyCode === 27) {
-      e.preventDefault();
-      unloadVideo($videoPlaying, true, true);
-    } else if (that.fullScreen || (opts.keyboard && !index)) {
-      if (e.keyCode === 27) {
-        e.preventDefault();
-        that.cancelFullScreen();
-      } else if (e.keyCode === 39 || (e.keyCode === 40 && that.fullScreen)) {
+	$DOCUMENT.on('keydown', function (e) {
+		if ($videoPlaying && e.keyCode === 27) {
+			e.preventDefault();
+			unloadVideo($videoPlaying, true, true);
+		} else if (that.fullScreen || (opts.keyboard && !index)) {
+			if (e.keyCode === 27) {
+				e.preventDefault();
+				that.cancelFullScreen();
+			} else if (e.keyCode === 39 || (e.keyCode === 40 && that.fullScreen)) {
 				e.preventDefault();
 				that.show({index: '>', slow: e.altKey, direct: true});
-      } else if (e.keyCode === 37 || (e.keyCode === 38 && that.fullScreen)) {
-        e.preventDefault();
-        that.show({index: '<', slow: e.altKey, direct: true});
-      }
-    }
-  });
+			} else if (e.keyCode === 37 || (e.keyCode === 38 && that.fullScreen)) {
+				e.preventDefault();
+				that.show({index: '<', slow: e.altKey, direct: true});
+			}
+		}
+	});
 
-  if (!index) {
-    $DOCUMENT.on('keydown', 'textarea, input, select', function (e) {
-      if (!that.fullScreen) {
-        e.stopPropagation();
-      }
-    });
-  }
+	if (!index) {
+		$DOCUMENT.on('keydown', 'textarea, input, select', function (e) {
+			if (!that.fullScreen) {
+				e.stopPropagation();
+			}
+		});
+	}
 
-  /**
-   * Изменяем размер фоторамы
-   *
-   * @param {Object} options Объект с набором размеров
-   * @param {Number|String} options.width
-   * @param {Number|String} options.height
-   * @param {Number} options.time
-   *
-   * */
-  that.resize = function (options) {
-	  if (!data) return;
+	/**
+	 * Изменяем размер фоторамы
+	 *
+	 * @param {Object} options Объект с набором размеров
+	 * @param {Number|String} options.width
+	 * @param {Number|String} options.height
+	 * @param {Number} options.time
+	 *
+	 * */
+	that.resize = function (options) {
+		if (!data) return;
 
 		extendMeasures(!that.fullScreen ? options : {width: '100%', maxWidth: null, minWidth: null, height: '100%', maxHeight: null, minHeight: null});
 
@@ -1144,41 +1143,41 @@ jQuery.Fotorama = function ($fotorama, opts) {
 			}
 		}
 
-    return this;
-  };
+		return this;
+	};
 
-  /**
-   * Применяем любые опции после инициализации
-   * */
-  that.setOptions = function (options) {
+	/**
+	 * Применяем любые опции после инициализации
+	 * */
+	that.setOptions = function (options) {
 		$.extend(opts, options);
 		reset();
-    return this;
-  };
+		return this;
+	};
 
 
-  function setShadow ($el, edge) {
-    $el.removeClass(shadowsLeftClass + ' ' + shadowsRightClass);
-    edge && !$videoPlaying && $el.addClass(edge.replace(/^|\s/g, ' ' + shadowsClass + '--'));
-  }
+	function setShadow ($el, edge) {
+		$el.removeClass(shadowsLeftClass + ' ' + shadowsRightClass);
+		edge && !$videoPlaying && $el.addClass(edge.replace(/^|\s/g, ' ' + shadowsClass + '--'));
+	}
 
-  that.destroy = function () {
-	  console.log('destroy');
+	that.destroy = function () {
+		console.log('destroy');
 		that.stopAutoplay();
-	  $wrap.detach();
+		$wrap.detach();
 		$fotorama.html(fotoramaData.urtext);
 		wrapAppendedFLAG = false;
 		data = that.data = null;
 		$.Fotorama.size--;
-    return this;
-  };
+		return this;
+	};
 
-  that.playVideo = function () {
-    var dataFrame = that.activeFrame,
-        video = dataFrame.video,
-        _activeIndex = activeIndex;
+	that.playVideo = function () {
+		var dataFrame = that.activeFrame,
+				video = dataFrame.video,
+				_activeIndex = activeIndex;
 
-    if (typeof video === 'object' && dataFrame.videoReady) {
+		if (typeof video === 'object' && dataFrame.videoReady) {
 			o_nativeFullScreen && that.fullScreen && that.cancelFullScreen();
 
 			waitFor(function () {
@@ -1197,71 +1196,71 @@ jQuery.Fotorama = function ($fotorama, opts) {
 			});
 		}
 
-    return this;
-  };
+		return this;
+	};
 
-  that.stopVideo = function () {
-    unloadVideo($videoPlaying, true, true);
-    return this;
-  };
+	that.stopVideo = function () {
+		unloadVideo($videoPlaying, true, true);
+		return this;
+	};
 
 
-  function unloadVideo ($video, unloadActiveFLAG, releaseAutoplayFLAG) {
-    if (unloadActiveFLAG) {
-      $wrap.removeClass(wrapVideoClass);
-      $videoPlaying = false;
+	function unloadVideo ($video, unloadActiveFLAG, releaseAutoplayFLAG) {
+		if (unloadActiveFLAG) {
+			$wrap.removeClass(wrapVideoClass);
+			$videoPlaying = false;
 
-      stageNoMove();
-    }
+			stageNoMove();
+		}
 
-    if ($video) {
-      $video.remove();
-      triggerEvent('unloadvideo');
-    }
+		if ($video) {
+			$video.remove();
+			triggerEvent('unloadvideo');
+		}
 
-    if (releaseAutoplayFLAG) {
-      releaseAutoplay();
-      changeAutoplay();
-    }
-  }
+		if (releaseAutoplayFLAG) {
+			releaseAutoplay();
+			changeAutoplay();
+		}
+	}
 
 	function toggleControlsClass (FLAG) {
 		$wrap.toggleClass(wrapNoControlsClass, FLAG);
 	}
 
 	$wrap.hover(
-		function () {
-			toggleControlsClass(false);
-		}, function () {
-			toggleControlsClass(true);
-		}
+			function () {
+				toggleControlsClass(false);
+			}, function () {
+				toggleControlsClass(true);
+			}
 	);
 
-  /**
-   * Тап по сцене:
-   * */
-  function onStageTap (e, touch) {
-    if ($videoPlaying) {
-      unloadVideo($videoPlaying, true, true);
-    } else {
-	    if (touch) {
-        toggleControlsClass();
-		  } else {
-		    that.show({index: e.shiftKey || e._x - $stage.offset().left < measures.w / 3 ? '<' : '>', slow: e.altKey, direct: true});
-	    }
-    }
-  }
+	/**
+	 * Тап по сцене:
+	 * */
+	function onStageTap (e, touch) {
+		if ($videoPlaying) {
+			unloadVideo($videoPlaying, true, true);
+		} else {
+			if (touch) {
+				toggleControlsClass();
+			} else {
+				that.show({index: e.shiftKey || e._x - $stage.offset().left < measures.w / 3 ? '<' : '>', slow: e.altKey, direct: true});
+			}
+		}
+	}
 
-  // Подключаем перелистывание кадров в шахте на сцене
-  stageShaftTouchTail = moveOnTouch($stageShaft, {
-    onStart: onTouchStart,
-    onMove: function (e, result) {
-      setShadow($stage, result.edge);
-    },
-    onEnd: function(result) {
-      setShadow($stage);
+	// Подключаем перелистывание кадров в шахте на сцене
+	stageShaftTouchTail = moveOnTouch($stageShaft, {
+		onStart: onTouchStart,
+		onMove: function (e, result) {
+			setShadow($stage, result.edge);
+		},
+		onEnd: function (result) {
+			setShadow($stage);
 
-	    if (result.moved || (result.touch && result.pos !== result.newPos)) {
+			if (result.moved || (result.touch && result.pos !== result.newPos)) {
 				var index = getIndexByPos(result.newPos, measures.w, MARGIN, repositionIndex);
 				that.show({
 					index: index,
@@ -1269,215 +1268,215 @@ jQuery.Fotorama = function ($fotorama, opts) {
 					overPos: result.overPos,
 					direct: true
 				});
-      } else if (!result.aborted) {
+			} else if (!result.aborted) {
 				onStageTap(result.startEvent, result.touch);
 			}
-    },
-    timeLow: 1,
-    timeHigh: 1,
-    friction: 2,
-    select: '.' + selectClass + ', .' + selectClass + ' *',
-    $wrap: $stage
-  });
+		},
+		timeLow: 1,
+		timeHigh: 1,
+		friction: 2,
+		select: '.' + selectClass + ', .' + selectClass + ' *',
+		$wrap: $stage
+	});
 
-  // Подключаем таскание шахты в навигации
-  navShaftTouchTail = moveOnTouch($navShaft, {
-    onStart: onTouchStart,
-    onMove: function (e, result) {
-      setShadow($nav, result.edge);
-    },
-    onEnd: function (result) {
-      function onEnd () {
-        releaseAutoplay();
-        changeAutoplay();
-        thumbsDraw(result.newPos, true);
-      }
+	// Подключаем таскание шахты в навигации
+	navShaftTouchTail = moveOnTouch($navShaft, {
+		onStart: onTouchStart,
+		onMove: function (e, result) {
+			setShadow($nav, result.edge);
+		},
+		onEnd: function (result) {
+			function onEnd () {
+				releaseAutoplay();
+				changeAutoplay();
+				thumbsDraw(result.newPos, true);
+			}
 
-      if (!result.moved) {
-        var target = result.$target.closest('.' + navFrameClass, $navShaft)[0];
+			if (!result.moved) {
+				var target = result.$target.closest('.' + navFrameClass, $navShaft)[0];
 				target && onNavFrameClick.call(target, result.startEvent);
-      } else if (result.pos !== result.newPos) {
-        slide($navShaft, {
-          time: result.time,
-          pos: result.newPos,
-          overPos: result.overPos,
-          onEnd: onEnd
-        });
-        thumbsDraw(result.newPos);
-        setShadow($nav, findShadowEdge(result.newPos, navShaftData.minPos, navShaftData.maxPos));
-      } else {
-        onEnd();
-      }
-    },
-    timeLow: .5,
-    timeHigh: 2,
-    friction: 5,
-    $wrap: $nav
-  });
+			} else if (result.pos !== result.newPos) {
+				slide($navShaft, {
+					time: result.time,
+					pos: result.newPos,
+					overPos: result.overPos,
+					onEnd: onEnd
+				});
+				thumbsDraw(result.newPos);
+				setShadow($nav, findShadowEdge(result.newPos, navShaftData.minPos, navShaftData.maxPos));
+			} else {
+				onEnd();
+			}
+		},
+		timeLow: .5,
+		timeHigh: 2,
+		friction: 5,
+		$wrap: $nav
+	});
 
-  // Клик по точкам и превьюшкам
-  function onNavFrameClick (e, time) {
-    var index = $(this).data().eq;
-    that.show({index: index, slow: e.altKey, direct: true, coo: e._x - $nav.offset().left, time: time});
-  }
+	// Клик по точкам и превьюшкам
+	function onNavFrameClick (e, time) {
+		var index = $(this).data().eq;
+		that.show({index: index, slow: e.altKey, direct: true, coo: e._x - $nav.offset().left, time: time});
+	}
 
-  // Клик по стрелкам
-  smartClick($arrs, function (e) {
-    e.preventDefault();
-    if ($videoPlaying) {
-      unloadVideo($videoPlaying, true, true);
-    } else {
-      that.show({index: $arrs.index(this) ? '>' : '<', slow: e.altKey, direct: true});
-    }
-  }, {
-    onStart: function (e) {
-      onTouchStart.call(this, e);
-      stageShaftTouchTail.control = true;
-    },
-    tail: stageShaftTouchTail
-  });
+	// Клик по стрелкам
+	smartClick($arrs, function (e) {
+		e.preventDefault();
+		if ($videoPlaying) {
+			unloadVideo($videoPlaying, true, true);
+		} else {
+			that.show({index: $arrs.index(this) ? '>' : '<', slow: e.altKey, direct: true});
+		}
+	}, {
+		onStart: function (e) {
+			onTouchStart.call(this, e);
+			stageShaftTouchTail.control = true;
+		},
+		tail: stageShaftTouchTail
+	});
 
-  // Клик по иконке фуллскрина
-  smartClick($fullscreenIcon, function () {
-    if (that.fullScreen) {
-      that.cancelFullScreen();
-    } else {
-      that.requestFullScreen();
-    }
-    releaseAutoplay();
-    changeAutoplay();
-  }, {
-    onStart: function (e) {
-      onTouchStart.call(this, e);
-      stageShaftTouchTail.control = true;
-    },
-    tail: stageShaftTouchTail
-  });
+	// Клик по иконке фуллскрина
+	smartClick($fullscreenIcon, function () {
+		if (that.fullScreen) {
+			that.cancelFullScreen();
+		} else {
+			that.requestFullScreen();
+		}
+		releaseAutoplay();
+		changeAutoplay();
+	}, {
+		onStart: function (e) {
+			onTouchStart.call(this, e);
+			stageShaftTouchTail.control = true;
+		},
+		tail: stageShaftTouchTail
+	});
 
-  /**
-   * Мягкий ресет после каких-нибудь манипуляций
-   * */
-  function reset () {
-    setData();
-    setOptions();
+	/**
+	 * Мягкий ресет после каких-нибудь манипуляций
+	 * */
+	function reset () {
+		setData();
+		setOptions();
 
-    if (!ready.ok) {
-      // Only first time
-      if (opts.hash && location.hash) {
-        startIndex = getIndexFromHash(location.hash.replace(/^#/, ''), data, index === 0);
-      }
-      startIndex = (o_loop ? normalizeIndex(startIndex) : limitIndex(startIndex)) || 0;
-      activeIndex = repositionIndex = dirtyIndex = lastActiveIndex = startIndex;
-    }
+		if (!ready.ok) {
+			// Only first time
+			if (opts.hash && location.hash) {
+				startIndex = getIndexFromHash(location.hash.replace(/^#/, ''), data, index === 0);
+			}
+			startIndex = (o_loop ? normalizeIndex(startIndex) : limitIndex(startIndex)) || 0;
+			activeIndex = repositionIndex = dirtyIndex = lastActiveIndex = startIndex;
+		}
 
-    if (size) {
-      if ($videoPlaying) {
-        unloadVideo($videoPlaying, true);
-      }
-      that.show({index: activeIndex, time: 0});
-      that.resize();
-    } else {
-      that.destroy();
-    }
-  }
+		if (size) {
+			if ($videoPlaying) {
+				unloadVideo($videoPlaying, true);
+			}
+			that.show({index: activeIndex, time: 0});
+			that.resize();
+		} else {
+			that.destroy();
+		}
+	}
 
-  /**
-   * Создаём пачку методов для добавления и удаления кадров на лету
-   * */
-  $.each('load push pop shift unshift reverse sort splice'.split(' '), function (i, method) {
-	  that[method] = function () {
-      data = data || [];
-      if (method !== 'load') {
-        Array.prototype[method].apply(data, arguments);
-      } else if (arguments[0] && typeof arguments[0] === 'object' && arguments[0].length) {
+	/**
+	 * Создаём пачку методов для добавления и удаления кадров на лету
+	 * */
+	$.each('load push pop shift unshift reverse sort splice'.split(' '), function (i, method) {
+		that[method] = function () {
+			data = data || [];
+			if (method !== 'load') {
+				Array.prototype[method].apply(data, arguments);
+			} else if (arguments[0] && typeof arguments[0] === 'object' && arguments[0].length) {
 				data = arguments[0];
-      }
-      reset();
-      return that;
-    }
-  });
+			}
+			reset();
+			return that;
+		}
+	});
 
-  /**
-   * Когда Фоторама готова
-   * */
-  function ready () {
-    if (!ready.ok) {
+	/**
+	 * Когда Фоторама готова
+	 * */
+	function ready () {
+		if (!ready.ok) {
 			ready.ok = true;
 			$wrap.removeClass(wrapNotReadyClass);
 			triggerEvent('ready');
 		}
-  }
+	}
 
-  $WINDOW.on('resize', that.resize);
-  reset();
+	$WINDOW.on('resize', that.resize);
+	reset();
 };
 
 // Заворачиваем в джейквери-плагин:
 $.fn.fotorama = function (opts) {
-    return this.each(function () {
-      var that = this,
-          $fotorama = $(this),
-          fotoramaData = $fotorama.data(),
-					fotorama = fotoramaData.fotorama;
+	return this.each(function () {
+		var that = this,
+				$fotorama = $(this),
+				fotoramaData = $fotorama.data(),
+				fotorama = fotoramaData.fotorama;
 
-      if (!fotorama) {
-        // Если фоторама ещё не инициализирована, включаем её:
-        waitFor(function () {
-          return !isHidden(that);
-        }, function () {
-	        fotoramaData.urtext = $fotorama.html();
-          new $.Fotorama($fotorama,
-              /* Иерархия приоритета опций, выше — приоритетней:
-               * 1. Дата-атрибуты (<div data-loop="true"></div>)
-               * 2. Массив опций при инициализации ($('div').fotorama({loop: false}))
-               * 3. Дефолтные значения */
-              $.extend(
-                  {},
-									{
-										// dimensions
-										width: null, // 500 || '100%'
-										minWidth: null,
-										maxWidth: null, // '100%'
-										height: null,
-										minHeight: null,
-										maxHeight: null,
-										ratio: null, // '16/9' || 500/333 || 1.5
+		if (!fotorama) {
+			// Если фоторама ещё не инициализирована, включаем её:
+			waitFor(function () {
+				return !isHidden(that);
+			}, function () {
+				fotoramaData.urtext = $fotorama.html();
+				new $.Fotorama($fotorama,
+						/* Иерархия приоритета опций, выше — приоритетней:
+						 * 1. Дата-атрибуты (<div data-loop="true"></div>)
+						 * 2. Массив опций при инициализации ($('div').fotorama({loop: false}))
+						 * 3. Дефолтные значения */
+						$.extend(
+								{},
+								{
+									// dimensions
+									width: null, // 500 || '100%'
+									minWidth: null,
+									maxWidth: null, // '100%'
+									height: null,
+									minHeight: null,
+									maxHeight: null,
+									ratio: null, // '16/9' || 500/333 || 1.5
 
-										// navigation, thumbs
-										nav: 'dots', // 'thumbs' || false
-										navPosition: 'bottom', // 'top'
-										thumbWidth: THUMB_SIZE,
-										thumbHeight: THUMB_SIZE,
+									// navigation, thumbs
+									nav: 'dots', // 'thumbs' || false
+									navPosition: 'bottom', // 'top'
+									thumbWidth: THUMB_SIZE,
+									thumbHeight: THUMB_SIZE,
 
-										allowFullScreen: false, // true || 'native'
+									allowFullScreen: false, // true || 'native'
 
-										fit: 'contain', // 'cover' || 'scale-down' || 'none'
+									fit: 'contain', // 'cover' || 'scale-down' || 'none'
 
-										transition: 'slide', // 'crossfade' || 'dissolve'
+									transition: 'slide', // 'crossfade' || 'dissolve'
 
-										captions: true,
+									captions: true,
 
-										hash: false,
+									hash: false,
 
-										autoplay: false,
-										stopAutoplayOnTouch: true,
+									autoplay: false,
+									stopAutoplayOnTouch: true,
 
-										keyboard: false,
+									keyboard: false,
 
-										loop: false
-									},
-                  $.extend(
-                      {},
-                      opts,
-                      fotoramaData
-                  )
-              )
-          );
-        });
-      } else {
-				fotorama.setOptions(opts);
-			}
-    });
+									loop: false
+								},
+								$.extend(
+										{},
+										opts,
+										fotoramaData
+								)
+						)
+				);
+			});
+		} else {
+			fotorama.setOptions(opts);
+		}
+	});
 //  }
 };
 
@@ -1492,6 +1491,6 @@ $.Fotorama.size = 0;
 
 // Когда DOM готов:
 $(function () {
-  // Авто-инициализация по классу
-  $('.' + _fotoramaClass + ':not([data-auto="false"])').fotorama();
+	// Авто-инициализация по классу
+	$('.' + _fotoramaClass + ':not([data-auto="false"])').fotorama();
 });
