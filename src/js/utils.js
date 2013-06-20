@@ -105,10 +105,10 @@ function getIndexByPos (pos, side, margin, baseIndex) {
  * Слушаем событие transitionend,
  * выполняем заданный колбек
  * */
-function bindTransitionEnd ($el, property) {
+function bindTransitionEnd ($el) {
   var elData = $el.data();
 
-  if (elData.transEnd) return;
+  if (elData.tEnd) return;
 
   var el = $el[0],
       transitionEndEvent = {
@@ -119,9 +119,10 @@ function bindTransitionEnd ($el, property) {
         transition: 'transitionend'
       };
   el.addEventListener(transitionEndEvent[Modernizr.prefixed('transition')], function (e) {
-    e.propertyName.match(property) && elData.onEndFn.call(this);
+    console.log('NATIVE transitionend', e.propertyName, elData.tProp && e.propertyName.match(elData.tProp) && 'CALL');
+    elData.tProp && e.propertyName.match(elData.tProp) && elData.onEndFn.call(this);
   });
-  elData.transEnd = true;
+  elData.tEnd = true;
 }
 
 /**
@@ -131,25 +132,31 @@ function afterTransition ($el, property, fn, time) {
   var done,
       elData = $el.data();
 
+  console.log('afterTransition', $el, fn);
+
   if (elData) {
+    //clearTimeout(elData.tT);
+
     elData.onEndFn = function () {
-      done || fn.call(this);
+      if (done) return;
+      console.log('elData.onEndFn()', fn);
+      fn.call(this);
       done = true;
     };
+    elData.tProp = property;
 
-    bindTransitionEnd($el, property);
+    bindTransitionEnd($el);
 
-    clearTimeout(elData.transTimeout);
-
-    if (!time) return;
-
-    elData.transTimeout = setTimeout(function () {
-      // Если не сработал нативный transitionend (а такое бывает),
-      // через таймаут вызываем onEndFn насильно:
-      if (done) return;
-      $el.data().onEndFn = noop;
-      fn.call($el[0]);
-    }, time * 1.1);
+//    if (!time) return;
+//
+//    elData.tT = setTimeout(function () {
+//      // Если не сработал нативный transitionend (а такое бывает),
+//      // через таймаут вызываем onEndFn насильно:
+//      console.log('request for FALLBACK', $el, fn);
+//      if (done) return;
+//      console.log('FALLBACK!!! for transition', $el, fn);
+//      elData.onEndFn();
+//    }, time * 5);
   }
 }
 
@@ -160,7 +167,7 @@ function afterTransition ($el, property, fn, time) {
 function stop ($el) {
   if (CSS3) {
     $el.css(getDuration(0));
-    afterTransition($el, '', noop);
+    $el.data().onEndFn = noop;
   } else {
     $el.stop();
   }
