@@ -1,5 +1,5 @@
 // Миксины
-@mixin inline-block ($va: middle) {
+@mixin inline-block($va: middle) {
   display: -moz-inline-box;
   -moz-box-orient: vertical;
   display: inline-block;

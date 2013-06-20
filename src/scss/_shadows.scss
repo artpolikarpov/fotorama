@@ -1,38 +1,38 @@
 /* Тенюшки */
 .fotorama__stage, .fotorama__nav {
-	&:before, &:after {
-		content: "";
-		display: block;
-		position: absolute;
-		text-decoration: none;
-		top: 0;
-		bottom: 0;
-		width: 10px;
-		height: auto;
-		z-index: 10;
-		background-repeat: no-repeat;
-		background-size: 1px 100%, 5px 100%;
-		@extend %no-select;
+  &:before, &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    text-decoration: none;
+    top: 0;
+    bottom: 0;
+    width: 10px;
+    height: auto;
+    z-index: 10;
+    background-repeat: no-repeat;
+    background-size: 1px 100%, 5px 100%;
+    @extend %no-select;
 
-		.fotorama--fullscreen & {
-			display: none !important;
-		}
-	}
-	&:before {
-		@include background-image(linear-gradient(transparent, rgba(0, 0, 0, .2) 25%, rgba(0, 0, 0, .3) 75%, transparent), radial-gradient(0 50%, farthest-side, rgba(0, 0, 0, .4), transparent));
-		background-position: 0 0, 0 0;
-		left: -10px;
-	}
-	&.fotorama__shadows--left:before {
-		left: 0;
-	}
-	&:after {
-		@include background-image(linear-gradient(transparent, rgba(0, 0, 0, .2) 25%, rgba(0, 0, 0, .3) 75%, transparent), radial-gradient(100% 50%, farthest-side, rgba(0, 0, 0, .4), transparent));
-		background-position: 100% 0, 100% 0;
-		right: -10px;
-	}
-	&.fotorama__shadows--right:after {
-		right: 0;
-	}
+    .fotorama--fullscreen & {
+      display: none !important;
+    }
+  }
+  &:before {
+    @include background-image(linear-gradient(transparent, rgba(0, 0, 0, .2) 25%, rgba(0, 0, 0, .3) 75%, transparent), radial-gradient(0 50%, farthest-side, rgba(0, 0, 0, .4), transparent));
+    background-position: 0 0, 0 0;
+    left: -10px;
+  }
+  &.fotorama__shadows--left:before {
+    left: 0;
+  }
+  &:after {
+    @include background-image(linear-gradient(transparent, rgba(0, 0, 0, .2) 25%, rgba(0, 0, 0, .3) 75%, transparent), radial-gradient(100% 50%, farthest-side, rgba(0, 0, 0, .4), transparent));
+    background-position: 100% 0, 100% 0;
+    right: -10px;
+  }
+  &.fotorama__shadows--right:after {
+    right: 0;
+  }
 }
 

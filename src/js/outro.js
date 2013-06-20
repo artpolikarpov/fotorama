@@ -1,1 +1,2 @@
-})(window, document, jQuery);
+})
+(window, document, jQuery);
