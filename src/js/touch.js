@@ -9,27 +9,6 @@ function extendEvent (e, touchFLAG) {
   e._y = touchFLAG ? e.touches[0].pageY : e.pageY;
 }
 
-/**
- * Базовая функция для таскания и швыряния некого элемента.
- * Работает с событиями touchstart, touchmove, touchend на тач-девайсах
- * и mousedown, mousemove, mouseup. Блокирует многопальцевые жесты.
- * На тач-дейвасах может сохранить возможность прокрутки страницы в одном из направлений.
- * Сама функция не перемещает элемент, но предоставляет интерфейс для этого.
- * Имеет три колбека — onStart, onMove, onEnd, в которые (кроме onEnd) первым параметром отдаётся объект
- * события, для непосредственного изменения позиции элемента, this внутри колбеков — это элемент,
- * на котором сработало событие.
- *
- * Пример использования:
- *   touch($('#shaft'), {
- *     onStart: function (e) { // log(e.type) },
- *     onMove: function (e) { ... },
- *     onEnd: function () { ... },
- *     keepTouchScroll: 'y' // or 'x'
- *   });
- *
- * @param $el {jQuery} Джейквери-объект, на котором будут отслеживаться события
- * @param options {Object} Объект с опциями
- */
 function touch ($el, options) {
   var el = $el[0],
       tail = {},
@@ -87,14 +66,13 @@ function touch ($el, options) {
 
     extendEvent(e, touchFLAG);
 
-    var xDiff = Math.abs(e._x - startEvent._x), // opt _x → _pageX
+    var xDiff = Math.abs(e._x - startEvent._x),
         yDiff = Math.abs(e._y - startEvent._y),
-        xyDiff = xDiff - yDiff,
-        xWin = xyDiff >= 3,
-        yWin = xyDiff <= -3;
+        xWin = xDiff > yDiff,
+        yWin = yDiff > xDiff;
 
     if (!movedFLAG) {
-      movedFLAG = /*!tail.noMove && */ !(!xWin && !yWin);
+      movedFLAG = !(!xWin && !yWin);
     }
 
     if (touchFLAG && !tail.checked) {
@@ -129,7 +107,6 @@ function touch ($el, options) {
     touchEnabledFLAG = false;
   }
 
-
   if (el.addEventListener) {
     el.addEventListener('touchstart', onStart);
     el.addEventListener('touchmove', onMove);
@@ -147,7 +124,6 @@ function touch ($el, options) {
       e.preventDefault();
     }
   });
-
 
   // Возвращаем хвостик, чтобы управлять некоторыми параметрами в будущем,
   // например ориентацией
