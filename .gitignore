@@ -13,3 +13,5 @@ node_modules
 product
 grunt-s3.json
 src/templates/compiled.js
+.grunt
+_SpecRunner.html
