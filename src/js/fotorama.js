@@ -982,12 +982,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   that.requestFullScreen = function () {
     if (o_allowFullScreen && !that.fullScreen) {
-      that.fullScreen = true;
-
       scrollTop = $WINDOW.scrollTop();
       scrollLeft = $WINDOW.scrollLeft();
 
       $WINDOW.scrollLeft(1).scrollTop(1);
+
+      $fotorama
+          .addClass(fullscreenClass)
+          .appendTo($BODY);
 
       if (o_nativeFullScreen) {
         fullScreenApi.request(fotorama);
@@ -998,16 +1000,16 @@ jQuery.Fotorama = function ($fotorama, opts) {
         // Таймаут нужен для Сафари, чтобы он успел пересчитать скрол и не залип
         $BODY.addClass(_fullscreenClass);
 
-        $fotorama
-            .addClass(fullscreenClass)
-            .appendTo($BODY);
-
         measuresStash = $.extend({}, measures);
+        console.log('measuresStash', measuresStash, measures);
 
         unloadVideo($videoPlaying, true);
 
         that.resize();
         loadImg([activeIndex, prevIndex, nextIndex], 'stage');
+
+
+        that.fullScreen = true;
       }, 5);
 
       triggerEvent('fullscreenenter');
@@ -1017,6 +1019,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
   };
 
   function cancelFullScreen () {
+    console.log('/!\ cancelFullScreen');
+
     if (that.fullScreen) {
       that.fullScreen = false;
 
@@ -1033,6 +1037,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
       triggerEvent('fullscreenexit');
 
       measures = $.extend({}, measuresStash);
+
+      console.log('measures', measures, measuresStash);
 
       unloadVideo($videoPlaying, true);
 
