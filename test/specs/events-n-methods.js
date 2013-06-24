@@ -161,12 +161,18 @@ describe('Events', function () {
 		fotorama.requestFullScreen();
 		expect(e.fullscreenenter.i).toBe(1);
 		expect(e.fullscreenexit).toBeUndefined();
-		expect(fotorama.fullScreen).toBe(true);
 
-		fotorama.cancelFullScreen();
-		expect(e.fullscreenenter.i).toBe(1);
-		expect(e.fullscreenexit.i).toBe(1);
-		expect(fotorama.fullScreen).toBe(false);
+    waitsFor(function () {
+			return fotorama.fullScreen;
+		}, 'Waiting for fotorama.fullScreen', 10);
+
+    runs(function () {
+      fotorama.cancelFullScreen();
+      expect(e.fullscreenenter.i).toBe(1);
+      expect(e.fullscreenexit.i).toBe(1);
+      expect(fotorama.fullScreen).toBe(false);
+    });
+
 	});
 
 	it('pushing new frames, video for example', function () {
