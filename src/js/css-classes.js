@@ -11,6 +11,7 @@ var _fotoramaClass = 'fotorama',
 
     stageClass = _fotoramaClass + '__stage',
     stageFrameClass = stageClass + '__frame',
+    stageFrameVisibleClass = stageFrameClass + '--visible',
     stageFrameVideoClass = stageFrameClass + '--video',
     stageShaftClass = stageClass + '__shaft',
     stageOnlyActiveClass = stageClass + '--only-active',
@@ -37,8 +38,8 @@ var _fotoramaClass = 'fotorama',
 
     shadowClass = _fotoramaClass + '__shadow',
     shadowsClass = shadowClass + 's',
-    shadowsLeftClass = shadowsClass + '--left',
-    shadowsRightClass = shadowsClass + '--right',
+    /*shadowsLeftClass = shadowsClass + '--left',
+    shadowsRightClass = shadowsClass + '--right',*/
 
     activeClass = _fotoramaClass + '__active',
     selectClass = _fotoramaClass + '__select',

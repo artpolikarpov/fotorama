@@ -1,9 +1,10 @@
+$time: 333ms;
+
 // Фоторама
 @import 'compass';
 @import 'mixins';
 @import 'placeholders';
 
-$time: 333ms;
 
 .fotorama {
 }
@@ -92,6 +93,12 @@ $time: 333ms;
   @extend %stretch;
   @extend %no-tap;
   overflow: hidden;
+
+  top: -9999px;
+}
+
+.fotorama__stage__frame--visible {
+  top: 0;
 }
 
 .fotorama__wrap--fade {
@@ -99,15 +106,15 @@ $time: 333ms;
     //left: -9999px;
     //top: -9999px;
     //opacity: 0;
+    left: 0 !important;
   }
-  .fotorama__stage__frame.fotorama__active {
-    opacity: 1;
-  }
+  //.fotorama__stage__frame.fotorama__active {
+  //
+  //}
   .fotorama__stage__frame.fotorama__active,
   .fotorama__fade-front,
   .fotorama__fade-rear {
     left: 0;
-    top: 0;
   }
   .fotorama__fade-front {
     z-index: 10;
@@ -118,10 +125,6 @@ $time: 333ms;
   .fotorama__stage .fotorama__shadow {
     display: none;
   }
-}
-
-.fotorama__stage__frame.fotorama__active {
-  z-index: 8;
 }
 
 .fotorama__wrap--video {
@@ -366,26 +369,32 @@ $time: 333ms;
   background-color: mix(black, white);
 }
 
+.fotorama__stage__shaft,
+.fotorama__nav__shaft,
+.fotorama__thumb-border,
+.fotorama__stage__frame,
+.fotorama__nav__frame,
+.fotorama__img,
+.fotorama__caption {
+  @extend %initial-translate;
+}
+
 // Если разрешены ЦСС-анимации
 .fotorama__wrap--css3 {
-  .fotorama__stage__shaft,
   .fotorama__nav__shaft {
-    @extend %transition-for-touch;
+    @extend %transition-for-slide;
   }
-  .fotorama__stage__shaft,
-  .fotorama__nav__shaft,
-  .fotorama__thumb-border,
-  .fotorama__stage__frame,
-  .fotorama__nav__frame,
-  .fotorama__img,
-  .fotorama__caption {
-    @extend %initial-translate;
+  
+  &.fotorama__wrap--fade {
+    .fotorama__stage__frame {
+      @extend %transition-for-fade;
+    }
   }
+
   .fotorama__img,
   .fotorama__html,
-  .fotorama__stage__frame,
   .fotorama__caption {
-    @include transition(opacity $time linear);
+    @extend %transition-for-fade;
   }
 }
 

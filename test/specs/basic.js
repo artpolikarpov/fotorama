@@ -31,7 +31,7 @@ describe('Basic', function () {
 		expect($('.fotorama__nav', $fotorama).size()).toEqual(1);
 		expect($('.fotorama__nav__shaft', $fotorama).size()).toEqual(1);
 		expect($('.fotorama__arr', $fotorama).size()).toEqual(2);
-		expect($('.fotorama__stage__frame', $fotorama).size()).toEqual(2);
+		expect($('.fotorama__stage__frame', $fotorama).size()).toEqual(5);
 		expect($('.fotorama__nav__frame', $fotorama).size()).toEqual(5);
 	});
 	it('dimensions are correct', function () {

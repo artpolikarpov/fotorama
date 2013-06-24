@@ -35,8 +35,12 @@
   @include transform(translate3d(0, 0, 0));
 }
 
-%transition-for-touch {
+%transition-for-slide {
   @include transition-property(transform 0ms cubic-bezier(.1, .25, .25, 1));
+}
+
+%transition-for-fade {
+  @include transition(opacity $time linear);
 }
 
 %bezier {

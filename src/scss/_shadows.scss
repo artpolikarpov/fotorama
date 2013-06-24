@@ -14,6 +14,8 @@
     background-size: 1px 100%, 5px 100%;
     @extend %no-select;
 
+    display: none;
+
     .fotorama--fullscreen & {
       display: none !important;
     }

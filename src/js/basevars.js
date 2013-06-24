@@ -8,8 +8,8 @@ var $WINDOW = $(window),
     CSS3 = Modernizr.csstransforms3d && !QUIRKS_FORCE,
     FULLSCREEN = fullScreenApi.ok,
 
-    TOUCH_TIMEOUT = 300,
-    TRANSITION_DURATION = 333,
+    TOUCH_TIMEOUT = 250,
+    TRANSITION_DURATION = 300,
     AUTOPLAY_INTERVAL = 5000,
     MARGIN = 2,
     THUMB_SIZE = 64,
@@ -19,6 +19,3 @@ var $WINDOW = $(window),
     HEIGHT = 333,
 
     BEZIER = bez([.1, 0, .25, 1]);
-
-
-console.log('Modernizr.csstransforms3d', Modernizr.csstransforms3d);

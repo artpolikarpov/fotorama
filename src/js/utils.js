@@ -16,7 +16,7 @@ function minMaxLimit (value, min, max) {
  * возвращает величину по определённой координате (top или left)
  * */
 function readTransform (css) {
-  //console.log('---readTransform---', css);
+  ////console.log('---readTransform---', css);
   return css && css.match(/-?\d+/g)[4];
 }
 
@@ -36,6 +36,7 @@ function readPosition ($el) {
  *   $el.css(getTranslate(100, 'left'));
  * */
 function getTranslate (pos) {
+  console.log('getTranslate', pos);
   var obj = {};
   if (CSS3) {
     obj.transform = 'translate3d(' + pos + 'px,0,0)';
@@ -119,7 +120,7 @@ function bindTransitionEnd ($el) {
         transition: 'transitionend'
       };
   el.addEventListener(transitionEndEvent[Modernizr.prefixed('transition')], function (e) {
-    console.log('NATIVE transitionend', e.propertyName, elData.tProp && e.propertyName.match(elData.tProp) && 'CALL');
+    //console.log('NATIVE transitionend', e.propertyName, elData.tProp && e.propertyName.match(elData.tProp) && 'CALL');
     elData.tProp && e.propertyName.match(elData.tProp) && elData.onEndFn.call(this);
   });
   elData.tEnd = true;
@@ -132,14 +133,14 @@ function afterTransition ($el, property, fn, time) {
   var done,
       elData = $el.data();
 
-  console.log('afterTransition', $el, fn);
+  //console.log('afterTransition', $el, fn);
 
   if (elData) {
     //clearTimeout(elData.tT);
 
     elData.onEndFn = function () {
       if (done) return;
-      console.log('elData.onEndFn()', fn);
+      //console.log('elData.onEndFn()', fn);
       fn.call(this);
       done = true;
     };
@@ -152,9 +153,9 @@ function afterTransition ($el, property, fn, time) {
 //    elData.tT = setTimeout(function () {
 //      // Если не сработал нативный transitionend (а такое бывает),
 //      // через таймаут вызываем onEndFn насильно:
-//      console.log('request for FALLBACK', $el, fn);
+//      //console.log('request for FALLBACK', $el, fn);
 //      if (done) return;
-//      console.log('FALLBACK!!! for transition', $el, fn);
+//      //console.log('FALLBACK!!! for transition', $el, fn);
 //      elData.onEndFn();
 //    }, time * 5);
   }
@@ -164,17 +165,18 @@ function afterTransition ($el, property, fn, time) {
  * Универсальная функция для остановки анимируемого объекта,
  * возвращает актуальную позицию
  * */
-function stop ($el) {
-  if (CSS3) {
-    $el.css(getDuration(0));
-    $el.data().onEndFn = noop;
-  } else {
-    $el.stop();
-  }
+function stop ($el, left) {
   if ($el.length) {
-    //console.log('$el.length', $el);
-    var lockedLeft = readPosition($el);
+    if (CSS3) {
+      $el.css(getDuration(0));
+      $el.data({onEndFn: noop});
+    } else {
+      $el.stop();
+    }
+
+    var lockedLeft = left || readPosition($el);
     $el.css(getTranslate(lockedLeft));
+
     return lockedLeft;
   }
 }
@@ -207,7 +209,7 @@ function findVideoId (href, forceVideo) {
       type;
 
   if (href.host.match(/youtube\.com/) && href.search) {
-    console.log();
+    //console.log();
     id = href.search.split('v=')[1];
     if (id) {
       var ampersandPosition = id.indexOf('&');
@@ -224,7 +226,7 @@ function findVideoId (href, forceVideo) {
     id = href.pathname.replace(/^\/(video\/)?/, '').replace(/\/.*/, '');
   }
 
-  console.log('id, type ', id, type);
+  //console.log('id, type ', id, type);
 
   if ((!id || !type) && forceVideo) {
     id = href.href;
@@ -235,7 +237,7 @@ function findVideoId (href, forceVideo) {
 }
 
 function getVideoThumbs (dataFrame, data, api) {
-  //console.log('getVideoThumbs');
+  ////console.log('getVideoThumbs');
 
   var img, thumb, video = dataFrame.video;
   if (video.type === 'youtube') {
@@ -419,9 +421,9 @@ function setStyle ($el, style) {
   }
 }
 
-function findShadowEdge (pos, minPos, maxPos) {
-  return minPos === maxPos ? false : pos <= minPos ? 'left' : pos >= maxPos ? 'right' : 'left right';
-}
+//function findShadowEdge (pos, minPos, maxPos) {
+//  return minPos === maxPos ? false : pos <= minPos ? 'left' : pos >= maxPos ? 'right' : 'left right';
+//}
 
 function getIndexFromHash (hash, data, ok) {
   if (!ok) return false;
@@ -441,8 +443,8 @@ function getIndexFromHash (hash, data, ok) {
   return index;
 }
 
-function smartClick ($el, fn, _options) {
-  _options = _options || {};
+function smartClick ($el, fn, options) {
+  options = options || {};
 
   $el.each(function () {
     var $this = $(this),
@@ -456,14 +458,14 @@ function smartClick ($el, fn, _options) {
     $.extend(touch($this, {
       onStart: function (e) {
         startEvent = e;
-        (_options.onStart || noop).call(this, e);
+        (options.onStart || noop).call(this, e);
       },
-      onMove: _options.onMove || noop,
+      onMove: options.onMove || noop,
       onEnd: function (result) {
-        if (result.moved || _options.tail.checked) return;
+        if (result.moved || options.tail.checked) return;
         fn.call(this, startEvent);
       }
-    }), _options.tail);
+    }), options.tail);
 
   });
 }

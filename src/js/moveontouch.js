@@ -31,18 +31,18 @@ function moveOnTouch ($el, options) {
 
     // Начинаем запись маршрута курсора
     moveTrack = [
-      [new Date().getTime(), startCoo]
+      [+ new Date, startCoo]
     ];
 
-    startElPos = moveElPos = stop($el);
+    startElPos = moveElPos = stop($el, options.getPos && options.getPos());
 
     (options.onStart || noop).call(el, e, {pos: startElPos});
   }
 
   function onStart (e, result) {
-    minPos = elData.minPos;
-    maxPos = elData.maxPos;
-    snap = elData.snap;
+    minPos = tail.minPos;
+    maxPos = tail.maxPos;
+    snap = tail.snap;
 
     slowFLAG = e.altKey;
     movedFLAG = false;
@@ -54,7 +54,7 @@ function moveOnTouch ($el, options) {
     }
   }
 
-  function onMove (e) {
+  function onMove (e, result) {
     if (controlFLAG) {
       controlFLAG = false;
       startTracking(e);
@@ -63,11 +63,11 @@ function moveOnTouch ($el, options) {
     coo = e._x;
 
     // Продолжаем запись маршрута курсора
-    moveTrack.push([new Date().getTime(), coo]);
+    moveTrack.push([+ new Date, coo]);
 
     moveElPos = startElPos - (startCoo - coo);
 
-    edge = findShadowEdge(moveElPos, minPos, maxPos);
+    //edge = findShadowEdge(moveElPos, minPos, maxPos);
 
     if (moveElPos <= minPos) {
       moveElPos = edgeResistance(moveElPos, minPos);
@@ -80,7 +80,8 @@ function moveOnTouch ($el, options) {
       $el.css(getTranslate(moveElPos));
       if (!movedFLAG) {
         movedFLAG = true;
-        $BODY.addClass('grabbing');
+        // only for mouse
+        result.touch || $BODY.addClass('grabbing');
       }
     }
 
@@ -90,9 +91,9 @@ function moveOnTouch ($el, options) {
   function onEnd (result) {
     if (controlFLAG) return;
 
-    $BODY.removeClass('grabbing');
+    result.touch || $BODY.removeClass('grabbing');
 
-    endTime = new Date().getTime();
+    endTime = + new Date;
 
     var _backTimeIdeal = endTime - TOUCH_TIMEOUT,
         _backTime,
