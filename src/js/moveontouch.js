@@ -141,7 +141,7 @@ function moveOnTouch ($el, options) {
         newPos = virtualPos;
       }
 
-      /*if (!forwardFLAG && virtualPos > maxPos || forwardFLAG && virtualPos < minPos) {
+      if (!forwardFLAG && virtualPos > maxPos || forwardFLAG && virtualPos < minPos) {
         limitPos = forwardFLAG ? minPos : maxPos;
         overPos = virtualPos - limitPos;
         if (!snap) {
@@ -149,7 +149,7 @@ function moveOnTouch ($el, options) {
         }
         overPos = minMaxLimit(newPos + overPos * .03, limitPos - 50, limitPos + 50);
         time = Math.abs((moveElPos - overPos) / (speed / friction));
-      }*/
+      }
     }
 
     time *= slowFLAG ? 10 : 1;

@@ -6,12 +6,12 @@ function slide ($el, options) {
   var elPos = Math.round(options.pos),
       onEndFn = options.onEnd || noop;
 
-  /*if (typeof options.overPos !== 'undefined' && options.overPos !== options.pos) {
+  if (typeof options.overPos !== 'undefined' && options.overPos !== options.pos) {
     elPos = options.overPos;
     onEndFn = function () {
       slide($el, $.extend({}, options, {overPos: options.pos, time: Math.max(TRANSITION_DURATION, options.time / 2)}))
     };
-  }*/
+  }
 
   var translate = getTranslate(elPos);
 
