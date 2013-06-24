@@ -591,16 +591,15 @@ jQuery.Fotorama = function ($fotorama, opts) {
       if (!$frame) return;
 
       $frame
-          .css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, MARGIN, repositionIndex)}, o_fade && getDuration(0)));
+          .css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, MARGIN, repositionIndex), display: 'block'}, o_fade && getDuration(0)));
       //.fadeTo(0, o_fade && index !== activeIndex ? 0 : 1);
 
       if (!frameData.appended) {
         $frame.appendTo($stageShaft);
         frameData.appended = true;
-        //unloadVideo(dataFrame.$video);
       }
 
-
+      //unloadVideo(dataFrame.$video);
 
 
       ///
@@ -759,7 +758,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       // Скрываем все лишние кадры
       $stageFrame
           .not(that.activeFrame[stageFrameKey].addClass(activeClass))
-          //.css({display: 'none'})
+          .css({display: 'none'})
         //.hide()
         //.data('hidden', true)
           //.detach()
