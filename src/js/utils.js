@@ -167,7 +167,7 @@ function afterTransition ($el, property, fn, time) {
 function stop ($el) {
   if (CSS3) {
     $el.css(getDuration(0));
-    $el.data().onEndFn = noop;
+    $el.data('onEndFn', noop);
   } else {
     $el.stop();
   }
