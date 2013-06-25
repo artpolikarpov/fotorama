@@ -82,6 +82,10 @@ $time: 333ms;
 
 .fotorama__img {
   opacity: 0;
+  max-width: none !important;
+  max-height: none !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
   .fotorama__loaded &,
   .fotorama__error & {
     opacity: 1;
@@ -92,6 +96,9 @@ $time: 333ms;
   @extend %stretch;
   @extend %no-tap;
   overflow: hidden;
+  &.fotorama__active {
+    z-index: 8;
+  }
 }
 
 .fotorama__wrap--fade {
@@ -118,10 +125,6 @@ $time: 333ms;
   .fotorama__stage .fotorama__shadow {
     display: none;
   }
-}
-
-.fotorama__stage__frame.fotorama__active {
-  z-index: 8;
 }
 
 .fotorama__wrap--video {
