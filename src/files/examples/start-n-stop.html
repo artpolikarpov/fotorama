@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Start & stop</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="http://fotorama.s3.amazonaws.com/fotorama.css" rel="stylesheet">
+	<script src="http://fotorama.s3.amazonaws.com/fotorama.js"></script>
+</head>
+
+<body>
+
+<p>Start & stop:<p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>var fotorama = $('#start-n-stop').data('fotorama');
+$('#start').on('click', function () {
+  fotorama.startAutoplay(3000);
+});
+$('#stop').on('click', function () {
+  fotorama.stopAutoplay();
+});</code></pre>
+
+<style type="text/css">
+	input[type="button"] {
+		font-size: 16px;
+	}
+</style>
+
+<script>
+	$(function () {
+		var $fotorama = $('#start-n-stop'),
+				fotorama = $fotorama.data('fotorama'),
+				$thumbBorder = $('.fotorama__thumb-border', $fotorama),
+				thumbBorderColor = $thumbBorder.css('border-color'),
+				thumbBackground = $thumbBorder.css('background'),
+				$start = $('#start'),
+				$stop = $('#stop');
+
+		// Visual response
+		$fotorama.on('fotorama:startautoplay fotorama:stopautoplay', function (e, fotorama) {
+			$start.attr('disabled', !!fotorama.autoplay);
+			$thumbBorder.css({
+				borderColor: fotorama.autoplay ? 'rgb(0, 200, 0)' : thumbBorderColor,
+				background: fotorama.autoplay ? 'rgba(100, 200, 100, .25)' : thumbBackground
+			});
+		});
+
+		// API calls
+		$start.on('click', function () {
+			fotorama.startAutoplay(3000);
+		});
+		$stop.on('click', function () {
+			fotorama.stopAutoplay();
+		});
+	});
+</script>
+
+<!-- Just don’t want to repeat this prefix in every img[src] -->
+<base href="i/okonechnikov/">
+
+<p style="margin-bottom: .5em;"><input type="button" value="&#9654; Start" id="start" /> <input type="button" value="Stop" id="stop" /></p>
+
+<!-- Fotorama -->
+<div class="fotorama"
+     id="start-n-stop"
+     data-stop-autoplay-on-touch="false"
+     data-width="700"
+     data-ratio="3/2"
+     data-max-width="100%"
+     data-nav="thumbs">
+	<a href="1-lo.jpg"><img src="1-thumb.jpg"></a>
+	<a href="2-lo.jpg"><img src="2-thumb.jpg"></a>
+	<a href="3-lo.jpg"><img src="3-thumb.jpg"></a>
+	<a href="4-lo.jpg"><img src="4-thumb.jpg"></a>
+	<a href="25-lo.jpg"><img src="25-thumb.jpg"></a>
+	<a href="26-lo.jpg"><img src="26-thumb.jpg"></a>
+	<a href="27-lo.jpg"><img src="27-thumb.jpg"></a>
+	<a href="28-lo.jpg"><img src="28-thumb.jpg"></a>
+	<a href="29-lo.jpg"><img src="29-thumb.jpg"></a>
+	<a href="30-lo.jpg"><img src="30-thumb.jpg"></a>
+	<a href="11-lo.jpg"><img src="11-thumb.jpg"></a>
+	<a href="12-lo.jpg"><img src="12-thumb.jpg"></a>
+	<a href="13-lo.jpg"><img src="13-thumb.jpg"></a>
+	<a href="14-lo.jpg"><img src="14-thumb.jpg"></a>
+	<a href="15-lo.jpg"><img src="15-thumb.jpg"></a>
+	<a href="16-lo.jpg"><img src="16-thumb.jpg"></a>
+	<a href="20-lo.jpg"><img src="20-thumb.jpg"></a>
+	<a href="21-lo.jpg"><img src="21-thumb.jpg"></a>
+	<a href="22-lo.jpg"><img src="22-thumb.jpg"></a>
+	<a href="23-lo.jpg"><img src="23-thumb.jpg"></a>
+	<a href="24-lo.jpg"><img src="24-thumb.jpg"></a>
+	<a href="17-lo.jpg"><img src="17-thumb.jpg"></a>
+	<a href="18-lo.jpg"><img src="18-thumb.jpg"></a>
+	<a href="19-lo.jpg"><img src="19-thumb.jpg"></a>
+</div>
+
+<!-- © -->
+<p>Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
+</body>
+</html>
