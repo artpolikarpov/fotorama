@@ -599,7 +599,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         frameData.appended = true;
       }
 
-      //unloadVideo(dataFrame.$video);
+      unloadVideo(dataFrame.$video);
 
 
       ///
