@@ -991,6 +991,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
           .addClass(fullscreenClass)
           .appendTo($BODY);
 
+      measuresStash = $.extend({}, measures);
+      console.log('measuresStash', measuresStash, measures);
+
+      unloadVideo($videoPlaying, true);
+
+      that.fullScreen = true;
+
       if (o_nativeFullScreen) {
         fullScreenApi.request(fotorama);
       }
@@ -1000,16 +1007,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
         // Таймаут нужен для Сафари, чтобы он успел пересчитать скрол и не залип
         $BODY.addClass(_fullscreenClass);
 
-        measuresStash = $.extend({}, measures);
-        console.log('measuresStash', measuresStash, measures);
-
-        unloadVideo($videoPlaying, true);
-
         that.resize();
         loadImg([activeIndex, prevIndex, nextIndex], 'stage');
-
-
-        that.fullScreen = true;
       }, 5);
 
       triggerEvent('fullscreenenter');
