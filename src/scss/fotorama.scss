@@ -1,14 +1,9 @@
-<<<<<<< HEAD
-=======
 $time: 300ms;
 
->>>>>>> 06dc59e... Sprite refreshing
 // Фоторама
 @import 'compass';
 @import 'mixins';
 @import 'placeholders';
-
-$time: 333ms;
 
 .fotorama {
 }
@@ -102,26 +97,21 @@ $time: 333ms;
 .fotorama__stage__frame {
   @extend %stretch;
 
-  width: 0;
-  height: 0;
+  //width: 0;
+  //height: 0;
   //display: none;
 
   @extend %no-tap;
   overflow: hidden;
-<<<<<<< HEAD
   &.fotorama__active {
     z-index: 8;
   }
-=======
 }
 
-.fotorama__stage__frame--visible {
-  width: 100%;
-  height: 100%;
-
-  //display: block;
->>>>>>> 06dc59e... Sprite refreshing
-}
+//.fotorama__stage__frame--visible {
+//  width: 100%;
+//  height: 100%;
+//}
 
 .fotorama__wrap--fade {
   .fotorama__stage__frame {
@@ -151,7 +141,7 @@ $time: 333ms;
 
 .fotorama__wrap--video {
   .fotorama__stage__frame--video {
-/*    background-color: #000;*/
+    /*background-color: #000;*/
     .fotorama__img,
     .fotorama__html {
       @include opacity(0);
