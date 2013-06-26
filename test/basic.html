@@ -17,8 +17,30 @@
 <p>Basic fotorama:<p>
 <pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div <mark>class="fotorama"</mark>></code></pre>
 
+<p>Counter for <tt>fotorama:load</tt> event: <mark id="count"></mark></p>
+
+<script type="text/javascript">
+  $(function () {
+    var $count = $('#count'),
+        count = 0,
+        updateCounter = (function fn () {
+          $count.text(count++);
+          return fn;
+        })();
+    $('.fotorama').on('fotorama:showend fotorama:load', function (e) {
+      if (e.type === 'fotorama:showend') {
+        console.time('Load time');
+      } else {
+        console.timeEnd('Load time');
+        updateCounter();
+      }
+
+    });
+  });
+</script>
+
 <!-- Fotorama -->
-<div class="fotorama" data-width="700" data-height="467">
+<div class="fotorama" data-width="700" data-height="467" data-loop="true">
 	<img src="i/okonechnikov/1.jpg">
 	<img src="i/okonechnikov/2.jpg">
 	<img src="i/okonechnikov/3.jpg">

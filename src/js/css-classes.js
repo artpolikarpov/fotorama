@@ -38,8 +38,8 @@ var _fotoramaClass = 'fotorama',
 
     shadowClass = _fotoramaClass + '__shadow',
     shadowsClass = shadowClass + 's',
-    /*shadowsLeftClass = shadowsClass + '--left',
-    shadowsRightClass = shadowsClass + '--right',*/
+    shadowsLeftClass = shadowsClass + '--left',
+    shadowsRightClass = shadowsClass + '--right',
 
     activeClass = _fotoramaClass + '__active',
     selectClass = _fotoramaClass + '__select',

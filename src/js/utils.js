@@ -421,9 +421,9 @@ function setStyle ($el, style) {
   }
 }
 
-//function findShadowEdge (pos, minPos, maxPos) {
-//  return minPos === maxPos ? false : pos <= minPos ? 'left' : pos >= maxPos ? 'right' : 'left right';
-//}
+function findShadowEdge (pos, minPos, maxPos) {
+  return minPos === maxPos ? false : pos <= minPos ? 'left' : pos >= maxPos ? 'right' : 'left right';
+}
 
 function getIndexFromHash (hash, data, ok) {
   if (!ok) return false;

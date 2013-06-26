@@ -4,7 +4,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   // Блок-спутник для загрузки в нём фотографий и проверки размеров,
   // прямо в фотораме это не всегда удобно делать:
-  $.Fotorama.$load = $.Fotorama.$load || $('<div class="' + loadClass + '"></div>').appendTo($BODY);
+  //$.Fotorama.$load = $.Fotorama.$load || $('<div class="' + loadClass + '"></div>').appendTo($BODY);
 
   var that = this,
       index = _size,
@@ -444,8 +444,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
         // Удачная загрузка:
         // Кешируем оригинальные размеры картинки
-        var width = $img.width(),
-            height = $img.height(),
+        var width = img.width,
+            height = img.height,
             ratio = width / height;
 
         imgData.measures = {
@@ -455,9 +455,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
         };
 
         setMeasures(width, height, ratio, index);
-        /*fit($img.addClass(imgClass + (fullFLAG ? ' ' + imgFullClass : '')),
+        fit($img.addClass(imgClass + (fullFLAG ? ' ' + imgFullClass : '')),
             specialMeasures || measures,
-            specialFit || dataFrame.fit || opts.fit);*/
+            specialFit || dataFrame.fit || opts.fit);
 
         $.Fotorama.cache[src] = 'loaded';
         frameData.state = 'loaded';
@@ -465,9 +465,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
         setTimeout(function () {
           $frame
               .trigger('f:load')
+              .prepend(img)
               .removeClass(loadingClass + ' ' + errorClass)
-              .addClass(loadedClass + ' ' + (fullFLAG ? loadedFullClass : loadedImgClass))
-              .prepend(img);
+              .addClass(loadedClass + ' ' + (fullFLAG ? loadedFullClass : loadedImgClass));
 
           if (type === 'stage') {
             triggerTriggerEvent('load');
@@ -484,7 +484,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         //$img.off('load error');
 
         waitFor(function () {
-          return !isHidden(img) && !touchedFLAG;
+          return /*!isHidden(img) && */!touchedFLAG;
         }, function () {
           loaded();
         });
@@ -513,7 +513,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
 
       img.src = src;
-      $.Fotorama.$load.append($img);
+      //$.Fotorama.$load.append($img);
     });
   }
 
@@ -621,6 +621,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 //        $stageShaft.append($frame);
 //        frameData.appended = true;
 //      }
+
+      unloadVideo(dataFrame.$video);
 
       toHide.push(
           $frame
@@ -732,7 +734,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       });
 
       if (time) thumbsDraw(pos);
-      //setShadow($nav, findShadowEdge(pos, navShaftData.minPos, navShaftData.maxPos));
+      setShadow($nav, findShadowEdge(pos, navShaftData.minPos, navShaftData.maxPos));
     }
   }
 
@@ -776,10 +778,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
       return;
     }
 
-    console.log('stageShaftReposition');
+    console.log('stageShaftReposition', dirtyIndex, activeIndex);
 
-    repositionIndex = dirtyIndex = activeIndex;
-
+//    repositionIndex = dirtyIndex = activeIndex;
+//
     var dataFrame = that.activeFrame,
         $frame = dataFrame[stageFrameKey];
 
@@ -791,9 +793,15 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       //});
 
-      stop($stageShaft.css(getTranslate(0)));
+      if (dirtyIndex < 0 || dirtyIndex >= size) {
+        dirtyIndex = activeIndex;
+        stop($stageShaft.css(getTranslate(-getPosByIndex(dirtyIndex, measures.w, MARGIN, repositionIndex))));
+
+      }
 
       /*leaveFrames(activeIndexes);*/
+
+
       hideFrames();
       stageFramePosition(activeIndexes);
 
@@ -964,6 +972,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       updateFotoramaState();
 
       loadImg(activeIndexes, 'stage');
+
       stageShaftReposition();
 
       triggerEvent('showend', options.direct);
@@ -1192,10 +1201,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
   };
 
 
-  //function setShadow ($el, edge) {
-    ///$el.removeClass(shadowsLeftClass + ' ' + shadowsRightClass);
-    ///edge && !$videoPlaying && $el.addClass(edge.replace(/^|\s/g, ' ' + shadowsClass + '--'));
-  //}
+  function setShadow ($el, edge) {
+    $el.removeClass(shadowsLeftClass + ' ' + shadowsRightClass);
+    edge && !$videoPlaying && $el.addClass(edge.replace(/^|\s/g, ' ' + shadowsClass + '--'));
+  }
 
   that.destroy = function () {
     //console.log('destroy');
@@ -1290,11 +1299,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
   // Подключаем перелистывание кадров в шахте на сцене
   stageShaftTouchTail = moveOnTouch($stageShaft, {
     onStart: onTouchStart,
-//    onMove: function (e, result) {
-//      setShadow($stage, result.edge);
-//    },
+    onMove: function (e, result) {
+      setShadow($stage, result.edge);
+    },
     onEnd: function (result) {
-      //setShadow($stage);
+      setShadow($stage);
 
       onTouchEnd();
 
@@ -1311,7 +1320,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
     },
     getPos: function () {
-      return - getPosByIndex(activeIndex, measures.w, MARGIN, repositionIndex);
+      return - getPosByIndex(dirtyIndex, measures.w, MARGIN, repositionIndex);
     },
     timeLow: 1,
     timeHigh: 1,
@@ -1323,9 +1332,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
   // Подключаем таскание шахты в навигации
   navShaftTouchTail = moveOnTouch($navShaft, {
     onStart: onTouchStart,
-//    onMove: function (e, result) {
-//      setShadow($nav, result.edge);
-//    },
+    onMove: function (e, result) {
+      setShadow($nav, result.edge);
+    },
     onEnd: function (result) {
       onTouchEnd();
 
@@ -1346,7 +1355,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           onEnd: onEnd
         });
         thumbsDraw(result.newPos);
-        //setShadow($nav, findShadowEdge(result.newPos, navShaftData.minPos, navShaftData.maxPos));
+        setShadow($nav, findShadowEdge(result.newPos, navShaftData.minPos, navShaftData.maxPos));
       } else {
         onEnd();
       }

@@ -67,7 +67,7 @@ function moveOnTouch ($el, options) {
 
     moveElPos = startElPos - (startCoo - coo);
 
-    //edge = findShadowEdge(moveElPos, minPos, maxPos);
+    edge = findShadowEdge(moveElPos, minPos, maxPos);
 
     if (moveElPos <= minPos) {
       moveElPos = edgeResistance(moveElPos, minPos);
@@ -81,7 +81,7 @@ function moveOnTouch ($el, options) {
       if (!movedFLAG) {
         movedFLAG = true;
         // only for mouse
-        result.touch || $BODY.addClass('grabbing');
+        //result.touch || $BODY.addClass('grabbing');
       }
     }
 
@@ -91,7 +91,7 @@ function moveOnTouch ($el, options) {
   function onEnd (result) {
     if (controlFLAG) return;
 
-    result.touch || $BODY.removeClass('grabbing');
+    //result.touch || $BODY.removeClass('grabbing');
 
     endTime = + new Date;
 
