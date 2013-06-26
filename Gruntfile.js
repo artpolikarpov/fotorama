@@ -204,18 +204,26 @@ module.exports = function (grunt) {
 				secret: '<%= grunt.file.readJSON("grunt-s3.json").secret %>',
 				bucket: 'fotorama',
 				access: 'public-read',
-				secure: false,
-				headers: {'Cache-Control': 'max-age=2592000'}
+				secure: false
 			},
 			product: {
+        options: {
+          headers: {'Cache-Control': 'max-age=2592000'}
+        },
 				upload: [
 						// Separate version to separate folder
 					{
 						src: 'product/*',
 						dest: '<%= pkg.version %>/'
-					},
-
-						// Latest to the root
+					}
+				]
+			},
+      edge: {
+        // Latest to the root
+        options: {
+          headers: {'Cache-Control': 'max-age=2592000'}
+        },
+				upload: [
 					{
 						src: 'product/fotorama.*',
 						dest: ''
