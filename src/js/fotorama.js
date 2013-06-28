@@ -161,7 +161,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     if (size > 1) {
       o_nav = opts.nav;
-      o_navTop = opts.navPosition === 'top';
+      o_navTop = opts.navposition === 'top';
       classes.remove.push(selectClass);
 
       $arrs.show();
@@ -1319,7 +1319,7 @@ $.fn.fotorama = function (opts) {
 
                   // navigation, thumbs
                   nav: 'dots', // 'thumbs' || false
-                  navPosition: 'bottom', // 'top'
+                  navposition: 'bottom', // 'top'
                   thumbWidth: THUMB_SIZE,
                   thumbHeight: THUMB_SIZE,
 
