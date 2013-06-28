@@ -2,8 +2,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
   $HTML = $HTML || $('html');
   $BODY = $BODY || $('body');
 
-  // Блок-спутник для загрузки в нём фотографий и проверки размеров,
-  // прямо в фотораме это не всегда удобно делать:
   $.Fotorama.$load = $.Fotorama.$load || $('<div class="' + loadClass + '"></div>').appendTo($BODY);
 
   var that = this,
@@ -15,7 +13,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       fotoramaData = $fotorama.data(),
       size,
 
-  // Скелет разметки будущей фоторамы:
       $style = $('<style></style>').insertBefore($fotorama),
 
       $anchor = $(div(hiddenClass)).insertBefore($fotorama),
@@ -41,9 +38,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       stageShaftData = $stageShaft.data(),
       navShaftData = $navShaft.data(),
 
-  //$shadows = /*bindNoInteraction(*/$(div(shadowClass + ' ' + shadowLeftClass) + div(shadowClass + ' ' + shadowRightClass)).appendTo($stage)/*)*/,
-  ///*$navShadows = *//*bindNoInteraction(*//*$shadows.clone().appendTo($nav)*//*)*//*,*/
-
       $thumbBorder = $(div(thumbBorderClass)).appendTo($navShaft),
 
       $fullscreenIcon = $(div(fullscreenIconClass)),
@@ -52,7 +46,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       $videoPlaying,
 
-  // Индексы на все случаи:
       activeIndex = false,
       activeFrame,
       repositionIndex,
@@ -62,7 +55,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       nextIndex,
       startIndex = false,
 
-  // Некоторые опции, которые могут измениться:
       o_loop,
       o_nav,
       o_navTop,
@@ -73,17 +65,12 @@ jQuery.Fotorama = function ($fotorama, opts) {
       o_thumbSide2,
       lastOptions = {},
 
-  // Размеры сцены:
       measures = {},
       measuresSetFLAG,
-
-  // Крутилка:
-  //krutilka = {},
 
       stageShaftTouchTail = {},
       navShaftTouchTail = {},
 
-  // Разные вспомогательные переменнные:
       scrollTop,
       scrollLeft,
       showedFLAG,
@@ -102,15 +89,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
     $wrap.addClass(wrapCss3Class);
   }
 
-  /* Включаем фотораму */
   fotoramaData.fotorama = this;
   that.options = opts;
   _size++;
-  // $.Fotorama.fotorama[index] = this;
 
-  /**
-   * Есть ли видео?
-   */
   function checkForVideo () {
     $.each(data, function (i, dataFrame) {
       if (!dataFrame.i) {
@@ -131,9 +113,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     });
   }
 
-  /**
-   * Данные
-   * */
   function setData () {
     data = that.data = data || getDataFromHtml($fotorama);
     size = that.size = data.length;
@@ -144,7 +123,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     navAppend.ok = false;
 
     if (!size) {
-      // Если ничего нет, ничего и не показываем
       //that.destroy();
     } else if (!wrapAppendedFLAG) {
       // Заменяем содержимое блока:
@@ -159,7 +137,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function stageNoMove () {
-    // Запрещаем таскать фотки
     stageShaftTouchTail.noMove = size < 2 || $videoPlaying || o_fade;
   }
 
@@ -206,7 +183,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     extendMeasures(opts, true);
 
-    // Создаём или убираем кучу навигационных кадров под точки или превьюшки
     if (o_nav === true || o_nav === 'dots') {
       $nav
           .addClass(navDotsClass)
@@ -244,13 +220,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
       o_nativeFullScreen = false;
     }
 
-    // Анимация перехода, и соответствующие классы:
     classes[addOrRemove(o_fade)].push(wrapFadeClass);
     classes[addOrRemove(!o_fade && !stageShaftTouchTail.noMove)].push(wrapSlideClass);
 
     ooooStop();
 
-    // Одним скопом удаляем и добавляем классы:
     $wrap
         .addClass(classes.add.join(' '))
         .removeClass(classes.remove.join(' '));
@@ -258,47 +232,28 @@ jQuery.Fotorama = function ($fotorama, opts) {
     lastOptions = $.extend({}, opts);
   }
 
-
-  /**
-   * Нормализуем индекс, например -2 при 5 фотках будет 3, а 11 — 1 :-)
-   * */
   function normalizeIndex (index) {
     return index < 0 ? (size + (index % size)) % size : index >= size ? index % size : index;
   }
 
-  /**
-   * Ограничиваем индекс
-   * */
   function limitIndex (index) {
     return minMaxLimit(index, 0, size - 1);
   }
 
-  /**
-   * Предыдущий индекс от текущего
-   * */
   function getPrevIndex (index) {
     return index > 0 || o_loop ? index - 1 : false;
   }
 
-  /**
-   * Следующий индекс от текущего
-   * */
   function getNextIndex (index) {
     return index < size - 1 || o_loop ? index + 1 : false;
   }
 
-  /**
-   * Параметры для таскания шахты
-   * */
   function setStageShaftMinMaxPosAndSnap () {
     stageShaftData.minPos = o_loop ? -Infinity : -getPosByIndex(size - 1, measures.w, MARGIN, repositionIndex);
     stageShaftData.maxPos = o_loop ? Infinity : -getPosByIndex(0, measures.w, MARGIN, repositionIndex);
     stageShaftData.snap = measures.w + MARGIN;
   }
 
-  /**
-   * Параметры для таскания шахты c точками и превьюшками
-   * */
   function setNavShaftMinMaxPos () {
     navShaftData.minPos = Math.min(0, measures.w - $navShaft.width());
     navShaftData.maxPos = 0;
@@ -306,12 +261,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     navShaftTouchTail.noMove = navShaftData.minPos === navShaftData.maxPos;
   }
 
-  /**
-   * Итератор для груповой работы с кадрами
-   * Принимает как массив индексов для перебора [1, 0, 2],
-   * так и диапазон массива, например, если indexes равно 3,
-   * будут перебраны индексы 0, 1 и 2.
-   * */
   function eachIndex (indexes, type, fn) {
     if (typeof indexes === 'number') {
       indexes = new Array(indexes);
@@ -331,7 +280,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function setMeasures (width, height, ratio, index) {
     if (!measuresSetFLAG || (measuresSetFLAG === '*' && index === startIndex)) {
-      // Если размеры ещё не определены пытаемся сделать это по первой фотке
       width = measureIsValid(opts.width) || measureIsValid(width) || WIDTH;
       height = measureIsValid(opts.height) || measureIsValid(height) || HEIGHT;
       that.resize({
@@ -341,9 +289,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }
 
-  /**
-   * Загружает картинки
-   * */
   function loadImg (indexes, type, specialMeasures, specialFit, again) {
     eachIndex(indexes, type, function (i, index, dataFrame, $frame, key, frameData) {
 
@@ -376,12 +321,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       function error () {
         //console.log('error', index, src);
-        // Ошибка
         $img.remove();
 
         $.Fotorama.cache[src] = 'error';
 
-        // Попытаемся загрузить запасную картинку, если она есть:
         if ((!dataFrame.$html || type !== 'stage') && dummy && dummy !== src) {
           dataFrame[srcKey] = src = dummy;
           loadImg([index], type, specialMeasures, specialFit, true);
@@ -403,13 +346,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
             setMeasures();
           }
 
-          // Записываем в кеш, что картинка загрузилась:
           frameData.state = 'error';
 
           if (size > 1 && !dataFrame.html && !dataFrame.deleted && !dataFrame.video && !fullFLAG) {
-            // Ни одной картинки не удалось загрузить,
-            // удаляем кадр совсем из фоторамы,
-            // если он не последний, и в нём нет ХТМЛ
             dataFrame.deleted = true;
             that.splice(index, 1);
           }
@@ -419,8 +358,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       function loaded () {
         //console.log('loaded', index, src);
 
-        // Удачная загрузка:
-        // Кешируем оригинальные размеры картинки
         var width = $img.width(),
             height = $img.height(),
             ratio = width / height;
@@ -475,16 +412,12 @@ jQuery.Fotorama = function ($fotorama, opts) {
             .on('load', waitAndLoad)
             .on('error', error);
       } else {
-        // Возьмём из кеша
         (function justWait () {
           if ($.Fotorama.cache[src] === 'error') {
-            // Ошибка
             error();
           } else if ($.Fotorama.cache[src] === 'loaded') {
-            // Усхпех
             waitAndLoad();
           } else {
-            // Ждём
             setTimeout(justWait, 100);
           }
         })();
@@ -495,9 +428,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     });
   }
 
-  /**
-   * Проверяет статус активной картинки, если надо показывает крутилку
-   * */
   function updateFotoramaState () {
     var $frame = that.activeFrame[stageFrameKey];
 
@@ -510,11 +440,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }
 
-  /**
-   * Отрисовываем кадр (на сцене или в навигации), загружаем изображение, если требуется, оборачиваем в див.
-   * @param {Array} indexes Массив индексов
-   * @param {String} type Кадр для сцены — 'stage', для навигации — 'nav'
-   * */
   function frameDraw (indexes, type) {
     eachIndex(indexes, type, function (i, index, dataFrame, $frame, key, frameData) {
       //console.log('frameDraw');
@@ -528,7 +453,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       frameData.data = dataFrame;
 
       if (type === 'stage') {
-        // Сцена
 
         ////console.log('dataFrame.html', $(dataFrame.html).html());
 
@@ -565,8 +489,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
         $stageFrame = $stageFrame.add($frame);
       } else if (type === 'navDot') {
-        // Точки
-
         $navDotFrame = $navDotFrame.add($frame);
       } else if (type === 'navThumb') {
         frameData.$wrap = $frame.children(':first');
@@ -582,10 +504,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     return $img && $img.length && fit($img, measuresToFit, method);
   }
 
-
-  /**
-   * Позиционируем и показываем кадры с определённым индексом.
-   * */
   function stageFramePosition (indexes) {
     eachIndex(indexes, 'stage', function (i, index, dataFrame, $frame, key, frameData) {
       if (!$frame) return;
@@ -642,9 +560,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     });
   }
 
-  /**
-   * Вставляем, удаляем, сортируем точки и превьюшки:
-   * */
   function navAppend ($navFrame, $navShaft, mainFLAG) {
     if (!navAppend.ok) {
       $navFrame = $navFrame
@@ -678,9 +593,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }
 
-  /**
-   * ОБновляем стрелки, дизаблим крайние
-   * */
   function arrsUpdate () {
     $arrs.each(function (i) {
       $(this).toggleClass(
@@ -721,9 +633,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }
 
-  /**
-   * Обновляем навигацию
-   * */
   function navUpdate () {
     //console.log('navUpdate', o_nav);
     if (o_nav === 'thumbs') {
@@ -739,9 +648,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     that.activeFrame[navFrameKey].addClass(activeClass);
   }
 
-  /**
-   * Позиционируем шахту, чтобы текущий кадр имел нулевую позицию
-   * */
   function stageShaftReposition () {
     /*if (touchedFLAG) {
      waitFor(function () {
@@ -755,7 +661,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
         $frame = dataFrame[stageFrameKey];
 
     if ($frame) {
-      // Скрываем все лишние кадры
       $stageFrame
           .not(that.activeFrame[stageFrameKey].addClass(activeClass))
           .css({display: 'none'})
@@ -765,11 +670,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
           //.data('appended', false)
           .removeClass(activeClass);
 
-      // Возвращаем шахту в начальную позицию
       stop($stageShaft);
       $stageShaft.css(getTranslate(0));
 
-      // Показываем нужные
       stageFramePosition([activeIndex, prevIndex, nextIndex]);
       setStageShaftMinMaxPosAndSnap();
       setNavShaftMinMaxPos();
@@ -883,9 +786,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     return this;
   };
 
-  /**
-   * Показываем кадр по индексу, или по кодовому символу '>' — вперёд, '<' — назад, '>>' — в конец, '<<' в начало
-   * */
   that.show = function (options) {
     var index,
         time = TRANSITION_DURATION,
@@ -1004,7 +904,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       setTimeout(function () {
         $WINDOW.scrollLeft(0).scrollTop(0);
-        // Таймаут нужен для Сафари, чтобы он успел пересчитать скрол и не залип
+        // Timeout for Safari
         $BODY.addClass(_fullscreenClass);
 
         that.resize();
@@ -1092,15 +992,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     });
   }
 
-  /**
-   * Изменяем размер фоторамы
-   *
-   * @param {Object} options Объект с набором размеров
-   * @param {Number|String} options.width
-   * @param {Number|String} options.height
-   * @param {Number} options.time
-   *
-   * */
   that.resize = function (options) {
     if (!data) return;
 
@@ -1151,9 +1042,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     return this;
   };
 
-  /**
-   * Применяем любые опции после инициализации
-   * */
   that.setOptions = function (options) {
     $.extend(opts, options);
     reset();
@@ -1241,9 +1129,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
   );
 
-  /**
-   * Тап по сцене:
-   * */
   function onStageTap (e, touch) {
     if ($videoPlaying) {
       unloadVideo($videoPlaying, true, true);
@@ -1256,7 +1141,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }
 
-  // Подключаем перелистывание кадров в шахте на сцене
   stageShaftTouchTail = moveOnTouch($stageShaft, {
     onStart: onTouchStart,
     onMove: function (e, result) {
@@ -1284,7 +1168,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     $wrap: $stage
   });
 
-  // Подключаем таскание шахты в навигации
   navShaftTouchTail = moveOnTouch($navShaft, {
     onStart: onTouchStart,
     onMove: function (e, result) {
@@ -1319,13 +1202,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
     $wrap: $nav
   });
 
-  // Клик по точкам и превьюшкам
   function onNavFrameClick (e, time) {
     var index = $(this).data().eq;
     that.show({index: index, slow: e.altKey, direct: true, coo: e._x - $nav.offset().left, time: time});
   }
 
-  // Клик по стрелкам
   smartClick($arrs, function (e) {
     e.preventDefault();
     if ($videoPlaying) {
@@ -1358,9 +1239,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     tail: stageShaftTouchTail
   });
 
-  /**
-   * Мягкий ресет после каких-нибудь манипуляций
-   * */
   function reset () {
     setData();
     setOptions();
@@ -1385,9 +1263,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }
 
-  /**
-   * Создаём пачку методов для добавления и удаления кадров на лету
-   * */
   $.each('load push pop shift unshift reverse sort splice'.split(' '), function (i, method) {
     that[method] = function () {
       data = data || [];
@@ -1401,9 +1276,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   });
 
-  /**
-   * Когда Фоторама готова
-   * */
   function ready () {
     if (!ready.ok) {
       ready.ok = true;
@@ -1416,7 +1288,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
   reset();
 };
 
-// Заворачиваем в джейквери-плагин:
 $.fn.fotorama = function (opts) {
   return this.each(function () {
     var that = this,
@@ -1425,16 +1296,15 @@ $.fn.fotorama = function (opts) {
         fotorama = fotoramaData.fotorama;
 
     if (!fotorama) {
-      // Если фоторама ещё не инициализирована, включаем её:
       waitFor(function () {
         return !isHidden(that);
       }, function () {
         fotoramaData.urtext = $fotorama.html();
         new $.Fotorama($fotorama,
-            /* Иерархия приоритета опций, выше — приоритетней:
-             * 1. Дата-атрибуты (<div data-loop="true"></div>)
-             * 2. Массив опций при инициализации ($('div').fotorama({loop: false}))
-             * 3. Дефолтные значения */
+            /* Priority for options:
+             * 1. <div data-loop="true"></div>
+             * 2. $('div').fotorama({loop: false})
+             * 3. Defaults */
             $.extend(
                 {},
                 {
@@ -1485,17 +1355,11 @@ $.fn.fotorama = function (opts) {
 //  }
 };
 
-//$.Fotorama = {};
-
-// Глобальный массив для хранения адресов загруженных фоток, (чтобы не загружать дважды)
 $.Fotorama.cache = {};
 
 var _size = 0;
 $.Fotorama.size = 0;
-// $.Fotorama.fotorama = [];
 
-// Когда DOM готов:
 $(function () {
-  // Авто-инициализация по классу
   $('.' + _fotoramaClass + ':not([data-auto="false"])').fotorama();
 });

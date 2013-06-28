@@ -1,13 +1,3 @@
-/**
- * Функция для перетаскивания и швыряния некого объекта. Для работы необходима функция touch,
- * предоставляющая универсальный доступ к событиям.
- * Имеет три колбека — onStart, onMove, onEnd, в которые (кроме onEnd) отдаётся объект
- * события и дополнительные вычисленные параметры, для добавления инерции или показа определённого изображения
- * в фотораме, например.
- *
- * @param {jQuery} $el Джейквери-объект, на котором будут отслеживаться события
- * @param {Object} options Объект с опциями
- */
 function moveOnTouch ($el, options) {
   var el = $el[0],
       elData = $el.data(),
@@ -29,7 +19,6 @@ function moveOnTouch ($el, options) {
   function startTracking (e) {
     startCoo = coo = e._x;
 
-    // Начинаем запись маршрута курсора
     moveTrack = [
       [new Date().getTime(), startCoo]
     ];
@@ -62,7 +51,6 @@ function moveOnTouch ($el, options) {
 
     coo = e._x;
 
-    // Продолжаем запись маршрута курсора
     moveTrack.push([new Date().getTime(), coo]);
 
     moveElPos = startElPos - (startCoo - coo);

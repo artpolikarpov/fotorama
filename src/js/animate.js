@@ -1,7 +1,3 @@
-/**
- * Универсальная функция для анимирования блока (через ЦСС3 или Джейквери),
- * по одному из свойств, top или left
- * */
 function slide ($el, options) {
   var elPos = Math.round(options.pos),
       onEndFn = options.onEnd || noop;

@@ -1,28 +1,14 @@
-/**
- * Noop
- * */
-function noop () {
-}
+function noop () {}
 
-/**
- * Простой лимитер
- * */
 function minMaxLimit (value, min, max) {
   return Math.max(typeof min !== 'number' ? -Infinity : min, Math.min(typeof max !== 'number' ? Infinity : max, value));
 }
 
-/**
- * Парсит матрицу трансформации элемента,
- * возвращает величину по определённой координате (top или left)
- * */
 function readTransform (css) {
   //console.log('---readTransform---', css);
   return css && css.match(/-?\d+/g)[4];
 }
 
-/**
- * Функция для чтения актуальной позиции элемента
- * */
 function readPosition ($el) {
   if (CSS3) {
     return Number(readTransform($el.css('transform')));
@@ -31,10 +17,6 @@ function readPosition ($el) {
   }
 }
 
-/**
- * Возвращает позицию для использования в .css(), например:
- *   $el.css(getTranslate(100, 'left'));
- * */
 function getTranslate (pos) {
   var obj = {};
   if (CSS3) {
@@ -45,66 +27,32 @@ function getTranslate (pos) {
   return obj;
 }
 
-/**
- * Возвращает время анимации для использования в .css(), например:
- *   $el.css(getDuration(333));
- * */
 function getDuration (time) {
   return {'transition-duration': time + 'ms'};
 }
 
-/**
- * Получаем число N из строки 'Npx'.
- * Можно вычленить любую другую единицу, передав её вторым параметром:
- * numberFromPx()
- * */
 function numberFromMeasure (value, measure) {
   value = Number(String(value).replace(measure || 'px', ''));
   return isNaN(value) ? false : value;
 }
 
-/**
- * Размер в процентах
- * */
 function numberFromPercent (value) {
   var number = numberFromMeasure(value, '%');
   return !!number && /%$/.test(value) ? number : false;
 }
 
-/**
- * Можно ли использовать размер, если да — возвращает исходное value
- * */
 function measureIsValid (value) {
   return !!numberFromMeasure(value) || !!numberFromMeasure(value, '%') ? value : false;
 }
 
-/*function capitaliseFirstLetter (string) {
- return string && string.charAt(0).toUpperCase() + string.slice(1);
- }*/
-
-/**
- * Позиция по индексу
- * */
 function getPosByIndex (index, side, margin, baseIndex) {
   return (index - (baseIndex || 0)) * (side + (margin || 0));
 }
 
-/**
- * Индекс по позиции
- * */
 function getIndexByPos (pos, side, margin, baseIndex) {
   return -Math.round(pos / (side + (margin || 0)) - (baseIndex || 0));
 }
 
-/*function getRandomInt (min, max) {
- return Math.floor(Math.random() * (max - min + 1)) + min;
- }*/
-
-
-/**
- * Слушаем событие transitionend,
- * выполняем заданный колбек
- * */
 function bindTransitionEnd ($el) {
   var elData = $el.data();
 
@@ -125,9 +73,6 @@ function bindTransitionEnd ($el) {
   elData.tEnd = true;
 }
 
-/**
- * Присваивание колбека для выполнения после завершения анимации
- * */
 function afterTransition ($el, property, fn, time) {
   var done,
       elData = $el.data();
@@ -160,10 +105,6 @@ function afterTransition ($el, property, fn, time) {
   }
 }
 
-/**
- * Универсальная функция для остановки анимируемого объекта,
- * возвращает актуальную позицию
- * */
 function stop ($el) {
   if (CSS3) {
     $el.css(getDuration(0));
@@ -179,9 +120,6 @@ function stop ($el) {
   }
 }
 
-/**
- * Сопротивление на краях шахты
- * */
 function edgeResistance (pos, edge) {
   return Math.round(pos + ((edge - pos) / 1.5));
 }
@@ -281,9 +219,6 @@ function updateData (data, _dataFrame, i, api) {
   }
 }
 
-/**
- * Парсим ХТМЛ в массив с данными об изображениях
- * */
 function getDataFromHtml ($el) {
   var data = [];
 
@@ -327,17 +262,10 @@ function getDataFromHtml ($el) {
   return data;
 }
 
-/**
- * Проверка видимости элемента (visibility: hidden — это видимый элемент, в данном контексте)
- * Работает в 3-4 раза быстрее джейкверевского ':hidden'
- * */
 function isHidden (el) {
   return el.offsetWidth === 0 && el.offsetHeight === 0;
 }
 
-/**
- * Фунция-посредник, чтобы выполнить другую функцию только, если определённый элемент видим (имеет размеры) на странице
- * */
 function waitFor (test, fn, timeout) {
   if (test()) {
     fn();
@@ -348,7 +276,6 @@ function waitFor (test, fn, timeout) {
   }
 }
 
-
 function setHash (hash) {
   location.replace(location.protocol
       + '//'
@@ -358,9 +285,6 @@ function setHash (hash) {
       + '#' + hash);
 }
 
-/**
- * Вписывает объект в заданные рамки тремя способами: none, contain и cover
- * */
 function fit ($el, measuresToFit, method) {
   //console.log('fit');
 
@@ -472,31 +396,3 @@ function smartClick ($el, fn, _options) {
 function div (classes, child) {
   return '<div class="' + classes + '">' + (child || '') + '</div>';
 }
-
-//function preventDefault (e) {
-//  e.preventDefault();
-//}
-
-//function stopPropagation (e) {
-//  e.stopPropagation();
-//}
-//
-//function noInteraction () {
-//  return false;
-//}
-
-//function bindNoInteraction ($el) {
-//  return $el.each(function () {
-//    $(this)
-//        .off('mousedown mousemove mouseup')
-//        .on('mousedown mousemove mouseup', noInteraction);
-//    if (TOUCH) {
-//      this.removeEventListener('touchstart', noInteraction);
-//      this.removeEventListener('touchmove', noInteraction);
-//      this.removeEventListener('touchend', noInteraction);
-//      this.addEventListener('touchstart', noInteraction);
-//      this.addEventListener('touchmove', noInteraction);
-//      this.addEventListener('touchend', noInteraction);
-//    }
-//  });
-//}

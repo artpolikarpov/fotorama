@@ -9,27 +9,6 @@ function extendEvent (e, touchFLAG) {
   e._y = touchFLAG ? e.touches[0].pageY : e.pageY;
 }
 
-/**
- * Базовая функция для таскания и швыряния некого элемента.
- * Работает с событиями touchstart, touchmove, touchend на тач-девайсах
- * и mousedown, mousemove, mouseup. Блокирует многопальцевые жесты.
- * На тач-дейвасах может сохранить возможность прокрутки страницы в одном из направлений.
- * Сама функция не перемещает элемент, но предоставляет интерфейс для этого.
- * Имеет три колбека — onStart, onMove, onEnd, в которые (кроме onEnd) первым параметром отдаётся объект
- * события, для непосредственного изменения позиции элемента, this внутри колбеков — это элемент,
- * на котором сработало событие.
- *
- * Пример использования:
- *   touch($('#shaft'), {
- *     onStart: function (e) { // log(e.type) },
- *     onMove: function (e) { ... },
- *     onEnd: function () { ... },
- *     keepTouchScroll: 'y' // or 'x'
- *   });
- *
- * @param $el {jQuery} Джейквери-объект, на котором будут отслеживаться события
- * @param options {Object} Объект с опциями
- */
 function touch ($el, options) {
   var el = $el[0],
       tail = {},
@@ -142,14 +121,10 @@ function touch ($el, options) {
       .on('mouseup', onEnd);
 
   $el.on('click', 'a', function (e) {
-    // Клик по ссылкам только если не начато перетаскивание
     if (tail.checked) {
       e.preventDefault();
     }
   });
 
-
-  // Возвращаем хвостик, чтобы управлять некоторыми параметрами в будущем,
-  // например ориентацией
   return tail;
 }

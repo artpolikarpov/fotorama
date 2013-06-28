@@ -14,11 +14,7 @@ var $WINDOW = $(window),
     MARGIN = 2,
     THUMB_SIZE = 64,
 
-// Размеры на тот случай, если пользователь не укажет и брать не откуда
     WIDTH = 500,
     HEIGHT = 333,
 
     BEZIER = bez([.1, 0, .25, 1]);
-
-
-console.log('Modernizr.csstransforms3d', Modernizr.csstransforms3d);

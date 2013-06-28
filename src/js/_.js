@@ -1,4 +1,4 @@
-// Underscore
+// My little Underscore
 
 // List of HTML entities for escaping.
 var escapeEntityMap = {
@@ -8,7 +8,7 @@ var escapeEntityMap = {
   '"': '&quot;',
   "'": '&#x27;',
   '/': '&#x2F;'
-}
+};
 
 // Regexes containing the keys and values listed immediately above.
 var escapeRegex = new RegExp('[&<>"\'/]', 'g');
