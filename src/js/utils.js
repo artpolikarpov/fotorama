@@ -305,19 +305,20 @@ function getDataFromHtml ($el) {
     return {
       video: video,
       img: imgData.img || _imgHref || _imgSrc || _thumbSrc,
-      thumb: imgData.thumb || _thumbSrc || _imgSrc || _imgHref,
-      id: $img.attr('id')
+      thumb: imgData.thumb || _thumbSrc || _imgSrc || _imgHref
     }
   }
 
   $el.children().each(function (i) {
     var $this = $(this),
-        dataFrame = $this.data();
+        dataFrame = $.extend($this.data(), {id: this.id});
     if ($this.is('a, img')) {
       $.extend(dataFrame, getDataFromImg($this, true));
     } else if (!$this.is(':empty')) {
-      dataFrame.html = this;
-      dataFrame._html = $this.html(); // Because of IE
+      $.extend(dataFrame, {
+        html: this,
+        _html: $this.html() // Because of IE
+      });
     } else return;
 
     data.push(dataFrame);
