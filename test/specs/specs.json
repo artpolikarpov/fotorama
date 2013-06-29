@@ -13,6 +13,12 @@
 			"specs": "test/specs/initialization.js"
 		}
 	},
+  "no-css-no-throw": {
+		"src": ["test/jquery/jquery-1.10.1.min.js", "product/fotorama.js"],
+		"options": {
+			"specs": "test/specs/no-css-no-throw.js"
+		}
+	},
 	"events-n-methods": {
 		"src": ["test/jquery/jquery-1.10.1.min.js", "product/fotorama.js"],
 		"options": {
