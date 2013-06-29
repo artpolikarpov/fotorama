@@ -4,7 +4,7 @@ var lastEvent,
     preventEventTimeout;
 
 function extendEvent (e, touchFLAG) {
-  console.log(e.type);
+  //console.log(e.type);
   e._x = touchFLAG ? e.touches[0].pageX : e.pageX;
   e._y = touchFLAG ? e.touches[0].pageY : e.pageY;
 }

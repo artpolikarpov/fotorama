@@ -103,7 +103,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           dataFrame.video = video;
           if (!dataFrame.img && !dataFrame.thumb) {
             thumbs = getVideoThumbs(dataFrame, data, that);
-            //console.log('thumbs', thumbs)
+            ////console.log('thumbs', thumbs)
           } else {
             dataFrame.thumbsReady = true;
           }
@@ -320,7 +320,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
 
       function error () {
-        //console.log('error', index, src);
+        ////console.log('error', index, src);
         $img.remove();
 
         $.Fotorama.cache[src] = 'error';
@@ -356,7 +356,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
 
       function loaded () {
-        //console.log('loaded', index, src);
+        ////console.log('loaded', index, src);
 
         var width = $img.width(),
             height = $img.height(),
@@ -442,11 +442,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function frameDraw (indexes, type) {
     eachIndex(indexes, type, function (i, index, dataFrame, $frame, key, frameData) {
-      //console.log('frameDraw');
+      ////console.log('frameDraw');
 
       if ($frame) return;
 
-      //console.log('frameDraw execute');
+      ////console.log('frameDraw execute');
 
       $frame = dataFrame[key] = $wrap[key].clone();
       frameData = $frame.data();
@@ -454,7 +454,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       if (type === 'stage') {
 
-        ////console.log('dataFrame.html', $(dataFrame.html).html());
+        //////console.log('dataFrame.html', $(dataFrame.html).html());
 
         if (dataFrame.html) {
           var $html = $(dataFrame.html).html(dataFrame._html); // Because of IE
@@ -634,7 +634,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function navUpdate () {
-    //console.log('navUpdate', o_nav);
+    ////console.log('navUpdate', o_nav);
     if (o_nav === 'thumbs') {
       $navFrame = $navThumbFrame;
       navFrameKey = navThumbFrameKey;
@@ -710,12 +710,12 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function triggerEvent (event, extra) {
-    console.log('triggerEvent', event, extra);
+    //console.log('triggerEvent', event, extra);
     $fotorama.trigger(_fotoramaClass + ':' + event, [that, extra]);
   }
 
   function eventData (index) {
-    console.log('eventData', index);
+    //console.log('eventData', index);
     return {
       index: index,
       frame: data[index]
@@ -892,7 +892,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           .appendTo($BODY);
 
       measuresStash = $.extend({}, measures);
-      console.log('measuresStash', measuresStash, measures);
+      //console.log('measuresStash', measuresStash, measures);
 
       unloadVideo($videoPlaying, true);
 
@@ -918,7 +918,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   };
 
   function cancelFullScreen () {
-    console.log('/!\ cancelFullScreen');
+    //console.log('/!\ cancelFullScreen');
 
     if (that.fullScreen) {
       that.fullScreen = false;
@@ -937,7 +937,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       measures = $.extend({}, measuresStash);
 
-      console.log('measures', measures, measuresStash);
+      //console.log('measures', measures, measuresStash);
 
       unloadVideo($videoPlaying, true);
 
@@ -1055,7 +1055,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   that.destroy = function () {
-    console.log('destroy');
+    //console.log('destroy');
     that.stopAutoplay();
     $wrap.detach();
     $fotorama.html(fotoramaData.urtext);
