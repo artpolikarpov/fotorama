@@ -5,8 +5,7 @@ function minMaxLimit (value, min, max) {
 }
 
 function readTransform (css) {
-  //console.log('---readTransform---', css);
-  return css && css.match(/-?\d+/g)[4];
+  return css.match(/^m/) && css.match(/-?\d+/g)[4];
 }
 
 function readPosition ($el) {
