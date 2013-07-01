@@ -515,10 +515,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
       if (!frameData.appended) {
         $frame.appendTo($stageShaft);
         frameData.appended = true;
+        unloadVideo(dataFrame.$video);
       }
-
-      unloadVideo(dataFrame.$video);
-
 
       ///
 //			if (frameData.hidden) {
