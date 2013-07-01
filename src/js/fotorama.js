@@ -509,7 +509,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       if (!$frame) return;
 
       $frame
-          .css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, MARGIN, repositionIndex), display: 'block'}, o_fade && getDuration(0)));
+          .css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, MARGIN, repositionIndex)/*, display: 'block'*/}, o_fade && getDuration(0)));
       //.fadeTo(0, o_fade && index !== activeIndex ? 0 : 1);
 
       if (!frameData.appended) {
@@ -517,6 +517,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
         frameData.appended = true;
         unloadVideo(dataFrame.$video);
       }
+
+
 
       ///
 //			if (frameData.hidden) {
@@ -661,11 +663,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if ($frame) {
       $stageFrame
           .not(that.activeFrame[stageFrameKey].addClass(activeClass))
-          .css({display: 'none'})
+          //.css({display: 'none'})
         //.hide()
         //.data('hidden', true)
-          //.detach()
-          //.data('appended', false)
+          .detach()
+          .data('appended', false)
           .removeClass(activeClass);
 
       stop($stageShaft);
@@ -1104,7 +1106,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       stageNoMove();
     }
 
-    if ($video) {
+    if ($video && $video !== $videoPlaying) {
       $video.remove();
       triggerEvent('unloadvideo');
     }
