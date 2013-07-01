@@ -140,8 +140,11 @@ $time: 300ms;
 }
 
 .fotorama__wrap--video {
+  .fotorama__stage__shaft {
+    @extend %no-transform;
+  }
   .fotorama__stage__frame--video {
-    /*background-color: #000;*/
+    @extend %no-transform;
     .fotorama__img,
     .fotorama__html {
       @include opacity(0);

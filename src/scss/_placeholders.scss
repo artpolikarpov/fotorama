@@ -35,6 +35,10 @@
   @include transform(translate3d(0, 0, 0));
 }
 
+%no-transform {
+  @include transform(none !important);
+}
+
 %transition-for-touch {
   @include transition-property(transform 0ms cubic-bezier(.1, .25, .25, 1));
 }
