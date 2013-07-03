@@ -17,7 +17,7 @@ describe('Fullscreen', function () {
 		$window = $window || $(window);
 		$fotorama = $fotorama || $('#fotorama');
 		fotorama = fotorama || $fotorama.data('fotorama');
-		jasmine.Clock.useMock();
+		//jasmine.Clock.useMock();
 	});
 
 	describe('requestFullScreen', function () {
@@ -31,7 +31,7 @@ describe('Fullscreen', function () {
 
 		it('no fullscreen if it is not allowed yet', function () {
 			fotorama.requestFullScreen();
-			jasmine.Clock.tick(100);
+			//jasmine.Clock.tick(100);
 			expect($fotorama.hasClass('fotorama--fullscreen')).toBeFalsy();
 		});
 
@@ -41,7 +41,7 @@ describe('Fullscreen', function () {
 //
 //		    // try again
 			fotorama.requestFullScreen();
-			jasmine.Clock.tick(100);
+			//jasmine.Clock.tick(100);
 //
 //		    // fullscreen is here
 			expect($fotorama.hasClass('fotorama--fullscreen')).toBeTruthy();
@@ -59,7 +59,7 @@ describe('Fullscreen', function () {
 	describe('cancelFullscreen', function () {
 		it('fullscreen is cancelled', function () {
 			fotorama.cancelFullScreen();
-			jasmine.Clock.tick(100);
+			//jasmine.Clock.tick(100);
 			expect($fotorama.hasClass('fotorama--fullscreen')).toBeFalsy();
 		});
 

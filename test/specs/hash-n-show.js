@@ -1,6 +1,6 @@
 document.write(
 	'<div class="fotorama" data-hash="true" id="fotorama">' +
-		'<img src="test/i/okonechnikov/1-lo.jpg">' +
+		'<img src="test/i/okonechnikov/1-lo.jpg" id="first">' +
 		'<img src="test/i/okonechnikov/2-lo.jpg">' +
 		'<img src="test/i/okonechnikov/9-lo.jpg" id="9-lo">' +
 		'<div>The fourth sequence</div>' +
@@ -49,5 +49,25 @@ describe('Hash', function () {
 		fotorama.show({index: '>', time: 0});
 
     expect(location.hash).toBe('#fifth');
+	});
+
+  it('.show() works with indexes', function () {
+		fotorama.show({index: 0, time: 0});
+    expect(fotorama.activeIndex).toBe(0);
+    fotorama.show({index: 1, time: 0});
+    expect(fotorama.activeIndex).toBe(1);
+    fotorama.show({index: fotorama.size - 1, time: 0});
+    expect(fotorama.activeIndex).toBe(fotorama.size - 1);
+	});
+
+  it('.show() works with ids', function () {
+		fotorama.show({index: 'first', time: 0});
+    expect(fotorama.activeIndex).toBe(0);
+    fotorama.show({index: '9-lo', time: 0});
+    expect(fotorama.activeIndex).toBe(2);
+    fotorama.show({index: 'fifth', time: 0});
+    expect(fotorama.activeIndex).toBe(fotorama.size - 1);
+    fotorama.show({index: 'qwerty', time: 0});
+    expect(fotorama.activeIndex).toBe(fotorama.size - 1);
 	});
 });
