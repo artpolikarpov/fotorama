@@ -64,7 +64,7 @@ $time: 300ms;
 }
 
 .fotorama__wrap--slide {
-  .fotorama__stage__shaft {
+  .fotorama__stage__shaft.fotorama__grab {
     @extend %grab-cursor;
   }
   .fotorama__stage__frame {
@@ -226,7 +226,9 @@ $time: 300ms;
   top: 0;
   text-align: left;
   @extend %no-tap;
-  @extend %grab-cursor;
+  &.fotorama__grab {
+    @extend %grab-cursor;
+  }
 }
 
 .fotorama__nav__frame {

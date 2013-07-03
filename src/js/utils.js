@@ -350,8 +350,8 @@ function findShadowEdge (pos, minPos, maxPos) {
 function getIndexFromHash (hash, data, ok) {
   if (!ok) return false;
 
-  var index = Number(hash);
-  if (!isNaN(index)) return index - 1;
+  var index;
+  if (!isNaN(hash)) return hash - 1;
 
   for (var _i = 0, _l = data.length; _i < _l; _i++) {
     var dataFrame = data[_i];

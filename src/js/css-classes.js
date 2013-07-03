@@ -15,6 +15,8 @@ var _fotoramaClass = 'fotorama',
     stageShaftClass = stageClass + '__shaft',
     stageOnlyActiveClass = stageClass + '--only-active',
 
+    grabClass = _fotoramaClass + '__grab',
+
     arrClass = _fotoramaClass + '__arr',
     arrDisabledClass = arrClass + '--disabled',
     arrPrevClass = arrClass + '--prev',
