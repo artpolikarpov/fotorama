@@ -366,6 +366,8 @@ $time: 300ms;
   &:before, &:after {
     content: '';
     position: absolute;
+    left: 0;
+    top: 0;
     width: $size;
     height: $size;
     border-radius: $size;
