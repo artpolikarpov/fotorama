@@ -829,11 +829,15 @@ jQuery.Fotorama = function ($fotorama, opts) {
     that.activeFrame = activeFrame = data[activeIndex];
 
     stageFramePosition([dirtyIndex]);
+
     unloadVideo(false, activeFrame.i !== data[normalizeIndex(repositionIndex)].i);
-    triggerEvent('show', options.direct);
+
+
+    frameDraw([activeIndex, prevIndex, nextIndex], 'stage');
+    triggerEvent('show', options.direct); // TODO: test that .activeFrame is ready event on the first show
 
     function onEnd () {
-      frameDraw([activeIndex, prevIndex, nextIndex], 'stage'); /////
+
       updateFotoramaState();
       loadImg([activeIndex, prevIndex, nextIndex], 'stage');
       stageShaftReposition(); /////
@@ -844,8 +848,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       releaseAutoplay();
       changeAutoplay();
-
-      showedFLAG = true;
     }
 
     if (!o_fade) {
@@ -879,6 +881,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
     if (o_nav === 'thumbs') slideThumbBorder(time);
 
+    showedFLAG = typeof lastActiveIndex !== 'undefined' && lastActiveIndex !== activeIndex;
     lastActiveIndex = activeIndex;
 
     return this;

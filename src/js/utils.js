@@ -210,7 +210,8 @@ function updateData (data, _dataFrame, i, api) {
         videoReady: true,
         caption: dataFrame.caption,
         img: dataFrame.img || _dataFrame.img,
-        thumb: dataFrame.thumb || _dataFrame.thumb
+        thumb: dataFrame.thumb || _dataFrame.thumb,
+        id: dataFrame.id || _dataFrame.id
       });
 
       break;
@@ -245,7 +246,7 @@ function getDataFromHtml ($el) {
 
   $el.children().each(function (i) {
     var $this = $(this),
-        dataFrame = $.extend($this.data(), {id: this.id});
+        dataFrame = $.extend($this.data(), {id: $this.attr('id')});
     if ($this.is('a, img')) {
       $.extend(dataFrame, getDataFromImg($this, true));
     } else if (!$this.is(':empty')) {

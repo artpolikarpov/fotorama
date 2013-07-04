@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Lightbox</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.10.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../product/fotorama.css" rel="stylesheet">
+	<script src="../product/fotorama.js"></script>
+</head>
+
+<body>
+
+<p>Lightbox. View page source for details.<p>
+
+<style>
+  body {
+    position: relative;
+  }
+
+  .overflow-hidden {
+    overflow: hidden !important;
+  }
+
+  .fotorama-lightbox {
+    z-index: 10001;
+    position: absolute;
+    background-color: #fff;
+    border: 4px solid;
+    border-color: #aaa;
+    border-color: rgba(255, 255, 255, .9);
+    box-shadow: 0 1px 25px rgba(0, 0, 0, .75), 0 0 5px rgba(0, 0, 0, .5);
+  }
+
+  .fotorama-lightbox .fotorama__nav {
+    margin-top: -30px;
+    /*background-color: rgba(255, 255, 255, .75);*/
+  }
+
+  /* straight “close” icon instead of “cancel fullscreen” */
+  .fotorama-lightbox .fotorama__fullscreen-icon {
+    background-position: -64px 0;
+  }
+
+  /* style thumbs a bit */
+  .thumbs a {
+    text-decoration: none;
+    display: inline-block;
+    color: #34457b;
+  }
+  .thumbs a:hover {
+    color: #af1d05;
+  }
+  .thumbs a.switch {
+    border-bottom: 1px dashed;
+  }
+  .thumbs img {
+    width: auto;
+    height: 72px;
+    border: 2px #fff solid;
+    box-shadow: 0 0 3px rgba(0, 0, 0, .5);
+    margin: 0 10px 10px -2px;
+  }
+
+  .thumbs a:hover img {
+    border-color: #00afea;
+  }
+</style>
+
+<script>
+  $(function () {
+
+    var $document = $(document),
+        $window = $(window),
+        $body = $('body');
+
+    var placeFotorama = function ($fotorama, time) {
+      if ($fotorama.data('open')) {
+        $fotorama
+            .stop()
+            .css({marginTop: -30, left: $body.width() / 2 - $fotorama.width() / 2, top: $window.scrollTop() + $window.height() / 2 - $fotorama.height() / 2 - 20})
+            .animate({marginTop: 0, opacity: 1}, time || 0);
+      } else {
+        $fotorama.css({left: -99999, top: -99999});
+      }
+    };
+
+    // take all .fotorama blocks
+    $('.thumbs').each(function () {
+      var $thumbs = $(this),
+
+          // clone it and make fotorama
+          $fotorama = $('.fotorama', $thumbs)
+              .clone()
+              .addClass('fotorama-lightbox')
+              .appendTo('body')
+              .fadeTo(0, 0)
+              .fotorama(),
+          fotorama = $fotorama.data('fotorama');
+
+      placeFotorama($fotorama);
+
+      for (var _i = 0, _l = fotorama.data.length; _i < _l; _i++) {
+        // prepare id to use in fotorama.show()
+        fotorama.data[_i].id = fotorama.data[_i].img;
+      }
+
+      // bind clicks
+      $fotorama.on('click', function (e) {
+        e.stopPropagation();
+      });
+
+      $thumbs.on('click', 'a', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        var $this = $(this),
+            _$fotorama = $body.data('$fotorama');
+
+        fotorama
+            // show needed frame
+            .show({index: $this.attr('href'), time: _$fotorama ? 300 : 0, slow: e.altKey});
+
+        if (_$fotorama) return;
+
+        $body
+            .addClass('overflow-hidden')
+            .data('$fotorama', $fotorama);
+
+        $fotorama.css({left: $this.offset().left, top: $this.offset().top});
+        placeFotorama($fotorama.data('open', true), 300);
+      });
+
+      $window.on('resize', function () {
+        placeFotorama($fotorama);
+      });
+
+      var closeFotorama = function () {
+        var $fotorama = $body.data('$fotorama');
+
+        if (!$fotorama) return;
+        $body
+            .removeClass('overflow-hidden')
+            .data('$fotorama', null);
+        $fotorama
+            .stop()
+            .animate({marginTop: 30, opacity: 0}, 300, function () {
+              placeFotorama($fotorama.data('open', false));
+            });
+      };
+
+      $document
+          .on('click', closeFotorama)
+          .on('keydown', function (e) {
+            var $fotorama = $body.data('$fotorama');
+
+            if (!$fotorama) return;
+
+            var fotorama = $fotorama.data('fotorama');
+
+            if (e.keyCode === 27) {
+              e.preventDefault();
+              closeFotorama();
+            } else if (e.keyCode === 39) {
+              fotorama.show({index: '>', slow: e.altKey, direct: true});
+            } else if (e.keyCode === 37) {
+              e.preventDefault();
+              fotorama.show({index: '<', slow: e.altKey, direct: true});
+            }
+          });
+
+      $fotorama.on('fotorama:fullscreenenter', function (e, fotorama) {
+        fotorama.cancelFullScreen();
+        closeFotorama();
+      });
+    });
+
+  });
+</script>
+
+<!-- Thumbs -->
+<div class="thumbs">
+  <p style="margin-top: 0; padding-top: 0; margin-bottom: .5em;"><a href="#" class="switch">Photos</a>:</p>
+
+  <!-- Fotorama, `data-auto="false"` is important -->
+  <div class="fotorama"
+       data-auto="false"
+       data-thumb-width="70"
+       data-thumb-height="47"
+       data-allow-full-screen="true"
+       data-loop="true"
+       data-nav="dots">
+    <a href="i/okonechnikov/1-lo.jpg"><img src="i/okonechnikov/1-thumb.jpg"></a>
+    <a href="i/okonechnikov/2-lo.jpg"><img src="i/okonechnikov/2-thumb.jpg"></a>
+    <a href="i/okonechnikov/4-lo.jpg"><img src="i/okonechnikov/4-thumb.jpg"></a>
+    <a href="i/okonechnikov/5-lo.jpg"><img src="i/okonechnikov/5-thumb.jpg"></a>
+    <a href="i/okonechnikov/6-lo.jpg"><img src="i/okonechnikov/6-thumb.jpg"></a>
+  </div>
+</div>
+
+<!-- © -->
+<p>Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
+
+</body>
+</html>

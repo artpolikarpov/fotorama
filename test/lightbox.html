@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Lighbox</title>
+	<title>Lightbox</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 
@@ -15,21 +15,39 @@
 
 <body>
 
-<p>Lighbox. View page source for details.<p>
+<p>Lightbox. View page source for details.<p>
 
 <style>
+  .fullscreen,
+  .fotorama--fullscreen,
+  .fotorama--fullscreen .fotorama__stage,
+  .fotorama--fullscreen .fotorama__nav,
+  .fotorama-overlay {
+    background-color: #ddddda;
+  }
   /* style thumbs a bit */
+  .thumbs a {
+    text-decoration: none;
+    color: #34457b;
+  }
+  .thumbs a:hover {
+    color: #af1d05;
+  }
+  .thumbs a.switch {
+    border-bottom: 1px dashed;
+  }
   .thumbs img {
     width: auto;
     height: 72px;
     border: 2px #fff solid;
+    margin-left: -2px;
   }
 
   .thumbs a:hover img {
     border-color: #00afea;
   }
 
-  /* straight close icon instead of fullscreen exit */
+  /* straight “close” icon instead of “cancel fullscreen” */
   .fotorama--fullscreen .fotorama__fullscreen-icon {
     background-position: -64px 0;
   }
@@ -38,8 +56,9 @@
 <script>
   $(function () {
 
+    // overlay for smoother fullscreen enter
     var $overlay = $('<div class="fotorama-overlay"></div>')
-        .css({position: 'fixed', top: 0, right: 0, bottom: 0, left: 0, backgroundColor: '#000', zIndex: 10001})
+        .css({position: 'fixed', top: 0, right: 0, bottom: 0, left: 0, zIndex: 10001})
         .fadeTo(0, 0)
         .hide()
         .appendTo('body');
@@ -49,9 +68,9 @@
       var $thumbs = $(this),
 
           // clone it and make fotorama
-          $fotorama = $thumbs
+          $fotorama = $('.fotorama', $thumbs)
               .clone()
-              .removeClass('thumbs')
+              //.show()
               .css({position: 'absolute', left: -99999, top: -99999})
               .appendTo('body')
               .fadeTo(0, 0)
@@ -74,6 +93,8 @@
             .stop()
             .fadeTo(150, 1, function () {
               $fotorama.stop().fadeTo(150, 1);
+
+              // API calls
               fotorama
                   // show needed frame
                   .show({index: $this.attr('href'), time: 0})
@@ -93,17 +114,23 @@
   });
 </script>
 
-<!-- Fotorama -->
-<div class="thumbs"
-     data-allow-full-screen="true"
-     data-thumb-width="70"
-     data-thumb-height="47"
-     data-nav="thumbs">
-	<a href="i/okonechnikov/1-lo.jpg"><img src="i/okonechnikov/1-thumb.jpg"></a>
-	<a href="i/okonechnikov/2-lo.jpg"><img src="i/okonechnikov/2-thumb.jpg"></a>
-	<a href="i/okonechnikov/4-lo.jpg"><img src="i/okonechnikov/4-thumb.jpg"></a>
-	<a href="i/okonechnikov/5-lo.jpg"><img src="i/okonechnikov/5-thumb.jpg"></a>
-	<a href="i/okonechnikov/6-lo.jpg"><img src="i/okonechnikov/6-thumb.jpg"></a>
+<!-- Thumbs -->
+<div class="thumbs">
+  <p style="margin-bottom: .5em;"><a href="#" class="switch">Photos</a>:</p>
+
+  <!-- Fotorama, `data-auto="false"` is important -->
+  <div class="fotorama"
+       data-auto="false"
+       data-allow-full-screen="true"
+       data-thumb-width="70"
+       data-thumb-height="47"
+       data-nav="thumbs">
+    <a href="i/okonechnikov/1-lo.jpg"><img src="i/okonechnikov/1-thumb.jpg"></a>
+    <a href="i/okonechnikov/2-lo.jpg"><img src="i/okonechnikov/2-thumb.jpg"></a>
+    <a href="i/okonechnikov/4-lo.jpg"><img src="i/okonechnikov/4-thumb.jpg"></a>
+    <a href="i/okonechnikov/5-lo.jpg"><img src="i/okonechnikov/5-thumb.jpg"></a>
+    <a href="i/okonechnikov/6-lo.jpg"><img src="i/okonechnikov/6-thumb.jpg"></a>
+  </div>
 </div>
 
 <!-- © -->

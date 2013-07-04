@@ -4,7 +4,7 @@ document.write(
 		'<img src="test/i/okonechnikov/2-lo.jpg">' +
 		'<img src="test/i/okonechnikov/9-lo.jpg" id="9-lo">' +
 		'<div>The fourth sequence</div>' +
-		'<div id="fifth">Fifth</div>' +
+		'<a href="http://www.youtube.com/watch?v=zyXF-BjY6pM" id="fifth">Fifth</a>' +
 	'</div>'
 );
 
