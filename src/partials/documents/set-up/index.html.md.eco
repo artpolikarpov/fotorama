@@ -1,7 +1,7 @@
 <p></p>
 
 ```xml
-<!-- 1. Link to the jQuery, -->
+<!-- 1. Link to jQuery, -->
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script> <!-- 93 KB -->
 
 <!-- fotorama.css & fotorama.js. -->
