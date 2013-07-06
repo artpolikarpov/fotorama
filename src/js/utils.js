@@ -1,7 +1,7 @@
 function noop () {}
 
 function minMaxLimit (value, min, max) {
-  return Math.max(typeof min !== 'number' ? -Infinity : min, Math.min(typeof max !== 'number' ? Infinity : max, value));
+  return Math.max(isNaN(min) ? -Infinity : min, Math.min(isNaN(max) ? Infinity : max, value));
 }
 
 function readTransform (css) {
@@ -10,9 +10,9 @@ function readTransform (css) {
 
 function readPosition ($el) {
   if (CSS3) {
-    return Number(readTransform($el.css('transform')));
+    return +readTransform($el.css('transform'));
   } else {
-    return Number($el.css('left').replace('px', ''));
+    return +$el.css('left').replace('px', '');
   }
 }
 
@@ -31,17 +31,15 @@ function getDuration (time) {
 }
 
 function numberFromMeasure (value, measure) {
-  value = Number(String(value).replace(measure || 'px', ''));
-  return isNaN(value) ? false : value;
+  return +String(value).replace(measure || 'px', '');
 }
 
 function numberFromPercent (value) {
-  var number = numberFromMeasure(value, '%');
-  return !!number && /%$/.test(value) ? number : false;
+  return /%$/.test(value) && numberFromMeasure(value, '%');
 }
 
 function measureIsValid (value) {
-  return !!numberFromMeasure(value) || !!numberFromMeasure(value, '%') ? value : false;
+  return !!numberFromMeasure(value) || !!numberFromMeasure(value, '%') && value;
 }
 
 function getPosByIndex (index, side, margin, baseIndex) {
@@ -106,8 +104,9 @@ function afterTransition ($el, property, fn, time) {
 
 function stop ($el) {
   if (CSS3) {
-    $el.css(getDuration(0));
-    $el.data('onEndFn', noop);
+    $el
+        .css(getDuration(0))
+        .data('onEndFn', noop);
   } else {
     $el.stop();
   }
@@ -124,8 +123,8 @@ function edgeResistance (pos, edge) {
 }
 
 function getProtocol () {
-  getProtocol.protocol = getProtocol.protocol || (location.protocol === 'https://' ? 'https://' : 'http://');
-  return getProtocol.protocol;
+  getProtocol.p = getProtocol.p || (location.protocol === 'https://' ? 'https://' : 'http://');
+  return getProtocol.p;
 }
 
 function parseHref (href) {
@@ -352,7 +351,7 @@ function getIndexFromHash (hash, data, ok) {
   if (!ok) return false;
 
   var index;
-  if (!isNaN(hash)) return hash - 1;
+  if (!isNaN(hash)) return +hash;
 
   for (var _i = 0, _l = data.length; _i < _l; _i++) {
     var dataFrame = data[_i];

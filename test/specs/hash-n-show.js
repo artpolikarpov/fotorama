@@ -26,7 +26,7 @@ describe('Hash', function () {
 
     waitsFor(function () {
       return location.hash === '#2';
-    }, 'wait for a new hash', 400);
+    }, 'wait for a new hash', 500);
 
     runs(function () {
       expect(location.hash).toBe('#' + (fotorama.activeIndex + 1));
@@ -54,8 +54,12 @@ describe('Hash', function () {
   it('.show() works with indexes', function () {
 		fotorama.show({index: 0, time: 0});
     expect(fotorama.activeIndex).toBe(0);
-    fotorama.show({index: 1, time: 0});
+    fotorama.show({index: '1', time: 0});
+    expect(fotorama.activeFrame.$stageFrame.css('left')).toBe('0px');
     expect(fotorama.activeIndex).toBe(1);
+    fotorama.show({index: '2', time: 0});
+    expect(fotorama.activeFrame.$stageFrame.css('left')).toBe('0px');
+    expect(fotorama.activeIndex).toBe(2);
     fotorama.show({index: fotorama.size - 1, time: 0});
     expect(fotorama.activeIndex).toBe(fotorama.size - 1);
 	});

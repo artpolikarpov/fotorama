@@ -806,19 +806,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     if (options.slow) time *= 10;
 
-//    if (index === '>') {
-//      index = dirtyIndex + 1;
-//    } else if (index === '<') {
-//      index = dirtyIndex - 1;
-//    } else if (index === '<<') {
-//      index = 0;
-//    } else if (index === '>>') {
-//      index = size - 1;
-//    }
-
-    index = index === '>' ? dirtyIndex + 1 : index === '<' ? dirtyIndex - 1 : index === '<<' ? 0 : index === '>>' ? size - 1 : index;
-    index = isNaN(index) ? getIndexFromHash(index, data, true) : index;
-    index = typeof index === 'undefined' ? activeIndex || 0 : index;
+    index = index === '>' ? dirtyIndex + 1 : index === '<' ? dirtyIndex - 1 : index === '<<' ? 0 : index === '>>' ? size - 1 : typeof index === 'string' ? getIndexFromHash(index, data, true) : index;
+    index = isNaN(index) ? activeIndex || 0 : index;
 
     that.activeIndex = activeIndex = o_loop ? normalizeIndex(index) : limitIndex(index);
     prevIndex = getPrevIndex(activeIndex);
@@ -832,7 +821,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     unloadVideo(false, activeFrame.i !== data[normalizeIndex(repositionIndex)].i);
 
-
     frameDraw([activeIndex, prevIndex, nextIndex], 'stage');
     triggerEvent('show', options.direct); // TODO: test that .activeFrame is ready event on the first show
 
@@ -843,8 +831,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       stageShaftReposition(); /////
 
       triggerEvent('showend', options.direct);
-
-      opts.hash && showedFLAG && !that.eq && setHash(activeFrame.id || activeIndex + 1);
 
       releaseAutoplay();
       changeAutoplay();
@@ -883,6 +869,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     showedFLAG = typeof lastActiveIndex !== 'undefined' && lastActiveIndex !== activeIndex;
     lastActiveIndex = activeIndex;
+    opts.hash && showedFLAG && !that.eq && setHash(activeFrame.id || activeIndex + 1);
 
     return this;
   };
