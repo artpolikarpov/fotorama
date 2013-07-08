@@ -39,7 +39,7 @@ function numberFromPercent (value) {
 }
 
 function measureIsValid (value) {
-  return !!numberFromMeasure(value) || !!numberFromMeasure(value, '%') && value;
+  return (!!numberFromMeasure(value) || !!numberFromMeasure(value, '%')) && value;
 }
 
 function getPosByIndex (index, side, margin, baseIndex) {
@@ -210,7 +210,8 @@ function updateData (data, _dataFrame, i, api) {
         caption: dataFrame.caption,
         img: dataFrame.img || _dataFrame.img,
         thumb: dataFrame.thumb || _dataFrame.thumb,
-        id: dataFrame.id || _dataFrame.id
+        id: dataFrame.id,
+        fit: dataFrame.fit
       });
 
       break;

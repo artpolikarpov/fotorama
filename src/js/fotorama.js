@@ -806,8 +806,12 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     if (options.slow) time *= 10;
 
-    index = index === '>' ? dirtyIndex + 1 : index === '<' ? dirtyIndex - 1 : index === '<<' ? 0 : index === '>>' ? size - 1 : typeof index === 'string' ? getIndexFromHash(index, data, true) : index;
-    index = isNaN(index) ? activeIndex || 0 : index;
+//    index = index === '>' ? dirtyIndex + 1 : index === '<' ? dirtyIndex - 1 : index === '<<' ? 0 : index === '>>' ? size - 1 : typeof index === 'string' ? getIndexFromHash(index, data, true) : index;
+//    index = isNaN(index) ? activeIndex || 0 : index;
+
+    index = index === '>' ? dirtyIndex + 1 : index === '<' ? dirtyIndex - 1 : index === '<<' ? 0 : index === '>>' ? size - 1 : index;
+    index = isNaN(index) ? getIndexFromHash(index, data, true) : index;
+    index = typeof index === 'undefined' ? activeIndex || 0 : index;
 
     that.activeIndex = activeIndex = o_loop ? normalizeIndex(index) : limitIndex(index);
     prevIndex = getPrevIndex(activeIndex);

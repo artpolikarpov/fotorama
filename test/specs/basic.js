@@ -37,7 +37,12 @@ describe('Basic', function () {
 	it('dimensions are correct', function () {
 		var $stage = $('.fotorama__stage', $fotorama);
 
-		expect($stage.width()).toEqual(700);
-		expect($stage.height()).toEqual(467);
+    waitsFor(function () {
+      return $stage.width() === 700
+    }, 'Waits for autosize...', 100);
+
+    runs(function () {
+		  expect($stage.height()).toEqual(467);
+    });
 	});
 });
