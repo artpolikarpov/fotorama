@@ -26,7 +26,7 @@ function touch ($el, options) {
   function onStart (e) {
 
     $target = $(e.target);
-    targetIsSelectFLAG = false;
+    tail.checked = movableFLAG = movedFLAG = targetIsSelectFLAG = targetIsLinkFlag = false;
     targetIsLinkFlag = false;
 
     if (touchEnabledFLAG
@@ -40,8 +40,6 @@ function touch ($el, options) {
     touchFLAG = e.type.match('touch');
     targetIsLinkFlag = $target.is('a, a *', el);
     extendEvent(e, touchFLAG);
-
-    tail.checked = movableFLAG = movedFLAG = false;
 
     lastEvent = e;
     moveEventType = e.type.replace(/down|start/, 'move');
