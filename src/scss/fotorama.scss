@@ -6,6 +6,9 @@ $time: 300ms;
 
 .fotorama {
   min-width: 1px;
+ * {
+   @extend %content-box;
+ }
 }
 
 .fullscreen {
@@ -257,7 +260,6 @@ $time: 300ms;
 }
 
 .fotorama__dot {
-  @extend %content-box;
   display: block;
   width: 4px;
   height: 4px;
@@ -294,7 +296,6 @@ $time: 300ms;
   border-style: solid;
   border-color: mix(#00d1ff, #008ed6);
   @include background(linear-gradient(top left, rgba(255, 255, 255, .25), rgba(64, 64, 64, .1)));
-  @extend %content-box;
 }
 
 .fotorama__caption {
