@@ -5,7 +5,7 @@
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script> <!-- 93 KB -->
 
 <!-- fotorama.css & fotorama.js. -->
-<link  href="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.css" rel="stylesheet"> <!-- 13 KB -->
+<link  href="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.css" rel="stylesheet"> <!-- 14 KB -->
 <script src="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.js"></script> <!-- 28 KB -->
 
 <!-- 2. Add images to <div class="fotorama"></div>. -->
