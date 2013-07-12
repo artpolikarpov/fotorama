@@ -1,7 +1,5 @@
 $arrSize: 32px;
 
-/* Стрелочки, иконки */
-
 .fotorama__arr,
 .fotorama__fullscreen-icon,
 .fotorama__video-play,
@@ -159,7 +157,5 @@ $arrSize: 32px;
   .fotorama__video-play,
   .fotorama__video-close {
     @include transition(all $time);
-    //@extend %transitionDuration;
-    //////@extend %bezier;
   }
 }
