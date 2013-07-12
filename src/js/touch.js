@@ -20,22 +20,25 @@ function touch ($el, options) {
       $target,
       controlTouch,
       touchFLAG,
-      targetIsSelectFLAG;
+      targetIsSelectFLAG,
+      targetIsLinkFlag;
 
   function onStart (e) {
 
     $target = $(e.target);
     targetIsSelectFLAG = false;
+    targetIsLinkFlag = false;
 
     if (touchEnabledFLAG
         || eventFlowFLAG
         || (e.touches && e.touches.length > 1)
         || e.which > 1
-        || tail.prevent
+        /*|| tail.prevent*/
         || (lastEvent && lastEvent.type !== e.type && preventEvent)
-        || (targetIsSelectFLAG = options.select && $target.is(options.select, el))) return tail.prevent !== true || targetIsSelectFLAG;
+        || (targetIsSelectFLAG = options.select && $target.is(options.select, el))) return /*tail.prevent !== true || */targetIsSelectFLAG;
 
     touchFLAG = e.type.match('touch');
+    targetIsLinkFlag = $target.is('a, a *', el);
     extendEvent(e, touchFLAG);
 
     tail.checked = movableFLAG = movedFLAG = false;
@@ -96,16 +99,17 @@ function touch ($el, options) {
   }
 
   function onEnd (e) {
-    eventFlowFLAG = tail.control = false;
-    if (!touchEnabledFLAG) return;
-    e && e.preventDefault && e.preventDefault();
+    var _touchEnabledFLAG = touchEnabledFLAG;
+    eventFlowFLAG = tail.control = touchEnabledFLAG = false;
+    if (!_touchEnabledFLAG || (targetIsLinkFlag && !tail.checked)) return;
+    console.log('onEnd', e && e.type);
+    e && e.preventDefault();
     preventEvent = true;
     clearTimeout(preventEventTimeout);
     preventEventTimeout = setTimeout(function () {
       preventEvent = false;
     }, 1000);
     (options.onEnd || noop).call(el, {moved: !!movedFLAG, $target: $target, control: controlTouch, startEvent: startEvent, aborted: !e, touch: touchFLAG});
-    touchEnabledFLAG = false;
   }
 
 
@@ -121,6 +125,7 @@ function touch ($el, options) {
       .on('mouseup', onEnd);
 
   $el.on('click', 'a', function (e) {
+    console.log('a click', tail.checked);
     if (tail.checked) {
       e.preventDefault();
     }

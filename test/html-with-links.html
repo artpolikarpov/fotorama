@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Custom HTML</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.9.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../product/fotorama.css" rel="stylesheet">
+	<script src="../product/fotorama.js"></script>
+
+	<!-- Just don’t want to repeat this prefix in every img[src] -->
+	<base href="i/okonechnikov/">
+</head>
+
+<body>
+
+<!-- Style for custom HTML -->
+<style type="text/css">
+	.fotorama .any {
+		text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+		font-family: Georgia, serif;
+		font-size: 72px;
+		text-align: center;
+		height: 100%;
+		box-sizing: border-box;
+		padding-top: 100px;
+		line-height: normal;
+	}
+
+  .fotorama .any a {
+    display: block;
+    height: 100%;
+  }
+
+	.fotorama .inverse {
+		color: #fff;
+		text-shadow: 0 1px 0 #000;
+	}
+</style>
+
+<p>Images on the background:</p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div class="fotorama">
+  &lt;div <mark>data-img="1.jpg"</mark>>One&lt;/div>
+&lt;/div></code></pre>
+
+<!-- Fotorama -->
+<div class="fotorama" data-width="500" data-height="281" data-max-width="100%" data-fit="cover">
+	<div data-img="19-lo.jpg" class="any inverse"><a href="19.jpg" target="_blank">One</a></div>
+	<div data-img="20-lo.jpg" class="any inverse"><a href="20.jpg" target="_blank"><strong>Two</strong></a></div>
+	<div data-img="30-lo.jpg" class="any inverse"><a href="30.jpg" target="_blank"><em>Three</em></a></div>
+</div>
+
+
+</body>
+</html>
