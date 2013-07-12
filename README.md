@@ -12,6 +12,8 @@ Test that Grunt's CLI is installed by running `grunt --version`.  If the command
 2. Run `npm install` to install all dependencies (including Grunt).
 3. Run `grunt` to grunt this project.
 
+To hack on use `grunt watch`.
+
 Assuming that you don't see any red, you're ready to go. Just be sure to run `grunt` after making any changes, to ensure that nothing is broken.
 
 The built version of Fotorama will be put in the `product/` subdirectory.
