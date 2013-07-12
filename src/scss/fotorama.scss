@@ -5,8 +5,10 @@ $time: 300ms;
 @import 'placeholders';
 
 .fotorama {
+  // /test/specs/initialization.js
   min-width: 1px;
  * {
+   // /test/specs/thumbs.js
    @extend %content-box;
  }
 }

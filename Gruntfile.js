@@ -273,7 +273,7 @@ module.exports = function (grunt) {
 		  }
 	  },
 
-	  jasmine: grunt.file.readJSON('test/specs/specs.json')
+	  jasmine: grunt.file.readJSON('test/specs/_specs.json')
   });
 
   grunt.loadNpmTasks('grunt-contrib-watch');
