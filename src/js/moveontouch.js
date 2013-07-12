@@ -14,7 +14,8 @@ function moveOnTouch ($el, options) {
       snap,
       slowFLAG,
       controlFLAG,
-      movedFLAG;
+      movedFLAG,
+      stableFLAG;
 
   function startTracking (e) {
     startCoo = coo = e._x;
@@ -24,6 +25,9 @@ function moveOnTouch ($el, options) {
     ];
 
     startElPos = moveElPos = stop($el);
+
+    stableFLAG = tail.stable = !(startElPos % snap);
+    !stableFLAG && e.preventDefault();
 
     (options.onStart || noop).call(el, e, {pos: startElPos});
   }

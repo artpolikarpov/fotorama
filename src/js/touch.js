@@ -27,7 +27,6 @@ function touch ($el, options) {
 
     $target = $(e.target);
     tail.checked = movableFLAG = movedFLAG = targetIsSelectFLAG = targetIsLinkFlag = false;
-    targetIsLinkFlag = false;
 
     if (touchEnabledFLAG
         || eventFlowFLAG
@@ -70,7 +69,7 @@ function touch ($el, options) {
     var xDiff = Math.abs(e._x - startEvent._x), // opt _x → _pageX
         yDiff = Math.abs(e._y - startEvent._y),
         xyDiff = xDiff - yDiff,
-        xWin = xyDiff >= 3,
+        xWin = !tail.stable || xyDiff >= 3,
         yWin = xyDiff <= -3;
 
     if (!movedFLAG) {
