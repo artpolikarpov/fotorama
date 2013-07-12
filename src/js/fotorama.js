@@ -821,11 +821,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     that.activeFrame = activeFrame = data[activeIndex];
 
-    stageFramePosition([dirtyIndex]);
-
     unloadVideo(false, activeFrame.i !== data[normalizeIndex(repositionIndex)].i);
 
     frameDraw([activeIndex, prevIndex, nextIndex], 'stage');
+    stageFramePosition([dirtyIndex]);
+
     triggerEvent('show', options.direct); // TODO: test that .activeFrame is ready event on the first show
 
     function onEnd () {

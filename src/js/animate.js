@@ -24,16 +24,17 @@ function slide ($el, options) {
 }
 
 function fade ($el1, $el2, $frames, options) {
-  console.log('fade', arguments);
+  console.log('fade', !!$el1, !!$el2);
 
   var _$el1 = $el1, _$el2 = $el2, crossfadeFLAG = options.method === 'crossfade';
-  fade.$el1 = $el1 = $el1 || $($el1);
-  fade.$el2 = $el2 = $el2 || $($el2);
+  /*fade.$el1 = */$el1 = $el1 || $($el1);
+  /*fade.$el2 = */$el2 = $el2 || $($el2);
 
   var onEndFn = function () {
         if (!onEndFn.done) {
           //$el1.removeClass(fadeRearClass);
           //$el2.removeClass(fadeFrontClass);
+          console.log('onEndFn');
           (options.onEnd || noop)();
           onEndFn.done = true;
         }
@@ -46,25 +47,20 @@ function fade ($el1, $el2, $frames, options) {
   $frames.removeClass(fadeRearClass + ' ' + fadeFrontClass);
 
   $el1
-      .addClass(fadeFrontClass);
+      .addClass(fadeRearClass);
   //.removeClass(fadeRearClass);
   $el2
-      .addClass(fadeRearClass);
+      .addClass(fadeFrontClass);
   //.removeClass(fadeFrontClass);
 
   if (CSS3) {
     stop($el1);
     stop($el2);
 
-    if (_$el2) {
-      $el1.css($.extend(duration0, opacity0));
-      // Reflow
-      $el1.width();
-    }
+    crossfadeFLAG && _$el2 && $el1.css($.extend(duration0, opacity0)).width(); // .width() for immediate reflow
 
-    $el1.css($.extend(duration, opacity1));
-
-    crossfadeFLAG && $el2.css($.extend(duration, opacity0));
+    $el1.css($.extend(crossfadeFLAG ? duration : duration0, opacity1));
+    $el2.css($.extend(duration, opacity0));
 
     if (options.time > 10 && (_$el1 || _$el2)) {
       afterTransition($el1, 'opacity', onEndFn, options.time);
