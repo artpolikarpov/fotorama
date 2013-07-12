@@ -117,7 +117,8 @@ function moveOnTouch ($el, options) {
     var cooDiff = backCoo - coo,
         forwardFLAG = cooDiff >= 0,
         timeDiff = endTime - backTime,
-        swipeFLAG = timeDiff <= TOUCH_TIMEOUT && moveElPos !== startElPos && newPos === moveElPos;
+        longTouchFLAG = timeDiff > TOUCH_TIMEOUT,
+        swipeFLAG = !longTouchFLAG && moveElPos !== startElPos && newPos === moveElPos;
 
     if (snap) {
       newPos = minMaxLimit(Math[swipeFLAG ? (forwardFLAG ? 'floor' : 'ceil') : 'round'](moveElPos / snap) * snap, minPos, maxPos);
@@ -146,7 +147,7 @@ function moveOnTouch ($el, options) {
 
     time *= slowFLAG ? 10 : 1;
 
-    (options.onEnd || noop).call(el, $.extend(result, {pos: moveElPos, newPos: newPos, overPos: overPos, time: time}));
+    (options.onEnd || noop).call(el, $.extend(result, {pos: moveElPos, newPos: newPos, overPos: overPos, time: time, moved: (longTouchFLAG && snap) || result.moved}));
   }
 
   tail = $.extend(touch(options.$wrap, {
