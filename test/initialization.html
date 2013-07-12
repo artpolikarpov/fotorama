@@ -13,7 +13,7 @@
 
   <script type="text/javascript">
     $(function () {
-      var $fotorama = $('.fotorama').show().clone().appendTo('body').fotorama();
+      var $fotorama = $('.fotorama').show().clone().css({position: 'absolute'}).appendTo('body').fotorama();
 
       console.log($fotorama, $fotorama.width());
 

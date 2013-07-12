@@ -1,11 +1,11 @@
 $time: 300ms;
 
-// Фоторама
 @import 'compass';
 @import 'mixins';
 @import 'placeholders';
 
 .fotorama {
+  min-width: 1px;
 }
 
 .fullscreen {
