@@ -99,7 +99,7 @@ function touch ($el, options) {
     var _touchEnabledFLAG = touchEnabledFLAG;
     eventFlowFLAG = tail.control = touchEnabledFLAG = false;
     if (!_touchEnabledFLAG || (targetIsLinkFlag && !tail.checked)) return;
-    console.log('onEnd', e && e.type);
+    //console.log('onEnd', e && e.type);
     e && e.preventDefault();
     preventEvent = true;
     clearTimeout(preventEventTimeout);
@@ -122,7 +122,7 @@ function touch ($el, options) {
       .on('mouseup', onEnd);
 
   $el.on('click', 'a', function (e) {
-    console.log('a click', tail.checked);
+    //console.log('a click', tail.checked);
     if (tail.checked) {
       e.preventDefault();
     }

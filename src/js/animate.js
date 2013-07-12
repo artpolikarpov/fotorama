@@ -24,6 +24,8 @@ function slide ($el, options) {
 }
 
 function fade ($el1, $el2, $frames, options) {
+  console.log('fade', arguments);
+
   var _$el1 = $el1, _$el2 = $el2, crossfadeFLAG = options.method === 'crossfade';
   fade.$el1 = $el1 = $el1 || $($el1);
   fade.$el2 = $el2 = $el2 || $($el2);
