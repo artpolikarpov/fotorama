@@ -2,7 +2,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   $HTML = $HTML || $('html');
   $BODY = $BODY || $('body');
 
-  $.Fotorama.$load = $.Fotorama.$load || $('<div class="' + loadClass + '"></div>').appendTo($BODY);
+  //$.Fotorama.$load = $.Fotorama.$load || $('<div class="' + loadClass + '"></div>').appendTo($BODY);
 
   var that = this,
       index = _size,
@@ -362,8 +362,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
       function loaded () {
         ////console.log('loaded', index, src);
 
-        var width = $img.width(),
-            height = $img.height(),
+        var width = img.width,
+            height = img.height,
             ratio = width / height;
 
         imgData.measures = {
@@ -403,7 +403,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       function waitAndLoad () {
         waitFor(function () {
-          return !isHidden(img)/* && !touchedFLAG*/;
+          return true;/*!isHidden(img)*//* && !touchedFLAG*/;
         }, function () {
           loaded();
         });
@@ -428,7 +428,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
 
       img.src = src;
-      $img.appendTo($.Fotorama.$load);
+      //$img.appendTo($.Fotorama.$load);
     });
   }
 

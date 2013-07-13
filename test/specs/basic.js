@@ -24,7 +24,7 @@ describe('Basic', function () {
 		expect(fotorama).toEqual(jasmine.any(Object));
 	});
 	it('all elements are here', function () {
-		expect($('.fotorama__load').size()).toEqual(1);
+		//expect($('.fotorama__load').size()).toEqual(1);
 		expect($('.fotorama__wrap', $fotorama).size()).toEqual(1);
 		expect($('.fotorama__stage', $fotorama).size()).toEqual(1);
 		expect($('.fotorama__stage__shaft', $fotorama).size()).toEqual(1);
