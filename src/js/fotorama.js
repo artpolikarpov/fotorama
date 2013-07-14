@@ -403,7 +403,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       function waitAndLoad () {
         waitFor(function () {
-          return true;/*!isHidden(img)*//* && !touchedFLAG*/;
+          return /*!isHidden(img) && */!touchedFLAG;
         }, function () {
           loaded();
         });
@@ -476,10 +476,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
           var $oneVideoPlay = $videoPlay.clone();
 
           smartClick($oneVideoPlay, function () {
+                onTouchEnd();
                 that.playVideo();
               }, {
                 onStart: function (e) {
-                  onTouchStart.call(this, e);
+                  onTouchStart();
                   stageShaftTouchTail.control = true;
                 },
                 tail: stageShaftTouchTail
@@ -653,12 +654,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function stageShaftReposition () {
-    /*if (touchedFLAG) {
-     waitFor(function () {
-     return !touchedFLAG;
-     }, stageShaftReposition, 100);
+    clearTimeout(stageShaftReposition.t);
+    if (touchedFLAG) {
+      stageShaftReposition.t = setTimeout(stageShaftReposition, 100);
      return;
-     }*/
+     }
     repositionIndex = dirtyIndex = activeIndex;
 
     var dataFrame = that.activeFrame,
@@ -726,17 +726,23 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }
 
-  /*var touchedFLAG; */
+  var touchedFLAG;
 
   function onTouchStart () {
-    /*clearTimeout(onTouchEnd.t);
-     touchedFLAG = 1;*/
+    clearTimeout(onTouchEnd.t);
+    touchedFLAG = 1;
 
     if (opts.stopAutoplayOnTouch) {
       that.stopAutoplay();
     } else {
       pausedAutoplayFLAG = true;
     }
+  }
+
+  function onTouchEnd () {
+    onTouchEnd.t = setTimeout(function () {
+      touchedFLAG = 0;
+    }, TRANSITION_DURATION + TOUCH_TIMEOUT);
   }
 
   function releaseAutoplay () {
@@ -1149,6 +1155,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     onEnd: function (result) {
       setShadow($stage);
 
+      onTouchEnd();
+
       if (result.moved || (result.touch && result.pos !== result.newPos)) {
         var index = getIndexByPos(result.newPos, measures.w, MARGIN, repositionIndex);
         that.show({
@@ -1177,6 +1185,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
       setShadow($nav, result.edge);
     },
     onEnd: function (result) {
+      onTouchEnd();
+
       function onEnd () {
         releaseAutoplay();
         changeAutoplay();
@@ -1215,11 +1225,12 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if ($videoPlaying) {
       unloadVideo($videoPlaying, true, true);
     } else {
+      onTouchEnd();
       that.show({index: $arrs.index(this) ? '>' : '<', slow: e.altKey, direct: true});
     }
   }, {
     onStart: function (e) {
-      onTouchStart.call(this, e);
+      onTouchStart();
       stageShaftTouchTail.control = true;
     },
     tail: stageShaftTouchTail
@@ -1227,6 +1238,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   // Клик по иконке фуллскрина
   smartClick($fullscreenIcon, function () {
+    onTouchEnd();
     if (that.fullScreen) {
       that.cancelFullScreen();
     } else {
@@ -1236,7 +1248,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     changeAutoplay();
   }, {
     onStart: function (e) {
-      onTouchStart.call(this, e);
+      onTouchStart();
       stageShaftTouchTail.control = true;
     },
     tail: stageShaftTouchTail
