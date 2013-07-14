@@ -104,7 +104,9 @@ function afterTransition ($el, property, fn, time) {
   }
 }
 
-function stop ($el) {
+
+function stop ($el, left) {
+  if ($el.length) {
   if (CSS3) {
     $el
         .css(getDuration(0))
@@ -112,9 +114,8 @@ function stop ($el) {
   } else {
     $el.stop();
   }
-  if ($el.length) {
     //console.log('$el.length', $el);
-    var lockedLeft = readPosition($el);
+    var lockedLeft = left || readPosition($el);
     $el.css(getTranslate(lockedLeft));
     return lockedLeft;
   }

@@ -6,7 +6,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   var that = this,
       index = _size,
-      stamp = new Date().getTime(),
+      stamp = + new Date,
       fotorama = $fotorama.addClass(_fotoramaClass + stamp)[0],
       data,
       dataFrameCount = 1,
@@ -1160,6 +1160,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
       } else if (!result.aborted) {
         onStageTap(result.startEvent, result.touch);
       }
+    },
+    getPos: function () {
+      return - getPosByIndex(dirtyIndex, measures.w, MARGIN, repositionIndex);
     },
     timeLow: 1,
     timeHigh: 1,

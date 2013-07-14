@@ -21,10 +21,10 @@ function moveOnTouch ($el, options) {
     startCoo = coo = e._x;
 
     moveTrack = [
-      [new Date().getTime(), startCoo]
+      [+ new Date, startCoo]
     ];
 
-    startElPos = moveElPos = stop($el);
+    startElPos = moveElPos = stop($el, options.getPos && options.getPos());
 
     stableFLAG = tail.stable = !(startElPos % snap);
     !stableFLAG && e.preventDefault();
