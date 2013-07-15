@@ -87,7 +87,7 @@ function touch ($el, options) {
       }
     } else if (!touchFLAG || movableFLAG) {
       e.preventDefault();
-      (options.onMove || noop).call(el, e);
+      (options.onMove || noop).call(el, e, {touch: touchFLAG});
     } else {
       touchEnabledFLAG = false;
     }

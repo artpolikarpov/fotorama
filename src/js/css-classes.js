@@ -57,6 +57,8 @@ var _fotoramaClass = 'fotorama',
     loadedImgClass = loadedClass + '--img',
     loadClass = _fotoramaClass + '__load',
 
+    grabbingClass = _fotoramaClass + '__grabbing',
+
     imgClass = _fotoramaClass + '__img',
     imgFullClass = imgClass + '--full',
 

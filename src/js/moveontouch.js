@@ -47,7 +47,7 @@ function moveOnTouch ($el, options) {
     }
   }
 
-  function onMove (e) {
+  function onMove (e, result) {
     if (controlFLAG) {
       controlFLAG = false;
       startTracking(e);
@@ -72,7 +72,8 @@ function moveOnTouch ($el, options) {
       $el.css(getTranslate(moveElPos));
       if (!movedFLAG) {
         movedFLAG = true;
-        $BODY.addClass('grabbing');
+        // only for mouse
+        result.touch || $el.addClass(grabbingClass);
       }
     }
 
@@ -82,7 +83,7 @@ function moveOnTouch ($el, options) {
   function onEnd (result) {
     if (controlFLAG) return;
 
-    $BODY.removeClass('grabbing');
+    result.touch || $el.removeClass(grabbingClass);
 
     endTime = new Date().getTime();
 
