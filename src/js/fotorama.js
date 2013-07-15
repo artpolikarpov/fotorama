@@ -48,6 +48,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       activeIndex = false,
       activeFrame,
+      activeIndexes,
       repositionIndex,
       dirtyIndex,
       lastActiveIndex,
@@ -677,7 +678,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       stop($stageShaft);
       $stageShaft.css(getTranslate(0));
 
-      stageFramePosition([activeIndex, prevIndex, nextIndex]);
+      stageFramePosition(activeIndexes);
       setStageShaftMinMaxPosAndSnap();
       setNavShaftMinMaxPos();
     }
@@ -822,6 +823,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     that.activeIndex = activeIndex = o_loop ? normalizeIndex(index) : limitIndex(index);
     prevIndex = getPrevIndex(activeIndex);
     nextIndex = getNextIndex(activeIndex);
+    activeIndexes = [activeIndex, prevIndex, nextIndex];
 
     dirtyIndex = o_loop ? index : activeIndex;
 
@@ -837,7 +839,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     function onEnd () {
 
       updateFotoramaState();
-      loadImg([activeIndex, prevIndex, nextIndex], 'stage');
+      loadImg(activeIndexes, 'stage');
       stageShaftReposition(); /////
 
       triggerEvent('showend', options.direct);
@@ -914,7 +916,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         //$BODY;
 
         that.resize();
-        loadImg([activeIndex, prevIndex, nextIndex], 'stage');
+        loadImg(activeIndexes, 'stage');
       //}, 0);
 
       triggerEvent('fullscreenenter');
@@ -948,7 +950,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       unloadVideo($videoPlaying, true);
 
       that.resize();
-      loadImg([activeIndex, prevIndex, nextIndex], 'stage');
+      loadImg(activeIndexes, 'stage');
 
       $WINDOW.scrollLeft(scrollLeft).scrollTop(scrollTop);
     }
