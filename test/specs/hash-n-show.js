@@ -21,8 +21,7 @@ describe('Hash', function () {
 	});
 
   it('hash is a number', function () {
-		// hacky alternative for fotorama.show('>');
-    $('.fotorama__arr--next', $fotorama).mousedown().mouseup();
+    fotorama.show('>');
 
     waitsFor(function () {
       return location.hash === '#2';
