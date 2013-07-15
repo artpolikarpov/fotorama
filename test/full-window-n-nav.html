@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Full window and hacked dots</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.9.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../product/fotorama.css" rel="stylesheet">
+	<script src="../product/fotorama.js"></script>
+
+	<!-- Just don’t want to repeat this prefix in every img[src] -->
+	<base href="i/okonechnikov/">
+</head>
+
+<body style="margin: 0; overflow: hidden; background: #000; position: relative;"> <!-- Reset margins to remove any gap -->
+
+<!-- Top overlay -->
+<div style="position: absolute; top: 0; left: 0; color: #fff; padding: 5px 10px; z-index: 2;">
+	<p>Full window:<p>
+	<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div class="fotorama"
+     data-width="100%"
+     data-height="100%"></code></pre>
+</div>
+
+<style type="text/css">
+  .fotorama__nav {
+    /* Lie that the height is equal to zero */
+    height: 0;
+
+    /* And return it using a “back door” */
+    padding-top: 30px;
+
+    /* Overlay the stage */
+    margin-top: -30px;
+  }
+  .fotorama__nav__shaft {
+    top: -30px;
+  }
+
+  /* White dots */
+  .fotorama__dot {
+    border-color: #fff;
+  }
+  .fotorama__active .fotorama__dot {
+    background-color: #fff;
+  }
+</style>
+
+<!-- Fotorama -->
+<div class="fotorama"
+     data-width="100%"
+     data-height="100%"
+     data-fit="cover"
+		 data-nav="dots">
+	<a href="5.jpg"></a>
+	<a href="3.jpg"></a>
+	<a href="10.jpg"></a>
+	<a href="14.jpg"></a>
+	<a href="9.jpg"></a>
+</div>
+
+<!-- Bottom overlay -->
+<div style="position: absolute; bottom: 0; right: 0; color: #fff; padding: 5px 10px; z-index: 2;">
+	<!-- © -->
+	<p>Photos <a href="http://okonet.ru/" style="color: #fff;">by Andrey Okonetchnikov</a></p>
+</div>
+</body>
+</html>
