@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hash</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.9.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../product/fotorama.css" rel="stylesheet">
+	<script src="../product/fotorama.js"></script>
+
+  <script type="text/javascript">
+    $(function () {
+      f = $('.fotorama').data('fotorama');
+    })
+  </script>
+</head>
+
+<body>
+
+<p>Hash:<p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div class="fotorama"
+     <mark>data-hash="true"</mark>></code></pre>
+
+<!-- Just don’t want to repeat this prefix in every img[src] -->
+<base href="i/nyc/">
+
+<!-- Fotorama -->
+<div class="fotorama"
+     data-width="500"
+     data-ratio="3/2"
+     data-max-width="100%"
+     data-hash="true">
+	<div data-img="http://fotorama.s3.amazonaws.com/i/okonechnikov/2-lo.jpg" id="one"><h1>asdfasdfasdf</h1></div>
+  <div data-img="http://fotorama.s3.amazonaws.com/i/okonechnikov/9-lo.jpg" id="one1"><h1>asdfasdfasdgffdfg</h1></div>
+  <div data-img="http://fotorama.s3.amazonaws.com/i/okonechnikov/6-lo.jpg" id="one2"><h1>dfsdfgn</h1></div>
+  <div data-img="http://fotorama.s3.amazonaws.com/i/okonechnikov/5-lo.jpg" id="one4"><h1>Tsdfgdsgsdfg</h1></div>
+</div>
+
+<!-- © -->
+<p>Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
+</body>
+</html>
