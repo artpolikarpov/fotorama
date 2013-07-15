@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Basic fotorama</title>
+	<meta charset="utf-8">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-2.0.2.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../product/fotorama.css" rel="stylesheet">
+	<script src="../product/fotorama.js"></script>
+</head>
+
+<body>
+
+<p>Basic fotorama:<p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div <mark>class="fotorama"</mark>></code></pre>
+
+<p>Counter for <tt>fotorama:load</tt> event: <mark id="count"></mark></p>
+
+<script type="text/javascript">
+  $(function () {
+    var $count = $('#count'),
+        count = 0,
+        updateCounter = (function fn () {
+          $count.text(count++);
+          return fn;
+        })();
+    $('.fotorama').on('fotorama:showend fotorama:load', function (e) {
+      if (e.type === 'fotorama:showend') {
+        console.time('Load time');
+      } else {
+        console.timeEnd('Load time');
+        updateCounter();
+      }
+
+    });
+  });
+</script>
+
+<!-- Fotorama -->
+<div class="fotorama" data-width="700" data-height="467" data-loop="true">
+	<img src="i/okonechnikov/1.jpg">
+	<img src="i/okonechnikov/2.jpg">
+	<img src="i/okonechnikov/3.jpg">
+	<img src="i/okonechnikov/4.jpg">
+	<img src="i/okonechnikov/5.jpg">
+  <img src="i/okonechnikov/6.jpg">
+	<img src="i/okonechnikov/7.jpg">
+	<img src="i/okonechnikov/8.jpg">
+	<img src="i/okonechnikov/9.jpg">
+	<img src="i/okonechnikov/10.jpg">
+  <img src="i/okonechnikov/11.jpg">
+	<img src="i/okonechnikov/12.jpg">
+	<img src="i/okonechnikov/13.jpg">
+	<img src="i/okonechnikov/14.jpg">
+	<img src="i/okonechnikov/15.jpg">
+  <img src="i/okonechnikov/16.jpg">
+	<img src="i/okonechnikov/17.jpg">
+	<img src="i/okonechnikov/18.jpg">
+	<img src="i/okonechnikov/19.jpg">
+	<img src="i/okonechnikov/20.jpg">
+  <img src="i/okonechnikov/21.jpg">
+	<img src="i/okonechnikov/22.jpg">
+	<img src="i/okonechnikov/23.jpg">
+	<img src="i/okonechnikov/24.jpg">
+	<img src="i/okonechnikov/25.jpg">
+  <img src="i/okonechnikov/26.jpg">
+	<img src="i/okonechnikov/27.jpg">
+	<img src="i/okonechnikov/28.jpg">
+	<img src="i/okonechnikov/29.jpg">
+	<img src="i/okonechnikov/30.jpg">
+</div>
+
+<!-- © -->
+<p>Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
+</body>
+</html>

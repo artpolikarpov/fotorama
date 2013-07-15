@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+
+  <script src="../jquery/jquery-1.10.1.min.js"></script>
+  <script src="speed-helpers.js"></script>
+
+  <script type="text/javascript">
+    $(function () {
+      S.test.before = function () {
+        var $body = $('body');
+
+        S.times(100, function () {
+          $body.append('<div>' + Math.random() +'</div>');
+        });
+      };
+
+      S.test.after = function() {
+        $('div').remove();
+      };
+
+      S.test('.data(key, value)', function () {
+        $('div').each(function () {
+          var $this = $(this);
+          $this
+              .data('counted1', true)
+              .data('counted2', true)
+              .data('counted3', true);
+
+          $this.data('counted1') || ERROR;
+        });
+      });
+
+      S.test('.data({key: value})', function () {
+        $('div').each(function () {
+          var $this = $(this);
+          $this.data({counted1: true, counted2: true, counted3: true});
+          $this.data('counted1') || ERROR;
+        });
+      });
+
+      S.test('data[key] = value', function () {
+        $('div').each(function () {
+          var $this = $(this),
+              data = $this.data();
+          data && $.extend(data, {
+            counted1: true,
+            counted2: true,
+            counted3: true
+          });
+          data.counted1 || ERROR;
+        });
+      });
+
+      S.test('array', function () {
+        var array = [];
+
+        $('div').each(function (i) {
+          var $this = $(this);
+          array.push(i);
+        });
+      });
+
+    });
+  </script>
+</head>
+<body>
+
+</body>
+</html>
