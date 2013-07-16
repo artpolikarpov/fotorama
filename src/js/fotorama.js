@@ -79,7 +79,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
       stoppedAutoplayFLAG,
       wrapAppendedFLAG,
 
-      toDeactivate = {/*s: [],*/ n: []},
+      toDeactivate = {},
+      toDetach = {},
 
       measuresStash;
 
@@ -87,6 +88,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
   $wrap[navThumbFrameKey] = $(div(navFrameClass + ' ' + navFrameThumbClass, div(thumbClass)));
   $wrap[navDotFrameKey] = $(div(navFrameClass + ' ' + navFrameDotClass, div(dotClass)));
 
+  toDeactivate[stageFrameKey] = [];
+  toDeactivate[navThumbFrameKey] = [];
+  toDeactivate[navDotFrameKey] = [];
+  toDetach[stageFrameKey] = [];
 
   if (CSS3) {
     $wrap.addClass(wrapCss3Class);
@@ -528,25 +533,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
     eachIndex(indexes, 'stage', function (i, index, dataFrame, $frame, key, frameData) {
       if (!$frame) return;
 
-      $frame
-          .css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, MARGIN, repositionIndex)/*, display: 'block'*/}, o_fade && getDuration(0)));
-      //.fadeTo(0, o_fade && index !== activeIndex ? 0 : 1);
+      toDetach[stageFrameKey].push(
+          $frame.css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, MARGIN, repositionIndex)}, o_fade && getDuration(0)))
+      );
 
-      if (!frameData.appended) {
+      if (isDetached($frame[0])) {
         $frame.appendTo($stageShaft);
-        frameData.appended = true;
         unloadVideo(dataFrame.$video);
       }
-
-
-
-      ///
-//			if (frameData.hidden) {
-//				$frame.show();
-//				frameData.hidden = false;
-//
-//			}
-      ///
 
       var method = dataFrame.fit || opts.fit;
 
@@ -582,7 +576,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function frameAppend ($frames, $shaft, type) {
     if (!frameAppend[type]) {
-      console.log('frameAppend', $frames, $shaft);
+      //console.log('frameAppend', $frames, $shaft);
       $shaft.append(
         $frames
             .filter(function () {
@@ -651,13 +645,24 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function navUpdate () {
-    deactivateFrames('n');
-    toDeactivate.n.push(that.activeFrame[navFrameKey].addClass(activeClass));
+    deactivateFrames(navFrameKey);
+    toDeactivate[navFrameKey].push(that.activeFrame[navFrameKey].addClass(activeClass));
   }
 
   function deactivateFrames (key) {
-    while (toDeactivate[key].length) {
-      toDeactivate[key].shift().removeClass(activeClass);
+    var _toDeactivate = toDeactivate[key];
+
+    while (_toDeactivate.length) {
+      _toDeactivate.shift().removeClass(activeClass);
+    }
+  }
+
+  function detachFrames (key) {
+    var _toDetach = toDetach[key];
+
+    while (_toDetach.length) {
+      var $frame = _toDetach.shift();
+      that.activeFrame[key] !== $frame && $frame.detach();
     }
   }
 
@@ -667,27 +672,19 @@ jQuery.Fotorama = function ($fotorama, opts) {
       stageShaftReposition.t = setTimeout(stageShaftReposition, 100);
       return;
     }
+
     repositionIndex = dirtyIndex = activeIndex;
 
     var dataFrame = that.activeFrame,
         $frame = dataFrame[stageFrameKey];
 
     if ($frame) {
-      //deactivateFrames('s');
-      //toDeactivate.s.push(that.activeFrame[stageFrameKey].addClass(activeClass));
+      deactivateFrames(stageFrameKey);
+      toDeactivate[stageFrameKey].push($frame.addClass(activeClass));
 
-      $stageFrame
-          .not($frame.addClass(activeClass))
-          //.css({display: 'none'})
-        //.hide()
-        //.data('hidden', true)
-          .detach()
-          .data('appended', false)
-          .removeClass(activeClass);
+      stop($stageShaft.css(getTranslate(0)));
 
-      stop($stageShaft);
-      $stageShaft.css(getTranslate(0));
-
+      detachFrames(stageFrameKey);
       stageFramePosition(activeIndexes);
       setStageShaftMinMaxPosAndSnap();
       setNavShaftMinMaxPos();

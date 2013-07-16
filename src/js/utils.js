@@ -55,7 +55,7 @@ function bindTransitionEnd ($el) {
 
   if (elData.tEnd) return;
 
-  console.log('bindTransitionEnd', $('img', $el).attr('src'));
+  //console.log('bindTransitionEnd', $('img', $el).attr('src'));
 
   var el = $el[0],
       transitionEndEvent = {
@@ -66,7 +66,7 @@ function bindTransitionEnd ($el) {
         transition: 'transitionend'
       };
   el.addEventListener(transitionEndEvent[Modernizr.prefixed('transition')], function (e) {
-    console.log('NATIVE transitionend', e.propertyName, elData.tProp && e.propertyName.match(elData.tProp) && 'CALL');
+    //console.log('NATIVE transitionend', e.propertyName, elData.tProp && e.propertyName.match(elData.tProp) && 'CALL');
     elData.tProp && e.propertyName.match(elData.tProp) && elData.onEndFn.call(this);
   });
   elData.tEnd = true;
@@ -76,7 +76,7 @@ function afterTransition ($el, property, fn, time) {
   var done,
       elData = $el.data();
 
-  console.log('afterTransition', $el);
+  //console.log('afterTransition', $el);
 
   if (elData) {
     //clearTimeout(elData.tT);
@@ -267,6 +267,10 @@ function getDataFromHtml ($el) {
 
 function isHidden (el) {
   return el.offsetWidth === 0 && el.offsetHeight === 0;
+}
+
+function isDetached (el) {
+  return !$.contains(document.documentElement, el);
 }
 
 function waitFor (test, fn, timeout) {

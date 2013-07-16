@@ -24,7 +24,7 @@ function slide ($el, options) {
 }
 
 function fade ($el1, $el2, $frames, options) {
-  console.log('fade', !!$el1, !!$el2);
+  //console.log('fade', !!$el1, !!$el2);
 
   var _$el1 = $el1, _$el2 = $el2, crossfadeFLAG = options.method === 'crossfade';
   /*fade.$el1 = */$el1 = $el1 || $($el1);
@@ -34,7 +34,7 @@ function fade ($el1, $el2, $frames, options) {
         if (!onEndFn.done) {
           //$el1.removeClass(fadeRearClass);
           //$el2.removeClass(fadeFrontClass);
-          console.log('onEndFn');
+          //console.log('onEndFn');
           (options.onEnd || noop)();
           onEndFn.done = true;
         }
