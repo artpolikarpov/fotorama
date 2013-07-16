@@ -474,10 +474,12 @@ jQuery.Fotorama = function ($fotorama, opts) {
         //////console.log('dataFrame.html', $(dataFrame.html).html());
 
         if (dataFrame.html) {
-          var $html = $(dataFrame.html).html(dataFrame._html); // Because of IE
-
           $('<div class="' + htmlClass + '"></div>')
-              .append(dataFrame.html)
+              .append(
+                  $(dataFrame.html)
+                      .removeAttr('id')
+                      .html(dataFrame._html) // Because of IE
+              )
               .appendTo($frame);
         }
 
