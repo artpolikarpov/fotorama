@@ -440,7 +440,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           if ($.Fotorama.cache[src] === 'error') {
             error();
           } else if ($.Fotorama.cache[src] === 'loaded') {
-            waitAndLoad();
+            setTimeout(waitAndLoad, 0);
           } else {
             setTimeout(justWait, 100);
           }
@@ -556,7 +556,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     var thumbSide = o_thumbSide + MARGIN,
         leftIndex = limitIndex(getIndexByPos(pos + thumbSide, thumbSide)),
-        rightIndex = limitIndex(getIndexByPos(pos - measures.w/* - thumbSide*/, thumbSide)),
+        rightIndex = limitIndex(getIndexByPos(pos - measures.w, thumbSide)),
         specialMeasures = {};
 
     specialMeasures.w = o_thumbSide;

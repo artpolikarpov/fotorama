@@ -306,7 +306,7 @@ function fit ($el, measuresToFit, method) {
       elData.l.h !== measuresToFit.h ||
       elData.l.m !== method)) {
 
-    //console.log('fit execute', measures, measuresToFit);
+    //console.log('fit execute', measures, elData.l);
 
     var width = measures.width,
         height = measures.height,
@@ -340,6 +340,8 @@ function fit ($el, measuresToFit, method) {
       m: method
     }
   }
+
+  return true;
 }
 
 function setStyle ($el, style) {
