@@ -359,7 +359,7 @@ function getIndexFromHash (hash, data, ok) {
   if (!ok) return false;
 
   var index;
-  if (!isNaN(hash)) return +hash;
+  if (!isNaN(hash)) return hash - 1;
 
   for (var _i = 0, _l = data.length; _i < _l; _i++) {
     var dataFrame = data[_i];
