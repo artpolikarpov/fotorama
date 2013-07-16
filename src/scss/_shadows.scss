@@ -14,7 +14,7 @@
     @extend %no-select;
 
     .fotorama--fullscreen & {
-      display: none !important;
+      display: none;
     }
   }
   &:before {
@@ -32,6 +32,12 @@
   }
   &.fotorama__shadows--right:after {
     right: 0;
+  }
+}
+
+.fotorama__wrap--fade .fotorama__stage {
+  &:before, &:after {
+    display: none !important;
   }
 }
 

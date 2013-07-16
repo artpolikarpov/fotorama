@@ -82,7 +82,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
       toDeactivate = {},
       toDetach = {},
 
-      measuresStash;
+      measuresStash,
+
+      touchedFLAG;
 
   $wrap[stageFrameKey] = $(div(stageFrameClass));
   $wrap[navThumbFrameKey] = $(div(navFrameClass + ' ' + navFrameThumbClass, div(thumbClass)));
@@ -733,8 +735,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       frame: data[index]
     }
   }
-
-  var touchedFLAG;
 
   function onTouchStart () {
     clearTimeout(onTouchEnd.t);
