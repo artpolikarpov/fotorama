@@ -11,6 +11,15 @@ $time: 300ms;
    // /test/specs/thumbs.js
    @extend %content-box;
  }
+
+  > * {
+    visibility: hidden;
+  }
+
+  &.fotorama--noscript > *,
+  > .fotorama__wrap {
+    visibility: visible;
+  }
 }
 
 .fullscreen {
