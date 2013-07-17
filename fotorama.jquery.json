@@ -30,6 +30,6 @@
 	"docs": "http://fotorama.io/use/",
 	"download": "http://fotorama.s3.amazonaws.com/4.1.17/fotorama-4.1.17.zip",
 	"dependencies": {
-		"jquery": ">=1.9"
+		"jquery": ">=1.8"
 	}
 }
