@@ -55,8 +55,6 @@ function bindTransitionEnd ($el) {
 
   if (elData.tEnd) return;
 
-  //console.log('bindTransitionEnd', $('img', $el).attr('src'));
-
   var el = $el[0],
       transitionEndEvent = {
         WebkitTransition: 'webkitTransitionEnd',
@@ -76,31 +74,15 @@ function afterTransition ($el, property, fn, time) {
   var done,
       elData = $el.data();
 
-  //console.log('afterTransition', $el);
-
   if (elData) {
-    //clearTimeout(elData.tT);
-
     elData.onEndFn = function () {
       if (done) return;
-      //.log('elData.onEndFn()', fn);
       fn.call(this);
       done = true;
     };
     elData.tProp = property;
 
     bindTransitionEnd($el);
-
-//    if (!time) return;
-//
-//    elData.tT = setTimeout(function () {
-//      // Если не сработал нативный transitionend (а такое бывает),
-//      // через таймаут вызываем onEndFn насильно:
-//      //.log('request for FALLBACK', $el, fn);
-//      if (done) return;
-//      //.log('FALLBACK!!! for transition', $el, fn);
-//      elData.onEndFn();
-//    }, time * 5);
   }
 }
 
@@ -114,7 +96,6 @@ function stop ($el, left) {
   } else {
     $el.stop();
   }
-    //console.log('$el.length', $el);
     var lockedLeft = left || readPosition($el);
     $el.css(getTranslate(lockedLeft));
     return lockedLeft;
@@ -140,8 +121,6 @@ function findVideoId (href, forceVideo) {
   if (typeof href !== 'string') return href;
   href = parseHref(href);
 
-  // href.host = href.host.replace(/^www./, '').replace(/:80$/, '');
-
   var id,
       type;
 
@@ -163,8 +142,6 @@ function findVideoId (href, forceVideo) {
     id = href.pathname.replace(/^\/(video\/)?/, '').replace(/\/.*/, '');
   }
 
-  //.log('id, type ', id, type);
-
   if ((!id || !type) && forceVideo) {
     id = href.href;
     type = 'custom';
@@ -174,8 +151,6 @@ function findVideoId (href, forceVideo) {
 }
 
 function getVideoThumbs (dataFrame, data, api) {
-  //console.log('getVideoThumbs');
-
   var img, thumb, video = dataFrame.video;
   if (video.type === 'youtube') {
     thumb = getProtocol() + 'img.youtube.com/vi/' + video.id + '/default.jpg';
@@ -205,7 +180,6 @@ function updateData (data, _dataFrame, i, api) {
     var dataFrame = data[_i];
 
     if (dataFrame.i === i && dataFrame.thumbsReady) {
-
       var clear = {videoReady: true};
       clear[STAGE_FRAME_KEY] = clear[NAV_THUMB_FRAME_KEY] = clear[NAV_DOT_FRAME_KEY] = false;
 
