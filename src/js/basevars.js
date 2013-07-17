@@ -4,7 +4,7 @@ var $WINDOW = $(window),
     $BODY,
 
     COMPAT = document.compatMode === 'CSS1Compat',
-    QUIRKS_FORCE = document.location.hash.replace('#', '') === 'quirks',
+    QUIRKS_FORCE = location.hash.replace('#', '') === 'quirks',
     CSS3 = Modernizr.csstransforms3d && !QUIRKS_FORCE,
     FULLSCREEN = fullScreenApi.ok,
 
@@ -16,5 +16,11 @@ var $WINDOW = $(window),
 
     WIDTH = 500,
     HEIGHT = 333,
+
+
+    STAGE_FRAME_KEY = '$stageFrame',
+    NAV_FRAME_KEY,
+    NAV_DOT_FRAME_KEY = '$navDotFrame',
+    NAV_THUMB_FRAME_KEY = '$navThumbFrame',
 
     BEZIER = bez([.1, 0, .25, 1]);

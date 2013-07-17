@@ -30,10 +30,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $navFrame,
       $navDotFrame = $(),
       $navThumbFrame = $(),
-      stageFrameKey = '$stageFrame',
-      navFrameKey,
-      navDotFrameKey = '$navDotFrame',
-      navThumbFrameKey = '$navThumbFrame',
 
       stageShaftData = $stageShaft.data(),
       navShaftData = $navShaft.data(),
@@ -86,14 +82,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       touchedFLAG;
 
-  $wrap[stageFrameKey] = $(div(stageFrameClass));
-  $wrap[navThumbFrameKey] = $(div(navFrameClass + ' ' + navFrameThumbClass, div(thumbClass)));
-  $wrap[navDotFrameKey] = $(div(navFrameClass + ' ' + navFrameDotClass, div(dotClass)));
+  $wrap[STAGE_FRAME_KEY] = $(div(stageFrameClass));
+  $wrap[NAV_THUMB_FRAME_KEY] = $(div(navFrameClass + ' ' + navFrameThumbClass, div(thumbClass)));
+  $wrap[NAV_DOT_FRAME_KEY] = $(div(navFrameClass + ' ' + navFrameDotClass, div(dotClass)));
 
-  toDeactivate[stageFrameKey] = [];
-  toDeactivate[navThumbFrameKey] = [];
-  toDeactivate[navDotFrameKey] = [];
-  toDetach[stageFrameKey] = [];
+  toDeactivate[STAGE_FRAME_KEY] = [];
+  toDeactivate[NAV_THUMB_FRAME_KEY] = [];
+  toDeactivate[NAV_DOT_FRAME_KEY] = [];
+  toDetach[STAGE_FRAME_KEY] = [];
 
   if (CSS3) {
     $wrap.addClass(wrapCss3Class);
@@ -198,7 +194,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       frameDraw(size, 'navThumb');
 
       $navFrame = $navThumbFrame;
-      navFrameKey = navThumbFrameKey;
+      NAV_FRAME_KEY = NAV_THUMB_FRAME_KEY;
 
       setStyle($style, $.Fotorama.jst.style({w: o_thumbSide, h: o_thumbSide2, m: MARGIN, s: stamp, q: !COMPAT}));
 
@@ -209,7 +205,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       frameDraw(size, 'navDot');
 
       $navFrame = $navDotFrame;
-      navFrameKey = navDotFrameKey;
+      NAV_FRAME_KEY = NAV_DOT_FRAME_KEY;
 
       $nav
           .addClass(navDotsClass)
@@ -453,7 +449,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function updateFotoramaState () {
-    var $frame = that.activeFrame[stageFrameKey];
+    var $frame = that.activeFrame[STAGE_FRAME_KEY];
 
     if ($frame && !$frame.data().state) {
       ooooStart($frame);
@@ -535,7 +531,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     eachIndex(indexes, 'stage', function (i, index, dataFrame, $frame, key, frameData) {
       if (!$frame) return;
 
-      toDetach[stageFrameKey].push(
+      toDetach[STAGE_FRAME_KEY].push(
           $frame.css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, MARGIN, repositionIndex)}, o_fade && getDuration(0)))
       );
 
@@ -625,13 +621,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
   function slideThumbBorder (time) {
     slide($thumbBorder, {
       time: time * .9,
-      pos: getNavFrameCenter(that.activeFrame[navFrameKey])
+      pos: getNavFrameCenter(that.activeFrame[NAV_FRAME_KEY])
     });
   }
 
   function slideNavShaft (options) {
-    if (data[options.guessIndex][navFrameKey]) {
-      var pos = minMaxLimit(options.coo - getNavFrameCenter(data[options.guessIndex][navFrameKey]), navShaftData.minPos, navShaftData.maxPos),
+    if (data[options.guessIndex][NAV_FRAME_KEY]) {
+      var pos = minMaxLimit(options.coo - getNavFrameCenter(data[options.guessIndex][NAV_FRAME_KEY]), navShaftData.minPos, navShaftData.maxPos),
           time = options.time * .9;
       slide($navShaft, {
         time: time,
@@ -647,8 +643,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function navUpdate () {
-    deactivateFrames(navFrameKey);
-    toDeactivate[navFrameKey].push(that.activeFrame[navFrameKey].addClass(activeClass));
+    deactivateFrames(NAV_FRAME_KEY);
+    toDeactivate[NAV_FRAME_KEY].push(that.activeFrame[NAV_FRAME_KEY].addClass(activeClass));
   }
 
   function deactivateFrames (key) {
@@ -678,15 +674,15 @@ jQuery.Fotorama = function ($fotorama, opts) {
     repositionIndex = dirtyIndex = activeIndex;
 
     var dataFrame = that.activeFrame,
-        $frame = dataFrame[stageFrameKey];
+        $frame = dataFrame[STAGE_FRAME_KEY];
 
     if ($frame) {
-      deactivateFrames(stageFrameKey);
-      toDeactivate[stageFrameKey].push($frame.addClass(activeClass));
+      deactivateFrames(STAGE_FRAME_KEY);
+      toDeactivate[STAGE_FRAME_KEY].push($frame.addClass(activeClass));
 
       stop($stageShaft.css(getTranslate(0)));
 
-      detachFrames(stageFrameKey);
+      detachFrames(STAGE_FRAME_KEY);
       stageFramePosition(activeIndexes);
       setStageShaftMinMaxPosAndSnap();
       setNavShaftMinMaxPos();
@@ -776,7 +772,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     var _activeIndex = activeIndex;
 
     changeAutoplay.t = setTimeout(function () {
-      var frameData = that.activeFrame[stageFrameKey].data();
+      var frameData = that.activeFrame[STAGE_FRAME_KEY].data();
       waitFor(function () {
         return frameData.state || _activeIndex !== activeIndex;
       }, function () {
@@ -863,8 +859,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
         onEnd: onEnd
       });
     } else {
-      var $activeFrame = activeFrame[stageFrameKey],
-          $prevActiveFrame = activeIndex !== lastActiveIndex ? data[lastActiveIndex][stageFrameKey] : null;
+      var $activeFrame = activeFrame[STAGE_FRAME_KEY],
+          $prevActiveFrame = activeIndex !== lastActiveIndex ? data[lastActiveIndex][STAGE_FRAME_KEY] : null;
 
       fade($activeFrame, $prevActiveFrame, $stageFrame, {
         time: time,
@@ -1095,7 +1091,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }, function () {
         if (_activeIndex === activeIndex) {
           dataFrame.$video = dataFrame.$video || $($.Fotorama.jst.video(video));
-          dataFrame.$video.appendTo(dataFrame[stageFrameKey]);
+          dataFrame.$video.appendTo(dataFrame[STAGE_FRAME_KEY]);
 
           $wrap.addClass(wrapVideoClass);
           $videoPlaying = dataFrame.$video;
@@ -1366,11 +1362,8 @@ $.fn.fotorama = function (opts) {
 
                   loop: false
                 },
-                $.extend(
-                    {},
-                    opts,
-                    fotoramaData
-                )
+                opts,
+                fotoramaData
             )
         );
       });
