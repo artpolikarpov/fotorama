@@ -349,11 +349,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
         $.Fotorama.cache[src] = 'error';
 
-        if ((!dataFrame.$html || type !== 'stage') && dummy && dummy !== src) {
+        if ((!dataFrame.html || type !== 'stage') && dummy && dummy !== src) {
           dataFrame[srcKey] = src = dummy;
           loadImg([index], type, specialMeasures, specialFit, true);
         } else {
-          if (src && !frameData.$html) {
+          if (src && !dataFrame.html) {
             $frame
                 .trigger('f:error')
                 .removeClass(loadingClass)
