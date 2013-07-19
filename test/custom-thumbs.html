@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Custom thumbs</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+
+  <!-- jQuery, -->
+  <script src="jquery/jquery-1.10.1.min.js"></script>
+
+  <!-- Fotorama -->
+  <link href="../product/fotorama.css" rel="stylesheet">
+  <script src="../product/fotorama.js"></script>
+</head>
+
+<body>
+
+<p>Custom thumbs. View page source for details.
+
+<p>
+
+  <style>
+      /* style thumbs a bit */
+    .thumbs {
+      text-align: center;
+      margin-top: 2px;
+      font-size: 1px;
+      line-height: 0;
+    }
+
+    .thumbs a {
+      visibility: visible;
+      text-decoration: none;
+      color: #34457b;
+    }
+
+    .thumbs a:hover {
+      color: #af1d05;
+    }
+
+    .thumbs img {
+      width: auto;
+      height: 48px;
+      border: 2px #fff solid;
+      opacity: .75;
+      transition: opacity .5s;
+    }
+
+    .thumbs a:hover img, .thumbs a.active img {
+      border-color: #00afea;
+      opacity: 1;
+      transition: none;
+    }
+  </style>
+
+  <script>
+    $(function () {
+
+      $('.thumbs').each(function () {
+        $('a', this).each(function () {
+          var $a = $(this);
+          // set ids, will use them later
+          $a.attr({id: $a.attr('href').replace(/[\/\.-]/g, '')});
+        });
+
+        var $thumbs = $(this),
+            $fotorama = $thumbs.clone();
+
+        $fotorama
+            .on('fotorama:show', function (e, fotorama) {
+              // pick the active thumb by id
+              $('#' + fotorama.activeFrame.id)
+                  .addClass('active')
+                  .siblings()
+                  .removeClass('active');
+            })
+            .addClass('fotorama')
+            .removeClass('thumbs')
+            .insertBefore(this)
+            .fotorama({nav: false, width: '100%', maxHeight: 400, ratio: 3 / 2});
+
+        // get access to the API
+        var fotorama = $fotorama.data('fotorama');
+
+        $thumbs.on('click', 'a', function (e) {
+          e.preventDefault();
+          // show frame by id
+          fotorama.show(this.id);
+        });
+      });
+
+    });
+  </script>
+
+<div class="thumbs">
+  <a href="i/okonechnikov/1-lo.jpg"><img src="i/okonechnikov/1-thumb.jpg"></a>
+  <a href="i/okonechnikov/2-lo.jpg"><img src="i/okonechnikov/2-thumb.jpg"></a>
+  <a href="i/okonechnikov/4-lo.jpg"><img src="i/okonechnikov/4-thumb.jpg"></a>
+  <a href="i/okonechnikov/5-lo.jpg"><img src="i/okonechnikov/5-thumb.jpg"></a>
+  <a href="i/okonechnikov/6-lo.jpg"><img src="i/okonechnikov/6-thumb.jpg"></a>
+  <a href="i/okonechnikov/7-lo.jpg"><img src="i/okonechnikov/7-thumb.jpg"></a>
+  <a href="i/okonechnikov/8-lo.jpg"><img src="i/okonechnikov/8-thumb.jpg"></a>
+  <a href="i/okonechnikov/9-lo.jpg"><img src="i/okonechnikov/9-thumb.jpg"></a>
+  <a href="i/okonechnikov/10-lo.jpg"><img src="i/okonechnikov/10-thumb.jpg"></a>
+  <a href="i/okonechnikov/11-lo.jpg"><img src="i/okonechnikov/11-thumb.jpg"></a>
+  <a href="i/okonechnikov/12-lo.jpg"><img src="i/okonechnikov/12-thumb.jpg"></a>
+  <a href="i/okonechnikov/13-lo.jpg"><img src="i/okonechnikov/13-thumb.jpg"></a>
+  <a href="i/okonechnikov/14-lo.jpg"><img src="i/okonechnikov/14-thumb.jpg"></a>
+  <a href="i/okonechnikov/15-lo.jpg"><img src="i/okonechnikov/15-thumb.jpg"></a>
+  <a href="i/okonechnikov/16-lo.jpg"><img src="i/okonechnikov/16-thumb.jpg"></a>
+  <a href="i/okonechnikov/20-lo.jpg"><img src="i/okonechnikov/20-thumb.jpg"></a>
+  <a href="i/okonechnikov/21-lo.jpg"><img src="i/okonechnikov/21-thumb.jpg"></a>
+  <a href="i/okonechnikov/22-lo.jpg"><img src="i/okonechnikov/22-thumb.jpg"></a>
+  <a href="i/okonechnikov/23-lo.jpg"><img src="i/okonechnikov/23-thumb.jpg"></a>
+  <a href="i/okonechnikov/24-lo.jpg"><img src="i/okonechnikov/24-thumb.jpg"></a>
+  <a href="i/okonechnikov/17-lo.jpg"><img src="i/okonechnikov/17-thumb.jpg"></a>
+  <a href="i/okonechnikov/18-lo.jpg"><img src="i/okonechnikov/18-thumb.jpg"></a>
+  <a href="i/okonechnikov/19-lo.jpg"><img src="i/okonechnikov/19-thumb.jpg"></a>
+</div>
+
+<!-- © -->
+<p>Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
+</body>
+</html>
