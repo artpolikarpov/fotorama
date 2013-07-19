@@ -258,6 +258,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
     return minMaxLimit(index, 0, size - 1);
   }
 
+  function edgeIndex (index) {
+    return o_loop ? normalizeIndex(index) : limitIndex(index);
+  }
+
   function getPrevIndex (index) {
     return index > 0 || o_loop ? index - 1 : false;
   }
@@ -750,7 +754,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function releaseAutoplay () {
-    pausedAutoplayFLAG = !(!$videoPlaying && !stoppedAutoplayFLAG);
+    pausedAutoplayFLAG = !!($videoPlaying || stoppedAutoplayFLAG);
   }
 
   function changeAutoplay () {
@@ -777,7 +781,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         return frameData.state || _activeIndex !== activeIndex;
       }, function () {
         if (pausedAutoplayFLAG || _activeIndex !== activeIndex) return;
-        that.show({index: normalizeIndex(activeIndex + 1)});
+        that.show(o_loop ? '>' : normalizeIndex(activeIndex + 1));
       });
     }, opts.autoplay);
   }
@@ -790,7 +794,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     changeAutoplay();
 
     return this;
-  }
+  };
 
   that.stopAutoplay = function () {
     if (that.autoplay) {
@@ -816,14 +820,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     if (options.slow) time *= 10;
 
-//    index = index === '>' ? dirtyIndex + 1 : index === '<' ? dirtyIndex - 1 : index === '<<' ? 0 : index === '>>' ? size - 1 : typeof index === 'string' ? getIndexFromHash(index, data, true) : index;
-//    index = isNaN(index) ? activeIndex || 0 : index;
-
     index = index === '>' ? dirtyIndex + 1 : index === '<' ? dirtyIndex - 1 : index === '<<' ? 0 : index === '>>' ? size - 1 : index;
     index = isNaN(index) ? getIndexFromHash(index, data, true) : index;
     index = typeof index === 'undefined' ? activeIndex || 0 : index;
 
-    that.activeIndex = activeIndex = o_loop ? normalizeIndex(index) : limitIndex(index);
+    that.activeIndex = activeIndex = edgeIndex(index);
     prevIndex = getPrevIndex(activeIndex);
     nextIndex = getNextIndex(activeIndex);
     activeIndexes = [activeIndex, prevIndex, nextIndex];
@@ -1270,8 +1271,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       if (opts.hash && location.hash) {
         startIndex = getIndexFromHash(location.hash.replace(/^#/, ''), data, index === 0);
       }
-      startIndex = (o_loop ? normalizeIndex(startIndex) : limitIndex(startIndex)) || 0;
-      activeIndex = repositionIndex = dirtyIndex = lastActiveIndex = startIndex;
+      activeIndex = repositionIndex = dirtyIndex = lastActiveIndex = startIndex = edgeIndex(startIndex) || 0;
     }
 
     if (size) {
