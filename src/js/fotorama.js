@@ -123,6 +123,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     data = that.data = data || getDataFromHtml($fotorama);
     size = that.size = data.length;
 
+    !ready.ok && opts.shuffle && shuffle(data);
+
     checkForVideo();
 
     activeIndex = limitIndex(activeIndex);
@@ -1003,7 +1005,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   that.resize = function (options) {
-    if (!data) return;
+    if (!data) return this;
 
     extendMeasures(!that.fullScreen ? options : {width: '100%', maxWidth: null, minWidth: null, height: '100%', maxHeight: null, minHeight: null}, that.fullScreen);
 
@@ -1055,6 +1057,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
   that.setOptions = function (options) {
     $.extend(opts, options);
     reset();
+    return this;
+  };
+
+  that.shuffle = function () {
+    data && shuffle(data) && reset();
     return this;
   };
 
@@ -1358,7 +1365,9 @@ $.fn.fotorama = function (opts) {
 
                   keyboard: false,
 
-                  loop: false
+                  loop: false,
+
+                  shuffle: false
                 },
                 opts,
                 fotoramaData

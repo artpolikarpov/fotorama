@@ -378,3 +378,21 @@ function smartClick ($el, fn, _options) {
 function div (classes, child) {
   return '<div class="' + classes + '">' + (child || '') + '</div>';
 }
+
+// Fisher–Yates Shuffle
+// http://bost.ocks.org/mike/shuffle/
+function shuffle(array) {
+  // While there remain elements to shuffle
+  var l = array.length;
+  while (l) {
+    // Pick a remaining element
+    var i = Math.floor(Math.random() * l--);
+
+    // And swap it with the current element
+    var t = array[l];
+    array[l] = array[i];
+    array[i] = t;
+  }
+
+  return array;
+}
