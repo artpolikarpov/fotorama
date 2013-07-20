@@ -298,10 +298,10 @@ function fit ($el, measuresToFit, method) {
     }
 
     $el.css({
-      width: Math.round(width),
-      height: Math.round(height),
-      marginLeft: Math.round(-width / 2),
-      marginTop: Math.round(-height / 2)
+      width: Math.ceil(width),
+      height: Math.ceil(height),
+      marginLeft: Math.floor(-width / 2),
+      marginTop: Math.floor(-height / 2)
     });
 
     elData.l = {
