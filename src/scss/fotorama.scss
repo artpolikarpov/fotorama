@@ -110,22 +110,18 @@ $time: 300ms;
 
 .fotorama__stage__frame {
   @extend %stretch;
-
-  //width: 0;
-  //height: 0;
-  //display: none;
-
+  @extend %before-load-bg;
   @extend %no-tap;
   overflow: hidden;
   &.fotorama__active {
     z-index: 8;
   }
+
+  &.fotorama__loaded {
+    background-color: transparent;
+  }
 }
 
-//.fotorama__stage__frame--visible {
-//  width: 100%;
-//  height: 100%;
-//}
 
 .fotorama__wrap--fade {
   .fotorama__stage__frame {
@@ -294,11 +290,9 @@ $time: 300ms;
 @include dotColor(mix(black, white));
 
 .fotorama__thumb {
-  background-color: mix(mix(mix(black, white), white), white);
-  // fuckYeah()
-  background-color: transparentize(mix(black, white), .75);
   overflow: hidden;
   position: relative;
+  @extend %before-load-bg;
 }
 
 .fotorama__thumb-border {
@@ -424,6 +418,10 @@ $time: 300ms;
   .fotorama__stage__frame,
   .fotorama__caption {
     @include transition(opacity $time linear);
+  }
+
+  .fotorama__stage__frame {
+    @include transition(background-color $time linear);
   }
 }
 

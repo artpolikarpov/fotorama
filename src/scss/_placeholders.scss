@@ -114,3 +114,7 @@
     background-size: 96px 160px;
   }
 }
+
+%before-load-bg {
+  background-color: rgba(mix(black, white), .13);
+}
