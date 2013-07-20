@@ -16,24 +16,24 @@
     $(function () {
       //f = $('.fotorama').data('fotorama');
 
-function catchImage ($frame) {
-  var $img = $('.fotorama__img', $frame);
-  // do something smart
-}
-
-$('.fotorama')
-    .on('fotorama:showend', function (e, fotorama) {
-      var $frame = fotorama.activeFrame.$stageFrame;
-
-      if (!$frame.data('state')) {
-        $frame.on('f:load f:error', function () {
-          catchImage($frame);
-        });
-      } else {
-        catchImage($frame);
+      function catchImage ($frame) {
+        var $img = $('.fotorama__img', $frame);
+        // do something smart
       }
-    })
-    .fotorama();
+
+      $('.fotorama')
+          .on('fotorama:showend', function (e, fotorama) {
+            var $frame = fotorama.activeFrame.$stageFrame;
+
+            if (!$frame.data('state')) {
+              $frame.on('f:load f:error', function () {
+                catchImage($frame);
+              });
+            } else {
+              catchImage($frame);
+            }
+          })
+          .fotorama();
     });
   </script>
 </head>
