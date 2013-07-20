@@ -669,11 +669,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function stageShaftReposition () {
-    clearTimeout(stageShaftReposition.t);
-    if (touchedFLAG && !o_fade) {
-      stageShaftReposition.t = setTimeout(stageShaftReposition, 100);
-      return;
-    }
+//    clearTimeout(stageShaftReposition.t);
+//    if (touchedFLAG && !o_fade) {
+//      stageShaftReposition.t = setTimeout(stageShaftReposition, 100);
+//      return;
+//    }
 
     repositionIndex = dirtyIndex = activeIndex;
 
