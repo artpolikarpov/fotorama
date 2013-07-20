@@ -83,6 +83,10 @@ $time: 300ms;
   }
   .fotorama__stage__frame {
     opacity: 1 !important;
+    @extend %before-load-bg;
+    &.fotorama__loaded {
+      background-color: transparent;
+    }
   }
 }
 
@@ -110,15 +114,10 @@ $time: 300ms;
 
 .fotorama__stage__frame {
   @extend %stretch;
-  @extend %before-load-bg;
   @extend %no-tap;
   overflow: hidden;
   &.fotorama__active {
     z-index: 8;
-  }
-
-  &.fotorama__loaded {
-    background-color: transparent;
   }
 }
 
@@ -415,13 +414,15 @@ $time: 300ms;
   }
   .fotorama__img,
   .fotorama__html,
-  .fotorama__stage__frame,
+  &.fotorama__wrap--fade .fotorama__stage__frame,
   .fotorama__caption {
     @include transition(opacity $time linear);
   }
 
-  .fotorama__stage__frame {
-    @include transition(background-color $time linear);
+  &.fotorama__wrap--slide {
+    .fotorama__stage__frame {
+      @include transition(background-color $time linear);
+    }
   }
 }
 

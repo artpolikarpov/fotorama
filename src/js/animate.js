@@ -24,17 +24,12 @@ function slide ($el, options) {
 }
 
 function fade ($el1, $el2, $frames, options) {
-  //console.log('fade', !!$el1, !!$el2);
-
-  var _$el1 = $el1, _$el2 = $el2, crossfadeFLAG = options.method === 'crossfade';
-  /*fade.$el1 = */$el1 = $el1 || $($el1);
-  /*fade.$el2 = */$el2 = $el2 || $($el2);
+  var crossfadeFLAG = options.method === 'crossfade';
+  $el1 = $el1 || $($el1);
+  $el2 = $el2 || $($el2);
 
   var onEndFn = function () {
         if (!onEndFn.done) {
-          //$el1.removeClass(fadeRearClass);
-          //$el2.removeClass(fadeFrontClass);
-          //console.log('onEndFn');
           (options.onEnd || noop)();
           onEndFn.done = true;
         }
@@ -46,23 +41,19 @@ function fade ($el1, $el2, $frames, options) {
 
   $frames.removeClass(fadeRearClass + ' ' + fadeFrontClass);
 
-  $el1
-      .addClass(fadeRearClass);
-  //.removeClass(fadeRearClass);
-  $el2
-      .addClass(fadeFrontClass);
-  //.removeClass(fadeFrontClass);
+  $el1.addClass(fadeRearClass);
+  $el2.addClass(fadeFrontClass);
 
   if (CSS3) {
     stop($el1);
     stop($el2);
 
-    crossfadeFLAG && _$el2 && $el1.css($.extend(duration0, opacity0)).width(); // .width() for immediate reflow
+    crossfadeFLAG && $el2[0] && $el1.css($.extend(duration0, opacity0)).width(); // .width() for immediate reflow
 
     $el1.css($.extend(crossfadeFLAG ? duration : duration0, opacity1));
     $el2.css($.extend(duration, opacity0));
 
-    if (options.time > 10 && (_$el1 || _$el2)) {
+    if (options.time > 10 && ($el1[0] || $el2[0])) {
       afterTransition($el1, 'opacity', onEndFn, options.time);
       afterTransition($el2, 'opacity', onEndFn, options.time);
     } else {
@@ -73,13 +64,11 @@ function fade ($el1, $el2, $frames, options) {
     $el1.stop();
     $el2.stop();
 
-    if (_$el2) {
-      $el1.fadeTo(0, 0);
-    }
+    crossfadeFLAG && $el2[0] && $el1.fadeTo(0, 0);
 
-    $el1.fadeTo(options.time, 1, onEndFn);
-    crossfadeFLAG && $el2.fadeTo(options.time, 0);
+    $el1.fadeTo(crossfadeFLAG ? options.time : 0, 1, crossfadeFLAG && onEndFn);
+    $el2.fadeTo(options.time, 0, onEndFn);
 
-    if (!_$el1 && !_$el2) onEndFn();
+    ($el1[0] && crossfadeFLAG) || $el2[0] || onEndFn();
   }
 }
