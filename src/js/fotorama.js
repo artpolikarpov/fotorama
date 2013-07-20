@@ -171,11 +171,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
       o_navTop = opts.navPosition === 'top';
       classes.remove.push(selectClass);
 
-      $arrs.show();
+      $arrs.toggle(opts.arrows);
+
       arrsUpdate();
     } else {
       o_nav = false;
-
       $arrs.hide();
     }
 
@@ -578,7 +578,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function frameAppend ($frames, $shaft, type) {
     if (!frameAppend[type]) {
-      //console.log('frameAppend', $frames, $shaft);
       $shaft.append(
         $frames
             .filter(function () {
@@ -610,10 +609,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     $arrs.each(function (i) {
       $(this).toggleClass(
           arrDisabledClass,
-          (!o_loop
-              && ((activeIndex === 0 && i === 0)
-              || (activeIndex === size - 1 && i === 1)))
-              && !$videoPlaying
+          !o_loop && (!(activeIndex + i) || !(activeIndex - size + i)) && !$videoPlaying
       );
     });
   }
@@ -1344,6 +1340,8 @@ $.fn.fotorama = function (opts) {
                   navPosition: 'bottom', // 'top'
                   thumbWidth: THUMB_SIZE,
                   thumbHeight: THUMB_SIZE,
+
+                  arrows: true,
 
                   allowFullScreen: false, // true || 'native'
 
