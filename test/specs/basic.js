@@ -1,48 +1,48 @@
 document.write(
-	'<div class="fotorama" id="fotorama">' +
-		'<img src="test/i/okonechnikov/1-lo.jpg">' +
-		'<img src="test/i/okonechnikov/2-lo.jpg">' +
-		'<img src="test/i/okonechnikov/9-lo.jpg">' +
-		'<img src="test/i/okonechnikov/6-lo.jpg">' +
-		'<img src="test/i/okonechnikov/5-lo.jpg">' +
-	'</div>'
+    '<div class="fotorama" id="fotorama">' +
+        '<img src="test/i/okonechnikov/1-lo.jpg">' +
+        '<img src="test/i/okonechnikov/2-lo.jpg">' +
+        '<img src="test/i/okonechnikov/9-lo.jpg">' +
+        '<img src="test/i/okonechnikov/6-lo.jpg">' +
+        '<img src="test/i/okonechnikov/5-lo.jpg">' +
+    '</div>'
 );
 
 describe('Basic', function () {
-	var $fotorama, fotorama;
+  var $fotorama, fotorama;
 
-	beforeEach(function () {
-		$fotorama = $fotorama || $('#fotorama');
-		fotorama = fotorama || $fotorama.data('fotorama');
-	});
+  beforeEach(function () {
+    $fotorama = $fotorama || $('#fotorama');
+    fotorama = fotorama || $fotorama.data('fotorama');
+  });
 
-	it('$.fn.fotorama is here', function () {
-		expect($.fn.fotorama).toBeDefined();
-	});
-	it('it’s initialized', function () {
-		expect(fotorama).toBeDefined();
-		expect(fotorama).toEqual(jasmine.any(Object));
-	});
-	it('all elements are here', function () {
-		//expect($('.fotorama__load').size()).toEqual(1);
-		expect($('.fotorama__wrap', $fotorama).size()).toEqual(1);
-		expect($('.fotorama__stage', $fotorama).size()).toEqual(1);
-		expect($('.fotorama__stage__shaft', $fotorama).size()).toEqual(1);
-		expect($('.fotorama__nav', $fotorama).size()).toEqual(1);
-		expect($('.fotorama__nav__shaft', $fotorama).size()).toEqual(1);
-		expect($('.fotorama__arr', $fotorama).size()).toEqual(2);
-		expect($('.fotorama__stage__frame', $fotorama).size()).toEqual(2);
-		expect($('.fotorama__nav__frame', $fotorama).size()).toEqual(5);
-	});
-	it('dimensions are correct', function () {
-		var $stage = $('.fotorama__stage', $fotorama);
+  it('$.fn.fotorama is here', function () {
+    expect($.fn.fotorama).toBeDefined();
+  });
+  it('it’s initialized', function () {
+    expect(fotorama).toBeDefined();
+    expect(fotorama).toEqual(jasmine.any(Object));
+  });
+  it('all elements are here', function () {
+    //expect($('.fotorama__load').size()).toEqual(1);
+    expect($('.fotorama__wrap', $fotorama).size()).toEqual(1);
+    expect($('.fotorama__stage', $fotorama).size()).toEqual(1);
+    expect($('.fotorama__stage__shaft', $fotorama).size()).toEqual(1);
+    expect($('.fotorama__nav', $fotorama).size()).toEqual(1);
+    expect($('.fotorama__nav__shaft', $fotorama).size()).toEqual(1);
+    expect($('.fotorama__arr', $fotorama).size()).toEqual(2);
+    expect($('.fotorama__stage__frame', $fotorama).size()).toEqual(2);
+    expect($('.fotorama__nav__frame', $fotorama).size()).toEqual(5);
+  });
+  it('dimensions are correct', function () {
+    var $stage = $('.fotorama__stage', $fotorama);
 
     waitsFor(function () {
       return $stage.width() === 700
     }, 'Waits for autosize...', 100);
 
     runs(function () {
-		  expect($stage.height()).toEqual(467);
+      expect($stage.height()).toEqual(467);
     });
-	});
+  });
 });

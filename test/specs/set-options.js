@@ -1,22 +1,22 @@
 document.write(
-	'<div class="fotorama" id="fotorama">' +
-		'<img src="test/i/okonechnikov/1-lo.jpg">' +
-		'<img src="test/i/okonechnikov/2-lo.jpg">' +
-		'<img src="test/i/okonechnikov/9-lo.jpg">' +
-		'<img src="test/i/okonechnikov/6-lo.jpg">' +
-		'<img src="test/i/okonechnikov/5-lo.jpg">' +
-	'</div>'
+    '<div class="fotorama" id="fotorama">' +
+        '<img src="test/i/okonechnikov/1-lo.jpg">' +
+        '<img src="test/i/okonechnikov/2-lo.jpg">' +
+        '<img src="test/i/okonechnikov/9-lo.jpg">' +
+        '<img src="test/i/okonechnikov/6-lo.jpg">' +
+        '<img src="test/i/okonechnikov/5-lo.jpg">' +
+    '</div>'
 );
 
 describe('setOptions()', function () {
-	var $fotorama, fotorama;
+  var $fotorama, fotorama;
 
-	beforeEach(function () {
-		$fotorama = $fotorama || $('#fotorama');
-		fotorama = fotorama || $fotorama.data('fotorama');
-	});
+  beforeEach(function () {
+    $fotorama = $fotorama || $('#fotorama');
+    fotorama = fotorama || $fotorama.data('fotorama');
+  });
 
-	it('arrows', function () {
+  it('arrows', function () {
     var $prev = $('.fotorama__arr--prev'),
         $next = $('.fotorama__arr--next');
 
@@ -32,7 +32,7 @@ describe('setOptions()', function () {
 
     fotorama.setOptions({arrows: true});
     _expect(true);
-	});
+  });
 
   // more coming soon...
 });

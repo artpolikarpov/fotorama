@@ -1,10 +1,10 @@
 document.write(
     '<div class="fotorama" data-width="700" data-height="467" data-auto="false" id="fotorama">' +
-      '<img src="test/i/okonechnikov/1-lo.jpg">' +
-      '<img src="test/i/okonechnikov/2-lo.jpg">' +
-      '<img src="test/i/okonechnikov/9-lo.jpg">' +
-      '<img src="ERROR">' +
-      '<img src="test/i/okonechnikov/5-lo.jpg">' +
+        '<img src="test/i/okonechnikov/1-lo.jpg">' +
+        '<img src="test/i/okonechnikov/2-lo.jpg">' +
+        '<img src="test/i/okonechnikov/9-lo.jpg">' +
+        '<img src="ERROR">' +
+        '<img src="test/i/okonechnikov/5-lo.jpg">' +
     '</div>'
 );
 
@@ -18,16 +18,16 @@ describe('Events', function () {
     if (!binded) {
       $fotorama.on(
           'fotorama:ready ' + //
-          'fotorama:load ' + //
-          'fotorama:error ' + //
-          'fotorama:show ' + //
-          'fotorama:showend ' + //
-          'fotorama:fullscreenenter ' + //
-          'fotorama:fullscreenexit ' + //
-          'fotorama:loadvideo ' + //
-          'fotorama:unloadvideo ' + //
-          'fotorama:startautoplay ' + //
-          'fotorama:stopautoplay', //
+              'fotorama:load ' + //
+              'fotorama:error ' + //
+              'fotorama:show ' + //
+              'fotorama:showend ' + //
+              'fotorama:fullscreenenter ' + //
+              'fotorama:fullscreenexit ' + //
+              'fotorama:loadvideo ' + //
+              'fotorama:unloadvideo ' + //
+              'fotorama:startautoplay ' + //
+              'fotorama:stopautoplay', //
           function (event, fotorama, extra) {
             var type = event.type.replace(/^fotorama:/, '');
             e[type] = e[type] || {i: 0, fotorama: fotorama};
