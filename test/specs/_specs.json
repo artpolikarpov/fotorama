@@ -16,7 +16,6 @@
   "no-css-no-throw": {
     "src": ["test/jquery/jquery-1.10.1.min.js", "product/fotorama.js"],
     "options": {
-      /*"styles": "product/fotorama.css",*/
       "specs": "test/specs/no-css-no-throw.js"
     }
   },
