@@ -204,8 +204,13 @@ function getDataFromHtml ($el) {
         _imgHref = $img.attr('href'),
         _imgSrc = $img.attr('src'),
         _thumbSrc = $child.attr('src'),
+        separateThumbFLAG = $child && _thumbSrc && _thumbSrc !== _imgHref && _thumbSrc !== _imgSrc,
         _video = imgData.video,
-        video = checkVideo ? findVideoId(_imgHref, _video === true) : false;
+        video = checkVideo ? findVideoId(_imgHref, _video === true) : false,
+        width = numberFromMeasure(imgData.width || $img.attr('width')),
+        height = numberFromMeasure(imgData.height || $img.attr('height')),
+        thumbWidth = numberFromMeasure(imgData.thumbWidth || $child.attr('width') || separateThumbFLAG || width),
+        thumbHeight = numberFromMeasure(imgData.thumbHeight || $child.attr('height') || separateThumbFLAG || height);
 
     if (video) {
       _imgHref = false;
@@ -216,7 +221,10 @@ function getDataFromHtml ($el) {
     return {
       video: video,
       img: imgData.img || _imgHref || _imgSrc || _thumbSrc,
-      thumb: imgData.thumb || _thumbSrc || _imgSrc || _imgHref
+      width: width || undefined,
+      height: height || undefined,
+      thumb: imgData.thumb || _thumbSrc || _imgSrc || _imgHref,
+      thumbRatio: thumbWidth / thumbHeight || undefined
     }
   }
 
@@ -279,7 +287,7 @@ function fit ($el, measuresToFit, method) {
       elData.l.h !== measuresToFit.h ||
       elData.l.m !== method)) {
 
-    //console.log('fit execute', measures, elData.l);
+    //console.log('fit execute', measuresToFit, measures, elData.l);
 
     var width = measures.width,
         height = measures.height,

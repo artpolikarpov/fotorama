@@ -9,7 +9,7 @@ function slide ($el, options) {
     };
   }
 
-  var translate = getTranslate(elPos);
+  var translate = $.extend(getTranslate(elPos), {width: options.width});
 
   if (CSS3) {
     $el.css($.extend(getDuration(options.time), translate));

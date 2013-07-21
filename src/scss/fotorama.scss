@@ -83,10 +83,10 @@ $time: 300ms;
   }
   .fotorama__stage__frame {
     opacity: 1 !important;
-    @extend %before-load-bg;
-    &.fotorama__loaded {
-      background-color: transparent;
-    }
+    //@extend %before-load-bg;
+    //&.fotorama__loaded {
+    //  background-color: transparent;
+    //}
   }
 }
 
@@ -291,6 +291,8 @@ $time: 300ms;
 .fotorama__thumb {
   overflow: hidden;
   position: relative;
+  width: 100%;
+  height: 100%;
   @extend %before-load-bg;
 }
 
@@ -399,7 +401,8 @@ $time: 300ms;
 // Если разрешены ЦСС-анимации
 .fotorama__wrap--css3 {
   .fotorama__stage__shaft,
-  .fotorama__nav__shaft {
+  .fotorama__nav__shaft,
+  .fotorama__thumb-border {
     @extend %transition-for-touch;
   }
   .fotorama__stage__shaft,
@@ -416,14 +419,17 @@ $time: 300ms;
   .fotorama__html,
   &.fotorama__wrap--fade .fotorama__stage__frame,
   .fotorama__caption {
-    @include transition(opacity $time linear);
+    @include transition-property(opacity);
+    @include transition-timing-function(linear);
+    @include transition-duration($time);
   }
 
-  &.fotorama__wrap--slide {
-    .fotorama__stage__frame {
-      @include transition(background-color $time linear);
-    }
-  }
+  // see also: %before-load-bg
+  //&.fotorama__wrap--slide {
+  //  .fotorama__stage__frame {
+  //    @include transition-property(background-color);
+  //  }
+  //}
 }
 
 .fotorama__select {

@@ -39,11 +39,9 @@
 }
 
 %transition-for-touch {
-  @include transition-property(transform 0ms cubic-bezier(.1, .25, .25, 1));
-}
-
-%bezier {
+  @include transition-property(transform);
   @include transition-timing-function(cubic-bezier(.1, .25, .25, 1));
+  @include transition-duration(0ms);
 }
 
 %no-select {

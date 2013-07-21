@@ -279,6 +279,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function setNavShaftMinMaxPos () {
+    //console.log('setNavShaftMinMaxPos', $navShaft.width());
+
     navShaftData.minPos = Math.min(0, measures.w - $navShaft.width());
     navShaftData.maxPos = 0;
 
@@ -401,6 +403,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
             .addClass(imgClass + (fullFLAG ? ' ' + imgFullClass : ''))
             .prependTo($frame);
 
+        //console.log('before fit', index, specialMeasures || measures, specialFit || dataFrame.fit || opts.fit);
         fit($img, specialMeasures || measures, specialFit || dataFrame.fit || opts.fit);
 
         $.Fotorama.cache[src] = 'loaded';
@@ -556,23 +559,30 @@ jQuery.Fotorama = function ($fotorama, opts) {
   function thumbsDraw (pos, loadFLAG) {
     if (o_nav !== 'thumbs' || isNaN(pos)) return;
 
-    var thumbSide = o_thumbSide + MARGIN,
-        leftIndex = limitIndex(getIndexByPos(pos + thumbSide, thumbSide)),
-        rightIndex = limitIndex(getIndexByPos(pos - measures.w, thumbSide)),
-        specialMeasures = {};
+    //console.log('thumbsDraw');
 
-    specialMeasures.w = o_thumbSide;
-    specialMeasures.h = o_thumbSide2;
+    var leftLimit = -pos,
+        rightLimit = -pos + measures.w;
+
+    //console.log('leftLimit: ' + leftLimit, ', rightLimit: ' + rightLimit);
 
     $navThumbFrame.each(function () {
       var $this = $(this),
           thisData = $this.data(),
           eq = thisData.eq,
+          specialMeasures = {h: o_thumbSide2},
           specialFit = 'cover';
 
-      if (eq < leftIndex
-          || eq > rightIndex
+      specialMeasures.w = thisData.w;
+
+      //console.log(eq, 'thisData.l: ' + thisData.l, ', thisData.w: ' + thisData.w);
+      //console.log(-thisData.l + thisData.w < leftLimit, -thisData.l > rightLimit);
+
+      if (thisData.l + thisData.w < leftLimit
+          || thisData.l > rightLimit
           || callFit(thisData.$img, specialMeasures, specialFit)) return;
+
+      //console.log('load thumb', eq, specialMeasures, specialFit);
 
       loadFLAG && loadImg([eq], 'navThumb', specialMeasures, specialFit);
     });
@@ -580,6 +590,12 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function frameAppend ($frames, $shaft, type) {
     if (!frameAppend[type]) {
+
+      //console.log('frameAppend');
+
+      var thumbsFLAG = type === 'nav' && o_nav === 'thumbs',
+          left = 0;
+
       $shaft.append(
         $frames
             .filter(function () {
@@ -593,13 +609,25 @@ jQuery.Fotorama = function ($fotorama, opts) {
                   break;
                 }
               }
-              if (!actual) {
-                $this.remove();
-              }
-              return actual;
+              return actual || $this.remove() && false;
             })
             .sort(function (a, b) {
               return $(a).data().eq - $(b).data().eq;
+            })
+            .each(function () {
+              if (!thumbsFLAG) return;
+
+              var $this = $(this),
+                  frameData = $this.data(),
+                  thumbWidth = Math.round(o_thumbSide2 * frameData.data.thumbRatio || o_thumbSide);
+
+              frameData.l = left;
+              frameData.w = thumbWidth;
+
+              $this.css({width: thumbWidth});
+
+              left += thumbWidth + MARGIN;
+
             })
       );
 
@@ -616,20 +644,22 @@ jQuery.Fotorama = function ($fotorama, opts) {
     });
   }
 
-  function getNavFrameCenter ($navFrame) {
-    return $navFrame.position().left + (o_thumbSide) / 2
+  function getNavFrameCenter (navFrameData) {
+    return navFrameData.l + navFrameData.w / 2
   }
 
   function slideThumbBorder (time) {
+    var navFrameData = that.activeFrame[NAV_FRAME_KEY].data();
     slide($thumbBorder, {
       time: time * .9,
-      pos: getNavFrameCenter(that.activeFrame[NAV_FRAME_KEY])
+      pos: navFrameData.l,
+      width: navFrameData.w - MARGIN * 2
     });
   }
 
   function slideNavShaft (options) {
     if (data[options.guessIndex][NAV_FRAME_KEY]) {
-      var pos = minMaxLimit(options.coo - getNavFrameCenter(data[options.guessIndex][NAV_FRAME_KEY]), navShaftData.minPos, navShaftData.maxPos),
+      var pos = minMaxLimit(options.coo - getNavFrameCenter(data[options.guessIndex][NAV_FRAME_KEY].data()), navShaftData.minPos, navShaftData.maxPos),
           time = options.time * .9;
       slide($navShaft, {
         time: time,
@@ -836,10 +866,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
     frameDraw([activeIndex, prevIndex, nextIndex], 'stage');
     stageFramePosition([dirtyIndex]);
 
-    triggerEvent('show', options.direct); // TODO: test that .activeFrame is ready event on the first show
+    triggerEvent('show', options.direct);
 
     function onEnd () {
-
       updateFotoramaState();
       loadImg(activeIndexes, 'stage');
       stageShaftReposition(); /////
