@@ -204,13 +204,8 @@ function getDataFromHtml ($el) {
         _imgHref = $img.attr('href'),
         _imgSrc = $img.attr('src'),
         _thumbSrc = $child.attr('src'),
-        separateThumbFLAG = $child && _thumbSrc && _thumbSrc !== _imgHref && _thumbSrc !== _imgSrc,
         _video = imgData.video,
-        video = checkVideo ? findVideoId(_imgHref, _video === true) : false,
-        width = numberFromMeasure(imgData.width || $img.attr('width')),
-        height = numberFromMeasure(imgData.height || $img.attr('height')),
-        thumbWidth = numberFromMeasure(imgData.thumbWidth || $child.attr('width') || separateThumbFLAG || width),
-        thumbHeight = numberFromMeasure(imgData.thumbHeight || $child.attr('height') || separateThumbFLAG || height);
+        video = checkVideo ? findVideoId(_imgHref, _video === true) : false;
 
     if (video) {
       _imgHref = false;
@@ -218,12 +213,20 @@ function getDataFromHtml ($el) {
       video = findVideoId(_video, _video);
     }
 
+    var img = imgData.img || _imgHref || _imgSrc || _thumbSrc,
+        thumb = imgData.thumb || _thumbSrc || _imgSrc || _imgHref,
+        separateThumbFLAG = img !== thumb,
+        width = numberFromMeasure(imgData.width || $img.attr('width')),
+        height = numberFromMeasure(imgData.height || $img.attr('height')),
+        thumbWidth = numberFromMeasure(imgData.thumbWidth || $child.attr('width') || separateThumbFLAG || width),
+        thumbHeight = numberFromMeasure(imgData.thumbHeight || $child.attr('height') || separateThumbFLAG || height);
+
     return {
       video: video,
-      img: imgData.img || _imgHref || _imgSrc || _thumbSrc,
+      img: img,
       width: width || undefined,
       height: height || undefined,
-      thumb: imgData.thumb || _thumbSrc || _imgSrc || _imgHref,
+      thumb: thumb,
       thumbRatio: thumbWidth / thumbHeight || undefined
     }
   }

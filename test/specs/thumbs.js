@@ -9,9 +9,8 @@ document.write(
         '<a href="test/i/nyc/facing-wind.jpg" data-caption="Facing wind" data-width="500" data-height="383"><img></a>' +
         '<a href="test/i/nyc/father-son-looking.jpg" data-caption="Father son looking" data-width="500" data-height="491"><img src="test/i/nyc/father-son-looking.jpg" width="50" height="49"></a>' +
         '<a href="test/i/nyc/flipoff.jpg" data-caption="Flip off"></a>' +
-        '<a href="test/i/nyc/freakout.jpg" data-caption="Freak out"></a>' +
-        '<a href="test/i/nyc/guy-in-park.jpg" data-caption="Guy in park"></a>' +
-        '<a href="test/i/nyc/homeless-sleeping.jpg" data-caption="Homeless sleeping"></a>' +
+        '<a href="test/i/nyc/freakout.jpg" data-thumb="test/i/nyc/freakout.jpg" data-width="443" data-height="525"></a>' +
+        '<a href="test/i/nyc/guy-in-park.jpg" data-thumb="test/i/nyc/homeless-sleeping.jpg" data-width="500" data-height="335"></a>' +
         '<a href="test/i/nyc/italianguy.jpg" data-caption="Italian guy"></a>' +
         '<a href="test/i/nyc/KIOSK.jpg" data-caption="Kiosk"></a>' +
         '<a href="test/i/nyc/ladies-riding.jpg" data-caption="Ladies riding"></a>' +
@@ -81,6 +80,10 @@ describe('Thumbs', function () {
     expect(data[7].thumbRatio).toBe(50 / 49);
 
     expect(data[8].thumbRatio).toBeUndefined();
+
+    expect(data[9].thumbRatio).toBe(443 / 525);
+
+    expect(data[10].thumbRatio).toBeUndefined();
   });
 
   it('positions are good', function () {
