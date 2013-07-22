@@ -16,7 +16,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $style = $('<style></style>').insertBefore($fotorama),
 
       $anchor = $(div(hiddenClass)).insertBefore($fotorama),
-      $wrap = $(div(wrapClass + ' ' + wrapNotReadyClass)),
+      $wrap = $(div(wrapClass)),
       $stage = $(div(stageClass)).appendTo($wrap),
       stage = $stage[0],
       $stageShaft = $(div(stageShaftClass)).appendTo($stage),
@@ -1333,7 +1333,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
   function ready () {
     if (!ready.ok) {
       ready.ok = true;
-      $wrap.removeClass(wrapNotReadyClass);
       triggerEvent('ready');
     }
   }

@@ -7,10 +7,6 @@ $time: 300ms;
 .fotorama {
   // /test/specs/initialization.js
   min-width: 1px;
- * {
-   // /test/specs/thumbs.js
-   @extend %content-box;
- }
 
   > * {
     visibility: hidden;
@@ -55,12 +51,11 @@ $time: 300ms;
   -webkit-text-size-adjust: 100%;
   position: relative;
   @extend %no-select;
-}
 
-.fotorama__wrap--not-ready {
   * {
-    visibility: hidden !important;
-  }
+     // /test/specs/thumbs.js
+     @extend %content-box;
+   }
 }
 
 .fotorama__stage {

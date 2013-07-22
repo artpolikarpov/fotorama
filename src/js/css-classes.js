@@ -2,7 +2,6 @@ var _fotoramaClass = 'fotorama',
     _fullscreenClass = 'fullscreen',
 
     wrapClass = _fotoramaClass + '__wrap',
-    wrapNotReadyClass = wrapClass + '--not-ready',
     wrapCss3Class = wrapClass + '--css3',
     wrapVideoClass = wrapClass + '--video',
     wrapFadeClass = wrapClass + '--fade',
@@ -55,7 +54,6 @@ var _fotoramaClass = 'fotorama',
     loadedClass = _fotoramaClass + '__loaded',
     loadedFullClass = loadedClass + '--full',
     loadedImgClass = loadedClass + '--img',
-    loadClass = _fotoramaClass + '__load',
 
     grabbingClass = _fotoramaClass + '__grabbing',
 
