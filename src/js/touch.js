@@ -15,7 +15,6 @@ function touch ($el, options) {
       touchEnabledFLAG,
       movableFLAG,
       startEvent,
-      eventFlowFLAG,
       movedFLAG,
       $target,
       controlTouch,
@@ -29,7 +28,7 @@ function touch ($el, options) {
     tail.checked = movableFLAG = movedFLAG = targetIsSelectFLAG = targetIsLinkFlag = false;
 
     if (touchEnabledFLAG
-        || eventFlowFLAG
+        || tail.flow
         || (e.touches && e.touches.length > 1)
         || e.which > 1
         /*|| tail.prevent*/
@@ -47,7 +46,7 @@ function touch ($el, options) {
 
     (options.onStart || noop).call(el, e, {control: controlTouch, $target: $target});
 
-    touchEnabledFLAG = eventFlowFLAG = true;
+    tail.flow = touchEnabledFLAG = true;
 
     if (!touchFLAG) {
       e.preventDefault();
@@ -97,7 +96,7 @@ function touch ($el, options) {
 
   function onEnd (e) {
     var _touchEnabledFLAG = touchEnabledFLAG;
-    eventFlowFLAG = tail.control = touchEnabledFLAG = false;
+    tail.flow = tail.control = touchEnabledFLAG = false;
     if (!_touchEnabledFLAG || (targetIsLinkFlag && !tail.checked)) return;
     //console.log('onEnd', e && e.type);
     e && e.preventDefault();

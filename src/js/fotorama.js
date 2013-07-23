@@ -80,7 +80,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       measuresStash,
 
-      touchedFLAG;
+      touchedFLAG,
+      stageLeft = 0;
 
   $wrap[STAGE_FRAME_KEY] = $(div(stageFrameClass));
   $wrap[NAV_THUMB_FRAME_KEY] = $(div(navFrameClass + ' ' + navFrameThumbClass, div(thumbClass)));
@@ -145,8 +146,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function stageNoMove () {
     stageShaftTouchTail.noMove = size < 2 || $videoPlaying || o_fade;
+    stageShaftTouchTail.noSwipe = !opts.swipe;
 
-    $stageShaft.toggleClass(grabClass, !stageShaftTouchTail.noMove);
+    $stageShaft.toggleClass(grabClass, !stageShaftTouchTail.noMove && !stageShaftTouchTail.noSwipe);
   }
 
   function setAutoplayInterval (interval) {
@@ -181,7 +183,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $arrs.hide();
     }
 
-    classes[addOrRemove(size > 1)].push('fotorama__wrap--navigation');
+    //classes[addOrRemove(size > 1)].push('fotorama__wrap--navigation');
 
     if (opts.autoplay) setAutoplayInterval(opts.autoplay);
 
@@ -635,11 +637,19 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }
 
+  function getDirection (x) {
+    return x - stageLeft > measures.w / 3;
+  }
+
+  function disableDirrection (i) {
+    return !o_loop && (!(activeIndex + i) || !(activeIndex - size + i)) && !$videoPlaying;
+  }
+
   function arrsUpdate () {
     $arrs.each(function (i) {
       $(this).toggleClass(
           arrDisabledClass,
-          !o_loop && (!(activeIndex + i) || !(activeIndex - size + i)) && !$videoPlaying
+          disableDirrection(i)
       );
     });
   }
@@ -875,6 +885,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       triggerEvent('showend', options.direct);
 
+      stageCursor();
       releaseAutoplay();
       changeAutoplay();
     }
@@ -1080,6 +1091,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
     }
 
+    stageLeft = $stage.offset().left;
+
     return this;
   };
 
@@ -1175,6 +1188,21 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
   );
 
+  function stageCursor (e) {
+    var pointerFLAG = !disableDirrection(getDirection(e ? e.pageX : stageCursor.x));
+
+    if (stageCursor.p !== pointerFLAG
+        && !stageShaftTouchTail.flow
+        && (o_fade || !opts.swipe)
+        && opts.click
+        && $stage.toggleClass(pointerClass, pointerFLAG)) {
+      stageCursor.p = pointerFLAG;
+      stageCursor.x = e.pageX;
+    }
+  }
+
+  $stage.on('mousemove', stageCursor);
+
   function onStageTap (e, touch) {
     if ($videoPlaying) {
       unloadVideo($videoPlaying, true, true);
@@ -1182,7 +1210,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       if (touch && opts.arrows) {
         toggleControlsClass();
       } else if (opts.click) {
-        that.show({index: e.shiftKey || e._x - $stage.offset().left < measures.w / 3 ? '<' : '>', slow: e.altKey, direct: true});
+        that.show({index: e.shiftKey || !getDirection(e._x) / 3 ? '<' : '>', slow: e.altKey, direct: true});
       }
     }
   }
@@ -1378,6 +1406,7 @@ $.fn.fotorama = function (opts) {
 
                   arrows: true,
                   click: true,
+                  swipe: true,
 
                   allowFullScreen: false, // true || 'native'
 

@@ -53,31 +53,32 @@ function moveOnTouch ($el, options) {
       startTracking(e);
     }
 
-    coo = e._x;
+    if (!tail.noSwipe) {
+      coo = e._x;
 
-    moveTrack.push([new Date().getTime(), coo]);
+      moveTrack.push([new Date().getTime(), coo]);
 
-    moveElPos = startElPos - (startCoo - coo);
+      moveElPos = startElPos - (startCoo - coo);
 
-    edge = findShadowEdge(moveElPos, minPos, maxPos);
+      edge = findShadowEdge(moveElPos, minPos, maxPos);
 
-    if (moveElPos <= minPos) {
-      moveElPos = edgeResistance(moveElPos, minPos);
-    } else if (moveElPos >= maxPos) {
-      moveElPos = edgeResistance(moveElPos, maxPos);
-    }
+      if (moveElPos <= minPos) {
+        moveElPos = edgeResistance(moveElPos, minPos);
+      } else if (moveElPos >= maxPos) {
+        moveElPos = edgeResistance(moveElPos, maxPos);
+      }
 
+      if (!tail.noMove) {
+        $el.css(getTranslate(moveElPos));
+        if (!movedFLAG) {
+          movedFLAG = true;
+          // only for mouse
+          result.touch || $el.addClass(grabbingClass);
+        }
 
-    if (!tail.noMove) {
-      $el.css(getTranslate(moveElPos));
-      if (!movedFLAG) {
-        movedFLAG = true;
-        // only for mouse
-        result.touch || $el.addClass(grabbingClass);
+        (options.onMove || noop).call(el, e, {pos: moveElPos, edge: edge});
       }
     }
-
-    (options.onMove || noop).call(el, e, {pos: moveElPos, edge: edge});
   }
 
   function onEnd (result) {

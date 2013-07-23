@@ -67,15 +67,20 @@ $time: 300ms;
   @extend %stretch;
 
   @extend %no-tap;
-  .fotorama__wrap--navigation.fotorama__wrap--fade & {
+}
+
+
+.fotorama__wrap {
+  .fotorama__pointer {
     cursor: pointer;
+  }
+
+  .fotorama__grab {
+    @extend %grab-cursor;
   }
 }
 
 .fotorama__wrap--slide {
-  .fotorama__stage__shaft.fotorama__grab {
-    @extend %grab-cursor;
-  }
   .fotorama__stage__frame {
     opacity: 1 !important;
     //@extend %before-load-bg;
@@ -232,9 +237,6 @@ $time: 300ms;
   top: 0;
   text-align: left;
   @extend %no-tap;
-  &.fotorama__grab {
-    @extend %grab-cursor;
-  }
 }
 
 .fotorama__nav__frame {
