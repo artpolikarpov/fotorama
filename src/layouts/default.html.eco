@@ -9,9 +9,12 @@ js: "/j/script.js"
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
 
-	<% if process.env.NODE_ENV: %>
-		<!-- jQuery, -->
-		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <% if process.env.NODE_ENV: %>
+    <!-- http://fontawesome.io/icons-->
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- jQuery, -->
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 
 		<script>
 		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -23,6 +26,8 @@ js: "/j/script.js"
 		  ga('send', 'pageview');
 		</script>
 	<% else: %>
+    <link href="/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
 		<!-- jQuery, -->
 		<script src="/lib/jquery-1.9.1.min.js"></script>
 	<% end %>

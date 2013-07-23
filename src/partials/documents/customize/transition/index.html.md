@@ -9,7 +9,7 @@ Define which transition to&nbsp;use&nbsp;&mdash; `slide` or `crossfade` &mdash; 
 
 _Transition example (<a href="/examples/transition.html" target="_blank">new window</a>):_
 
-<p class="switch-group">
+<p>
 	<span class="switch js-transition-switch active" data-fotorama="#transition">Slide</span>
 	&nbsp;
 	<span class="switch js-transition-switch" data-fotorama="#transition">Crossfade</span>

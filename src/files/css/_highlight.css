@@ -8,11 +8,11 @@ tt, code {
 	font-family: Menlo, Monaco, Consolas, 'Courier New', monospase;
 	font-size: 14px;
 	color: #454b43;
-	/*background-color: white;*/
-	/*border: 1px solid rgb(200, 200, 199);*/
+	background-color: #fcfcfb;
+  border: 1px solid #dddddc;
 	white-space: nowrap;
 	border-radius: 3px;
-	/*padding: 1px 3px 2px;*/
+	padding: 1px 3px 2px;
 }
 
 pre {
@@ -30,22 +30,22 @@ pre code {
 
 	background:
 		/* Shadow covers */
-		linear-gradient(to right, white, rgba(255,255,255,0)),
-		linear-gradient(to right, rgba(255,255,255,0), white) 100% 0,
+		linear-gradient(to right, #fcfcfb, rgba(255,255,255,0)),
+		linear-gradient(to right, rgba(255,255,255,0), #fcfcfb) 100% 0,
 
 			/* Shadows */
 		radial-gradient(0 50%, farthest-side, rgba(0,0,0,.4), rgba(0,0,0,0)),
 		radial-gradient(100% 50%,farthest-side, rgba(0,0,0,.4), rgba(0,0,0,0)) 100% 0;
 	background:
 		/* Shadow covers */
-		linear-gradient(to right, white, rgba(255,255,255,0)),
-		linear-gradient(to right, rgba(255,255,255,0), white) 100% 0,
+		linear-gradient(to right, #fcfcfb, rgba(255,255,255,0)),
+		linear-gradient(to right, rgba(255,255,255,0), #fcfcfb) 100% 0,
 
 			/* Shadows */
 		radial-gradient(farthest-side at 0 50%, rgba(0,0,0,.4), rgba(0,0,0,0)),
 		radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,.4), rgba(0,0,0,0)) 100% 0;
 	background-repeat: no-repeat;
-	/*background-color: white;*/
+	background-color: #fcfcfb;
 	background-size: 50px 100%, 50px 100%, 5px 100%, 5px 100%;
 
 	/* Opera doesn't support this in the shorthand */

@@ -1,10 +1,9 @@
 ---
-title: "Use"
+title: "Customize"
 layout: "page"
 menuOrder: 2
 ---
 
-## Customize
 Fotorama’s default settings are good, so there’s no need to mess with them. Still, you can fine-tune:
 <%- @partial('sub-menu.html.eco', {menuItems: @generateMenu(@document.url)}) %>
 

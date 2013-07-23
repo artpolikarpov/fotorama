@@ -1,6 +1,6 @@
 body {
   line-height: 1.5;
-	color: #333;
+	color: rgb(33, 33, 30);
 	/*text-shadow: 0 1px 0 rgba(255,255,255,.5);*/
 }
 
@@ -67,13 +67,16 @@ a.no-u {
 }
 
 a:visited,
-a:visited u {
+a:visited u,
+.header .menu .menu a:visited,
+.header .menu .menu a:visited u {
 	color: rgb(85, 26, 139);
 	border-color: rgba(85, 26, 139, .3);
 }
 
 #root a:hover,
-#root a:hover u {
+#root a:hover u,
+.switch:hover {
   color: rgb(170, 0, 0);
   border-color: rgba(170, 0, 0, .3);
 }
@@ -84,10 +87,13 @@ a:visited u {
 	border-color: rgb(170, 0, 0);
 }
 
-a:active {
+/*a {
 	position: relative;
-	top: 1px;
 }
+
+a:active {
+	top: 1px;
+}*/
 
 abbr {
 	font-size: 95%;

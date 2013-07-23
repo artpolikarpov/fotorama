@@ -18,6 +18,8 @@
 <!-- 3. Enjoy! -->
 ```
 
+<p class="after-pre">*Example: <a href="/examples/basic.html" target="_blank">Basic</a>*</p>
+
 Fotorama’s <abbr>CDN</abbr> is&nbsp;provided by&nbsp;Amazon&nbsp;S3, feel free to&nbsp;use&nbsp;it.
 
 Or&nbsp;download zipped, unpack and host it&nbsp;on&nbsp;your server if&nbsp;you want:

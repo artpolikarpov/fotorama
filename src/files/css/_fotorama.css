@@ -6,3 +6,16 @@
 	font-size: 14px;
 	text-align: right;
 }
+
+.fotorama-with-numbers .fotorama__html div {
+  background-color: #fff;
+  width: 2em;
+  height: 2em;
+  text-align: center;
+  line-height: 2em;
+  border-radius: 1em;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+  position: absolute;
+  top: 1em;
+  left: 1em;
+}

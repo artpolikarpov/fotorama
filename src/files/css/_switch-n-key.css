@@ -1,5 +1,6 @@
 .switch {
-	border-bottom: 1px dashed;
+  color: rgb(33, 33, 30);
+	border-bottom: 1px dashed rgba(33, 33, 30, .3);
 	cursor: pointer;
 }
 
