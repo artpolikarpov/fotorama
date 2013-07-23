@@ -1179,9 +1179,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if ($videoPlaying) {
       unloadVideo($videoPlaying, true, true);
     } else {
-      if (touch) {
+      if (touch && opts.arrows) {
         toggleControlsClass();
-      } else {
+      } else if (opts.click) {
         that.show({index: e.shiftKey || e._x - $stage.offset().left < measures.w / 3 ? '<' : '>', slow: e.altKey, direct: true});
       }
     }
@@ -1377,6 +1377,7 @@ $.fn.fotorama = function (opts) {
                   thumbHeight: THUMB_SIZE,
 
                   arrows: true,
+                  click: true,
 
                   allowFullScreen: false, // true || 'native'
 
