@@ -2,14 +2,6 @@
   margin-bottom: 5px;
 }
 
-.fotorama > * {
-	visibility: hidden;
-}
-
-.fotorama > .fotorama__wrap {
-	visibility: visible;
-}
-
 .photos-by {
 	font-size: 14px;
 	text-align: right;
