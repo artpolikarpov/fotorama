@@ -3,7 +3,41 @@ title: "Fotorama"
 layout: "default"
 ---
 
-<%- @partial('fotorama.html.eco', {images: @getDocument().getAssociatedFiles('lebedev-tibet/full').toJSON(), by: '<a href="http://alexeilebedev.com/">by Alexei Lebedev</a>'}) %>
+<div class="fotorama" data-width="100%" data-ratio="1.5" data-hash="true" data-max-height="100%" data-nav="thumbs" data-fit="cover" data-allow-full-screen="native" data-thumb-height="48">
+  <a href="/associated-files/lebedev-tibet/full/000_lake.jpg"><img src="/associated-files/lebedev-tibet/thumbs/000_lake.jpg" width="144" height="96"></a>
+  <a href="/associated-files/lebedev-tibet/full/01_puppy.jpg"><img src="/associated-files/lebedev-tibet/thumbs/01_puppy.jpg" width="144" height="96"></a>
+  <a href="/associated-files/lebedev-tibet/full/02_stupas2.jpg"><img src="/associated-files/lebedev-tibet/thumbs/02_stupas2.jpg" width="144" height="96"></a>
+  <a href="/associated-files/lebedev-tibet/full/03_monkwithglasses.jpg"><img src="/associated-files/lebedev-tibet/thumbs/03_monkwithglasses.jpg" width="144" height="96"></a>
+  <a href="/associated-files/lebedev-tibet/full/04_spikydog.jpg"><img src="/associated-files/lebedev-tibet/thumbs/04_spikydog.jpg" width="144" height="96"></a>
+  <a href="/associated-files/lebedev-tibet/full/05_monk5.jpg"><img src="/associated-files/lebedev-tibet/thumbs/05_monk5.jpg" width="144" height="96"></a>
+  <a href="/associated-files/lebedev-tibet/full/06_wood.jpg"><img src="/associated-files/lebedev-tibet/thumbs/06_wood.jpg" width="144" height="96"></a>
+  <a href="/associated-files/lebedev-tibet/full/07_monastery.jpg"><img src="/associated-files/lebedev-tibet/thumbs/07_monastery.jpg" width="144" height="94"></a>
+  <a href="/associated-files/lebedev-tibet/full/31_kitchen.jpg"><img src="/associated-files/lebedev-tibet/thumbs/31_kitchen.jpg" width="144" height="214"></a>
+  <a href="/associated-files/lebedev-tibet/full/07b_argument.jpg"><img src="/associated-files/lebedev-tibet/thumbs/07b_argument.jpg" width="144" height="96"></a>
+  <a href="/associated-files/lebedev-tibet/full/08_nomadwoman.jpg"><img src="/associated-files/lebedev-tibet/thumbs/08_nomadwoman.jpg" width="144" height="96"></a>
+  <a href="/associated-files/lebedev-tibet/full/09_manistones2.jpg"><img src="/associated-files/lebedev-tibet/thumbs/09_manistones2.jpg" width="144" height="96"></a>
+  <a href="/associated-files/lebedev-tibet/full/11_manistones.jpg"><img src="/associated-files/lebedev-tibet/thumbs/11_manistones.jpg" width="144" height="96"></a>
+  <a href="/associated-files/lebedev-tibet/full/13_lookers2.jpg"><img src="/associated-files/lebedev-tibet/thumbs/13_lookers2.jpg" width="144" height="96"></a>
+  <a href="/associated-files/lebedev-tibet/full/16_bee.jpg"><img src="/associated-files/lebedev-tibet/thumbs/16_bee.jpg" width="144" height="96"></a>
+  <a href="/associated-files/lebedev-tibet/full/16b_debates.jpg"><img src="/associated-files/lebedev-tibet/thumbs/16b_debates.jpg" width="144" height="96"></a>
+  <a href="/associated-files/lebedev-tibet/full/17_bleedingheart.jpg"><img src="/associated-files/lebedev-tibet/thumbs/17_bleedingheart.jpg" width="144" height="96"></a>
+  <a href="/associated-files/lebedev-tibet/full/18_lilmonk.jpg"><img src="/associated-files/lebedev-tibet/thumbs/18_lilmonk.jpg" width="144" height="96"></a>
+  <a href="/associated-files/lebedev-tibet/full/20_kid2.jpg"><img src="/associated-files/lebedev-tibet/thumbs/20_kid2.jpg" width="144" height="214"></a>
+  <a href="/associated-files/lebedev-tibet/full/20b_sheep.jpg"><img src="/associated-files/lebedev-tibet/thumbs/20b_sheep.jpg" width="144" height="96"></a>
+  <a href="/associated-files/lebedev-tibet/full/22_winxpbuilding.jpg"><img src="/associated-files/lebedev-tibet/thumbs/22_winxpbuilding.jpg" width="144" height="96"></a>
+  <a href="/associated-files/lebedev-tibet/full/23_looking.jpg"><img src="/associated-files/lebedev-tibet/thumbs/23_looking.jpg" width="144" height="96"></a>
+  <a href="/associated-files/lebedev-tibet/full/24_girl.jpg"><img src="/associated-files/lebedev-tibet/thumbs/24_girl.jpg" width="144" height="216"></a>
+  <a href="/associated-files/lebedev-tibet/full/24b_cat.jpg"><img src="/associated-files/lebedev-tibet/thumbs/24b_cat.jpg" width="144" height="96"></a>
+  <a href="/associated-files/lebedev-tibet/full/26_candleman.jpg"><img src="/associated-files/lebedev-tibet/thumbs/26_candleman.jpg" width="144" height="96"></a>
+  <a href="/associated-files/lebedev-tibet/full/25_boy.jpg"><img src="/associated-files/lebedev-tibet/thumbs/25_boy.jpg" width="144" height="214"></a>
+  <a href="/associated-files/lebedev-tibet/full/27_religiouspunk.jpg"><img src="/associated-files/lebedev-tibet/thumbs/27_religiouspunk.jpg" width="144" height="96"></a>
+  <a href="/associated-files/lebedev-tibet/full/28_kitchen2.jpg"><img src="/associated-files/lebedev-tibet/thumbs/28_kitchen2.jpg" width="144" height="96"></a>
+  <a href="/associated-files/lebedev-tibet/full/29_hills.jpg"><img src="/associated-files/lebedev-tibet/thumbs/29_hills.jpg" width="144" height="96"></a>
+  <a href="/associated-files/lebedev-tibet/full/30_monk.jpg"><img src="/associated-files/lebedev-tibet/thumbs/30_monk.jpg" width="144" height="214"></a>
+  <a href="/associated-files/lebedev-tibet/full/32_woman.jpg"><img src="/associated-files/lebedev-tibet/thumbs/32_woman.jpg" width="144" height="96"></a>
+</div>
+
+<p class="photos-by">Photos <a href="http://alexeilebedev.com/">by Alexei Lebedev</a></p>
 
 <h1>Fotorama</h1>
 
@@ -16,7 +50,7 @@ layout: "default"
 				<h2><%= item.title %></h2>
 			<%- @partial('documents' + item.url + 'index.html.md') %>
 			<% else: %>
-				<h2><a href="<%= item.url %>"><%= item.title %></a></h2>
+        <h2 class="front-menu"><a href="<%= item.url %>"><%= item.title %></a></h2>
 			<% end %>
 		<% end %>
 	<% end %>

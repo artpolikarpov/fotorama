@@ -54,6 +54,7 @@ module.exports = function(grunt) {
 				bucket: 'fotorama',
 				access: 'public-read',
 				secure: false,
+        gzip: true,
 				headers: {'Cache-Control': 'max-age=2592000'}
 			},
 			product: {

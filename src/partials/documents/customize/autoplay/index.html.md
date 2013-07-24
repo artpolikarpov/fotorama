@@ -12,7 +12,7 @@ By&nbsp;default, a&nbsp;pause between images is&nbsp;5&nbsp;seconds. Set any int
 *Autoplay example (<a href="/examples/autoplay.html" target="_blank">new window</a>):*
 
 <div class="fotorama-wrap"><div class="fotorama"
-     data-autoplay="true"
+     data-autoplay="3000"
      data-width="700"
      data-ratio="3/2"
      data-max-width="100%"

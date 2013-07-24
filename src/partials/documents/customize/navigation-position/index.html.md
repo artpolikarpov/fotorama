@@ -1,20 +1,17 @@
-Turn on&nbsp;keyboard navigation with the arrows by&nbsp;adding `data-keyboard="true"`:
+To move dots or thumbs on top, use `data-nav-position="top"`.
 
 	<div class="fotorama"
-	     data-keyboard="true">
+	     data-nav-position="top">
 	  <img src="1.jpg">
 	  <img src="2.jpg">
 	  <img src="3.jpg">
 	</div>
 
-*Keyboard example (<a href="/examples/keyboard.html" target="_blank">new window</a>):*
-
-<p class="switch-group">Press <strong class="key js-arrow" data-fotorama="#keyboard" data-show="<">←</strong> and <strong class="key js-arrow" data-fotorama="#keyboard" data-show=">">→</strong> on the keyboard:</p>
+*Navigation position example (<a href="/examples/navigation-position.html" target="_blank">new window</a>):*
 
 <div class="fotorama-wrap"><div class="fotorama"
-     id="keyboard"
-     data-keyboard="true"
-     data-loop="true"
+     data-nav-position="top"
+     data-nav="thumbs"
      data-width="700"
      data-ratio="3/2"
      data-max-width="100%">
@@ -24,3 +21,5 @@ Turn on&nbsp;keyboard navigation with the arrows by&nbsp;adding `data-keyboard="
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/8-lo.jpg"></a>
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/6-lo.jpg"></a>
 </div></div>
+
+Hide navigation with `data-nav="false"`.

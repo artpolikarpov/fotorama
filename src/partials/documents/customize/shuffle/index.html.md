@@ -9,7 +9,7 @@ Shuffle frames by&nbsp;adding `data-shuffle="true"`:
 
 *Shuffle example (<a href="/examples/shuffle.html" target="_blank">new window</a>):*
 
-<p>
+<p class="switch-group">
 	<span class="switch js-shuffle" data-fotorama="#shuffle"><i class="icon-random"></i> Shuffle again</span>
 </p>
 

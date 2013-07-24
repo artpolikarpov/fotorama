@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Navigation position</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="http://fotorama.s3.amazonaws.com/fotorama.css" rel="stylesheet">
+	<script src="http://fotorama.s3.amazonaws.com/fotorama.js"></script>
+</head>
+
+<body>
+
+<p>Navigation position:<p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div class="fotorama"
+     <mark>data-nav-position="top"</mark>></code></pre>
+
+<!-- Just don’t want to repeat this prefix in every img[src] -->
+<base href="http://fotorama.s3.amazonaws.com/i/okonechnikov/">
+
+<!-- Fotorama -->
+<div class="fotorama"
+     id="keyboard"
+     data-nav-position="top"
+     data-nav="thumbs"
+     data-width="700"
+     data-ratio="3/2"
+     data-max-width="100%">
+	<a href="2-lo.jpg"></a>
+	<a href="3-lo.jpg"></a>
+	<a href="5-lo.jpg"></a>
+	<a href="8-lo.jpg"></a>
+	<a href="6-lo.jpg"></a>
+</div>
+
+<!-- © -->
+<p>Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
+</body>
+</html>

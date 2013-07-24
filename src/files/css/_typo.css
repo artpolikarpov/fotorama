@@ -9,14 +9,19 @@ h1, h2, h3 {
   margin-bottom: .1em;
 }
 
-h2 + h2 {
+#root h2 + h2 {
 	margin-top: .5em;
+}
+
+h2.front-menu {
+  margin-top: 2em;
 }
 
 .header + h1,
 h1:first-child,
 h1 + h2,
 p,
+form,
 ul,
 ol {
   margin-top: 0;
@@ -39,7 +44,7 @@ ol {
 	color: #aaa;
 }
 
-p + ul, p + ol, p + pre, .after-pre, p + .fotorama-wrap, p + .image {
+p + ul, p + ol, p + pre, .after-pre, form + .fotorama-wrap, p + .fotorama-wrap, p + .image {
 	margin-top: -.5em;
 	margin-left: 40px;
 	margin-bottom: 1.5em;
