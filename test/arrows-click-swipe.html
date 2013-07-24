@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Basic fotorama</title>
+	<title>Arrows, click, swipe</title>
 	<meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
 
@@ -12,9 +12,28 @@
 	<link  href="../product/fotorama.css" rel="stylesheet">
 	<script src="../product/fotorama.js"></script>
 
-  <script type="text/javascript">
+  <script>
     $(function () {
       f = $('.fotorama').data('fotorama');
+    })
+  </script>
+
+  <script>
+    $(function () {
+      $('.js-set-options').on('change', function (e) {
+        var fotorama = $($(this).data('fotorama')).data('fotorama'),
+            options = {};
+
+        if (!fotorama) return;
+
+        $(':input', this).each(function () {
+          var $input = $(this);
+          options[$input.attr('name')] = $input.attr('type') === 'checkbox' ? $input.is(':checked') : $input.val();
+        });
+
+        fotorama.setOptions(options);
+
+      });
     })
   </script>
 </head>
@@ -26,17 +45,17 @@
 
 <p>Fotorama with slide transition:</p>
 
-<p style="margin-bottom: .5em;">
-  <label><input type="checkbox" checked> Arrows</label>
+<form style="margin-bottom: .5em;" class="js-set-options" data-fotorama="#slide-controls">
+  <label><input type="checkbox" name="arrows" checked> Arrows</label>
   &nbsp;
-  <label><input type="checkbox" checked> Click</label>
+  <label><input type="checkbox" name="click" checked> Click</label>
   &nbsp;
-  <label><input type="checkbox" checked> Swipe</label>
-</p>
+  <label><input type="checkbox" name="swipe" checked> Swipe</label>
+</form>
 
 <!-- Fotorama -->
 <div class="fotorama"
-     id=""
+     id="slide-controls"
      data-width="700"
      data-ratio="3/2"
      data-max-width="100%">
@@ -49,16 +68,17 @@
 
 <p>Fotorama with crossfade transition:</p>
 
-<p style="margin-bottom: .5em;">
-  <label><input type="checkbox" checked> Arrows</label>
+<form style="margin-bottom: .5em;" class="js-set-options" data-fotorama="#crossfade-controls">
+  <label><input type="checkbox" name="arrows" checked> Arrows</label>
   &nbsp;
-  <label><input type="checkbox" checked> Click</label>
+  <label><input type="checkbox" name="click" checked> Click</label>
   &nbsp;
-  <label><input type="checkbox" checked> Swipe</label>
-</p>
+  <label><input type="checkbox" name="swipe" checked> Swipe</label>
+</form>
 
 <!-- Fotorama -->
 <div class="fotorama"
+     id="crossfade-controls"
      data-width="700"
      data-ratio="3/2"
      data-max-width="100%"
