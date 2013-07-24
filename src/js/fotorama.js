@@ -1189,7 +1189,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
   );
 
   function stageCursor (e) {
-    var pointerFLAG = !disableDirrection(getDirection(e ? e.pageX : stageCursor.x));
+    var x = e ? e.pageX : stageCursor.x,
+        pointerFLAG = !disableDirrection(getDirection(x));
 
     if (stageCursor.p !== pointerFLAG
         && !stageShaftTouchTail.flow
@@ -1197,7 +1198,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         && opts.click
         && $stage.toggleClass(pointerClass, pointerFLAG)) {
       stageCursor.p = pointerFLAG;
-      stageCursor.x = e.pageX;
+      stageCursor.x = x;
     }
   }
 

@@ -204,6 +204,7 @@ module.exports = function (grunt) {
 				secret: '<%= grunt.file.readJSON("grunt-s3.json").secret %>',
 				bucket: 'fotorama',
 				access: 'public-read',
+        gzip: true,
 				secure: false
 			},
 			product: {
