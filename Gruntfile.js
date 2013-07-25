@@ -209,7 +209,7 @@ module.exports = function (grunt) {
 			},
 			product: {
         options: {
-          headers: {'Cache-Control': 'max-age=2592000'}
+          headers: {'Cache-Control': 'max-age=2592000', 'Content-Encoding': 'gzip', 'Accept-Encoding': 'gzip'}
         },
 				upload: [
 						// Separate version to separate folder
@@ -222,7 +222,7 @@ module.exports = function (grunt) {
       edge: {
         // Latest to the root
         options: {
-          headers: {'Cache-Control': 'max-age=2592000'}
+          headers: {'Cache-Control': 'max-age=1', 'Content-Encoding': 'gzip', 'Accept-Encoding': 'gzip'}
         },
 				upload: [
 					{
