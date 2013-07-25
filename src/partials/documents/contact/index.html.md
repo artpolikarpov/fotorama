@@ -7,7 +7,9 @@
 	</div>
 </div>
 
-The best place for technical questions is <a href="http://stackoverflow.com/questions/ask">Stack Overflow</a>.
+Follow <a href="https://twitter.com/fotoramajs">@fotoramajs</a> on Twitter for the updates.
+
+The best place for technical questions is <a href="http://stackoverflow.com/questions/ask">Stack Overflow</a>. Don’t forget to use the “fotorama” tag when asking.
 
 If&nbsp;you’ve found a&nbsp;bug in&nbsp;Fotorama or&nbsp;have an&nbsp;enhancement idea, file a&nbsp;report <a href="https://github.com/artpolikarpov/fotorama/issues">in&nbsp;the issue tracker</a> on&nbsp;GitHub.
 

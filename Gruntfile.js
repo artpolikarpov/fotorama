@@ -55,7 +55,7 @@ module.exports = function(grunt) {
 				access: 'public-read',
 				secure: false,
         gzip: true,
-				headers: {'Cache-Control': 'max-age=2592000'}
+				headers: {'Cache-Control': 'max-age=2592000', 'Content-Encoding': 'gzip', 'Accept-Encoding': 'gzip'}
 			},
 			product: {
 				upload: [

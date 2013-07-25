@@ -60,7 +60,8 @@ pre + .after-pre {
 }
 
 a, .header a:visited, h2 a:visited,
-a u, .header a:visited u, h2 a:visited u {
+a u, .header a:visited u, h2 a:visited u,
+.social a:visited, .social a:visited u {
   text-decoration: none;
   border-bottom: 1px solid;
   color: rgb(3, 112, 154);
@@ -77,6 +78,11 @@ a:visited u,
 .header .menu .menu a:visited u {
 	color: rgb(85, 26, 139);
 	border-color: rgba(85, 26, 139, .3);
+}
+
+a.black, a.black u, a.black:visited, a.black:visited u {
+  color: rgb(33, 33, 30);
+  border-color: rgba(33, 33, 30, .3);
 }
 
 #root a:hover,

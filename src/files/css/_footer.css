@@ -1,13 +1,24 @@
 .footer {
   margin-top: 50px;
   margin-bottom: 10px;
-  font-size: 14px;
 }
 
 .footer > p {
 	opacity: .6;
+  font-size: 14px;
 }
 
-.footer .social-likes {
-	margin-bottom: 10px;
+.footer .social {
+  padding: 0;
+	margin: 0 0 10px;
 }
+
+.footer .social li {
+  display: inline;
+  margin-right: 10px;
+}
+
+.footer .social li .small {
+  font-size: 12px;
+}
+
