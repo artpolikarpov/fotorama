@@ -19,7 +19,6 @@ var $WINDOW = $(window),
 
 
     STAGE_FRAME_KEY = '$stageFrame',
-    NAV_FRAME_KEY,
     NAV_DOT_FRAME_KEY = '$navDotFrame',
     NAV_THUMB_FRAME_KEY = '$navThumbFrame',
 

@@ -50,7 +50,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       lastActiveIndex,
       prevIndex,
       nextIndex,
-      startIndex = false,
+      startIndex,
 
       o_loop,
       o_nav,
@@ -81,6 +81,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       measuresStash,
 
       touchedFLAG,
+      navFrameKey,
       stageLeft = 0;
 
   $wrap[STAGE_FRAME_KEY] = $(div(stageFrameClass));
@@ -198,7 +199,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       frameDraw(size, 'navThumb');
 
       $navFrame = $navThumbFrame;
-      NAV_FRAME_KEY = NAV_THUMB_FRAME_KEY;
+      navFrameKey = NAV_THUMB_FRAME_KEY;
 
       setStyle($style, $.Fotorama.jst.style({w: o_thumbSide, h: o_thumbSide2, m: MARGIN, s: stamp, q: !COMPAT}));
 
@@ -209,7 +210,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       frameDraw(size, 'navDot');
 
       $navFrame = $navDotFrame;
-      NAV_FRAME_KEY = NAV_DOT_FRAME_KEY;
+      navFrameKey = NAV_DOT_FRAME_KEY;
 
       $nav
           .addClass(navDotsClass)
@@ -659,7 +660,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function slideThumbBorder (time) {
-    var navFrameData = that.activeFrame[NAV_FRAME_KEY].data();
+    var navFrameData = that.activeFrame[navFrameKey].data();
     slide($thumbBorder, {
       time: time * .9,
       pos: navFrameData.l,
@@ -668,8 +669,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function slideNavShaft (options) {
-    if (data[options.guessIndex][NAV_FRAME_KEY]) {
-      var pos = minMaxLimit(options.coo - getNavFrameCenter(data[options.guessIndex][NAV_FRAME_KEY].data()), navShaftData.minPos, navShaftData.maxPos),
+    if (data[options.guessIndex][navFrameKey]) {
+      var pos = minMaxLimit(options.coo - getNavFrameCenter(data[options.guessIndex][navFrameKey].data()), navShaftData.minPos, navShaftData.maxPos),
           time = options.time * .9;
       slide($navShaft, {
         time: time,
@@ -685,8 +686,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function navUpdate () {
-    deactivateFrames(NAV_FRAME_KEY);
-    toDeactivate[NAV_FRAME_KEY].push(that.activeFrame[NAV_FRAME_KEY].addClass(activeClass));
+    deactivateFrames(navFrameKey);
+    toDeactivate[navFrameKey].push(that.activeFrame[navFrameKey].addClass(activeClass));
   }
 
   function deactivateFrames (key) {
