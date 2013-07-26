@@ -81,5 +81,12 @@
       "styles": "product/fotorama.css",
       "specs": "test/specs/video.js"
     }
+  },
+  "two-fotoramas": {
+    "src": ["test/jquery/jquery-1.10.1.min.js", "product/fotorama.js"],
+    "options": {
+      "styles": "product/fotorama.css",
+      "specs": "test/specs/two-fotoramas.js"
+    }
   }
 }
