@@ -19,7 +19,7 @@ describe('Video', function () {
   });
 
 
-  it('previews are fetched', function () {
+  it('previews are fetched (works only if script able to connect to the Internet)', function () {
     $thumb.each(function () {
       var $this = $(this);
       waitsFor(function () {

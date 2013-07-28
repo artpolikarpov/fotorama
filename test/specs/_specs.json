@@ -82,11 +82,18 @@
       "specs": "test/specs/video.js"
     }
   },
-  "two-fotoramas": {
+  "basic-x-2": {
     "src": ["test/jquery/jquery-1.10.1.min.js", "product/fotorama.js"],
     "options": {
       "styles": "product/fotorama.css",
-      "specs": "test/specs/two-fotoramas.js"
+      "specs": "test/specs/basic-x-2.js"
+    }
+  },
+  "destroy": {
+    "src": ["test/jquery/jquery-1.10.2.min.js", "product/fotorama.js"],
+    "options": {
+      "styles": "product/fotorama.css",
+      "specs": "test/specs/destroy.js"
     }
   }
 }

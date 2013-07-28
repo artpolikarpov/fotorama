@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dissolve</title>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.10.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../product/fotorama.css" rel="stylesheet">
+	<script src="../product/fotorama.js"></script>
+
+  <script type="text/javascript">
+    $(window).on('load', function () {
+      f = $('.fotorama').data('fotorama');
+    });
+  </script>
+</head>
+
+<body>
+
+<p>Dissolve:<p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div class="fotorama"
+     <mark>data-transition="dissolve"</mark>></code></pre>
+
+<!-- Fotorama -->
+<div class="fotorama"
+     data-transition="dissolve"
+     data-loop="true"
+     data-width="700"
+     data-ratio="3/2"
+     data-max-width="100%">
+	<a href="i/okonechnikov/1-lo.jpg"></a>
+	<div style="height: 100%; background-color: #fff; font-size: 300px; text-align: center; line-height: 467px;">123</div>
+	<a href="i/okonechnikov/9-lo.jpg"></a>
+</div>
+
+<!-- © -->
+<p>Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
+</body>
+</html>
