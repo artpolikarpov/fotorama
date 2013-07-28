@@ -7,15 +7,16 @@ jQuery.Fotorama = function ($fotorama, opts) {
   var that = this,
       index = _size,
       stamp = + new Date,
-      fotorama = $fotorama.addClass(_fotoramaClass + stamp)[0],
+      stampClass = _fotoramaClass + stamp,
+      fotorama = $fotorama[0],
       data,
       dataFrameCount = 1,
       fotoramaData = $fotorama.data(),
       size,
 
-      $style = $('<style></style>').insertBefore($fotorama),
+      $style = $('<style></style>'),
 
-      $anchor = $(div(hiddenClass)).insertBefore($fotorama),
+      $anchor = $(div(hiddenClass)),
       $wrap = $(div(wrapClass)),
       $stage = $(div(stageClass)).appendTo($wrap),
       stage = $stage[0],
@@ -73,7 +74,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       showedFLAG,
       pausedAutoplayFLAG,
       stoppedAutoplayFLAG,
-      wrapAppendedFLAG,
 
       toDeactivate = {},
       toDetach = {},
@@ -121,6 +121,34 @@ jQuery.Fotorama = function ($fotorama, opts) {
     });
   }
 
+  function appendElements (FLAG) {
+    if (FLAG === appendElements.f) return;
+
+    if (FLAG) {
+      $fotorama
+          .html('')
+          .addClass(stampClass)
+          .append($wrap)
+          .before($style)
+          .before($anchor);
+
+      $.Fotorama.size++;
+    } else {
+      $wrap.detach();
+      $style.detach();
+      $anchor.detach();
+      $fotorama
+          .html(fotoramaData.urtext)
+          .removeClass(stampClass);
+
+      $.Fotorama.size--;
+    }
+
+    appendElements.f = FLAG;
+  }
+
+
+
   function setData () {
     data = that.data = data || getDataFromHtml($fotorama);
     size = that.size = data.length;
@@ -131,18 +159,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     activeIndex = limitIndex(activeIndex);
 
-    if (!size) {
-      //that.destroy();
-    } else if (!wrapAppendedFLAG) {
-      // Заменяем содержимое блока:
-      $fotorama
-          .html('')
-          .append($wrap);
-
-      $.Fotorama.size++;
-
-      wrapAppendedFLAG = true;
-    }
+    size && appendElements(true);
   }
 
   function stageNoMove () {
@@ -1116,12 +1133,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   that.destroy = function () {
     //console.log('destroy');
+    that.cancelFullScreen();
     that.stopAutoplay();
-    $wrap.detach();
-    $fotorama.html(fotoramaData.urtext);
-    wrapAppendedFLAG = false;
+
+    appendElements(false);
+
     data = that.data = null;
-    $.Fotorama.size--;
+
     return this;
   };
 
