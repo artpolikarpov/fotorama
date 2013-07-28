@@ -36,8 +36,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $thumbBorder = $(div(thumbBorderClass)).appendTo($navShaft),
 
       $fullscreenIcon = $(div(fullscreenIconClass)),
+      fullscreenIcon = $fullscreenIcon[0],
       $videoPlay = $(div(videoPlayClass)),
       $videoClose = $(div(videoCloseClass)).appendTo($stage),
+      videoClose = $videoClose[0],
 
       $videoPlaying,
 
@@ -1157,19 +1159,20 @@ jQuery.Fotorama = function ($fotorama, opts) {
   $stage.on('mousemove', stageCursor);
 
   function onStageTap (e, touch) {
-    var $target = $(e.target);
+    var target = e.target,
+        $target = $(target);
 
-    if ($target.is('.' + videoPlayClass)) {
+    if ($target.hasClass(videoPlayClass)) {
       that.playVideo();
-    } else if ($target.is($fullscreenIcon)) {
+    } else if (target === fullscreenIcon) {
       that[(that.fullScreen ? 'cancel' : 'request') +'FullScreen']();
     } else if ($videoPlaying) {
-      $target.is($videoClose) && unloadVideo($videoPlaying, true, true);
+      target === videoClose && unloadVideo($videoPlaying, true, true);
     } else {
       if (touch && opts.arrows) {
         toggleControlsClass();
       } else if (opts.click) {
-        that.show({index: e.shiftKey || !getDirection(e._x) / 3 ? '<' : '>', slow: e.altKey, direct: true});
+        that.show({index: e.shiftKey || !getDirection(e._x) ? '<' : '>', slow: e.altKey, direct: true});
       }
     }
   }

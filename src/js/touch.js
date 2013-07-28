@@ -4,7 +4,6 @@ var lastEvent,
     preventEventTimeout;
 
 function extendEvent (e, touchFLAG) {
-  //console.log(e.type);
   e._x = touchFLAG ? e.touches[0].pageX : e.pageX;
   e._y = touchFLAG ? e.touches[0].pageY : e.pageY;
 }
@@ -31,9 +30,8 @@ function touch ($el, options) {
         || tail.flow
         || (e.touches && e.touches.length > 1)
         || e.which > 1
-        /*|| tail.prevent*/
         || (lastEvent && lastEvent.type !== e.type && preventEvent)
-        || (targetIsSelectFLAG = options.select && $target.is(options.select, el))) return /*tail.prevent !== true || */targetIsSelectFLAG;
+        || (targetIsSelectFLAG = options.select && $target.is(options.select, el))) return targetIsSelectFLAG;
 
     touchFLAG = e.type.match('touch');
     targetIsLinkFlag = $target.is('a, a *', el);
@@ -71,9 +69,7 @@ function touch ($el, options) {
         xWin = !tail.stable || xyDiff >= 3,
         yWin = xyDiff <= -3;
 
-    if (!movedFLAG) {
-      movedFLAG = /*!tail.noMove && */ !(!xWin && !yWin);
-    }
+    movedFLAG = movedFLAG || xWin || yWin;
 
     if (touchFLAG && !tail.checked) {
       if (xWin || yWin) {
@@ -98,16 +94,14 @@ function touch ($el, options) {
     var _touchEnabledFLAG = touchEnabledFLAG;
     tail.flow = tail.control = touchEnabledFLAG = false;
     if (!_touchEnabledFLAG || (targetIsLinkFlag && !tail.checked)) return;
-    //console.log('onEnd', e && e.type);
     e && e.preventDefault();
     preventEvent = true;
     clearTimeout(preventEventTimeout);
     preventEventTimeout = setTimeout(function () {
       preventEvent = false;
     }, 1000);
-    (options.onEnd || noop).call(el, {moved: !!movedFLAG, $target: $target, control: controlTouch, startEvent: startEvent, aborted: !e, touch: touchFLAG});
+    (options.onEnd || noop).call(el, {moved: movedFLAG, $target: $target, control: controlTouch, startEvent: startEvent, aborted: !e, touch: touchFLAG});
   }
-
 
   if (el.addEventListener) {
     el.addEventListener('touchstart', onStart);
@@ -121,10 +115,7 @@ function touch ($el, options) {
       .on('mouseup', onEnd);
 
   $el.on('click', 'a', function (e) {
-    //console.log('a click', tail.checked);
-    if (tail.checked) {
-      e.preventDefault();
-    }
+    tail.checked && e.preventDefault();
   });
 
   return tail;
