@@ -501,25 +501,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
           $('<div class="' + captionClass + '"></div>').append(dataFrame.caption).appendTo($frame);
         }
 
-        if (dataFrame.video) {
-          var $oneVideoPlay = $videoPlay.clone();
-
-          smartClick($oneVideoPlay, function () {
-                onTouchEnd();
-                that.playVideo();
-              }, {
-                onStart: function (e) {
-                  onTouchStart();
-                  stageShaftTouchTail.control = true;
-                },
-                tail: stageShaftTouchTail
-              }
-          );
-
-          $frame
-              .addClass(stageFrameVideoClass)
-              .append($oneVideoPlay);
-        }
+        dataFrame.video && $frame
+          .addClass(stageFrameVideoClass)
+          .append($videoPlay.clone());
 
         $stageFrame = $stageFrame.add($frame);
       } else if (type === 'navDot') {
@@ -923,7 +907,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           .addClass(fullscreenClass)
           .appendTo($BODY.addClass(_fullscreenClass));
 
-      unloadVideo($videoPlaying, true);
+      unloadVideo($videoPlaying, true, true);
 
       that.fullScreen = true;
 
@@ -958,7 +942,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       measures = $.extend({}, measuresStash);
 
-      unloadVideo($videoPlaying, true);
+      unloadVideo($videoPlaying, true, true);
 
       that.resize();
       loadImg(activeIndexes, 'stage');
@@ -1173,8 +1157,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
   $stage.on('mousemove', stageCursor);
 
   function onStageTap (e, touch) {
-    if ($videoPlaying) {
-      $videoClose.is(e.target) && unloadVideo($videoPlaying, true, true);
+    var $target = $(e.target);
+
+    if ($target.is('.' + videoPlayClass)) {
+      that.playVideo();
+    } else if ($target.is($fullscreenIcon)) {
+      that[(that.fullScreen ? 'cancel' : 'request') +'FullScreen']();
+    } else if ($videoPlaying) {
+      $target.is($videoClose) && unloadVideo($videoPlaying, true, true);
     } else {
       if (touch && opts.arrows) {
         toggleControlsClass();
@@ -1265,23 +1255,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       onTouchEnd();
       that.show({index: $arrs.index(this) ? '>' : '<', slow: e.altKey, direct: true});
     }
-  }, {
-    onStart: function (e) {
-      onTouchStart();
-      stageShaftTouchTail.control = true;
-    },
-    tail: stageShaftTouchTail
-  });
-
-  smartClick($fullscreenIcon, function () {
-    onTouchEnd();
-    if (that.fullScreen) {
-      that.cancelFullScreen();
-    } else {
-      that.requestFullScreen();
-    }
-    releaseAutoplay();
-    changeAutoplay();
   }, {
     onStart: function (e) {
       onTouchStart();
