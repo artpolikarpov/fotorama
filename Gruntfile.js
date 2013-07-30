@@ -46,7 +46,7 @@ module.exports = function (grunt) {
       },
       sass: {
         files: '<%= meta.sass %>',
-        tasks: 'compass'
+        tasks: 'sass autoprefixer'
       },
       js: {
         files: '<%= meta.js %>',
@@ -57,13 +57,22 @@ module.exports = function (grunt) {
 		    tasks: 'copy:i'
 	    }
     },
-    compass: {
+    sass: {
 			mixdown: {
         options: {
-          sassDir: 'src/scss',
-          cssDir: 'product',
-          noLineComments: true,
-          force: true
+        },
+        files: {
+          'product/fotorama.css': 'src/scss/fotorama.scss'
+        }
+      }
+    },
+    autoprefixer: {
+      mixdown: {
+        options: {
+          browsers: ['last 2 version', 'ie 8', 'ie 7']
+        },
+        files: {
+          'product/fotorama.css': 'product/fotorama.css'
         }
       }
     },
@@ -283,7 +292,8 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-compass');
+  grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-autoprefixer');
   grunt.loadNpmTasks('grunt-string-replace');
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
 	grunt.loadNpmTasks('grunt-contrib-clean');
@@ -293,7 +303,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-shell');
 
-	var defaultTask = 'copy compass jst string-replace:jst concat:js string-replace:console concat:css jasmine uglify cssmin jasmine clean compress';
+	var defaultTask = 'copy sass autoprefixer jst string-replace:jst concat:js string-replace:console concat:css jasmine uglify cssmin jasmine clean compress';
 
   // Compile
   grunt.registerTask('default', defaultTask.split(' '));

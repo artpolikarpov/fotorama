@@ -1,6 +1,6 @@
 $time: 300ms;
 
-@import 'compass';
+
 @import 'mixins';
 @import 'placeholders';
 
@@ -14,6 +14,7 @@ $time: 300ms;
 
   &.fotorama--noscript > *,
   > .fotorama__wrap {
+
     visibility: visible;
   }
 }
@@ -158,7 +159,7 @@ $time: 300ms;
     @extend %no-transform;
     .fotorama__img,
     .fotorama__html {
-      @include opacity(0);
+      opacity: 0;
     }
   }
 }
@@ -166,12 +167,7 @@ $time: 300ms;
 .fotorama__img {
   border: 0;
   overflow: hidden;
-  //@extend %stretch;
   @extend %stretch-for-fit;
-  //width: auto !important;
-  //height: auto !important;
-  //-webkit-backface-visibility: hidden;
-  //@include scale(.3);
 }
 
 .fotorama__img--full {
@@ -271,7 +267,7 @@ $time: 300ms;
   position: relative;
   top: 12px;
   left: 6px;
-  @include border-radius(6px);
+  border-radius: 6px;
   border: 1px solid;
 }
 
@@ -300,7 +296,7 @@ $time: 300ms;
   left: 0;
   border-style: solid;
   border-color: mix(#00d1ff, #008ed6);
-  @include background(linear-gradient(top left, rgba(255, 255, 255, .25), rgba(64, 64, 64, .1)));
+  background-image: linear-gradient(top left, rgba(255, 255, 255, .25), rgba(64, 64, 64, .1));
 }
 
 .fotorama__caption {
@@ -313,42 +309,22 @@ $time: 300ms;
   font-size: 14px;
   line-height: 1.5;
   color: #000;
-  /*	text-shadow: 0 1px 0 #fff;*/
   background-color: #fff;
   background-color: rgba(#fff, .9);
 
   @extend %border-box;
   padding: 5px 10px;
 
-  /*	h1, h2, h3, h4, h5, h6 {
-      margin: 0 0 .1em;
+  a {
+    text-decoration: none;
+    color: #000;
+    border-bottom: 1px solid;
+    border-color: rgba(#000, .5);
+    &:hover {
+      color: #333;
+      border-color: rgba(#333, .5);
     }
-    h1 {
-      font-size: 115%;
-    }
-    h2 {
-      font-size: 110%;
-    }
-    h3, h4, h5, h6 {
-      font-size: 100%;
-    }
-    p {
-      margin: 0 0 .4em;
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-
-    a {
-      text-decoration: none;
-      color: #000;
-      border-bottom: 1px solid;
-      border-color: rgba(#000, .5);
-      &:hover {
-        color: #333;
-        border-color: rgba(#333, .5);
-      }
-    }*/
+  }
 
   .fotorama__wrap--no-controls &,
   .fotorama__wrap--video & {
@@ -416,17 +392,10 @@ $time: 300ms;
   .fotorama__html,
   &.fotorama__wrap--fade .fotorama__stage__frame,
   .fotorama__caption {
-    @include transition-property(opacity);
-    @include transition-timing-function(linear);
-    @include transition-duration($time);
+    transition-property: opacity;
+    transition-timing-function: linear;
+    transition-duration: $time;
   }
-
-  // see also: %before-load-bg
-  //&.fotorama__wrap--slide {
-  //  .fotorama__stage__frame {
-  //    @include transition-property(background-color);
-  //  }
-  //}
 }
 
 .fotorama__select {
