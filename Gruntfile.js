@@ -218,7 +218,7 @@ module.exports = function (grunt) {
 			},
 			product: {
         options: {
-          headers: {'Cache-Control': 'max-age=2592000', 'Content-Encoding': 'gzip', 'Accept-Encoding': 'gzip'}
+          headers: {'Cache-Control': 'max-age=2592000'}
         },
 				upload: [
 						// Separate version to separate folder
@@ -231,7 +231,7 @@ module.exports = function (grunt) {
       edge: {
         // Latest to the root
         options: {
-          headers: {'Cache-Control': 'max-age=1', 'Content-Encoding': 'gzip', 'Accept-Encoding': 'gzip'}
+          headers: {'Cache-Control': 'max-age=1'}
         },
 				upload: [
 					{
