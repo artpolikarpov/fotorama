@@ -2,11 +2,11 @@
 
 ```xml
 <!-- 1. Link to jQuery (1.8.0 or later), -->
-<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script> <!-- 91 KB -->
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script> <!-- 32 KB -->
 
 <!-- fotorama.css & fotorama.js. -->
-<link  href="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.css" rel="stylesheet"> <!-- 14 KB -->
-<script src="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.js"></script> <!-- 28 KB -->
+<link  href="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.css" rel="stylesheet"> <!-- 3 KB -->
+<script src="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.js"></script> <!-- 12 KB -->
 
 <!-- 2. Add images to <div class="fotorama"></div>. -->
 <div class="fotorama">

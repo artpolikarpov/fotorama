@@ -29,7 +29,7 @@ js: "/j/script.js"
     <link href="/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
 		<!-- jQuery, -->
-		<script src="/lib/jquery-1.9.1.min.js"></script>
+		<script src="/lib/jquery-1.10.2.min.js"></script>
 	<% end %>
 
 	<% s3 = (url) -> return if process.env.NODE_ENV then ('http://fotorama.s3.amazonaws.com' + (url.replace /\/(\d+)\/(.*)$/, '/$2?$1')) else url %>
