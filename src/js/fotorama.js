@@ -1194,7 +1194,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         var index = getIndexByPos(result.newPos, measures.w, MARGIN, repositionIndex);
         that.show({
           index: index,
-          time: result.time,
+          time: o_fade ? o_transitionDuration : result.time,
           overPos: result.overPos,
           direct: true
         });
