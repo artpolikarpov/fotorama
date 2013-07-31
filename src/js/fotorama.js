@@ -61,6 +61,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       o_fade,
       o_thumbSide,
       o_thumbSide2,
+      o_transitionDuration,
       lastOptions = {},
 
       measures = {},
@@ -170,7 +171,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function setAutoplayInterval (interval) {
     if (interval === true) interval = '';
-    opts.autoplay = Math.max(Number(interval) || AUTOPLAY_INTERVAL, TRANSITION_DURATION * 1.5);
+    opts.autoplay = Math.max(+interval || AUTOPLAY_INTERVAL, o_transitionDuration * 1.5);
   }
 
   function addOrRemove (FLAG) {
@@ -184,6 +185,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     o_fade = opts.transition === 'crossfade' || opts.transition === 'dissolve';
 
     o_loop = opts.loop && (size > 2 || o_fade);
+
+    o_transitionDuration = +opts.transitionDuration || TRANSITION_DURATION;
 
     var classes = {add: [], remove: []};
 
@@ -810,7 +813,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   that.show = function (options) {
     var index,
-        time = TRANSITION_DURATION,
+        time = o_transitionDuration,
         overPos;
 
     if (typeof options !== 'object') {
@@ -1357,6 +1360,7 @@ $.fn.fotorama = function (opts) {
                   fit: 'contain', // 'cover' || 'scale-down' || 'none'
 
                   transition: 'slide', // 'crossfade' || 'dissolve'
+                  transitionDuration: TRANSITION_DURATION,
 
                   captions: true,
 
