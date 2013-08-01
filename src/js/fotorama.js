@@ -124,6 +124,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
   function appendElements (FLAG) {
     if (FLAG === appendElements.f) return;
 
+    console.log('appendElements', FLAG);
+
     if (FLAG) {
       $fotorama
           .html('')
@@ -248,9 +250,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
 
     o_allowFullScreen = opts.allowFullScreen;
-    $fotorama
-        .insertAfter($anchor)
-        .removeClass(hiddenClass);
 
     if (o_allowFullScreen) {
       $fullscreenIcon.appendTo($stage);
@@ -931,6 +930,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function cancelFullScreen () {
     if (that.fullScreen) {
+      console.log('cancelFullScreen');
+
       that.fullScreen = false;
 
       if (FULLSCREEN) {
@@ -1073,7 +1074,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     that.cancelFullScreen();
     that.stopAutoplay();
 
-    appendElements(false);
+    appendElements();
 
     data = that.data = null;
 

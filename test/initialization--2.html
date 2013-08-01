@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Basic fotorama</title>
+	<meta charset="utf-8">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.10.2.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../product/fotorama.css" rel="stylesheet">
+	<script src="../product/fotorama.js"></script>
+
+  <script type="text/javascript">
+    $(function () {
+      $gallery = $('<div id="gal"></div>').appendTo("body");
+
+      //$gallery = $('#gal');
+
+      console.log("gallery is in the document: ", $("#gal").length);
+
+      $gallery.fotorama();
+
+      console.log("gallery is missed: ", $("#gal").length);
+
+      var fotorama = $gallery.data("fotorama");
+
+      console.log("fotorama instance is initialized: ", fotorama);
+
+      $gallery.appendTo("body");
+
+      console.log("add gallery to the document: ", $("#gal").length);
+
+      fotorama.load([{img: "http://img3-fotki.yandex.net/get/9509/26024940.4b/0_STATIC8372b_d93f13a1_L.jpg"}]);
+
+      console.log("gallery is still missed: ", $("#gal").length);
+
+    });
+  </script>
+</head>
+
+<body>
+
+<!-- © -->
+<p>Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
+</body>
+</html>
