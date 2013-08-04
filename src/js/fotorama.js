@@ -598,6 +598,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
               return $(a).data().eq - $(b).data().eq;
             })
             .each(function () {
+
               if (!thumbsFLAG) return;
 
               var $this = $(this),
@@ -635,8 +636,20 @@ jQuery.Fotorama = function ($fotorama, opts) {
     });
   }
 
-  function getNavFrameCenter (navFrameData) {
-    return navFrameData.l + navFrameData.w / 2
+  function getNavFrameCenter (navFrame) {
+    var navFrameData = navFrame.data(),
+        left,
+        width;
+
+    if (o_nav === 'thumbs') {
+      left = navFrameData.l;
+      width = navFrameData.w;
+    } else {
+      left = navFrame.position().left;
+      width = navFrame.width();
+    }
+
+    return left + width / 2;
   }
 
   function slideThumbBorder (time) {
@@ -650,7 +663,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function slideNavShaft (options) {
     if (data[options.guessIndex][navFrameKey]) {
-      var pos = minMaxLimit(options.coo - getNavFrameCenter(data[options.guessIndex][navFrameKey].data()), navShaftData.minPos, navShaftData.maxPos),
+      var pos = minMaxLimit(options.coo - getNavFrameCenter(data[options.guessIndex][navFrameKey]), navShaftData.minPos, navShaftData.maxPos),
           time = options.time * .9;
       slide($navShaft, {
         time: time,
