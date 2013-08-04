@@ -4,17 +4,25 @@ var lastEvent,
     preventEventTimeout;
 
 function extendEvent (e, touchFLAG) {
-  e._x = touchFLAG ? e.touches[0].pageX : e.pageX;
-  e._y = touchFLAG ? e.touches[0].pageY : e.pageY;
+  if (touchFLAG) {
+    var touch = e.touches[0];
+    e._x = touch.pageX;
+    e._y = touch.pageY;
+    e._X = touch.clientX;
+    e._Y = touch.clientY;
+  } else {
+    e._x = e.pageX;
+    e._y = e.pageY;
+    e._X = e.clientX;
+    e._Y = e.clientY;
+  }
 }
 
 function touch ($el, options) {
   var el = $el[0],
       tail = {},
       touchEnabledFLAG,
-      movableFLAG,
       startEvent,
-      movedFLAG,
       $target,
       controlTouch,
       touchFLAG,
@@ -22,9 +30,8 @@ function touch ($el, options) {
       targetIsLinkFlag;
 
   function onStart (e) {
-
     $target = $(e.target);
-    tail.checked = movableFLAG = movedFLAG = targetIsSelectFLAG = targetIsLinkFlag = false;
+    tail.checked = targetIsSelectFLAG = targetIsLinkFlag = false;
 
     if (touchEnabledFLAG
         || tail.flow
@@ -35,11 +42,11 @@ function touch ($el, options) {
 
     touchFLAG = e.type.match('touch');
     targetIsLinkFlag = $target.is('a, a *', el);
+
     extendEvent(e, touchFLAG);
 
-    lastEvent = e;
+    startEvent = lastEvent = e;
     moveEventType = e.type.replace(/down|start/, 'move');
-    startEvent = e;
     controlTouch = tail.control;
 
     (options.onStart || noop).call(el, e, {control: controlTouch, $target: $target});
@@ -52,39 +59,28 @@ function touch ($el, options) {
   }
 
   function onMove (e) {
-
-    if (!touchEnabledFLAG
-        || (e.touches && e.touches.length > 1)) {
+    if ((e.touches && e.touches.length > 1)
+        || moveEventType !== e.type
+        || !touchEnabledFLAG) {
       onEnd();
-      return;
-    } else if (moveEventType !== e.type) {
       return;
     }
 
     extendEvent(e, touchFLAG);
 
-    var xDiff = Math.abs(e._x - startEvent._x), // opt _x → _pageX
-        yDiff = Math.abs(e._y - startEvent._y),
+    var xDiff = Math.abs(e._X - startEvent._X), // opt _x → _pageX
+        yDiff = Math.abs(e._Y - startEvent._Y),
         xyDiff = xDiff - yDiff,
-        xWin = !tail.stable || xyDiff >= 3,
-        yWin = xyDiff <= -3;
-
-    movedFLAG = movedFLAG || xWin || yWin;
+        xWin = (!tail.stable || xyDiff > 0) && !tail.noSwipe,
+        yWin = xyDiff < 1;
 
     if (touchFLAG && !tail.checked) {
-      if (xWin || yWin) {
-        tail.checked = true;
-        movableFLAG = xWin;
-      }
-
-      if (!tail.checked || movableFLAG) {
-        e.preventDefault();
-      }
-    } else if (!touchFLAG || movableFLAG) {
+      tail.checked = xWin || yWin;
+      touchEnabledFLAG = xWin;
+      touchEnabledFLAG && e.preventDefault();
+    } else {
       e.preventDefault();
       (options.onMove || noop).call(el, e, {touch: touchFLAG});
-    } else {
-      touchEnabledFLAG = false;
     }
 
     tail.checked = tail.checked || xWin || yWin;
@@ -100,7 +96,7 @@ function touch ($el, options) {
     preventEventTimeout = setTimeout(function () {
       preventEvent = false;
     }, 1000);
-    (options.onEnd || noop).call(el, {moved: movedFLAG, $target: $target, control: controlTouch, startEvent: startEvent, aborted: !e, touch: touchFLAG});
+    (options.onEnd || noop).call(el, {moved: tail.checked, $target: $target, control: controlTouch, startEvent: startEvent, aborted: !e, touch: touchFLAG});
   }
 
   if (el.addEventListener) {
