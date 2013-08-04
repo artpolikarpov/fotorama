@@ -67,7 +67,7 @@ function fade ($el1, $el2, $frames, options) {
 
     crossfadeFLAG && _$el2 && $el1.fadeTo(0, 0);
 
-    $el1.fadeTo(crossfadeFLAG ? options.time : 0, 1, crossfadeFLAG && onEndFn);
+    $el1.fadeTo(crossfadeFLAG ? options.time : 1, 1, crossfadeFLAG && onEndFn);
     $el2.fadeTo(options.time, 0, onEndFn);
 
     (_$el1 && crossfadeFLAG) || _$el2 || onEndFn();
