@@ -7,6 +7,7 @@ var _fotoramaClass = 'fotorama',
     wrapFadeClass = wrapClass + '--fade',
     wrapSlideClass = wrapClass + '--slide',
     wrapNoControlsClass = wrapClass + '--no-controls',
+    wrapNoShadowsClass = wrapClass + '--no-shadows',
 
     stageClass = _fotoramaClass + '__stage',
     stageFrameClass = stageClass + '__frame',
@@ -35,7 +36,6 @@ var _fotoramaClass = 'fotorama',
     fadeClass = _fotoramaClass + '__fade',
     fadeFrontClass = fadeClass + '-front',
     fadeRearClass = fadeClass + '-rear',
-
 
     shadowClass = _fotoramaClass + '__shadow',
     shadowsClass = shadowClass + 's',

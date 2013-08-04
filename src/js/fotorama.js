@@ -62,6 +62,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       o_thumbSide,
       o_thumbSide2,
       o_transitionDuration,
+      o_shadows,
       lastOptions = {},
 
       measures = {},
@@ -261,6 +262,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     classes[addOrRemove(o_fade)].push(wrapFadeClass);
     classes[addOrRemove(!o_fade)].push(wrapSlideClass);
+
+    o_shadows = opts.shadows && !SLOW;
+    classes[addOrRemove(!o_shadows)].push(wrapNoShadowsClass);
 
     ooooStop();
 
@@ -1066,8 +1070,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
 
   function setShadow ($el, edge) {
-    $el.removeClass(shadowsLeftClass + ' ' + shadowsRightClass);
-    edge && !$videoPlaying && $el.addClass(edge.replace(/^|\s/g, ' ' + shadowsClass + '--'));
+    if (o_shadows) {
+      $el.removeClass(shadowsLeftClass + ' ' + shadowsRightClass);
+      edge && !$videoPlaying && $el.addClass(edge.replace(/^|\s/g, ' ' + shadowsClass + '--'));
+    }
   }
 
   that.destroy = function () {
@@ -1374,7 +1380,9 @@ $.fn.fotorama = function (opts) {
 
                   loop: false,
 
-                  shuffle: false
+                  shuffle: false,
+
+                  shadows: true
                 },
                 opts,
                 fotoramaData

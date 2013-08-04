@@ -13,7 +13,8 @@
     background-size: 1px 100%, 5px 100%;
     @extend %no-select;
 
-    .fotorama--fullscreen & {
+    .fotorama--fullscreen &,
+    .fotorama__wrap--no-shadows & {
       display: none;
     }
   }
@@ -37,7 +38,7 @@
 
 .fotorama__wrap--fade .fotorama__stage {
   &:before, &:after {
-    display: none !important;
+    display: none;
   }
 }
 

@@ -8,6 +8,9 @@ var $WINDOW = $(window),
     CSS3 = Modernizr.csstransforms3d && !QUIRKS_FORCE,
     FULLSCREEN = fullScreenApi.ok,
 
+    MOBILE = navigator.userAgent.match(/Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i),
+    SLOW = !CSS3 || MOBILE,
+
     TOUCH_TIMEOUT = 250,
     TRANSITION_DURATION = 300,
     AUTOPLAY_INTERVAL = 5000,
