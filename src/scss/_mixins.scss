@@ -6,3 +6,15 @@
   *display: inline;
   *zoom: 1;
 }
+
+@mixin opacity($val: 1, $important: 0) {
+  @if $important == 0 {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{$val*100})";
+    filter: alpha(opacity=$val*100);
+    opacity: $val;
+  } @else {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{$val*100})" !important;
+    filter: alpha(opacity=$val*100) !important;
+    opacity: $val !important;
+  }
+}
