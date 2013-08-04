@@ -6,15 +6,11 @@ var lastEvent,
 function extendEvent (e, touchFLAG) {
   if (touchFLAG) {
     var touch = e.touches[0];
-    e._x = touch.pageX;
-    e._y = touch.pageY;
-    e._X = touch.clientX;
-    e._Y = touch.clientY;
+    e._x = touch.clientX;
+    e._y = touch.clientY;
   } else {
-    e._x = e.pageX;
-    e._y = e.pageY;
-    e._X = e.clientX;
-    e._Y = e.clientY;
+    e._x = e.clientX;
+    e._y = e.clientY;
   }
 }
 
@@ -68,8 +64,8 @@ function touch ($el, options) {
 
     extendEvent(e, touchFLAG);
 
-    var xDiff = Math.abs(e._X - startEvent._X), // opt _x → _pageX
-        yDiff = Math.abs(e._Y - startEvent._Y),
+    var xDiff = Math.abs(e._x - startEvent._x), // opt _x → _pageX
+        yDiff = Math.abs(e._y - startEvent._y),
         xyDiff = xDiff - yDiff,
         xWin = (!tail.stable || xyDiff > 0) && !tail.noSwipe,
         yWin = xyDiff < 1;
