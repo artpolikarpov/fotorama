@@ -3,7 +3,7 @@ title: "Fotorama"
 layout: "default"
 ---
 
-<div class="fotorama" data-width="100%" data-ratio="1.5" data-hash="true" data-max-height="100%" data-nav="thumbs" data-fit="cover" data-allow-full-screen="native" data-thumb-height="48">
+<div class="fotorama" data-width="100%" data-ratio="1.5" data-hash="true" data-max-height="100%" data-nav="thumbs" data-allow-full-screen="native" data-thumb-height="48">
   <a href="/associated-files/lebedev-tibet/full/000_lake.jpg"><img src="/associated-files/lebedev-tibet/thumbs/000_lake.jpg" width="144" height="96"></a>
   <a href="/associated-files/lebedev-tibet/full/01_puppy.jpg"><img src="/associated-files/lebedev-tibet/thumbs/01_puppy.jpg" width="144" height="96"></a>
   <a href="/associated-files/lebedev-tibet/full/02_stupas2.jpg"><img src="/associated-files/lebedev-tibet/thumbs/02_stupas2.jpg" width="144" height="96"></a>
