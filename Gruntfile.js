@@ -46,7 +46,7 @@ module.exports = function (grunt) {
       },
       sass: {
         files: '<%= meta.sass %>',
-        tasks: 'sass autoprefixer'
+        tasks: ['sass', 'autoprefixer']
       },
       js: {
         files: '<%= meta.js %>',
