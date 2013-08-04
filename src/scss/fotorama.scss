@@ -102,8 +102,8 @@ $time: 300ms;
 
 .fotorama__img {
   @include opacity(0);
-  max-width: none !important;
-  max-height: none !important;
+  max-width: 99999px !important;
+  max-height: 99999px !important;
   min-width: 0 !important;
   min-height: 0 !important;
   .fotorama__loaded &,
