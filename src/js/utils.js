@@ -78,8 +78,8 @@ function afterTransition ($el, property, fn, time) {
     elData.onEndFn = function () {
       if (ok) return;
       ok = true;
-      console.log('elData.onEndFn', $el.attr('class').split(' ')[0]);
-      console.log('skipReposition');
+      //console.log('elData.onEndFn', $el.attr('class').split(' ')[0]);
+      //console.log('skipReposition');
       fn();
     };
     elData.tProp = property;

@@ -94,7 +94,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   toDeactivate[STAGE_FRAME_KEY] = [];
   toDeactivate[NAV_THUMB_FRAME_KEY] = [];
   toDeactivate[NAV_DOT_FRAME_KEY] = [];
-  toDetach[STAGE_FRAME_KEY] = [];
+  toDetach[STAGE_FRAME_KEY] = {};
 
   if (CSS3) {
     $wrap.addClass(wrapCss3Class);
@@ -446,7 +446,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       function waitAndLoad () {
         waitFor(function () {
-          console.log('wait for no touchedFLAG', touchedFLAG, type, index);
+          //console.log('wait for no touchedFLAG', touchedFLAG, type, index);
           return /*!isHidden(img) && */!touchedFLAG;
         }, function () {
           loaded();
@@ -537,9 +537,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     eachIndex(indexes, 'stage', function (i, index, dataFrame, $frame, key, frameData) {
       if (!$frame) return;
 
-      toDetach[STAGE_FRAME_KEY].push(
-          $frame.css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, MARGIN, repositionIndex)}, o_fade && getDuration(0)))
-      );
+      toDetach[STAGE_FRAME_KEY][index] = $frame.css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, MARGIN, repositionIndex)}, o_fade && getDuration(0)));
 
       if (isDetached($frame[0])) {
         $frame.appendTo($stageShaft);
@@ -668,6 +666,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (data[options.guessIndex][navFrameKey]) {
       var pos = minMaxLimit(options.coo - getNavFrameCenter(data[options.guessIndex][navFrameKey]), navShaftData.minPos, navShaftData.maxPos),
           time = options.time * .9;
+
+      console.log('slideNavShaft, pos', pos);
+
       slide($navShaft, {
         time: time,
         pos: pos,
@@ -694,23 +695,29 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }
 
+
   function detachFrames (key) {
     var _toDetach = toDetach[key];
 
-    while (_toDetach.length) {
-      var $frame = _toDetach.shift();
-      that.activeFrame[key] !== $frame && $frame.detach();
-    }
+    $.each(activeIndexes, function (i, index) {
+      delete _toDetach[index];
+    });
+
+    $.each(_toDetach, function (index, $frame) {
+      console.log('_toDetach', index, $frame);
+      delete _toDetach[index];
+      $frame.detach();
+    });
   }
 
-  function stageShaftReposition () {
+  function stageShaftReposition (skipOnEnd) {
 //    clearTimeout(stageShaftReposition.t);
 //    if (touchedFLAG && !o_fade) {
 //      stageShaftReposition.t = setTimeout(stageShaftReposition, 100);
 //      return;
 //    }
 
-    console.log('stageShaftReposition');
+    //console.log('stageShaftReposition');
 
     repositionIndex = dirtyIndex = activeIndex;
 
@@ -721,7 +728,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       deactivateFrames(STAGE_FRAME_KEY);
       toDeactivate[STAGE_FRAME_KEY].push($frame.addClass(activeClass));
 
-      that.show.onEnd(true);
+      skipOnEnd || that.show.onEnd(true);
       stop($stageShaft.css(getTranslate(0)));
 
       detachFrames(STAGE_FRAME_KEY);
@@ -881,7 +888,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       updateFotoramaState();
       loadImg(activeIndexes, 'stage');
 
-      skipReposition || stageShaftReposition();
+      skipReposition || stageShaftReposition(true);
 
       console.log('SHOWEND', activeIndex);
       triggerEvent('showend', options.direct);

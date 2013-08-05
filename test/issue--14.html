@@ -6,16 +6,31 @@
   <meta name="viewport" content="width=device-width">
 
 	<!-- jQuery, -->
-	<script src="jquery/jquery-1.10.1.min.js"></script>
+	<script src="jquery/jquery-1.10.2.min.js"></script>
 
 	<!-- Fotorama -->
 	<link  href="../product/fotorama.css" rel="stylesheet">
 	<script src="../product/fotorama.js"></script>
 
+  <!--<link  href="http://fotorama.s3.amazonaws.com/4.2.3/fotorama.css" rel="stylesheet">
+  <script src="http://fotorama.s3.amazonaws.com/4.2.3/fotorama.js"></script>-->
+
   <script type="text/javascript">
     $(function () {
-      f = $('.fotorama').data('fotorama');
-    })
+      $fotorama = $('.slideshow');
+
+
+      $fotorama.fotorama();
+      fotorama = $fotorama.data('fotorama');
+
+      fotorama.show(3);
+
+//      $('.slideshow')
+//          .on('fotorama:ready', function (e, fotorama) {
+//            fotorama.show({index: 3, time: 0});
+//          })
+//          .fotorama();
+    });
   </script>
 </head>
 
@@ -25,16 +40,12 @@
 <pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div <mark>class="fotorama"</mark>></code></pre>-->
 
 <!-- Fotorama -->
-<div class="fotorama"
-     data-nav="thumbs"
-     data-width="700"
-     data-ratio="3/2"
-     data-max-width="100%">
-	<img src="i/okonechnikov/1-lo.jpg">
-	<img src="i/okonechnikov/2-lo.jpg">
-	<img src="i/okonechnikov/9-lo.jpg">
-	<a href="i/okonechnikov/6.jpg"><img src="i/okonechnikov/6-lo.jpg"></a>
-	<img src="i/okonechnikov/5-lo.jpg">
+<div class="slideshow" data-auto="false">
+	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/1-lo.jpg"></a>
+  <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/2-lo.jpg"></a>
+  <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/3-lo.jpg"></a>
+  <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/4-lo.jpg"></a>
+  <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/5-lo.jpg"></a>
 </div>
 
 <!-- © -->
