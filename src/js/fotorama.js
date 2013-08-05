@@ -866,7 +866,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     unloadVideo(false, activeFrame.i !== data[normalizeIndex(repositionIndex)].i);
 
     frameDraw(activeIndexes, 'stage');
-    stageFramePosition([dirtyIndex]);
+    stageFramePosition([dirtyIndex, getPrevIndex(dirtyIndex), getNextIndex(dirtyIndex)]);
 
     triggerEvent('show', options.direct);
 
