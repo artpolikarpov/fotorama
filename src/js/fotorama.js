@@ -835,20 +835,16 @@ jQuery.Fotorama = function ($fotorama, opts) {
   };
 
   that.show = function (options) {
-    var index,
-        time = o_transitionDuration,
-        overPos;
+    var index;
 
     if (typeof options !== 'object') {
       index = options;
       options = {};
     } else {
       index = options.index;
-      time = typeof options.time === 'number' ? options.time : time;
-      overPos = options.overPos;
     }
 
-    if (options.slow) time *= 10;
+
 
     index = index === '>' ? dirtyIndex + 1 : index === '<' ? dirtyIndex - 1 : index === '<<' ? 0 : index === '>>' ? size - 1 : index;
     index = isNaN(index) ? getIndexFromHash(index, data, true) : index;
@@ -860,6 +856,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
     activeIndexes = [activeIndex, prevIndex, nextIndex];
 
     dirtyIndex = o_loop ? index : activeIndex;
+
+    var diffIndex = Math.abs(lastActiveIndex - dirtyIndex),
+        time = typeof options.time === 'number' ? options.time : Math.min(o_transitionDuration * (1 + (diffIndex - 1) / 10), o_transitionDuration * 2),
+        overPos = options.overPos;
+
+    if (options.slow) time *= 10;
+
+    console.log('time', time);
 
     that.activeFrame = activeFrame = data[activeIndex];
 

@@ -86,7 +86,7 @@ function afterTransition ($el, property, fn, time) {
 
     // Passive call, just in case of native transition-end event fail
     clearTimeout(elData.tT);
-    elData.tT = setTimeout(elData.onEndFn, time * 1.5);
+    elData.tT = setTimeout(elData.onEndFn, time * 1.1);
 
     bindTransitionEnd($el);
   }
