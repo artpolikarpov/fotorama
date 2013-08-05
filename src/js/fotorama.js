@@ -500,9 +500,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
         if (dataFrame.html) {
           $('<div class="' + htmlClass + '"></div>')
               .append(
-                  $(dataFrame.html)
+                  dataFrame._html ? $(dataFrame.html)
                       .removeAttr('id')
                       .html(dataFrame._html) // Because of IE
+                  : dataFrame.html
               )
               .appendTo($frame);
         }
