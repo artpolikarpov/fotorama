@@ -59,14 +59,14 @@ $time: 300ms;
    }
 }
 
-.fotorama__stage {
+.fotorama__stage,
+.fotorama__nav {
   overflow: hidden;
   position: relative;
 }
 
 .fotorama__stage__shaft {
   @extend %stretch;
-
   @extend %no-tap;
 }
 
@@ -203,8 +203,6 @@ $time: 300ms;
   line-height: 0;
   text-align: center;
   display: none;
-  position: relative;
-  overflow: hidden;
   white-space: nowrap;
   @extend %no-margin;
   @extend %no-tap;

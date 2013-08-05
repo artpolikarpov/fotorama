@@ -65,22 +65,28 @@ function bindTransitionEnd ($el) {
       };
   el.addEventListener(transitionEndEvent[Modernizr.prefixed('transition')], function (e) {
     //console.log('NATIVE transitionend', e.propertyName, elData.tProp && e.propertyName.match(elData.tProp) && 'CALL');
-    elData.tProp && e.propertyName.match(elData.tProp) && elData.onEndFn.call(this);
+    elData.tProp && e.propertyName.match(elData.tProp) && elData.onEndFn();
   });
   elData.tEnd = true;
 }
 
 function afterTransition ($el, property, fn, time) {
-  var done,
+  var ok,
       elData = $el.data();
 
   if (elData) {
     elData.onEndFn = function () {
-      if (done) return;
-      fn.call(this);
-      done = true;
+      if (ok) return;
+      ok = true;
+      console.log('elData.onEndFn', $el.attr('class').split(' ')[0]);
+      console.log('skipReposition');
+      fn();
     };
     elData.tProp = property;
+
+    // Passive call, just in case of native transition-end event fail
+    clearTimeout(elData.tT);
+    elData.tT = setTimeout(elData.onEndFn, time * 1.5);
 
     bindTransitionEnd($el);
   }
@@ -89,13 +95,14 @@ function afterTransition ($el, property, fn, time) {
 
 function stop ($el, left) {
   if ($el.length) {
-  if (CSS3) {
-    $el
-        .css(getDuration(0))
-        .data('onEndFn', noop);
-  } else {
-    $el.stop();
-  }
+    var elData = $el.data();
+    if (CSS3) {
+      $el.css(getDuration(0));
+      elData.onEndFn = noop;
+      clearTimeout(elData.tT);
+    } else {
+      $el.stop();
+    }
     var lockedLeft = left || readPosition($el);
     $el.css(getTranslate(lockedLeft));
     return lockedLeft;
@@ -406,4 +413,10 @@ function shuffle(array) {
   }
 
   return array;
+}
+
+function lockScroll (left, top) {
+  $WINDOW
+    .scrollLeft(left)
+    .scrollTop(top);
 }

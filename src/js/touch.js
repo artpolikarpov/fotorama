@@ -67,8 +67,8 @@ function touch ($el, options) {
     var xDiff = Math.abs(e._x - startEvent._x), // opt _x → _pageX
         yDiff = Math.abs(e._y - startEvent._y),
         xyDiff = xDiff - yDiff,
-        xWin = (!tail.stable || xyDiff > 0) && !tail.noSwipe,
-        yWin = xyDiff < 1;
+        xWin = (!tail.stable || xyDiff >= 0) && !tail.noSwipe,
+        yWin = xyDiff < 0;
 
     if (touchFLAG && !tail.checked) {
       tail.checked = xWin || yWin;

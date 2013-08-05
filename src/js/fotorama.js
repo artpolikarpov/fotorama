@@ -73,6 +73,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       scrollTop,
       scrollLeft,
+
       showedFLAG,
       pausedAutoplayFLAG,
       stoppedAutoplayFLAG,
@@ -445,6 +446,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       function waitAndLoad () {
         waitFor(function () {
+          console.log('wait for no touchedFLAG', touchedFLAG, type, index);
           return /*!isHidden(img) && */!touchedFLAG;
         }, function () {
           loaded();
@@ -707,6 +709,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 //      return;
 //    }
 
+    console.log('stageShaftReposition');
+
     repositionIndex = dirtyIndex = activeIndex;
 
     var dataFrame = that.activeFrame,
@@ -716,6 +720,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       deactivateFrames(STAGE_FRAME_KEY);
       toDeactivate[STAGE_FRAME_KEY].push($frame.addClass(activeClass));
 
+      that.show.onEnd(true);
       stop($stageShaft.css(getTranslate(0)));
 
       detachFrames(STAGE_FRAME_KEY);
@@ -760,6 +765,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function onTouchStart () {
+    console.log('onTouchStart');
     clearTimeout(onTouchEnd.t);
     touchedFLAG = 1;
 
@@ -771,6 +777,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function onTouchEnd () {
+    console.log('onTouchEnd');
     onTouchEnd.t = setTimeout(function () {
       touchedFLAG = 0;
     }, TRANSITION_DURATION + TOUCH_TIMEOUT);
@@ -858,22 +865,26 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     unloadVideo(false, activeFrame.i !== data[normalizeIndex(repositionIndex)].i);
 
-    frameDraw([activeIndex, prevIndex, nextIndex], 'stage');
+    frameDraw(activeIndexes, 'stage');
     stageFramePosition([dirtyIndex]);
 
     triggerEvent('show', options.direct);
 
-    function onEnd () {
+    var onEnd = that.show.onEnd = function (skipReposition) {
+      if (onEnd.ok) return;
+      onEnd.ok = true;
       updateFotoramaState();
       loadImg(activeIndexes, 'stage');
-      stageShaftReposition();
 
+      skipReposition || stageShaftReposition();
+
+      console.log('SHOWEND', activeIndex);
       triggerEvent('showend', options.direct);
 
       stageCursor();
       releaseAutoplay();
       changeAutoplay();
-    }
+    };
 
     if (!o_fade) {
       slide($stageShaft, {
@@ -920,7 +931,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       scrollTop = $WINDOW.scrollTop();
       scrollLeft = $WINDOW.scrollLeft();
 
-      $WINDOW.scrollTop(0).scrollLeft(0);
+      lockScroll(0, 0);
 
       measuresStash = $.extend({}, measures);
 
@@ -970,7 +981,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       that.resize();
       loadImg(activeIndexes, 'stage');
 
-      $WINDOW.scrollLeft(scrollLeft).scrollTop(scrollTop);
+      lockScroll(scrollLeft, scrollTop);
     }
   }
 
@@ -1019,6 +1030,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   that.resize = function (options) {
+    console.log('that.resize');
+
     if (!data) return this;
 
     extendMeasures(!that.fullScreen ? options : {width: '100%', maxWidth: null, minWidth: null, height: '100%', maxHeight: null, minHeight: null}, that.fullScreen);
@@ -1270,6 +1283,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function onNavFrameClick (e, time) {
     var index = $(this).data().eq;
+    console.log('onNavFrameClick', e.type, index);
     that.show({index: index, slow: e.altKey, direct: true, coo: e._x - $nav.offset().left, time: time});
   }
 
@@ -1333,6 +1347,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   $WINDOW.on('resize', that.resize);
+
   reset();
 };
 
