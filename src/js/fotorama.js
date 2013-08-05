@@ -1067,8 +1067,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         if (o_nav) {
           $nav
               .stop()
-              .animate({width: width}, time)
-              .css({left: 0});
+              .animate({width: width}, time);
 
           slideNavShaft({guessIndex: activeIndex, time: time, coo: measures.w / 2});
           if (o_nav === 'thumbs' && frameAppend.nav) slideThumbBorder(time);

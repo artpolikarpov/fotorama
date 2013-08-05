@@ -209,21 +209,6 @@ $time: 300ms;
   z-index: 5;
 }
 
-.fotorama__nav--dots {
-  display: block;
-  .fotorama__nav__frame--thumb,
-  .fotorama__thumb-border {
-    display: none;
-  }
-}
-
-.fotorama__nav--thumbs {
-  display: block;
-  .fotorama__nav__frame--dot {
-    display: none;
-  }
-}
-
 .fotorama__nav__shaft {
   @extend %inline-block;
   position: relative;
@@ -242,11 +227,30 @@ $time: 300ms;
 }
 
 .fotorama__nav--dots {
+  display: block;
   .fotorama__nav__frame {
     width: 18px;
     height: 30px;
   }
+  .fotorama__nav__frame--thumb,
+  .fotorama__thumb-border {
+    display: none;
+  }
 }
+
+.fotorama__nav--thumbs {
+  display: block;
+  .fotorama__nav__frame {
+    padding-left: 0 !important;
+    &:last-child {
+      padding-right: 0 !important;
+    }
+  }
+  .fotorama__nav__frame--dot {
+    display: none;
+  }
+}
+
 
 @mixin dotColor($color) {
   .fotorama__dot {
