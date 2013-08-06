@@ -55,6 +55,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       o_loop,
       o_nav,
+      o_navThumbs,
       o_navTop,
       o_allowFullScreen,
       o_nativeFullScreen,
@@ -216,7 +217,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     extendMeasures(opts, true);
 
-    if (o_nav === 'thumbs') {
+    o_navThumbs = o_nav === 'thumbs'
+
+    if (o_navThumbs) {
       frameDraw(size, 'navThumb');
 
       $navFrame = $navThumbFrame;
@@ -296,17 +299,17 @@ jQuery.Fotorama = function ($fotorama, opts) {
     return index < size - 1 || o_loop ? index + 1 : false;
   }
 
-  function setStageShaftMinMaxPosAndSnap () {
-    stageShaftData.minPos = o_loop ? -Infinity : -getPosByIndex(size - 1, measures.w, MARGIN, repositionIndex);
-    stageShaftData.maxPos = o_loop ? Infinity : -getPosByIndex(0, measures.w, MARGIN, repositionIndex);
+  function setStageShaftMinmaxAndSnap () {
+    stageShaftData.min = o_loop ? -Infinity : -getPosByIndex(size - 1, measures.w, MARGIN, repositionIndex);
+    stageShaftData.max = o_loop ? Infinity : -getPosByIndex(0, measures.w, MARGIN, repositionIndex);
     stageShaftData.snap = measures.w + MARGIN;
   }
 
-  function setNavShaftMinMaxPos () {
-    navShaftData.minPos = Math.min(0, measures.w - $navShaft.width());
-    navShaftData.maxPos = 0;
+  function setNavShaftMinmax () {
+    navShaftData.min = Math.min(0, measures.w - $navShaft.width());
+    navShaftData.max = 0;
 
-    navShaftTouchTail.noMove = navShaftData.minPos === navShaftData.maxPos;
+    navShaftTouchTail.noMove = navShaftData.min === navShaftData.max;
 
     $navShaft.toggleClass(grabClass, !navShaftTouchTail.noMove);
   }
@@ -577,7 +580,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   function frameAppend ($frames, $shaft, type) {
     if (!frameAppend[type]) {
 
-      var thumbsFLAG = type === 'nav' && o_nav === 'thumbs',
+      var thumbsFLAG = type === 'nav' && o_navThumbs,
           left = 0;
 
       $shaft.append(
@@ -637,20 +640,24 @@ jQuery.Fotorama = function ($fotorama, opts) {
     });
   }
 
-  function getNavFrameCenter (navFrame) {
-    var navFrameData = navFrame.data(),
+  function getNavFrameBounds ($navFrame) {
+    var navFrameData = $navFrame.data(),
         left,
         width;
 
-    if (o_nav === 'thumbs') {
+    if (o_navThumbs) {
       left = navFrameData.l;
       width = navFrameData.w;
     } else {
-      left = navFrame.position().left;
-      width = navFrame.width();
+      left = $navFrame.position().left;
+      width = $navFrame.width();
     }
 
-    return left + width / 2;
+    return {
+      c: left + width / 2,
+      min: -left + MARGIN * 10,
+      max: -left + measures.w - width - MARGIN * 10
+    };
   }
 
   function slideThumbBorder (time) {
@@ -663,11 +670,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function slideNavShaft (options) {
-    if (data[options.guessIndex][navFrameKey]) {
-      var pos = minMaxLimit(options.coo - getNavFrameCenter(data[options.guessIndex][navFrameKey]), navShaftData.minPos, navShaftData.maxPos),
+    var $guessNavFrame = data[options.guessIndex][navFrameKey];
+    if ($guessNavFrame) {
+      var activeNavFrameBounds = getNavFrameBounds(that.activeFrame[navFrameKey]),
+          pos = minMaxLimit(minMaxLimit(options.coo - getNavFrameBounds($guessNavFrame).c, activeNavFrameBounds.min, activeNavFrameBounds.max), navShaftData.min, navShaftData.max),
           time = options.time * .9;
 
-      console.log('slideNavShaft, pos', pos);
+      console.log('slideNavShaft, pos', activeNavFrameBounds);
 
       slide($navShaft, {
         time: time,
@@ -678,7 +687,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       });
 
       if (time) thumbsDraw(pos);
-      setShadow($nav, findShadowEdge(pos, navShaftData.minPos, navShaftData.maxPos));
+      setShadow($nav, findShadowEdge(pos, navShaftData.min, navShaftData.max));
     }
   }
 
@@ -733,8 +742,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       detachFrames(STAGE_FRAME_KEY);
       stageFramePosition(activeIndexes, true);
-      setStageShaftMinMaxPosAndSnap();
-      setNavShaftMinMaxPos();
+      setStageShaftMinmaxAndSnap();
+      setNavShaftMinmax();
     }
   }
 
@@ -923,11 +932,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
       var guessIndex = limitIndex(activeIndex + minMaxLimit(dirtyIndex - lastActiveIndex, -1, 1)),
           cooUndefinedFLAG = typeof options.coo === 'undefined';
 
-      if (cooUndefinedFLAG || guessIndex !== activeIndex) {
-        slideNavShaft({time: time, coo: !cooUndefinedFLAG ? options.coo : measures.w / 2, guessIndex: !cooUndefinedFLAG ? guessIndex : activeIndex});
-      }
+      (!cooUndefinedFLAG || guessIndex !== activeIndex)
+          && slideNavShaft({time: time, coo: !cooUndefinedFLAG && guessIndex !== activeIndex ? options.coo : measures.w / 2, guessIndex: !cooUndefinedFLAG ? guessIndex : activeIndex});
 
-      if (o_nav === 'thumbs') slideThumbBorder(time);
+      if (o_navThumbs) slideThumbBorder(time);
     }
 
     showedFLAG = typeof lastActiveIndex !== 'undefined' && lastActiveIndex !== activeIndex;
@@ -1081,7 +1089,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
               .animate({width: width}, time);
 
           slideNavShaft({guessIndex: activeIndex, time: time, coo: measures.w / 2});
-          if (o_nav === 'thumbs' && frameAppend.nav) slideThumbBorder(time);
+          if (o_navThumbs && frameAppend.nav) slideThumbBorder(time);
         }
         measuresSetFLAG = setFLAG || true;
         ready();
@@ -1282,7 +1290,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           onEnd: onEnd
         });
         thumbsDraw(result.newPos);
-        setShadow($nav, findShadowEdge(result.newPos, navShaftData.minPos, navShaftData.maxPos));
+        setShadow($nav, findShadowEdge(result.newPos, navShaftData.min, navShaftData.max));
       } else {
         onEnd();
       }

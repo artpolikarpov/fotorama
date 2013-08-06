@@ -9,8 +9,8 @@ function moveOnTouch ($el, options) {
       edge,
       moveTrack,
       endTime,
-      minPos,
-      maxPos,
+      min,
+      max,
       snap,
       slowFLAG,
       controlFLAG,
@@ -30,8 +30,8 @@ function moveOnTouch ($el, options) {
   }
 
   function onStart (e, result) {
-    minPos = elData.minPos;
-    maxPos = elData.maxPos;
+    min = elData.min;
+    max = elData.max;
     snap = elData.snap;
 
     slowFLAG = e.altKey;
@@ -57,12 +57,12 @@ function moveOnTouch ($el, options) {
 
       moveElPos = startElPos - (startCoo - coo);
 
-      edge = findShadowEdge(moveElPos, minPos, maxPos);
+      edge = findShadowEdge(moveElPos, min, max);
 
-      if (moveElPos <= minPos) {
-        moveElPos = edgeResistance(moveElPos, minPos);
-      } else if (moveElPos >= maxPos) {
-        moveElPos = edgeResistance(moveElPos, maxPos);
+      if (moveElPos <= min) {
+        moveElPos = edgeResistance(moveElPos, min);
+      } else if (moveElPos >= max) {
+        moveElPos = edgeResistance(moveElPos, max);
       }
 
       if (!tail.noMove) {
@@ -111,7 +111,7 @@ function moveOnTouch ($el, options) {
       _timeDiffLast = _timeDiff;
     }
 
-    newPos = minMaxLimit(moveElPos, minPos, maxPos);
+    newPos = minMaxLimit(moveElPos, min, max);
 
     var cooDiff = backCoo - coo,
         forwardFLAG = cooDiff >= 0,
@@ -120,8 +120,8 @@ function moveOnTouch ($el, options) {
         swipeFLAG = !longTouchFLAG && moveElPos !== startElPos && newPos === moveElPos;
 
     if (snap) {
-      newPos = minMaxLimit(Math[swipeFLAG ? (forwardFLAG ? 'floor' : 'ceil') : 'round'](moveElPos / snap) * snap, minPos, maxPos);
-      minPos = maxPos = newPos;
+      newPos = minMaxLimit(Math[swipeFLAG ? (forwardFLAG ? 'floor' : 'ceil') : 'round'](moveElPos / snap) * snap, min, max);
+      min = max = newPos;
     }
 
     if (swipeFLAG && (snap || newPos === moveElPos)) {
@@ -133,8 +133,8 @@ function moveOnTouch ($el, options) {
         newPos = virtualPos;
       }
 
-      if (!forwardFLAG && virtualPos > maxPos || forwardFLAG && virtualPos < minPos) {
-        limitPos = forwardFLAG ? minPos : maxPos;
+      if (!forwardFLAG && virtualPos > max || forwardFLAG && virtualPos < min) {
+        limitPos = forwardFLAG ? min : max;
         overPos = virtualPos - limitPos;
         if (!snap) {
           newPos = limitPos;
