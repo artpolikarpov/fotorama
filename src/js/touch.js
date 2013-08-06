@@ -16,6 +16,8 @@ function extendEvent (e, touchFLAG) {
 
 function touch ($el, options) {
   var el = $el[0],
+      addEventListener = 'addEventListener',
+      docTouchTimeout,
       tail = {},
       touchEnabledFLAG,
       startEvent,
@@ -29,12 +31,16 @@ function touch ($el, options) {
     $target = $(e.target);
     tail.checked = targetIsSelectFLAG = targetIsLinkFlag = false;
 
+    e.stopPropagation();
+
     if (touchEnabledFLAG
         || tail.flow
         || (e.touches && e.touches.length > 1)
         || e.which > 1
         || (lastEvent && lastEvent.type !== e.type && preventEvent)
         || (targetIsSelectFLAG = options.select && $target.is(options.select, el))) return targetIsSelectFLAG;
+
+    //console.log('onStart $WINDOW.scrollTop', $WINDOW.scrollTop());
 
     touchFLAG = e.type.match('touch');
     targetIsLinkFlag = $target.is('a, a *', el);
@@ -49,7 +55,7 @@ function touch ($el, options) {
 
     tail.flow = touchEnabledFLAG = true;
 
-    if (!touchFLAG) {
+    if (!touchFLAG || tail.go) {
       e.preventDefault();
     }
   }
@@ -62,13 +68,17 @@ function touch ($el, options) {
       return;
     }
 
+    //console.log('onMove $WINDOW.scrollTop', $WINDOW.scrollTop());
+
     extendEvent(e, touchFLAG);
 
     var xDiff = Math.abs(e._x - startEvent._x), // opt _x → _pageX
         yDiff = Math.abs(e._y - startEvent._y),
         xyDiff = xDiff - yDiff,
-        xWin = (!tail.stable || xyDiff >= 0) && !tail.noSwipe,
+        xWin = (tail.go || xyDiff >= 0) && !tail.noSwipe,
         yWin = xyDiff < 0;
+
+    console.log('x y', e._x, startEvent._x, e._y, startEvent._y);
 
     if (touchFLAG && !tail.checked) {
       tail.checked = xWin || yWin;
@@ -86,7 +96,9 @@ function touch ($el, options) {
     var _touchEnabledFLAG = touchEnabledFLAG;
     tail.flow = tail.control = touchEnabledFLAG = false;
     if (!_touchEnabledFLAG || (targetIsLinkFlag && !tail.checked)) return;
+
     e && e.preventDefault();
+
     preventEvent = true;
     clearTimeout(preventEventTimeout);
     preventEventTimeout = setTimeout(function () {
@@ -95,10 +107,24 @@ function touch ($el, options) {
     (options.onEnd || noop).call(el, {moved: tail.checked, $target: $target, control: controlTouch, startEvent: startEvent, aborted: !e, touch: touchFLAG});
   }
 
-  if (el.addEventListener) {
-    el.addEventListener('touchstart', onStart);
-    el.addEventListener('touchmove', onMove);
-    el.addEventListener('touchend', onEnd);
+  if (el[addEventListener]) {
+    el[addEventListener]('touchstart', onStart);
+    el[addEventListener]('touchmove', onMove);
+    el[addEventListener]('touchend', onEnd);
+
+    document[addEventListener]('touchstart', function () {
+      clearTimeout(docTouchTimeout);
+      console.log('DOC TOUCHSTART');
+      tail.flow = true;
+    });
+
+    document[addEventListener]('touchend', function () {
+      clearTimeout(docTouchTimeout);
+      docTouchTimeout = setTimeout(function () {
+        console.log('DOC TOUCHEND');
+        tail.flow = false;
+      }, TOUCH_TIMEOUT);
+    });
   }
 
   $el.on('mousedown', onStart);

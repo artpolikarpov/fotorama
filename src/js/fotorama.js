@@ -445,9 +445,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
 
       function waitAndLoad () {
+        var i = 10;
         waitFor(function () {
-          //console.log('wait for no touchedFLAG', touchedFLAG, type, index);
-          return /*!isHidden(img) && */!touchedFLAG;
+          return !touchedFLAG || !i--;
         }, function () {
           loaded();
         });
@@ -852,8 +852,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       index = options.index;
     }
 
-
-
     index = index === '>' ? dirtyIndex + 1 : index === '<' ? dirtyIndex - 1 : index === '<<' ? 0 : index === '>>' ? size - 1 : index;
     index = isNaN(index) ? getIndexFromHash(index, data, true) : index;
     index = typeof index === 'undefined' ? activeIndex || 0 : index;
@@ -871,8 +869,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     if (options.slow) time *= 10;
 
-    console.log('time', time);
-
     that.activeFrame = activeFrame = data[activeIndex];
 
     unloadVideo(false, activeFrame.i !== data[normalizeIndex(repositionIndex)].i);
@@ -882,6 +878,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     triggerEvent('show', options.direct);
 
+    stageShaftTouchTail.go = navShaftTouchTail.go = true;
+
     var onEnd = that.show.onEnd = function (skipReposition) {
       if (onEnd.ok) return;
       onEnd.ok = true;
@@ -890,8 +888,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       skipReposition || stageShaftReposition(true);
 
-      console.log('SHOWEND', activeIndex);
       triggerEvent('showend', options.direct);
+
+      stageShaftTouchTail.go = navShaftTouchTail.go = false;
 
       stageCursor();
       releaseAutoplay();
@@ -1359,7 +1358,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }
 
-  $WINDOW.on('resize', that.resize);
+
+
+  $WINDOW
+      .on('resize', that.resize);
 
   reset();
 };

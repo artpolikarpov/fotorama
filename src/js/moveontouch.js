@@ -26,9 +26,6 @@ function moveOnTouch ($el, options) {
 
     startElPos = moveElPos = stop($el, options.getPos && options.getPos());
 
-    stableFLAG = tail.stable = !(startElPos % snap);
-    !stableFLAG && e.preventDefault();
-
     (options.onStart || noop).call(el, e, {pos: startElPos});
   }
 
