@@ -537,7 +537,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     eachIndex(indexes, 'stage', function (i, index, dataFrame, $frame, key, frameData) {
       if (!$frame) return;
 
-      toDetach[STAGE_FRAME_KEY][index] = $frame.css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, MARGIN, repositionIndex)}, o_fade && getDuration(0)));
+      toDetach[STAGE_FRAME_KEY][normalizeIndex(index)] = $frame.css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, MARGIN, repositionIndex)}, o_fade && getDuration(0)));
 
       if (isDetached($frame[0])) {
         $frame.appendTo($stageShaft);
@@ -704,7 +704,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     });
 
     $.each(_toDetach, function (index, $frame) {
-      console.log('_toDetach', index, $frame);
+      console.log('_TODETACH', index, $frame);
       delete _toDetach[index];
       $frame.detach();
     });
@@ -732,7 +732,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       stop($stageShaft.css(getTranslate(0)));
 
       detachFrames(STAGE_FRAME_KEY);
-      stageFramePosition(activeIndexes);
+      stageFramePosition(activeIndexes, true);
       setStageShaftMinMaxPosAndSnap();
       setNavShaftMinMaxPos();
     }
@@ -1117,9 +1117,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
     that.cancelFullScreen();
     that.stopAutoplay();
 
-    appendElements();
-
     data = that.data = null;
+    activeIndexes = [];
+
+    appendElements();
+    detachFrames(STAGE_FRAME_KEY);
 
     return this;
   };
