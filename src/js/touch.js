@@ -114,14 +114,12 @@ function touch ($el, options) {
 
     document[addEventListener]('touchstart', function () {
       clearTimeout(docTouchTimeout);
-      console.log('DOC TOUCHSTART');
       tail.flow = true;
     });
 
     document[addEventListener]('touchend', function () {
       clearTimeout(docTouchTimeout);
       docTouchTimeout = setTimeout(function () {
-        console.log('DOC TOUCHEND');
         tail.flow = false;
       }, TOUCH_TIMEOUT);
     });
