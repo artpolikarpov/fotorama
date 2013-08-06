@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fotorama</title>
+
+  <style type="text/css">
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .fotorama__html {
+      font-family: sans-serif;
+      font-size: 64px;
+      font-size: 40vw;
+      line-height: 1;
+      text-align: center;
+      display: table-row;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .fotorama__html > div {
+      position: relative;
+      top: 50%;
+      margin-top: -.5em;
+    }
+
+    .fotorama .fotorama__dot {
+      border-color: #000;
+    }
+
+    .fotorama .fotorama__active .fotorama__dot {
+      background-color: #000;
+    }
+  </style>
+
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="test/jquery/jquery-1.10.2.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="product/fotorama.css" rel="stylesheet">
+	<script src="product/fotorama.js"></script>
+
+  <script type="text/javascript">
+    $(function () {
+      $('.fotorama')
+          .on('fotorama:ready', function (e, fotorama) {
+            fotorama.show({index: 2, time: 0});
+          })
+          .fotorama();
+    })
+  </script>
+</head>
+<body>
+
+<div class="fotorama" data-auto="false" data-width="100%" data-height="100%">
+  <div>Fo</div><div>to</div><div>ra</div><div>ma</div>
+</div>
+
+</body>
+</html>
