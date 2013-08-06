@@ -672,15 +672,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
   function slideNavShaft (options) {
     var $guessNavFrame = data[options.guessIndex][navFrameKey];
     if ($guessNavFrame) {
-      var activeNavFrameBounds = getNavFrameBounds(that.activeFrame[navFrameKey]),
-          pos = minMaxLimit(minMaxLimit(options.coo - getNavFrameBounds($guessNavFrame).c, activeNavFrameBounds.min, activeNavFrameBounds.max), navShaftData.min, navShaftData.max),
+      var overflowFLAG = navShaftData.min !== navShaftData.max,
+          activeNavFrameBounds = overflowFLAG && getNavFrameBounds(that.activeFrame[navFrameKey]),
+          pos = overflowFLAG && minMaxLimit(minMaxLimit(options.coo - getNavFrameBounds($guessNavFrame).c, activeNavFrameBounds.min, activeNavFrameBounds.max), navShaftData.min, navShaftData.max),
           time = options.time * .9;
-
-      console.log('slideNavShaft, pos', activeNavFrameBounds);
 
       slide($navShaft, {
         time: time,
-        pos: pos,
+        pos: pos || 0,
         onEnd: function () {
           thumbsDraw(pos, true);
         }
