@@ -78,6 +78,7 @@ function afterTransition ($el, property, fn, time) {
     elData.onEndFn = function () {
       if (ok) return;
       ok = true;
+      clearTimeout(elData.tT);
       //console.log('elData.onEndFn', $el.attr('class').split(' ')[0]);
       //console.log('skipReposition');
       fn();
@@ -86,7 +87,7 @@ function afterTransition ($el, property, fn, time) {
 
     // Passive call, just in case of fail of native transition-end event
     clearTimeout(elData.tT);
-    elData.tT = setTimeout(elData.onEndFn, time * 1.1);
+    elData.tT = setTimeout(elData.onEndFn, time * 1.5);
 
     bindTransitionEnd($el);
   }
