@@ -31,16 +31,12 @@ function touch ($el, options) {
     $target = $(e.target);
     tail.checked = targetIsSelectFLAG = targetIsLinkFlag = false;
 
-    e.stopPropagation();
-
     if (touchEnabledFLAG
         || tail.flow
         || (e.touches && e.touches.length > 1)
         || e.which > 1
         || (lastEvent && lastEvent.type !== e.type && preventEvent)
         || (targetIsSelectFLAG = options.select && $target.is(options.select, el))) return targetIsSelectFLAG;
-
-    //console.log('onStart $WINDOW.scrollTop', $WINDOW.scrollTop());
 
     touchFLAG = e.type.match('touch');
     targetIsLinkFlag = $target.is('a, a *', el);
@@ -53,7 +49,7 @@ function touch ($el, options) {
 
     (options.onStart || noop).call(el, e, {control: controlTouch, $target: $target});
 
-    tail.flow = touchEnabledFLAG = true;
+    touchEnabledFLAG = tail.flow = true;
 
     if (!touchFLAG || tail.go) {
       e.preventDefault();
@@ -64,11 +60,9 @@ function touch ($el, options) {
     if ((e.touches && e.touches.length > 1)
         || moveEventType !== e.type
         || !touchEnabledFLAG) {
-      onEnd();
+      touchEnabledFLAG && onEnd();
       return;
     }
-
-    //console.log('onMove $WINDOW.scrollTop', $WINDOW.scrollTop());
 
     extendEvent(e, touchFLAG);
 
@@ -78,10 +72,7 @@ function touch ($el, options) {
         xWin = (tail.go || xyDiff >= 0) && !tail.noSwipe,
         yWin = xyDiff < 0;
 
-    console.log('x y', e._x, startEvent._x, e._y, startEvent._y);
-
     if (touchFLAG && !tail.checked) {
-      tail.checked = xWin || yWin;
       touchEnabledFLAG = xWin;
       touchEnabledFLAG && e.preventDefault();
     } else {
@@ -94,8 +85,11 @@ function touch ($el, options) {
 
   function onEnd (e) {
     var _touchEnabledFLAG = touchEnabledFLAG;
-    tail.flow = tail.control = touchEnabledFLAG = false;
+    tail.control = touchEnabledFLAG = false;
+
     if (!_touchEnabledFLAG || (targetIsLinkFlag && !tail.checked)) return;
+
+    tail.flow = false;
 
     e && e.preventDefault();
 
