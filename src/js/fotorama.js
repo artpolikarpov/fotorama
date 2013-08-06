@@ -1124,9 +1124,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
     that.stopAutoplay();
 
     data = that.data = null;
-    activeIndexes = [];
 
     appendElements();
+
+    activeIndexes = [];
     detachFrames(STAGE_FRAME_KEY);
 
     return this;
@@ -1338,6 +1339,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
       if ($videoPlaying) {
         unloadVideo($videoPlaying, true);
       }
+
+      activeIndexes = [];
+      detachFrames(STAGE_FRAME_KEY);
+
       that.show({index: activeIndex, time: 0});
       that.resize();
     } else {
