@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+
+  <style>
+    .hide {
+      display: none;
+    }
+  </style>
+
+  <script src="../jquery/jquery-1.10.1.min.js"></script>
+  <script src="speed-helpers.js"></script>
+
+  <script type="text/javascript">
+    $(function () {
+      S.test.before = function () {
+        var $body = $('body');
+
+        S.times(10, function () {
+          $body.append('<div>' + Math.random() +'</div>');
+        });
+      };
+
+      S.test.after = function() {
+        $('div').remove();
+      };
+
+      S.test('.hide()', function () {
+        var $div = $('div');
+        $div.hide().show();
+      });
+
+      S.test('.addClass(\'hide\')', function () {
+        var $div = $('div');
+        $div.addClass('hide').removeClass('hide');
+      });
+
+      S.test('.detach()', function () {
+        var $div = $('div');
+        $div.detach().appendTo('body');
+      });
+
+    });
+  </script>
+</head>
+<body>
+
+</body>
+</html>

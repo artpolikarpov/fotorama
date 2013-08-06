@@ -55,8 +55,6 @@ function bindTransitionEnd ($el) {
 
   if (elData.tEnd) return;
 
-  console.log('bindTransitionEnd', $('img', $el).attr('src'));
-
   var el = $el[0],
       transitionEndEvent = {
         WebkitTransition: 'webkitTransitionEnd',
@@ -66,55 +64,47 @@ function bindTransitionEnd ($el) {
         transition: 'transitionend'
       };
   el.addEventListener(transitionEndEvent[Modernizr.prefixed('transition')], function (e) {
-    console.log('NATIVE transitionend', e.propertyName, elData.tProp && e.propertyName.match(elData.tProp) && 'CALL');
-    elData.tProp && e.propertyName.match(elData.tProp) && elData.onEndFn.call(this);
+    //console.log('NATIVE transitionend', e.propertyName, elData.tProp && e.propertyName.match(elData.tProp) && 'CALL');
+    elData.tProp && e.propertyName.match(elData.tProp) && elData.onEndFn();
   });
   elData.tEnd = true;
 }
 
 function afterTransition ($el, property, fn, time) {
-  var done,
+  var ok,
       elData = $el.data();
 
-  console.log('afterTransition', $el);
-
   if (elData) {
-    //clearTimeout(elData.tT);
-
     elData.onEndFn = function () {
-      if (done) return;
-      //.log('elData.onEndFn()', fn);
-      fn.call(this);
-      done = true;
+      if (ok) return;
+      ok = true;
+      clearTimeout(elData.tT);
+      //console.log('elData.onEndFn', $el.attr('class').split(' ')[0]);
+      //console.log('skipReposition');
+      fn();
     };
     elData.tProp = property;
 
-    bindTransitionEnd($el);
+    // Passive call, just in case of fail of native transition-end event
+    clearTimeout(elData.tT);
+    elData.tT = setTimeout(elData.onEndFn, time * 1.5);
 
-//    if (!time) return;
-//
-//    elData.tT = setTimeout(function () {
-//      // Если не сработал нативный transitionend (а такое бывает),
-//      // через таймаут вызываем onEndFn насильно:
-//      //.log('request for FALLBACK', $el, fn);
-//      if (done) return;
-//      //.log('FALLBACK!!! for transition', $el, fn);
-//      elData.onEndFn();
-//    }, time * 5);
+    bindTransitionEnd($el);
   }
 }
 
-function stop ($el) {
-  if (CSS3) {
-    $el
-        .css(getDuration(0))
-        .data('onEndFn', noop);
-  } else {
-    $el.stop();
-  }
+
+function stop ($el, left) {
   if ($el.length) {
-    //console.log('$el.length', $el);
-    var lockedLeft = readPosition($el);
+    var elData = $el.data();
+    if (CSS3) {
+      $el.css(getDuration(0));
+      elData.onEndFn = noop;
+      clearTimeout(elData.tT);
+    } else {
+      $el.stop();
+    }
+    var lockedLeft = left || readPosition($el);
     $el.css(getTranslate(lockedLeft));
     return lockedLeft;
   }
@@ -139,8 +129,6 @@ function findVideoId (href, forceVideo) {
   if (typeof href !== 'string') return href;
   href = parseHref(href);
 
-  // href.host = href.host.replace(/^www./, '').replace(/:80$/, '');
-
   var id,
       type;
 
@@ -162,8 +150,6 @@ function findVideoId (href, forceVideo) {
     id = href.pathname.replace(/^\/(video\/)?/, '').replace(/\/.*/, '');
   }
 
-  //.log('id, type ', id, type);
-
   if ((!id || !type) && forceVideo) {
     id = href.href;
     type = 'custom';
@@ -173,8 +159,6 @@ function findVideoId (href, forceVideo) {
 }
 
 function getVideoThumbs (dataFrame, data, api) {
-  //console.log('getVideoThumbs');
-
   var img, thumb, video = dataFrame.video;
   if (video.type === 'youtube') {
     thumb = getProtocol() + 'img.youtube.com/vi/' + video.id + '/default.jpg';
@@ -204,17 +188,15 @@ function updateData (data, _dataFrame, i, api) {
     var dataFrame = data[_i];
 
     if (dataFrame.i === i && dataFrame.thumbsReady) {
+      var clear = {videoReady: true};
+      clear[STAGE_FRAME_KEY] = clear[NAV_THUMB_FRAME_KEY] = clear[NAV_DOT_FRAME_KEY] = false;
 
-      api.splice(_i, 1, {
-        i: i,
-        video: dataFrame.video,
-        videoReady: true,
-        caption: dataFrame.caption,
-        img: dataFrame.img || _dataFrame.img,
-        thumb: dataFrame.thumb || _dataFrame.thumb,
-        id: dataFrame.id,
-        fit: dataFrame.fit
-      });
+      api.splice(_i, 1, $.extend(
+          {},
+          dataFrame,
+          clear,
+          _dataFrame
+      ));
 
       break;
     }
@@ -239,10 +221,21 @@ function getDataFromHtml ($el) {
       video = findVideoId(_video, _video);
     }
 
+    var img = imgData.img || _imgHref || _imgSrc || _thumbSrc,
+        thumb = imgData.thumb || _thumbSrc || _imgSrc || _imgHref,
+        separateThumbFLAG = img !== thumb,
+        width = numberFromMeasure(imgData.width || $img.attr('width')),
+        height = numberFromMeasure(imgData.height || $img.attr('height')),
+        thumbWidth = numberFromMeasure(imgData.thumbWidth || $child.attr('width') || separateThumbFLAG || width),
+        thumbHeight = numberFromMeasure(imgData.thumbHeight || $child.attr('height') || separateThumbFLAG || height);
+
     return {
       video: video,
-      img: imgData.img || _imgHref || _imgSrc || _thumbSrc,
-      thumb: imgData.thumb || _thumbSrc || _imgSrc || _imgHref
+      img: img,
+      width: width || undefined,
+      height: height || undefined,
+      thumb: thumb,
+      thumbRatio: thumbWidth / thumbHeight || undefined
     }
   }
 
@@ -266,6 +259,10 @@ function getDataFromHtml ($el) {
 
 function isHidden (el) {
   return el.offsetWidth === 0 && el.offsetHeight === 0;
+}
+
+function isDetached (el) {
+  return !$.contains(document.documentElement, el);
 }
 
 function waitFor (test, fn, timeout) {
@@ -301,7 +298,7 @@ function fit ($el, measuresToFit, method) {
       elData.l.h !== measuresToFit.h ||
       elData.l.m !== method)) {
 
-    //console.log('fit execute', measures, measuresToFit);
+    //console.log('fit execute', measuresToFit, measures, elData.l);
 
     var width = measures.width,
         height = measures.height,
@@ -320,10 +317,10 @@ function fit ($el, measuresToFit, method) {
     }
 
     $el.css({
-      width: Math.round(width),
-      height: Math.round(height),
-      marginLeft: Math.round(-width / 2),
-      marginTop: Math.round(-height / 2)
+      width: Math.ceil(width),
+      height: Math.ceil(height),
+      marginLeft: Math.floor(-width / 2),
+      marginTop: Math.floor(-height / 2)
     });
 
     elData.l = {
@@ -335,6 +332,8 @@ function fit ($el, measuresToFit, method) {
       m: method
     }
   }
+
+  return true;
 }
 
 function setStyle ($el, style) {
@@ -346,15 +345,15 @@ function setStyle ($el, style) {
   }
 }
 
-function findShadowEdge (pos, minPos, maxPos) {
-  return minPos === maxPos ? false : pos <= minPos ? 'left' : pos >= maxPos ? 'right' : 'left right';
+function findShadowEdge (pos, min, max) {
+  return min === max ? false : pos <= min ? 'left' : pos >= max ? 'right' : 'left right';
 }
 
 function getIndexFromHash (hash, data, ok) {
   if (!ok) return false;
+  if (!isNaN(hash)) return hash - 1;
 
   var index;
-  if (!isNaN(hash)) return +hash;
 
   for (var _i = 0, _l = data.length; _i < _l; _i++) {
     var dataFrame = data[_i];
@@ -397,4 +396,28 @@ function smartClick ($el, fn, _options) {
 
 function div (classes, child) {
   return '<div class="' + classes + '">' + (child || '') + '</div>';
+}
+
+// Fisher–Yates Shuffle
+// http://bost.ocks.org/mike/shuffle/
+function shuffle(array) {
+  // While there remain elements to shuffle
+  var l = array.length;
+  while (l) {
+    // Pick a remaining element
+    var i = Math.floor(Math.random() * l--);
+
+    // And swap it with the current element
+    var t = array[l];
+    array[l] = array[i];
+    array[i] = t;
+  }
+
+  return array;
+}
+
+function lockScroll (left, top) {
+  $WINDOW
+    .scrollLeft(left)
+    .scrollTop(top);
 }

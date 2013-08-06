@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>List as start layout</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.10.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../product/fotorama.css" rel="stylesheet">
+	<script src="../product/fotorama.js"></script>
+
+
+  <script type="text/javascript">
+    $.fn.fotoramaListApapter = function () {
+      this.each(function () {
+        var html = '';
+
+        $('> li', this).each(function () {
+          html += $(this).html();
+        });
+
+        $(this).html(html);
+      });
+      return this;
+    };
+
+    $(function () {
+      $('ul.fotorama')
+          .fotoramaListApapter()
+          .fotorama();
+    });
+  </script>
+</head>
+
+<body>
+
+<!-- Fotorama -->
+<ul class="fotorama"
+    data-auto="false"
+    data-width="700"
+    data-ratio="3/2"
+    data-max-width="100%"
+    data-fit="cover"
+    data-nav="thumbs">
+	<li><a href="i/okonechnikov/7-lo.jpg"><img src="i/okonechnikov/7-thumb.jpg"></a></li>
+	<li><a href="i/okonechnikov/8-lo.jpg"><img src="i/okonechnikov/8-thumb.jpg"></a></li>
+	<li><a href="i/okonechnikov/9-lo.jpg"><img src="i/okonechnikov/9-thumb.jpg"></a></li>
+	<li><a href="i/okonechnikov/10-lo.jpg"><img src="i/okonechnikov/10-thumb.jpg"></a></li>
+	<li><a href="i/okonechnikov/11-lo.jpg"><img src="i/okonechnikov/11-thumb.jpg"></a></li>
+</ul>
+
+<!-- © -->
+<p>Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
+</body>
+</html>

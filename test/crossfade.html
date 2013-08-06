@@ -11,6 +11,12 @@
 	<!-- Fotorama -->
 	<link  href="../product/fotorama.css" rel="stylesheet">
 	<script src="../product/fotorama.js"></script>
+
+  <script type="text/javascript">
+    $(function () {
+      f = $('.fotorama').data('fotorama');
+    })
+  </script>
 </head>
 
 <body>
@@ -24,6 +30,7 @@
      data-transition="crossfade"
      data-width="700"
      data-ratio="3/2"
+     data-hash="true"
      data-max-width="100%">
 	<a href="i/okonechnikov/1-lo.jpg"></a>
 	<a href="i/okonechnikov/2-lo.jpg"></a>

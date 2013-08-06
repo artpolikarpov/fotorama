@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Autoplay</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.9.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../product/fotorama.css" rel="stylesheet">
+	<script src="../product/fotorama.js"></script>
+</head>
+
+<body>
+
+<p>Autoplay:<p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div class="fotorama"
+     <mark>data-autoplay="true"</mark>></code></pre>
+
+<p>The show stops on&nbsp;touch. Change this with <code>data-stop-autoplay-on-touch="false"</code>.</p>
+
+<!-- Just don’t want to repeat this prefix in every img[src] -->
+<base href="i/okonechnikov/">
+
+<!-- Fotorama -->
+<div class="fotorama"
+     data-autoplay="1000"
+     data-width="700"
+     data-ratio="3/2"
+     data-max-width="100%"
+     data-nav="thumbs"
+     data-loop="true">
+	<a href="1-lo.jpg"><img src="1-thumb.jpg"></a>
+	<a href="2-lo.jpg"><img src="2-thumb.jpg"></a>
+	<a href="3-lo.jpg"><img src="3-thumb.jpg"></a>
+</div>
+
+<!-- © -->
+<p>Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
+</body>
+</html>

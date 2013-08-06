@@ -9,8 +9,8 @@ function moveOnTouch ($el, options) {
       edge,
       moveTrack,
       endTime,
-      minPos,
-      maxPos,
+      min,
+      max,
       snap,
       slowFLAG,
       controlFLAG,
@@ -21,20 +21,17 @@ function moveOnTouch ($el, options) {
     startCoo = coo = e._x;
 
     moveTrack = [
-      [new Date().getTime(), startCoo]
+      [+ new Date, startCoo]
     ];
 
-    startElPos = moveElPos = stop($el);
-
-    stableFLAG = tail.stable = !(startElPos % snap);
-    !stableFLAG && e.preventDefault();
+    startElPos = moveElPos = stop($el, options.getPos && options.getPos());
 
     (options.onStart || noop).call(el, e, {pos: startElPos});
   }
 
   function onStart (e, result) {
-    minPos = elData.minPos;
-    maxPos = elData.maxPos;
+    min = elData.min;
+    max = elData.max;
     snap = elData.snap;
 
     slowFLAG = e.altKey;
@@ -47,42 +44,44 @@ function moveOnTouch ($el, options) {
     }
   }
 
-  function onMove (e) {
+  function onMove (e, result) {
     if (controlFLAG) {
       controlFLAG = false;
       startTracking(e);
     }
 
-    coo = e._x;
+    if (!tail.noSwipe) {
+      coo = e._x;
 
-    moveTrack.push([new Date().getTime(), coo]);
+      moveTrack.push([new Date().getTime(), coo]);
 
-    moveElPos = startElPos - (startCoo - coo);
+      moveElPos = startElPos - (startCoo - coo);
 
-    edge = findShadowEdge(moveElPos, minPos, maxPos);
+      edge = findShadowEdge(moveElPos, min, max);
 
-    if (moveElPos <= minPos) {
-      moveElPos = edgeResistance(moveElPos, minPos);
-    } else if (moveElPos >= maxPos) {
-      moveElPos = edgeResistance(moveElPos, maxPos);
-    }
+      if (moveElPos <= min) {
+        moveElPos = edgeResistance(moveElPos, min);
+      } else if (moveElPos >= max) {
+        moveElPos = edgeResistance(moveElPos, max);
+      }
 
+      if (!tail.noMove) {
+        $el.css(getTranslate(moveElPos));
+        if (!movedFLAG) {
+          movedFLAG = true;
+          // only for mouse
+          result.touch || $el.addClass(grabbingClass);
+        }
 
-    if (!tail.noMove) {
-      $el.css(getTranslate(moveElPos));
-      if (!movedFLAG) {
-        movedFLAG = true;
-        $BODY.addClass('grabbing');
+        (options.onMove || noop).call(el, e, {pos: moveElPos, edge: edge});
       }
     }
-
-    (options.onMove || noop).call(el, e, {pos: moveElPos, edge: edge});
   }
 
   function onEnd (result) {
     if (controlFLAG) return;
 
-    $BODY.removeClass('grabbing');
+    result.touch || $el.removeClass(grabbingClass);
 
     endTime = new Date().getTime();
 
@@ -112,7 +111,7 @@ function moveOnTouch ($el, options) {
       _timeDiffLast = _timeDiff;
     }
 
-    newPos = minMaxLimit(moveElPos, minPos, maxPos);
+    newPos = minMaxLimit(moveElPos, min, max);
 
     var cooDiff = backCoo - coo,
         forwardFLAG = cooDiff >= 0,
@@ -121,8 +120,8 @@ function moveOnTouch ($el, options) {
         swipeFLAG = !longTouchFLAG && moveElPos !== startElPos && newPos === moveElPos;
 
     if (snap) {
-      newPos = minMaxLimit(Math[swipeFLAG ? (forwardFLAG ? 'floor' : 'ceil') : 'round'](moveElPos / snap) * snap, minPos, maxPos);
-      minPos = maxPos = newPos;
+      newPos = minMaxLimit(Math[swipeFLAG ? (forwardFLAG ? 'floor' : 'ceil') : 'round'](moveElPos / snap) * snap, min, max);
+      min = max = newPos;
     }
 
     if (swipeFLAG && (snap || newPos === moveElPos)) {
@@ -134,8 +133,8 @@ function moveOnTouch ($el, options) {
         newPos = virtualPos;
       }
 
-      if (!forwardFLAG && virtualPos > maxPos || forwardFLAG && virtualPos < minPos) {
-        limitPos = forwardFLAG ? minPos : maxPos;
+      if (!forwardFLAG && virtualPos > max || forwardFLAG && virtualPos < min) {
+        limitPos = forwardFLAG ? min : max;
         overPos = virtualPos - limitPos;
         if (!snap) {
           newPos = limitPos;

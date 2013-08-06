@@ -9,7 +9,7 @@ function slide ($el, options) {
     };
   }
 
-  var translate = getTranslate(elPos);
+  var translate = $.extend(getTranslate(elPos), {width: options.width});
 
   if (CSS3) {
     $el.css($.extend(getDuration(options.time), translate));
@@ -24,17 +24,13 @@ function slide ($el, options) {
 }
 
 function fade ($el1, $el2, $frames, options) {
-  console.log('fade', !!$el1, !!$el2);
-
-  var _$el1 = $el1, _$el2 = $el2, crossfadeFLAG = options.method === 'crossfade';
-  /*fade.$el1 = */$el1 = $el1 || $($el1);
-  /*fade.$el2 = */$el2 = $el2 || $($el2);
-
-  var onEndFn = function () {
+  $el1 = $el1 || $($el1);
+  $el2 = $el2 || $($el2);
+  var _$el1 = $el1[0],
+      _$el2 = $el2[0],
+      crossfadeFLAG = options.method === 'crossfade',
+      onEndFn = function () {
         if (!onEndFn.done) {
-          //$el1.removeClass(fadeRearClass);
-          //$el2.removeClass(fadeFrontClass);
-          console.log('onEndFn');
           (options.onEnd || noop)();
           onEndFn.done = true;
         }
@@ -46,12 +42,8 @@ function fade ($el1, $el2, $frames, options) {
 
   $frames.removeClass(fadeRearClass + ' ' + fadeFrontClass);
 
-  $el1
-      .addClass(fadeRearClass);
-  //.removeClass(fadeRearClass);
-  $el2
-      .addClass(fadeFrontClass);
-  //.removeClass(fadeFrontClass);
+  $el1.addClass(fadeRearClass);
+  $el2.addClass(fadeFrontClass);
 
   if (CSS3) {
     stop($el1);
@@ -73,13 +65,11 @@ function fade ($el1, $el2, $frames, options) {
     $el1.stop();
     $el2.stop();
 
-    if (_$el2) {
-      $el1.fadeTo(0, 0);
-    }
+    crossfadeFLAG && _$el2 && $el1.fadeTo(0, 0);
 
-    $el1.fadeTo(options.time, 1, onEndFn);
-    crossfadeFLAG && $el2.fadeTo(options.time, 0);
+    $el1.fadeTo(crossfadeFLAG ? options.time : 1, 1, crossfadeFLAG && onEndFn);
+    $el2.fadeTo(options.time, 0, onEndFn);
 
-    if (!_$el1 && !_$el2) onEndFn();
+    (_$el1 && crossfadeFLAG) || _$el2 || onEndFn();
   }
 }

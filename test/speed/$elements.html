@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+
+  <script src="../jquery/jquery-1.10.2.min.js"></script>
+  <script src="speed-helpers.js"></script>
+
+  <script type="text/javascript">
+    $(function () {
+      var $1th = $('.first-div'),
+          $1th_1 = $1th,
+          $1th_2 = $('body > div:first'),
+          $2th = $('body > div:last'),
+          $3th = $('<div></div>');
+
+      S.test('$el1 === $el2', function () {
+        $1th === $1th || E;
+        $1th === $1th_1 || E;
+        $1th !== $1th_2 || E;
+        $1th !== $2th || E;
+        $1th !== $3th || E;
+      }, 1000);
+
+      S.test('$el1[0] === $el2[0]', function () {
+        $1th[0] === $1th[0] || E;
+        $1th[0] === $1th_1[0] || E;
+        $1th[0] === $1th_2[0] || E;
+        $1th[0] !== $2th[0] || E;
+        $1th[0] !== $3th[0] || E;
+      }, 1000);
+
+      S.test('$el1.is($el2)', function () {
+        $1th.is($1th) || E;
+        $1th.is($1th_1) || E;
+        $1th.is($1th_2) || E;
+        !$1th.is($2th) || E;
+        !$1th.is($3th) || E;
+      }, 1000);
+
+      S.test('$el1.is($el2[0])', function () {
+        $1th.is($1th[0]) || E;
+        $1th.is($1th_1[0]) || E;
+        $1th.is($1th_2[0]) || E;
+        !$1th.is($2th[0]) || E;
+        !$1th.is($3th[0]) || E;
+      }, 1000);
+
+      S.test('$el2.is(\'.class-1\')', function () {
+        $1th.is('.first-div') || E;
+        $1th_1.is('.first-div') || E;
+        $1th_2.is('.first-div') || E;
+        !$2th.is('.first-div') || E;
+        !$3th.is('.first-div') || E;
+      }, 1000);
+
+      S.test('$el2.hasClass(\'class-1\')', function () {
+        $1th.hasClass('first-div') || E;
+        $1th_1.hasClass('first-div') || E;
+        $1th_2.hasClass('first-div') || E;
+        !$2th.hasClass('first-div') || E;
+        !$3th.hasClass('first-div') || E;
+      }, 1000);
+
+    });
+  </script>
+</head>
+<body>
+
+<div class="first-div">The 1th</div>
+
+<div></div>
+
+</body>
+</html>

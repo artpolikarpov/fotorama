@@ -24,7 +24,7 @@
 	$(function () {
 		$('#events')
 				.on('fotorama:show', function (e, fotorama, direct) {
-					console.log(e.type, direct);
+					console.log(e.type, fotorama.activeFrame, direct);
 					$('#number').text((fotorama.activeIndex + 1)
 							+ '/' + fotorama.size);
 				})
