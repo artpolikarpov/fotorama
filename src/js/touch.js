@@ -101,22 +101,28 @@ function touch ($el, options) {
     (options.onEnd || noop).call(el, {moved: tail.checked, $target: $target, control: controlTouch, startEvent: startEvent, aborted: !e, touch: touchFLAG});
   }
 
+  function onOtherStart () {
+    clearTimeout(docTouchTimeout);
+      docTouchTimeout = setTimeout(function () {
+        tail.flow = true;
+      }, 10);
+  }
+
+  function onOtherEnd () {
+    clearTimeout(docTouchTimeout);
+      docTouchTimeout = setTimeout(function () {
+        tail.flow = false;
+      }, TOUCH_TIMEOUT);
+  }
+
   if (el[addEventListener]) {
     el[addEventListener]('touchstart', onStart);
     el[addEventListener]('touchmove', onMove);
     el[addEventListener]('touchend', onEnd);
 
-    document[addEventListener]('touchstart', function () {
-      clearTimeout(docTouchTimeout);
-      tail.flow = true;
-    });
-
-    document[addEventListener]('touchend', function () {
-      clearTimeout(docTouchTimeout);
-      docTouchTimeout = setTimeout(function () {
-        tail.flow = false;
-      }, TOUCH_TIMEOUT);
-    });
+    document[addEventListener]('touchstart', onOtherStart);
+    document[addEventListener]('touchend', onOtherEnd);
+    window[addEventListener]('scroll', onOtherEnd);
   }
 
   $el.on('mousedown', onStart);
