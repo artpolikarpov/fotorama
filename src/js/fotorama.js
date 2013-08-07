@@ -886,7 +886,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     triggerEvent('show', options.direct);
 
-    stageShaftTouchTail.go = navShaftTouchTail.go = true;
+    updateTouchTails('go', true);
 
     var onEnd = that.show.onEnd = function (skipReposition) {
       if (onEnd.ok) return;
@@ -898,7 +898,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       triggerEvent('showend', options.direct);
 
-      stageShaftTouchTail.go = navShaftTouchTail.go = false;
+      updateTouchTails('go', false);
 
       stageCursor();
       releaseAutoplay();
@@ -951,6 +951,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       lockScroll(0, 0);
 
+      updateTouchTails('x', true);
+
       measuresStash = $.extend({}, measures);
 
       $fotorama
@@ -998,6 +1000,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
       measures = $.extend({}, measuresStash);
 
       unloadVideo($videoPlaying, true, true);
+
+      updateTouchTails('x', false);
 
       that.resize();
       loadImg(activeIndexes, 'stage');
@@ -1234,6 +1238,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
         that.show({index: e.shiftKey || !getDirection(e._x) ? '<' : '>', slow: e.altKey, direct: true});
       }
     }
+  }
+
+  function updateTouchTails (key, value) {
+    stageShaftTouchTail[key] = navShaftTouchTail[key] = value;
   }
 
   stageShaftTouchTail = moveOnTouch($stageShaft, {

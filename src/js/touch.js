@@ -51,7 +51,7 @@ function touch ($el, options) {
 
     touchEnabledFLAG = tail.flow = true;
 
-    if (!touchFLAG || tail.go) {
+    if (!touchFLAG || tail.go || tail.x) {
       e.preventDefault();
     }
   }
