@@ -400,7 +400,7 @@ function div (classes, child) {
 
 // Fisher–Yates Shuffle
 // http://bost.ocks.org/mike/shuffle/
-function shuffle(array) {
+function shuffle (array) {
   // While there remain elements to shuffle
   var l = array.length;
   while (l) {
@@ -414,6 +414,13 @@ function shuffle(array) {
   }
 
   return array;
+}
+
+function clone (array) {
+  return toString.call(array) == '[object Array]'
+      && $.map(array, function (frame) {
+       return $.extend({}, frame);
+      });
 }
 
 function lockScroll (left, top) {

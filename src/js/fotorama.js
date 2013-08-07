@@ -152,10 +152,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     appendElements.f = FLAG;
   }
 
-
-
   function setData () {
-    data = that.data = data || getDataFromHtml($fotorama);
+    data = that.data = data || clone(opts.data) || getDataFromHtml($fotorama);
     size = that.size = data.length;
 
     !ready.ok && opts.shuffle && shuffle(data);
