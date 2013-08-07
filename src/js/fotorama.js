@@ -993,8 +993,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
           .removeClass(fullscreenClass)
           .insertAfter($anchor);
 
-      triggerEvent('fullscreenexit');
-
       measures = $.extend({}, measuresStash);
 
       unloadVideo($videoPlaying, true, true);
@@ -1005,6 +1003,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
       loadImg(activeIndexes, 'stage');
 
       lockScroll(scrollLeft, scrollTop);
+
+      triggerEvent('fullscreenexit');
     }
   }
 

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fullscreen</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.10.2.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../product/fotorama.css" rel="stylesheet">
+	<script src="../product/fotorama.js"></script>
+
+  <style type="text/css">
+    img {
+      max-width: 100px;
+    }
+  </style>
+
+  <script type="text/javascript">
+    //<![CDATA[
+      $(function(){
+      $('.fotorama')
+          .on('fotorama:fullscreenenter fotorama:fullscreenexit', function (e, fotorama) {
+          if (e.type === 'fotorama:fullscreenenter') {
+              // Настройки для полного экрана
+              fotorama.setOptions({
+                  nav: 'thumbs'
+              });
+          } else {
+              // Возврат к обычным настройкам
+              fotorama.setOptions({
+                  nav: 'dots'
+              });
+          }
+      }).fotorama();
+      });//]]>
+
+
+  </script>
+</head>
+
+<body>
+
+<p>Fullscreen:<p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div class="fotorama"
+     <mark>data-allow-full-screen="true"</mark>></code></pre>
+
+<p>Click icon at the top-right.</p>
+
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid consequatur consequuntur corporis distinctio dolore
+  dolorum earum expedita in inventore magnam modi numquam, perferendis praesentium repellat sint tempora tenetur velit
+  vitae.</p>
+
+<p>Ad architecto ea ex molestias obcaecati sunt voluptas. Aut blanditiis exercitationem illum ipsa ipsam laboriosam
+  minima minus nulla officiis quaerat repellendus, similique sit ullam? Dignissimos maiores nemo nisi repellat
+  voluptas.</p>
+
+<p>Deserunt doloribus eius molestiae praesentium voluptatum? Aliquam blanditiis culpa dolores eligendi ex fugiat maxime
+  numquam odit pariatur quaerat quisquam, ut! Accusamus deserunt doloremque doloribus explicabo id nemo rerum temporibus
+  voluptatum!</p>
+
+<!-- Fotorama -->
+<div class="fotorama"
+     data-width="700"
+     data-ratio="3/2"
+     data-max-width="100%"
+     data-fit="cover"
+     data-allow-full-screen="true">
+	<a href="i/okonechnikov/9-lo.jpg"></a>
+	<a href="i/okonechnikov/23-lo.jpg"></a>
+	<a href="i/okonechnikov/14-lo.jpg"></a>
+	<a href="i/okonechnikov/15-lo.jpg"></a>
+	<a href="i/okonechnikov/16-lo.jpg"></a>
+</div>
+
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad amet aperiam aspernatur assumenda autem beatae
+  consequatur dicta earum enim eveniet, fugiat iure, laboriosam, maiores nesciunt perferendis rerum soluta sunt
+  veniam!</p>
+
+<p>Ad dolor eaque eius eveniet illo iusto labore nesciunt, nisi nobis, optio possimus qui repellat sint, sit velit.
+  Adipisci cupiditate dicta ducimus id maiores soluta tempora? Ea facilis incidunt odit.</p>
+
+<p>Consectetur delectus expedita molestias nostrum numquam quis, sunt vitae. A distinctio dolorem fuga, illum natus
+  nulla vel? Aliquid aperiam aspernatur cum cupiditate dolore eum illum maxime praesentium, sed, sit tenetur?</p>
+
+<p>Aperiam atque blanditiis dolorum est facere harum itaque labore maiores nemo nulla obcaecati, perferendis porro quae
+  quaerat quo quod repellat repellendus voluptates! Ab ipsam laudantium non placeat quo reiciendis rem.</p>
+
+<p>At cum deleniti odio tenetur vel. Ad alias at dolor enim esse excepturi, illo in iste laudantium magni molestias nisi
+  nostrum perferendis praesentium quis quod repellat, voluptatem! Rerum soluta, vel.</p>
+
+<!-- © -->
+<p>Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
+</body>
+</html>
