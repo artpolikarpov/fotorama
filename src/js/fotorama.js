@@ -957,6 +957,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
           .addClass(fullscreenClass)
           .appendTo($BODY.addClass(_fullscreenClass));
 
+      $HTML.addClass(_fullscreenClass);
+
       unloadVideo($videoPlaying, true, true);
 
       that.fullScreen = true;
@@ -985,6 +987,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
 
       $BODY.removeClass(_fullscreenClass);
+      $HTML.removeClass(_fullscreenClass);
 
       $fotorama
           .removeClass(fullscreenClass)
