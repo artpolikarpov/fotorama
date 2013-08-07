@@ -53,7 +53,6 @@ $arrSize: 32px;
 .fotorama__arr--disabled {
   cursor: default;
   *display: none;
-  text-shadow: none;
   @include opacity(.1, important);
 }
 
