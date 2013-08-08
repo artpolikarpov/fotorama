@@ -68,6 +68,7 @@ $time: 300ms;
 .fotorama__stage__shaft {
   @extend %stretch;
   @extend %no-tap;
+  -ms-touch-action: pan-y;
 }
 
 
@@ -216,6 +217,7 @@ $time: 300ms;
   top: 0;
   text-align: left;
   @extend %no-tap;
+  -ms-touch-action: pan-y;
 }
 
 .fotorama__nav__frame {
