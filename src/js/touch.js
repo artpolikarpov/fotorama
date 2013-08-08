@@ -87,7 +87,7 @@ function touch ($el, options) {
     var _touchEnabledFLAG = touchEnabledFLAG;
     tail.control = touchEnabledFLAG = false;
 
-    if (!_touchEnabledFLAG || (targetIsLinkFlag && !tail.checked)) return;
+    if (!_touchEnabledFLAG || (targetIsLinkFlag && !tail.checked) || e && e.type === 'MSPointerCancel') return;
 
     tail.flow = false;
 
@@ -120,6 +120,8 @@ function touch ($el, options) {
     el[addEventListener]('touchmove', onMove);
     el[addEventListener]('touchend', onEnd);
 
+    el[addEventListener]('MSPointerCancel', onEnd);
+
     document[addEventListener]('touchstart', onOtherStart);
     document[addEventListener]('touchend', onOtherEnd);
     window[addEventListener]('scroll', onOtherEnd);
@@ -128,7 +130,9 @@ function touch ($el, options) {
   $el.on('mousedown', onStart);
   $DOCUMENT
       .on('mousemove', onMove)
-      .on('mouseup', onEnd);
+      .on('mouseup', onEnd);/*
+      .on('mousedown', onOtherStart)
+      .on('mouseup', onOtherEnd);*/
 
   $el.on('click', 'a', function (e) {
     tail.checked && e.preventDefault();
