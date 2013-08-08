@@ -87,7 +87,9 @@ function afterTransition ($el, property, fn, time) {
 
     // Passive call, just in case of fail of native transition-end event
     clearTimeout(elData.tT);
-    elData.tT = setTimeout(elData.onEndFn, time * 1.5);
+    elData.tT = setTimeout(function () {
+      elData.onEndFn();
+    }, time * 1.5);
 
     bindTransitionEnd($el);
   }
@@ -95,6 +97,7 @@ function afterTransition ($el, property, fn, time) {
 
 
 function stop ($el, left) {
+  console.log('stop, ' + left);
   if ($el.length) {
     var elData = $el.data();
     if (CSS3) {
@@ -104,7 +107,7 @@ function stop ($el, left) {
     } else {
       $el.stop();
     }
-    var lockedLeft = left || readPosition($el);
+    var lockedLeft = typeof left === 'number' ? left : readPosition($el);
     $el.css(getTranslate(lockedLeft));
     return lockedLeft;
   }
