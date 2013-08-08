@@ -674,7 +674,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if ($guessNavFrame) {
       var overflowFLAG = navShaftData.min !== navShaftData.max,
           activeNavFrameBounds = overflowFLAG && getNavFrameBounds(that.activeFrame[navFrameKey]),
-          pos = overflowFLAG && minMaxLimit(minMaxLimit(options.coo - getNavFrameBounds($guessNavFrame).c, activeNavFrameBounds.min, activeNavFrameBounds.max), navShaftData.min, navShaftData.max),
+          l = overflowFLAG && (options.keep && slideNavShaft.l ? slideNavShaft.l : minMaxLimit((options.coo || measures.w / 2) - getNavFrameBounds($guessNavFrame).c, activeNavFrameBounds.min, activeNavFrameBounds.max)),
+          pos = overflowFLAG && minMaxLimit(l, navShaftData.min, navShaftData.max),
           time = options.time * .9;
 
       slide($navShaft, {
@@ -687,6 +688,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       if (time) thumbsDraw(pos);
       setShadow($nav, findShadowEdge(pos, navShaftData.min, navShaftData.max));
+
+      slideNavShaft.l = l;
     }
   }
 
@@ -932,7 +935,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           cooUndefinedFLAG = typeof options.coo === 'undefined';
 
       (!cooUndefinedFLAG || guessIndex !== activeIndex)
-          && slideNavShaft({time: time, coo: !cooUndefinedFLAG && guessIndex !== activeIndex ? options.coo : measures.w / 2, guessIndex: !cooUndefinedFLAG ? guessIndex : activeIndex});
+          && slideNavShaft({time: time, coo: !cooUndefinedFLAG && guessIndex !== activeIndex && options.coo, guessIndex: !cooUndefinedFLAG ? guessIndex : activeIndex});
 
       if (o_navThumbs) slideThumbBorder(time);
     }
@@ -1094,7 +1097,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
               .stop()
               .animate({width: width}, time);
 
-          slideNavShaft({guessIndex: activeIndex, time: time, coo: measures.w / 2});
+          slideNavShaft({guessIndex: activeIndex, time: time, keep: true});
           if (o_navThumbs && frameAppend.nav) slideThumbBorder(time);
         }
         measuresSetFLAG = setFLAG || true;
@@ -1285,6 +1288,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       onTouchEnd();
 
       function onEnd () {
+        slideNavShaft.l = result.newPos;
         releaseAutoplay();
         changeAutoplay();
         thumbsDraw(result.newPos, true);
