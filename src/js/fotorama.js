@@ -422,8 +422,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
             .off('load error')
             .addClass(imgClass + (fullFLAG ? ' ' + imgFullClass : ''))
             .prependTo($frame);
-
-        fit($img, specialMeasures || measures, specialFit || dataFrame.fit || opts.fit);
+		
+        fit($img, specialMeasures || measures, specialFit || dataFrame.fit || opts.fit, dataFrame.alignment || opts.alignment);
 
         $.Fotorama.cache[src] = 'loaded';
         frameData.state = 'loaded';
@@ -530,8 +530,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     });
   }
 
-  function callFit ($img, measuresToFit, method) {
-    return $img && $img.length && fit($img, measuresToFit, method);
+  function callFit ($img, measuresToFit, method, alignment) {
+    return $img && $img.length && fit($img, measuresToFit, method, alignment);
   }
 
   function stageFramePosition (indexes) {
@@ -546,9 +546,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
 
       var method = dataFrame.fit || opts.fit;
-
-      callFit(frameData.$img, measures, method);
-      callFit(frameData.$full, measures, method);
+	  var alignment = dataFrame.alignment || opts.alignment;
+	  
+      callFit(frameData.$img, measures, method, alignment);
+      callFit(frameData.$full, measures, method, alignment);
     });
   }
 
@@ -563,13 +564,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
           thisData = $this.data(),
           eq = thisData.eq,
           specialMeasures = {h: o_thumbSide2},
-          specialFit = 'cover';
+          specialFit = 'cover',
+		  specialAlignment = 'center';
 
       specialMeasures.w = thisData.w;
 
       if (thisData.l + thisData.w < leftLimit
           || thisData.l > rightLimit
-          || callFit(thisData.$img, specialMeasures, specialFit)) return;
+          || callFit(thisData.$img, specialMeasures, specialFit, specialAlignment)) return;
 
       loadFLAG && loadImg([eq], 'navThumb', specialMeasures, specialFit);
     });
@@ -1429,6 +1431,8 @@ $.fn.fotorama = function (opts) {
                   allowFullScreen: false, // true || 'native'
 
                   fit: 'contain', // 'cover' || 'scale-down' || 'none'
+				  
+				  align: 'center', // 'top' || 'bottom' || 'left' || 'right' || 'top-left' || 'top-right' || 'bottom-left' || 'bottom-right'
 
                   transition: 'slide', // 'crossfade' || 'dissolve'
                   transitionDuration: TRANSITION_DURATION,

@@ -284,9 +284,9 @@ function setHash (hash) {
       + '#' + hash);
 }
 
-function fit ($el, measuresToFit, method) {
+function fit ($el, measuresToFit, method, alignment) {
   //console.log('fit');
-
+  
   var elData = $el.data(),
       measures = elData.measures;
 
@@ -315,14 +315,64 @@ function fit ($el, measuresToFit, method) {
       height = minMaxLimit(measuresToFit.h, 0, fitFLAG ? height : Infinity);
       width = height * measures.ratio;
     }
+	
+	var x = -width >> 1,
+		y = -height >> 1, 
+		ox = (measuresToFit.w - width) >> 1, 
+		oy = (measuresToFit.h - height) >> 1,
+		ml = x, // center
+		mt = y; // center
 
+	switch (alignment) {
+		case 'center':
+			ml = x;
+			mt = y;
+			break;
+		case 'top':
+			ml = x;
+			mt = y - oy;
+			break;
+		case 'bottom':
+			ml = x;
+			mt = y + oy;
+			break;
+		case 'left':
+			ml = x + ox;
+			mt = y;
+			break;
+		case 'right':
+			ml = x - ox;
+			mt = y;
+			break;
+		case "top-left":
+		    ml = x + ox;
+		    mt = y - oy;
+		    break;
+		case "top-right":
+		    ml = x - ox;
+		    mt = y - oy;
+		    break;
+		case "bottom-left":
+		    ml = x + ox;
+		    mt = y + oy;
+		    break;
+		case "bottom-right":
+		    ml = x - ox;
+		    mt = y + oy;
+		    break;
+		default: // center
+			ml = x;
+			mt = y;
+			break;
+	}
+	
     $el.css({
       width: Math.ceil(width),
       height: Math.ceil(height),
-      marginLeft: Math.floor(-width / 2),
-      marginTop: Math.floor(-height / 2)
+      marginLeft: Math.floor(ml),
+      marginTop: Math.floor(mt)
     });
-
+	
     elData.l = {
       W: measures.width,
       H: measures.height,
