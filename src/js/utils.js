@@ -420,7 +420,7 @@ function shuffle (array) {
 }
 
 function clone (array) {
-  return toString.call(array) == '[object Array]'
+  return Object.prototype.toString.call(array) == '[object Array]'
       && $.map(array, function (frame) {
        return $.extend({}, frame);
       });
