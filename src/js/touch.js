@@ -85,9 +85,11 @@ function touch ($el, options) {
     var _touchEnabledFLAG = touchEnabledFLAG;
     tail.control = touchEnabledFLAG = false;
 
-    if (!_touchEnabledFLAG || (targetIsLinkFlag && !tail.checked)/* || e && e.type === 'MSPointerCancel'*/) return;
+    if (_touchEnabledFLAG) {
+      tail.flow = false;
+    }
 
-    tail.flow = false;
+    if (!_touchEnabledFLAG || (targetIsLinkFlag && !tail.checked)) return;
 
     e && e.preventDefault();
 

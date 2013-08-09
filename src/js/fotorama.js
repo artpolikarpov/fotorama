@@ -1319,7 +1319,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       function () {
         //clearTimeout(hoverTimeout);
         setTimeout(function () {
-          if (touchedFLAG) return;
+          if (stageShaftTouchTail.flow || navShaftTouchTail.flow) return;
           mouseFLAG = hoverFLAG = true;
           updateTouchTails('mouse', mouseFLAG);
           console.log('mouseFLAG', mouseFLAG);
