@@ -97,7 +97,7 @@ function afterTransition ($el, property, fn, time) {
 
 
 function stop ($el, left) {
-  console.log('stop, ' + left);
+  //console.log('stop, ' + left);
   if ($el.length) {
     var elData = $el.data();
     if (CSS3) {

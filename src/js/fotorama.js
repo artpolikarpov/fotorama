@@ -538,7 +538,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     eachIndex(indexes, 'stage', function (i, index, dataFrame, $frame, key, frameData) {
       if (!$frame) return;
 
-      console.log('stageFramePosition, ' + activeIndex + ', ' + index + ', ' + getPosByIndex(index, measures.w, MARGIN, repositionIndex) + ', ' + readPosition($stageShaft));
+      //console.log('stageFramePosition, ' + activeIndex + ', ' + index + ', ' + getPosByIndex(index, measures.w, MARGIN, repositionIndex) + ', ' + readPosition($stageShaft));
 
       toDetach[STAGE_FRAME_KEY][normalizeIndex(index)] = $frame.css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, MARGIN, repositionIndex)}, o_fade && getDuration(0)));
 
