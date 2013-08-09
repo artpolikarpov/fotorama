@@ -123,5 +123,6 @@
 }
 
 %before-load-bg {
+  background-color: mix(black, white);
   background-color: rgba(mix(black, white), .2);
 }
