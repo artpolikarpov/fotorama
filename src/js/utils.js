@@ -107,10 +107,22 @@ function stop ($el, left) {
     } else {
       $el.stop();
     }
-    var lockedLeft = typeof left === 'number' ? left : readPosition($el);
+    var lockedLeft = getNumber(left, readPosition($el));
     $el.css(getTranslate(lockedLeft));
     return lockedLeft;
   }
+}
+
+function getNumber () {
+  var number;
+  for (var _i = 0, _l = arguments.length; _i < _l; _i++) {
+    number = arguments[_i];
+    if (typeof number === 'number') {
+      break;
+    }
+  }
+
+  return number;
 }
 
 function edgeResistance (pos, edge) {
