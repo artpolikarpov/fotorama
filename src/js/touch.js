@@ -6,10 +6,10 @@ var lastEvent,
 function extendEvent (e, touchFLAG) {
   if (touchFLAG) {
     var touch = e.touches[0];
-    e._x = touch.clientX;
-    e._y = touch.clientY;
+    e._x = touch.pageX;
+    e._y = touch.clientY; // clienY is using to detect vertical scrolling
   } else {
-    e._x = e.clientX;
+    e._x = e.pageX;
     e._y = e.clientY;
   }
 }
