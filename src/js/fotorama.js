@@ -882,7 +882,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
     dirtyIndex = o_loop ? index : activeIndex;
 
     var diffIndex = Math.abs(lastActiveIndex - dirtyIndex),
-        time = getNumber(options.time, Math.min(o_transitionDuration * (1 + (diffIndex - 1) / 12), o_transitionDuration * 2)),
+        time = getNumber(options.time, function () {
+          return Math.min(o_transitionDuration * (1 + (diffIndex - 1) / 12), o_transitionDuration * 2);
+        }),
         overPos = options.overPos;
 
     if (options.slow) time *= 10;

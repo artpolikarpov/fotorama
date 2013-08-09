@@ -5,10 +5,11 @@ function minMaxLimit (value, min, max) {
 }
 
 function readTransform (css) {
-  return css.match(/^m/) && css.match(/-?\d+/g)[4];
+  return css.match(/ma/) && css.match(/-?\d+(?!d)/g)[css.match(/3d/) ? 12 : 4];
 }
 
 function readPosition ($el) {
+  console.log('readPosition', $el.css('transform'));
   if (CSS3) {
     return +readTransform($el.css('transform'));
   } else {
@@ -107,7 +108,12 @@ function stop ($el, left) {
     } else {
       $el.stop();
     }
-    var lockedLeft = getNumber(left, readPosition($el));
+    var lockedLeft = getNumber(left, function () {
+      return readPosition($el);
+    });
+
+    console.log('lockedLeft', lockedLeft);
+
     $el.css(getTranslate(lockedLeft));
     return lockedLeft;
   }
@@ -116,7 +122,7 @@ function stop ($el, left) {
 function getNumber () {
   var number;
   for (var _i = 0, _l = arguments.length; _i < _l; _i++) {
-    number = arguments[_i];
+    number = _i ? arguments[_i]() : arguments[_i];
     if (typeof number === 'number') {
       break;
     }
