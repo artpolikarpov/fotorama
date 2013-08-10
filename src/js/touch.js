@@ -77,7 +77,7 @@ function touch ($el, options) {
       touchEnabledFLAG && e.preventDefault();
     } else {
       e.preventDefault();
-      (options.onMove || noop).call(el, e);
+      (options.onMove || noop).call(el, e, {touch: touchFLAG});
     }
 
     tail.checked = tail.checked || xWin || yWin;

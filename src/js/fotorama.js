@@ -4,7 +4,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   var that = this,
       index = _size,
-      stamp = + new Date,
+      stamp = $.now(),
       stampClass = _fotoramaClass + stamp,
       fotorama = $fotorama[0],
       data,
@@ -88,7 +88,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       hoverFLAG,
       hoverEnableFLAG,
-      hoverEnableFLAGTimeout,
 
       navFrameKey,
       stageLeft = 0,
@@ -547,7 +546,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     eachIndex(indexes, 'stage', function (i, index, dataFrame, $frame, key, frameData) {
       if (!$frame) return;
 
-      //console.log('stageFramePosition, ' + activeIndex + ', ' + index + ', ' + getPosByIndex(index, measures.w, MARGIN, repositionIndex) + ', ' + readPosition($stageShaft));
+      console.log('stageFramePosition, ' + activeIndex + ', ' + index + ', ' + getPosByIndex(index, measures.w, MARGIN, repositionIndex) + ', ' + readPosition($stageShaft) + ', ' + $stageShaft.position().left);
 
       toDetach[STAGE_FRAME_KEY][normalizeIndex(index)] = $frame.css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, MARGIN, repositionIndex)}, o_fade && getDuration(0)));
 
@@ -620,7 +619,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
                   frameData = $this.data(),
                   thumbWidth = Math.round(o_thumbSide2 * frameData.data.thumbRatio) || o_thumbSide;
 
-              alert(frameData.eq + ': ' + left + ', ' + thumbWidth + ', ' + frameData.data.thumbRatio + ', ' + o_thumbSide);
+              //alert(frameData.eq + ': ' + left + ', ' + thumbWidth + ', ' + frameData.data.thumbRatio + ', ' + o_thumbSide);
 
               frameData.l = left;
               frameData.w = thumbWidth;
@@ -737,13 +736,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function stageShaftReposition (skipOnEnd) {
-//    clearTimeout(stageShaftReposition.t);
-//    if (touchedFLAG && !o_fade) {
-//      stageShaftReposition.t = setTimeout(stageShaftReposition, 100);
-//      return;
-//    }
-
-    //console.log('stageShaftReposition');
 
     repositionIndex = dirtyIndex = activeIndex;
 
@@ -1328,7 +1320,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         if (!hoverEnableFLAG) return; // Disable Android’s auto hover
         setTimeout(function () {
           if (touchedFLAG) return;
-          //console.log('HOVER');
+          console.log('HOVER');
           mouseFLAG = hoverFLAG = true;
           updateTouchTails('mouse', mouseFLAG);
           toggleControlsClass(!mouseFLAG);
@@ -1341,9 +1333,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
   );
 
-  hoverEnableFLAGTimeout = setTimeout(function () {
+  setTimeout(function () {
     hoverEnableFLAG = true;
-  }, 1000);
+  }, TOUCH_TIMEOUT);
 
   function onNavFrameClick (e, time) {
     var index = $(this).data().eq;
@@ -1360,7 +1352,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       that.show({index: $arrs.index(this) ? '>' : '<', slow: e.altKey, direct: true});
     }
   }, {
-    onStart: function (e) {
+    onStart: function () {
       onTouchStart();
       stageShaftTouchTail.control = true;
     },
