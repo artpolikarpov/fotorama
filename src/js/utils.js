@@ -9,7 +9,6 @@ function readTransform (css) {
 }
 
 function readPosition ($el) {
-  console.log('readPosition', $el.css('transform'));
   if (CSS3) {
     return +readTransform($el.css('transform'));
   } else {
@@ -65,7 +64,6 @@ function bindTransitionEnd ($el) {
         transition: 'transitionend'
       };
   el.addEventListener(transitionEndEvent[Modernizr.prefixed('transition')], function (e) {
-    //console.log('NATIVE transitionend', e.propertyName, elData.tProp && e.propertyName.match(elData.tProp) && 'CALL');
     elData.tProp && e.propertyName.match(elData.tProp) && elData.onEndFn();
   });
   elData.tEnd = true;
@@ -80,8 +78,6 @@ function afterTransition ($el, property, fn, time) {
       if (ok) return;
       ok = true;
       clearTimeout(elData.tT);
-      //console.log('elData.onEndFn', $el.attr('class').split(' ')[0]);
-      //console.log('skipReposition');
       fn();
     };
     elData.tProp = property;
@@ -98,7 +94,6 @@ function afterTransition ($el, property, fn, time) {
 
 
 function stop ($el, left) {
-  //console.log('stop, ' + left);
   if ($el.length) {
     var elData = $el.data();
     if (CSS3) {
@@ -111,8 +106,6 @@ function stop ($el, left) {
     var lockedLeft = getNumber(left, function () {
       return readPosition($el);
     });
-
-    console.log('lockedLeft ' + lockedLeft);
 
     $el.css(getTranslate(lockedLeft));
     return lockedLeft;
@@ -306,8 +299,6 @@ function setHash (hash) {
 }
 
 function fit ($el, measuresToFit, method) {
-  //console.log('fit');
-
   var elData = $el.data(),
       measures = elData.measures;
 
@@ -318,9 +309,6 @@ function fit ($el, measuresToFit, method) {
       elData.l.w !== measuresToFit.w ||
       elData.l.h !== measuresToFit.h ||
       elData.l.m !== method)) {
-
-    //console.log('fit execute', measuresToFit, measures, elData.l);
-
     var width = measures.width,
         height = measures.height,
         ratio = measuresToFit.w / measuresToFit.h,

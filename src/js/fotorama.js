@@ -87,12 +87,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
       touchedFLAG,
 
       hoverFLAG,
-      hoverEnableFLAG,
 
       navFrameKey,
-      stageLeft = 0,
-
-      hoverFLAG;
+      stageLeft = 0;
 
   $wrap[STAGE_FRAME_KEY] = $(div(stageFrameClass));
   $wrap[NAV_THUMB_FRAME_KEY] = $(div(navFrameClass + ' ' + navFrameThumbClass, div(thumbClass)));
@@ -132,8 +129,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function appendElements (FLAG) {
     if (FLAG === appendElements.f) return;
-
-    //console.log('appendElements', FLAG);
 
     if (FLAG) {
       $fotorama
@@ -546,8 +541,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     eachIndex(indexes, 'stage', function (i, index, dataFrame, $frame, key, frameData) {
       if (!$frame) return;
 
-      console.log('stageFramePosition, ' + activeIndex + ', ' + index + ', ' + getPosByIndex(index, measures.w, MARGIN, repositionIndex) + ', ' + readPosition($stageShaft) + ', ' + $stageShaft.position().left);
-
       toDetach[STAGE_FRAME_KEY][normalizeIndex(index)] = $frame.css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, MARGIN, repositionIndex)}, o_fade && getDuration(0)));
 
       if (isDetached($frame[0])) {
@@ -619,15 +612,12 @@ jQuery.Fotorama = function ($fotorama, opts) {
                   frameData = $this.data(),
                   thumbWidth = Math.round(o_thumbSide2 * frameData.data.thumbRatio) || o_thumbSide;
 
-              //alert(frameData.eq + ': ' + left + ', ' + thumbWidth + ', ' + frameData.data.thumbRatio + ', ' + o_thumbSide);
-
               frameData.l = left;
               frameData.w = thumbWidth;
 
               $this.css({width: thumbWidth});
 
               left += thumbWidth + MARGIN;
-
             })
       );
 
@@ -682,8 +672,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function slideNavShaft (options) {
-    console.log('slideNavShaft options.coo', options.coo);
-
     var $guessNavFrame = data[options.guessIndex][navFrameKey];
     if ($guessNavFrame) {
       var overflowFLAG = navShaftData.min !== navShaftData.max,
@@ -729,7 +717,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     });
 
     $.each(_toDetach, function (index, $frame) {
-      //console.log('_TODETACH', index, $frame);
       delete _toDetach[index];
       $frame.detach();
     });
@@ -791,7 +778,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function onTouchStart () {
-    //console.log('onTouchStart');
     clearTimeout(onTouchEnd.t);
     touchedFLAG = 1;
 
@@ -803,7 +789,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function onTouchEnd () {
-    //console.log('onTouchEnd');
     onTouchEnd.t = setTimeout(function () {
       touchedFLAG = 0;
     }, TRANSITION_DURATION + TOUCH_TIMEOUT);
@@ -990,8 +975,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function cancelFullScreen () {
     if (that.fullScreen) {
-      //console.log('cancelFullScreen');
-
       that.fullScreen = false;
 
       if (FULLSCREEN) {
@@ -1065,8 +1048,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   that.resize = function (options) {
-    //console.log('that.resize');
-
     if (!data) return this;
 
     extendMeasures(!that.fullScreen ? options : {width: '100%', maxWidth: null, minWidth: null, height: '100%', maxHeight: null, minHeight: null}, that.fullScreen);
@@ -1333,7 +1314,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function onNavFrameClick (e, time) {
     var index = $(this).data().eq;
-    //console.log('onNavFrameClick ', e._x - $nav.offset().left, index);
     that.show({index: index, slow: e.altKey, direct: true, coo: e._x - $nav.offset().left, time: time});
   }
 

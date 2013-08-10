@@ -23,8 +23,6 @@ function touch ($el, options) {
       targetIsLinkFlag;
 
   function onStart (e) {
-    //console.log('onStart ' + e.type);
-
     $target = $(e.target);
     tail.checked = targetIsSelectFLAG = targetIsLinkFlag = false;
 
@@ -54,8 +52,6 @@ function touch ($el, options) {
   }
 
   function onMove (e) {
-    //console.log('onMove ' + e.type, e.pageX);
-
     if ((e.touches && e.touches.length > 1)
         || (MS_POINTER && !e.isPrimary)
         || moveEventType !== e.type
@@ -84,8 +80,6 @@ function touch ($el, options) {
   }
 
   function onEnd (e) {
-    //console.log('onEnd');
-
     var _touchEnabledFLAG = touchEnabledFLAG;
     tail.control = touchEnabledFLAG = false;
 
