@@ -8,7 +8,7 @@ To&nbsp;use Fotorama with Assets Pipeline in&nbsp;Ruby on&nbsp;Rails, add [fotor
 gem "fotoramajs"
 ```
 
-Add include Fotorama to your scripts:
+Include Fotorama to your scripts:
 
 ```coffeescript
 #= require fotorama
