@@ -451,7 +451,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       function waitAndLoad () {
         var i = 10;
         waitFor(function () {
-          return !touchedFLAG || !i--;
+          return !touchedFLAG || !i-- && !SLOW;
         }, function () {
           loaded();
         });
