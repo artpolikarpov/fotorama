@@ -107,7 +107,7 @@ function stop ($el, left) {
       return readPosition($el);
     });
 
-    $el.css(getTranslate(lockedLeft)).width(); // `.width()` for reflow
+    $el.css(getTranslate(lockedLeft));//.width(); // `.width()` for reflow
     return lockedLeft;
   }
 }

@@ -409,6 +409,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
 
       function loaded () {
+        //console.log('loaded: ' + src);
+
         var width = img.width,
             height = img.height,
             ratio = width / height;
@@ -449,9 +451,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
 
       function waitAndLoad () {
-        var i = 10;
+        var _i = 10;
         waitFor(function () {
-          return !touchedFLAG || !i-- && !SLOW;
+          return !touchedFLAG || !_i-- && !SLOW;
         }, function () {
           loaded();
         });
@@ -468,6 +470,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           if ($.Fotorama.cache[src] === 'error') {
             error();
           } else if ($.Fotorama.cache[src] === 'loaded') {
+            //console.log('take from cache: ' + src);
             setTimeout(waitAndLoad, 0);
           } else {
             setTimeout(justWait, 100);

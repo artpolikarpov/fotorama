@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Basic fotorama</title>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.10.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../product/fotorama.css" rel="stylesheet">
+	<script src="../product/fotorama.js"></script>
+
+  <script type="text/javascript">
+    $(function () {
+      f = $('.fotorama').data('fotorama');
+    })
+  </script>
+</head>
+
+<body>
+
+<!--<p>Basic fotorama:<p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div <mark>class="fotorama"</mark>></code></pre>-->
+
+<!-- Fotorama -->
+<div class="fotorama fotorama-frontpage" data-width="700" data-ratio="3/2" data-hash="true" data-max-height="100%" data-min-height="200" data-nav="thumbs" data-keyboard="true" data-allow-full-screen="native" data-thumb-height="48">
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/1-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/1-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/2-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/2-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/3-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/3-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/4-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/4-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/5-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/5-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/24-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/24-thumb.jpg" data-thumb-width="144" data-thumb-height="214"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/6-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/6-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/7-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/7-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/8-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/8-thumb.jpg" data-thumb-width="144" data-thumb-height="80"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/23-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/23-thumb.jpg" data-thumb-width="144" data-thumb-height="214"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/9-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/9-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/10-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/10-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/11-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/11-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/12-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/12-thumb.jpg" data-thumb-width="144" data-thumb-height="216"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/13-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/13-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/30-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/30-thumb.jpg" data-thumb-width="144" data-thumb-height="104"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/14-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/14-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/15-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/15-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/16-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/16-thumb.jpg" data-thumb-width="144" data-thumb-height="108"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/20-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/20-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/21-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/21-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/22-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/22-thumb.jpg" data-thumb-width="144" data-thumb-height="194"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/17-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/17-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/29-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/29-thumb.jpg" data-thumb-width="144" data-thumb-height="108"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/18-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/18-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/19-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/19-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/25-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/25-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/26-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/26-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/27-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/27-thumb.jpg" data-thumb-width="144" data-thumb-height="92"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/28-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/28-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+  </div>
+
+<!-- © -->
+<p>Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
+</body>
+</html>
