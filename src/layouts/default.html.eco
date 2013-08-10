@@ -8,6 +8,8 @@ js: "/j/script.js"
   <title><%= @document.headTitle || @document.title %></title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
+  <meta http-equiv="x-ua-compatible" content="IE=edge" />
+  <meta name="msapplication-tap-highlight" content="no" />
 
   <% if process.env.NODE_ENV: %>
     <!-- http://fontawesome.io/icons-->
@@ -47,8 +49,8 @@ js: "/j/script.js"
 		<script src="/lib/fotorama/fotorama.js"></script>
 	<% end %>
 </head>
-<body id="root">
-
+<body id="root" class="noise">
+<div class="body-wrap">
 <% frontpage = @document.url == '/index.html' && 'frontpage' %>
 
 <div class="header">
@@ -61,9 +63,11 @@ js: "/j/script.js"
 	<% if !frontpage : %>
 		<h1><%- @document.title %></h1>
 	<% end %>
-
-	<%- @content %>
 </div>
+
+<%- @content %>
+</div>
+
 
 <%- @partial('footer.html') %>
 

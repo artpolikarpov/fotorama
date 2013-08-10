@@ -3,56 +3,59 @@ title: "Fotorama"
 layout: "default"
 ---
 
-<div class="fotorama" data-width="100%" data-ratio="1.5" data-hash="true" data-max-height="100%" data-nav="thumbs" data-allow-full-screen="native" data-thumb-height="48">
-  <a href="/associated-files/lebedev-tibet/full/000_lake.jpg"><img src="/associated-files/lebedev-tibet/thumbs/000_lake.jpg" width="144" height="96"></a>
-  <a href="/associated-files/lebedev-tibet/full/01_puppy.jpg"><img src="/associated-files/lebedev-tibet/thumbs/01_puppy.jpg" width="144" height="96"></a>
-  <a href="/associated-files/lebedev-tibet/full/02_stupas2.jpg"><img src="/associated-files/lebedev-tibet/thumbs/02_stupas2.jpg" width="144" height="96"></a>
-  <a href="/associated-files/lebedev-tibet/full/03_monkwithglasses.jpg"><img src="/associated-files/lebedev-tibet/thumbs/03_monkwithglasses.jpg" width="144" height="96"></a>
-  <a href="/associated-files/lebedev-tibet/full/04_spikydog.jpg"><img src="/associated-files/lebedev-tibet/thumbs/04_spikydog.jpg" width="144" height="96"></a>
-  <a href="/associated-files/lebedev-tibet/full/05_monk5.jpg"><img src="/associated-files/lebedev-tibet/thumbs/05_monk5.jpg" width="144" height="96"></a>
-  <a href="/associated-files/lebedev-tibet/full/06_wood.jpg"><img src="/associated-files/lebedev-tibet/thumbs/06_wood.jpg" width="144" height="96"></a>
-  <a href="/associated-files/lebedev-tibet/full/07_monastery.jpg"><img src="/associated-files/lebedev-tibet/thumbs/07_monastery.jpg" width="144" height="94"></a>
-  <a href="/associated-files/lebedev-tibet/full/31_kitchen.jpg"><img src="/associated-files/lebedev-tibet/thumbs/31_kitchen.jpg" width="144" height="214"></a>
-  <a href="/associated-files/lebedev-tibet/full/07b_argument.jpg"><img src="/associated-files/lebedev-tibet/thumbs/07b_argument.jpg" width="144" height="96"></a>
-  <a href="/associated-files/lebedev-tibet/full/08_nomadwoman.jpg"><img src="/associated-files/lebedev-tibet/thumbs/08_nomadwoman.jpg" width="144" height="96"></a>
-  <a href="/associated-files/lebedev-tibet/full/09_manistones2.jpg"><img src="/associated-files/lebedev-tibet/thumbs/09_manistones2.jpg" width="144" height="96"></a>
-  <a href="/associated-files/lebedev-tibet/full/11_manistones.jpg"><img src="/associated-files/lebedev-tibet/thumbs/11_manistones.jpg" width="144" height="96"></a>
-  <a href="/associated-files/lebedev-tibet/full/13_lookers2.jpg"><img src="/associated-files/lebedev-tibet/thumbs/13_lookers2.jpg" width="144" height="96"></a>
-  <a href="/associated-files/lebedev-tibet/full/16_bee.jpg"><img src="/associated-files/lebedev-tibet/thumbs/16_bee.jpg" width="144" height="96"></a>
-  <a href="/associated-files/lebedev-tibet/full/16b_debates.jpg"><img src="/associated-files/lebedev-tibet/thumbs/16b_debates.jpg" width="144" height="96"></a>
-  <a href="/associated-files/lebedev-tibet/full/17_bleedingheart.jpg"><img src="/associated-files/lebedev-tibet/thumbs/17_bleedingheart.jpg" width="144" height="96"></a>
-  <a href="/associated-files/lebedev-tibet/full/18_lilmonk.jpg"><img src="/associated-files/lebedev-tibet/thumbs/18_lilmonk.jpg" width="144" height="96"></a>
-  <a href="/associated-files/lebedev-tibet/full/20_kid2.jpg"><img src="/associated-files/lebedev-tibet/thumbs/20_kid2.jpg" width="144" height="214"></a>
-  <a href="/associated-files/lebedev-tibet/full/20b_sheep.jpg"><img src="/associated-files/lebedev-tibet/thumbs/20b_sheep.jpg" width="144" height="96"></a>
-  <a href="/associated-files/lebedev-tibet/full/22_winxpbuilding.jpg"><img src="/associated-files/lebedev-tibet/thumbs/22_winxpbuilding.jpg" width="144" height="96"></a>
-  <a href="/associated-files/lebedev-tibet/full/23_looking.jpg"><img src="/associated-files/lebedev-tibet/thumbs/23_looking.jpg" width="144" height="96"></a>
-  <a href="/associated-files/lebedev-tibet/full/24_girl.jpg"><img src="/associated-files/lebedev-tibet/thumbs/24_girl.jpg" width="144" height="216"></a>
-  <a href="/associated-files/lebedev-tibet/full/24b_cat.jpg"><img src="/associated-files/lebedev-tibet/thumbs/24b_cat.jpg" width="144" height="96"></a>
-  <a href="/associated-files/lebedev-tibet/full/26_candleman.jpg"><img src="/associated-files/lebedev-tibet/thumbs/26_candleman.jpg" width="144" height="96"></a>
-  <a href="/associated-files/lebedev-tibet/full/25_boy.jpg"><img src="/associated-files/lebedev-tibet/thumbs/25_boy.jpg" width="144" height="214"></a>
-  <a href="/associated-files/lebedev-tibet/full/27_religiouspunk.jpg"><img src="/associated-files/lebedev-tibet/thumbs/27_religiouspunk.jpg" width="144" height="96"></a>
-  <a href="/associated-files/lebedev-tibet/full/28_kitchen2.jpg"><img src="/associated-files/lebedev-tibet/thumbs/28_kitchen2.jpg" width="144" height="96"></a>
-  <a href="/associated-files/lebedev-tibet/full/29_hills.jpg"><img src="/associated-files/lebedev-tibet/thumbs/29_hills.jpg" width="144" height="96"></a>
-  <a href="/associated-files/lebedev-tibet/full/30_monk.jpg"><img src="/associated-files/lebedev-tibet/thumbs/30_monk.jpg" width="144" height="214"></a>
-  <a href="/associated-files/lebedev-tibet/full/32_woman.jpg"><img src="/associated-files/lebedev-tibet/thumbs/32_woman.jpg" width="144" height="96"></a>
+<div class="fotorama-wrap-frontpage noise">
+  <div class="fotorama fotorama-frontpage" data-auto="false" data-width="100%" data-ratio="16/9" data-hash="true" data-max-height="100%" data-min-height="200" data-nav="thumbs" data-keyboard="true" data-allow-full-screen="native" data-thumb-height="48">
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/1-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/1-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/2-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/2-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/3-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/3-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/4-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/4-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/5-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/5-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/24-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/24-thumb.jpg" data-thumb-width="144" data-thumb-height="214"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/6-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/6-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/7-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/7-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/8-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/8-thumb.jpg" data-thumb-width="144" data-thumb-height="80"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/23-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/23-thumb.jpg" data-thumb-width="144" data-thumb-height="214"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/9-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/9-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/10-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/10-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/11-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/11-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/12-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/12-thumb.jpg" data-thumb-width="144" data-thumb-height="216"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/13-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/13-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/30-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/30-thumb.jpg" data-thumb-width="144" data-thumb-height="104"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/14-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/14-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/15-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/15-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/16-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/16-thumb.jpg" data-thumb-width="144" data-thumb-height="108"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/20-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/20-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/21-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/21-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/22-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/22-thumb.jpg" data-thumb-width="144" data-thumb-height="194"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/17-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/17-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/29-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/29-thumb.jpg" data-thumb-width="144" data-thumb-height="108"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/18-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/18-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/19-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/19-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/25-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/25-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/26-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/26-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/27-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/27-thumb.jpg" data-thumb-width="144" data-thumb-height="92"></a>
+    <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/28-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/28-thumb.jpg" data-thumb-width="144" data-thumb-height="96"></a>
+  </div>
 </div>
 
-<p class="photos-by">Photos <a href="http://alexeilebedev.com/">by Alexei Lebedev</a></p>
+<p class="photos-by">Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
 
-<h1>Fotorama</h1>
+<div class="content">
+  <h1>Fotorama</h1>
 
-<p class="lead">A simple, stunning, powerful jQuery gallery. Licensed <a href="/license/">under the <abbr>MIT</abbr></a>.</p>
+  <p class="lead">A simple, stunning, powerful jQuery gallery. Licensed <a href="/license/">under the <abbr>MIT</abbr></a>.</p>
 
-<% renderMenu = (items) => %>
-	<% for item in items: %>
-		<% if item.order: %>
-			<% if item.url.match(/set-up/): %>
-				<h2><%= item.title %></h2>
-			<%- @partial('documents' + item.url + 'index.html.md') %>
-			<% else: %>
-        <h2 class="front-menu"><a href="<%= item.url %>"><%= item.title %></a></h2>
-			<% end %>
-		<% end %>
-	<% end %>
-<% end %>
-<%= renderMenu @generateMenu(@document.url) %>
+  <% renderMenu = (items) => %>
+    <% for item in items: %>
+      <% if item.order: %>
+        <% if item.url.match(/set-up/): %>
+          <h2><%= item.title %></h2>
+        <%- @partial('documents' + item.url + 'index.html.md') %>
+        <% else: %>
+          <h2 class="front-menu"><a href="<%= item.url %>"><%= item.title %></a></h2>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <%= renderMenu @generateMenu(@document.url) %>
+</div>

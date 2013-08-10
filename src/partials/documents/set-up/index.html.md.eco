@@ -1,7 +1,7 @@
 <p></p>
 
 ```xml
-<!-- 1. Link to jQuery (1.8.0 or later), -->
+<!-- 1. Link to jQuery (1.8 or later), -->
 <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script> <!-- 32 KB -->
 
 <!-- fotorama.css & fotorama.js. -->
@@ -24,7 +24,7 @@ Fotorama’s <abbr>CDN</abbr> is&nbsp;provided by&nbsp;Amazon&nbsp;S3, feel free
 
 Or&nbsp;download zipped, unpack and host it&nbsp;on&nbsp;your server if&nbsp;you want:
 
-<a href="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama-<%= process.env.FOTORAMA_VERSION %>.zip" class="download"><strong>fotorama-<%= process.env.FOTORAMA_VERSION %>.zip</strong></a>
+<a href="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama-<%= process.env.FOTORAMA_VERSION %>.zip" class="download noise"><strong><i class="icon-cloud-download"></i> fotorama-<%= process.env.FOTORAMA_VERSION %>.zip</strong></a>
 
 <!--<p class="after-pre">Read <a href="/set-up/changelog/">the changelog</a>.</p>-->
 

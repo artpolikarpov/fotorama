@@ -13,11 +13,6 @@
   -webkit-backface-visibility: hidden;
 }
 
-.header--frontpage .logo {
-  padding-right: 17px; /* 33px — center 'RA', 0 — center whole word */
-	margin-right: 0;
-}
-
 .logo > span, .logo > a > span {
   display: inline-block;
   padding-top: 1px;

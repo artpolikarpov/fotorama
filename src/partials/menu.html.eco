@@ -2,10 +2,10 @@
 <ul class="menu">
   <% for item in items: %><li<% if item.state: %> class="selected"<% end %>>
   <% if item.state != 'current': %>
-  <a href="<%= item.url %>" class="no-u"><u><%- item.title %></u></a><% else: %>
-  <span><%- item.title %></span><% end %><% if item.children: %><i class="icon-caret-down js-menu-down"></i>
+  <a href="<%= item.url %>" class="no-u"><u><%- item.title %></u></a><% if item.children: %><i class="icon-caret-down js-menu-down"></i>
   <%- renderMenu(item.children) %>
-  <% end %>
+  <% end %><% else: %>
+  <span><%- item.title %></span><% if item.children: %><i class="icon-caret-down icon-disabled"></i><% end %><% end %>
   </li><% end %>
 </ul>
 <% end %>

@@ -1,13 +1,6 @@
 .header {
   position: relative;
   z-index: 100;
-}
-
-.header--frontpage {
-  text-align: center;
-}
-
-.header .social-likes {
-	float: right;
-	margin: 10px 0 10px 10px;
+  max-width: 760px;
+  margin: auto;
 }

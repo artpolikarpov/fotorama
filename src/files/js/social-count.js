@@ -6,7 +6,7 @@ $(function () {
         dataType: 'jsonp',
         success: function (json) {
           var _count = +$el.text() || 0;
-          $el.text(_count + getNumberFromData(json));
+          $el.text(_count + getNumberFromData(json) || '');
         }
       });
   }

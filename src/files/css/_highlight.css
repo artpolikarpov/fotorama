@@ -9,6 +9,7 @@ tt, code {
 	font-size: 14px;
 	color: #454b43;
 	background-color: #fcfcfb;
+  text-shadow: 0 1px 0 #fff;
   border: 1px solid #dddddc;
 	white-space: nowrap;
 	border-radius: 3px;

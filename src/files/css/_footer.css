@@ -1,6 +1,8 @@
 .footer {
-  margin-top: 50px;
-  margin-bottom: 10px;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 15px 0;
+  text-shadow: 0 1px 0 #fff;
 }
 
 .footer > p {

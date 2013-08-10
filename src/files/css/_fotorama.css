@@ -19,3 +19,30 @@
   top: 1em;
   left: 1em;
 }
+
+.fotorama-wrap-frontpage {
+  background: #090907;
+  padding: 2px 0 0;
+  margin: 0 -16px 5px;
+  overflow: hidden;
+}
+
+.fotorama-wrap-frontpage .fotorama {
+  margin-bottom: 0;
+}
+
+.fotorama-frontpage .fotorama__active .fotorama__dot {
+  background-color: #fff;
+}
+
+.fotorama-frontpage .fotorama__nav__shaft {
+  padding: 0 2px;
+}
+
+.fotorama-frontpage .fotorama__thumb-border {
+  margin-left: 2px;
+}
+
+.fotorama-frontpage .fotorama__nav--thumbs .fotorama__nav__frame:last-child {
+  padding-right: 4px !important;
+}

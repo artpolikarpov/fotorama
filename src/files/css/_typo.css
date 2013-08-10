@@ -69,7 +69,7 @@ a u, .header a:visited u, h2 a:visited u,
 }
 
 a.no-u {
-	border-bottom: none;
+	border-bottom: none !important;
 }
 
 a:visited,

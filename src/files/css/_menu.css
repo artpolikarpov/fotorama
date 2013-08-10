@@ -40,6 +40,11 @@
   cursor: pointer;
 }
 
+.menu li i.icon-disabled {
+  cursor: default;
+  color: #ccc;
+}
+
 /* Sub-menu */
 .menu li .menu {
   display: none;

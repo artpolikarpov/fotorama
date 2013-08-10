@@ -2,5 +2,8 @@
 layout: "default"
 ---
 
-<%- @partial('documents' + @document.url) %>
+<div class="content">
+  <%- @partial('documents' + @document.url) %>
+</div>
+
 <%- @content %>

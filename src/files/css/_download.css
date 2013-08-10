@@ -1,11 +1,12 @@
 .download {
 	margin-left: 40px;
 	display: inline-block;
-	background: #fff;
-	border: none;
+	background: #fafaf9;
+	border: 1px solid #999 !important;
 	line-height: 40px;
 	padding: 0 40px;
-	box-shadow: 0 0 1px, 0 0 3px rgba(0, 0, 0, .5);
+	box-shadow: 0 0 3px rgba(0, 0, 0, .3);
 	border-radius: 3px;
-	background-image: linear-gradient(#fff, #f4f4f3);
+  text-shadow: 0 1px 0 #fff;
+	/*background-image: linear-gradient(#fff, #f4f4f3);*/
 }
