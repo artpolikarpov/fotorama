@@ -32,11 +32,14 @@ body {
   position: relative;
   background-color: #fff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
-  z-index: 2;
+  z-index: 9;
 }
 
 .footer-fixed {
   position: fixed;
-  width: 100%;
   bottom: 0;
+  overflow: hidden;
+  right: 0;
+  left: 0;
+  height: 6.5em;
 }
