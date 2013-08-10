@@ -87,7 +87,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
       touchedFLAG,
 
       hoverFLAG,
-      hoverEnable,
+      hoverEnableFLAG,
+      hoverEnableFLAGTimeout,
 
       navFrameKey,
       stageLeft = 0,
@@ -613,9 +614,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
               if (!thumbsFLAG) return;
 
+
+
               var $this = $(this),
                   frameData = $this.data(),
-                  thumbWidth = Math.round(o_thumbSide2 * frameData.data.thumbRatio || o_thumbSide);
+                  thumbWidth = Math.round(o_thumbSide2 * frameData.data.thumbRatio) || o_thumbSide;
+
+              alert(frameData.eq + ': ' + left + ', ' + thumbWidth + ', ' + frameData.data.thumbRatio + ', ' + o_thumbSide);
 
               frameData.l = left;
               frameData.w = thumbWidth;
@@ -1319,23 +1324,26 @@ jQuery.Fotorama = function ($fotorama, opts) {
   });
 
   $wrap.hover(
-      function (e) {
-        if (!hoverEnable) return; // Disable Android’s auto hover
+      function () {
+        if (!hoverEnableFLAG) return; // Disable Android’s auto hover
         setTimeout(function () {
           if (touchedFLAG) return;
-          //console.log('HOVER ' + e.type);
+          //console.log('HOVER');
           mouseFLAG = hoverFLAG = true;
           updateTouchTails('mouse', mouseFLAG);
           toggleControlsClass(!mouseFLAG);
         }, 0);
       }, function () {
-        hoverEnable = true;
-        if (!hoverFLAG) return;
+        if (!hoverFLAG && hoverEnableFLAG) return;
         mouseFLAG = hoverFLAG = false;
         updateTouchTails('mouse', mouseFLAG);
         toggleControlsClass(!mouseFLAG);
       }
   );
+
+  hoverEnableFLAGTimeout = setTimeout(function () {
+    hoverEnableFLAG = true;
+  }, 1000);
 
   function onNavFrameClick (e, time) {
     var index = $(this).data().eq;
