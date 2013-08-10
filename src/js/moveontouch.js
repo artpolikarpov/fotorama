@@ -73,7 +73,7 @@ function moveOnTouch ($el, options) {
         if (!movedFLAG) {
           movedFLAG = true;
           // only for mouse
-          tail.mouse && $el.addClass(grabbingClass);
+          result.touch || MS_POINTER || $el.addClass(grabbingClass);
         }
 
         (options.onMove || noop).call(el, e, {pos: moveElPos, edge: edge});
@@ -84,7 +84,7 @@ function moveOnTouch ($el, options) {
   function onEnd (result) {
     if (controlFLAG) return;
 
-    tail.mouse && $el.removeClass(grabbingClass);
+    result.touch || MS_POINTER || $el.removeClass(grabbingClass);
 
     endTime = new Date().getTime();
 

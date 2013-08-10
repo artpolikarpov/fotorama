@@ -35,7 +35,7 @@ function touch ($el, options) {
         || (lastEvent && lastEvent.type !== e.type && preventEvent)
         || (targetIsSelectFLAG = options.select && $target.is(options.select, el))) return targetIsSelectFLAG;
 
-    touchFLAG = e.type.match(/to/);
+    touchFLAG = e.type.match(/^t/);
     targetIsLinkFlag = $target.is('a, a *', el);
 
     extendEvent(e);
@@ -102,7 +102,7 @@ function touch ($el, options) {
     preventEventTimeout = setTimeout(function () {
       preventEvent = false;
     }, 1000);
-    (options.onEnd || noop).call(el, {moved: tail.checked, $target: $target, control: controlTouch, startEvent: startEvent, aborted: !e});
+    (options.onEnd || noop).call(el, {moved: tail.checked, $target: $target, control: controlTouch, touch: touchFLAG, startEvent: startEvent, aborted: !e});
   }
 
   function onOtherStart () {
