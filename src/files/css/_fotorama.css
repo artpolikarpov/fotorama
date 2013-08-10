@@ -22,12 +22,13 @@
 
 .fotorama-wrap-frontpage {
   background: #090907;
-  padding: 2px 0 0;
+  padding: 0;
   margin: 0 -16px 5px;
   overflow: hidden;
 }
 
 .fotorama-wrap-frontpage .fotorama {
+  margin-top: 2px;
   margin-bottom: 0;
 }
 
