@@ -101,16 +101,16 @@ function touch ($el, options) {
 
   function onOtherStart () {
     clearTimeout(docTouchTimeout);
-      docTouchTimeout = setTimeout(function () {
-        tail.flow = true;
-      }, 10);
+    docTouchTimeout = setTimeout(function () {
+      tail.flow = true;
+    }, 10);
   }
 
   function onOtherEnd () {
     clearTimeout(docTouchTimeout);
-      docTouchTimeout = setTimeout(function () {
-        tail.flow = false;
-      }, TOUCH_TIMEOUT);
+    docTouchTimeout = setTimeout(function () {
+      tail.flow = false;
+    }, TOUCH_TIMEOUT);
   }
 
   if (MS_POINTER) {
