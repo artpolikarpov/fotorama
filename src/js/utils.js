@@ -112,7 +112,7 @@ function stop ($el, left) {
       return readPosition($el);
     });
 
-    console.log('lockedLeft', lockedLeft);
+    console.log('lockedLeft ' + lockedLeft);
 
     $el.css(getTranslate(lockedLeft));
     return lockedLeft;

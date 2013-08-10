@@ -85,7 +85,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
       measuresStash,
 
       touchedFLAG,
+
       hoverFLAG,
+      hoverEnable,
+
       navFrameKey,
       stageLeft = 0,
 
@@ -940,11 +943,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (o_nav) {
       navUpdate();
 
-      var guessIndex = limitIndex(activeIndex + minMaxLimit(dirtyIndex - lastActiveIndex, -1, 1)),
-          cooUndefinedFLAG = typeof options.coo === 'undefined';
+      var guessIndex = limitIndex(activeIndex + minMaxLimit(dirtyIndex - lastActiveIndex, -1, 1));
 
-      (!cooUndefinedFLAG || guessIndex !== activeIndex)
-          && slideNavShaft({time: time, coo: guessIndex !== activeIndex && options.coo, guessIndex: !cooUndefinedFLAG ? guessIndex : activeIndex});
+      slideNavShaft({time: time, coo: guessIndex !== activeIndex && options.coo, guessIndex: typeof options.coo !== 'undefined' ? guessIndex : activeIndex});
 
       if (o_navThumbs) slideThumbBorder(time);
     }
@@ -1318,27 +1319,27 @@ jQuery.Fotorama = function ($fotorama, opts) {
   });
 
   $wrap.hover(
-      function () {
-        //clearTimeout(hoverTimeout);
+      function (e) {
+        if (!hoverEnable) return; // Disable Android’s auto hover
         setTimeout(function () {
-          if (stageShaftTouchTail.flow || navShaftTouchTail.flow) return;
+          if (touchedFLAG) return;
+          //console.log('HOVER ' + e.type);
           mouseFLAG = hoverFLAG = true;
           updateTouchTails('mouse', mouseFLAG);
-          console.log('mouseFLAG', mouseFLAG);
           toggleControlsClass(!mouseFLAG);
         }, 0);
       }, function () {
+        hoverEnable = true;
         if (!hoverFLAG) return;
         mouseFLAG = hoverFLAG = false;
         updateTouchTails('mouse', mouseFLAG);
-        console.log('mouseFLAG', mouseFLAG);
         toggleControlsClass(!mouseFLAG);
       }
   );
 
   function onNavFrameClick (e, time) {
     var index = $(this).data().eq;
-    console.log('onNavFrameClick ', e._x - $nav.offset().left, index);
+    //console.log('onNavFrameClick ', e._x - $nav.offset().left, index);
     that.show({index: index, slow: e.altKey, direct: true, coo: e._x - $nav.offset().left, time: time});
   }
 
