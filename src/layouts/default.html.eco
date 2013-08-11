@@ -3,7 +3,7 @@ css: "/c/style.css"
 js: "/j/script.js"
 ---
 <!DOCTYPE html>
-<html>
+<html class="noise">
 <head>
   <title><%= @document.headTitle || @document.title %></title>
   <meta charset="utf-8">
@@ -49,7 +49,7 @@ js: "/j/script.js"
 		<script src="/lib/fotorama/fotorama.js"></script>
 	<% end %>
 </head>
-<body id="root" class="noise">
+<body id="root">
 <div class="body-wrap">
 <% frontpage = @document.url == '/index.html' && 'frontpage' %>
 
