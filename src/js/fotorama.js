@@ -879,7 +879,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     that.activeFrame = activeFrame = data[activeIndex];
 
-    unloadVideo(false, activeFrame.i !== data[normalizeIndex(repositionIndex)].i);
+    unloadVideo($videoPlaying, activeFrame.i !== data[normalizeIndex(repositionIndex)].i);
 
     frameDraw(activeIndexes, 'stage');
     stageFramePosition([dirtyIndex, getPrevIndex(dirtyIndex), getNextIndex(dirtyIndex)]);
@@ -1169,6 +1169,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
 
   function unloadVideo ($video, unloadActiveFLAG, releaseAutoplayFLAG) {
+    console.log('unloadVideo', $video, unloadActiveFLAG, releaseAutoplayFLAG);
     if (unloadActiveFLAG) {
       $wrap.removeClass(wrapVideoClass);
       $videoPlaying = false;
