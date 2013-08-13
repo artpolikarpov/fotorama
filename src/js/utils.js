@@ -232,7 +232,7 @@ function getDataFromHtml ($el) {
     if (video) {
       _imgHref = false;
     } else {
-      video = findVideoId(_video, _video);
+      video = _video;
     }
 
     var img = imgData.img || _imgHref || _imgSrc || _thumbSrc,
