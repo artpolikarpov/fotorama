@@ -330,10 +330,9 @@ $time: 300ms;
     }
   }
 
-  //.fotorama__wrap--no-controls &,
-  //.fotorama__wrap--video & {
-  //  @include opacity(0);
-  //}
+  .fotorama__wrap--video & {
+    @include opacity(0);
+  }
 }
 
 .fotorama--hidden {
