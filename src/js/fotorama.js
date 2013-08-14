@@ -18,6 +18,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $wrap = $(div(wrapClass)),
       $stage = $(div(stageClass)).appendTo($wrap),
       stage = $stage[0],
+      
       $stageShaft = $(div(stageShaftClass)).appendTo($stage),
       $stageFrame = $(),
       $arrPrev = $(div(arrClass + ' ' + arrPrevClass, div(arrArrClass))),
@@ -323,11 +324,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
     return $.each(indexes, function (i, index) {
       if (rangeFLAG) index = i;
       if (typeof(index) === 'number') {
-        var dataFrame = data[normalizeIndex(index)],
-            key = '$' + type + 'Frame',
-            $frame = dataFrame[key];
+        var dataFrame = data[normalizeIndex(index)];
 
-        fn.call(this, i, index, dataFrame, $frame, key, $frame && $frame.data());
+        if (dataFrame !== undefined) {
+          var key = '$' + type + 'Frame',
+              $frame = dataFrame[key];
+
+          fn.call(this, i, index, dataFrame, $frame, key, $frame && $frame.data());
+        }
       }
     });
   }
