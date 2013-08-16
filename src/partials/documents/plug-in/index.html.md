@@ -17,7 +17,7 @@ Include Fotorama to your scripts:
 ...and styles:
 
 ```css
-@import "fototrama"
+@import "fotorama"
 ```
 
 <div style="opacity: .5">
