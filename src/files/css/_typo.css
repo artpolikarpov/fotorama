@@ -85,6 +85,13 @@ a.black, a.black u, a.black:visited, a.black:visited u {
   border-color: rgba(33, 33, 30, .3);
 }
 
+a.green, a.green u, a.green:visited, a.green:visited u {
+  color: rgb(102,162,57);
+  border-color: rgba(102,162,57, .3);
+}
+
+
+
 #root a:hover,
 #root a:hover u,
 .switch:hover {
