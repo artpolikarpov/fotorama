@@ -1256,7 +1256,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
     },
     getPos: function () {
-      return - getPosByIndex(dirtyIndex, measures.w, MARGIN, repositionIndex);
+      return -getPosByIndex(dirtyIndex, measures.w, MARGIN, repositionIndex);
     },
     timeLow: 1,
     timeHigh: 1,
