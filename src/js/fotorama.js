@@ -228,7 +228,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * Options on the fly
    * */
   function setOptions () {
-    that.options = opts.opts = optionsToLowerCase(opts);
+    that.options = opts = optionsToLowerCase(opts);
 
     o_fade = opts.transition === 'crossfade' || opts.transition === 'dissolve';
 
