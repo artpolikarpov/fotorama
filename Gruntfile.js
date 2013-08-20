@@ -19,6 +19,7 @@ module.exports = function (grunt) {
         'src/js/moveontouch.js',
 		    'src/js/oooo.js',
         'src/js/fotorama.js',
+        'src/js/instances.js',
         'src/templates/compiled.js',
         'src/js/outro.js'
       ]
@@ -303,10 +304,12 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-shell');
 
-	var defaultTask = 'copy sass autoprefixer jst string-replace:jst concat:js string-replace:console concat:css jasmine uglify cssmin jasmine clean compress';
+	var defaultTask = 'copy sass autoprefixer jst string-replace:jst concat:js string-replace:console concat:css jasmine uglify cssmin jasmine clean compress'.split(' ');
+  var build = 'copy sass autoprefixer jst string-replace:jst concat:js string-replace:console concat:css uglify cssmin clean compress'.split(' ');
 
   // Compile
-  grunt.registerTask('default', defaultTask.split(' '));
+  grunt.registerTask('default', defaultTask);
+  grunt.registerTask('build', build);
 
 	// Publish, will fail without secret details ;-)
 	grunt.registerTask('publish', (defaultTask + ' ' + 's3 string-replace:version shell').split(' '));

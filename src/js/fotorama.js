@@ -3,7 +3,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
   $BODY = $BODY || $('body');
 
   var that = this,
-      index = _size,
       stamp = $.now(),
       stampClass = _fotoramaClass + stamp,
       fotorama = $fotorama[0],
@@ -106,7 +105,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   fotoramaData.fotorama = this;
   that.options = opts;
-  _size++;
 
   function checkForVideo () {
     $.each(data, function (i, dataFrame) {
@@ -127,6 +125,49 @@ jQuery.Fotorama = function ($fotorama, opts) {
     });
   }
 
+  function bindGlobalEvents (FLAG) {
+    var keydownCommon = 'keydown.' + _fotoramaClass,
+        keydownLocal = 'keydown.' + _fotoramaClass + stamp,
+        resizeLocal = 'resize' + _fotoramaClass + stamp;
+
+    if (FLAG) {
+      $DOCUMENT
+          .off(keydownLocal)
+          .on(keydownLocal, function (e) {
+            console.log('keydownIndexed', e, that.index);
+            if ($videoPlaying && e.keyCode === 27) {
+              e.preventDefault();
+              unloadVideo($videoPlaying, true, true);
+            } else if (that.fullScreen || (opts.keyboard && !that.index)) {
+              console.log('that.index', that.index, e);
+              if (e.keyCode === 27) {
+                e.preventDefault();
+                that.cancelFullScreen();
+              } else if (e.keyCode === 39 || (e.keyCode === 40 && that.fullScreen)) {
+                e.preventDefault();
+                that.show({index: '>', slow: e.altKey, direct: true});
+              } else if (e.keyCode === 37 || (e.keyCode === 38 && that.fullScreen)) {
+                e.preventDefault();
+                that.show({index: '<', slow: e.altKey, direct: true});
+              }
+            }
+          });
+
+      if (!that.index) {
+        $DOCUMENT
+            .off(keydownCommon)
+            .on(keydownCommon, 'textarea, input, select', function (e) {
+              !$BODY.hasClass(_fullscreenClass) && e.stopPropagation();
+            });
+      }
+
+      $WINDOW.on(resizeLocal, that.resize);
+    } else {
+      $DOCUMENT.off(keydownLocal);
+      $WINDOW.off(resizeLocal);
+    }
+  }
+
   function appendElements (FLAG) {
     if (FLAG === appendElements.f) return;
 
@@ -138,7 +179,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           .before($style)
           .before($anchor);
 
-      $.Fotorama.size++;
+      addInstance(that);
     } else {
       $wrap.detach();
       $style.detach();
@@ -147,9 +188,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
           .html(fotoramaData.urtext)
           .removeClass(stampClass);
 
-      $.Fotorama.size--;
+      hideInstance(that);
     }
 
+    bindGlobalEvents(FLAG);
     appendElements.f = FLAG;
   }
 
@@ -711,7 +753,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }
 
-
   function detachFrames (key) {
     var _toDetach = toDetach[key];
 
@@ -829,7 +870,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
       });
     }, opts.autoplay);
   }
-
 
   that.startAutoplay = function (interval) {
     if (that.autoplay) return this;
@@ -1018,34 +1058,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   if (document.addEventListener) {
     document.addEventListener(fullScreenApi.event, function () {
-      if (!fullScreenApi.is() && !$videoPlaying) {
+      if (data && !fullScreenApi.is() && !$videoPlaying) {
         cancelFullScreen();
-      }
-    });
-  }
-
-  $DOCUMENT.on('keydown', function (e) {
-    if ($videoPlaying && e.keyCode === 27) {
-      e.preventDefault();
-      unloadVideo($videoPlaying, true, true);
-    } else if (that.fullScreen || (opts.keyboard && !index)) {
-      if (e.keyCode === 27) {
-        e.preventDefault();
-        that.cancelFullScreen();
-      } else if (e.keyCode === 39 || (e.keyCode === 40 && that.fullScreen)) {
-        e.preventDefault();
-        that.show({index: '>', slow: e.altKey, direct: true});
-      } else if (e.keyCode === 37 || (e.keyCode === 38 && that.fullScreen)) {
-        e.preventDefault();
-        that.show({index: '<', slow: e.altKey, direct: true});
-      }
-    }
-  });
-
-  if (!index) {
-    $DOCUMENT.on('keydown', 'textarea, input, select', function (e) {
-      if (!that.fullScreen) {
-        e.stopPropagation();
       }
     });
   }
@@ -1112,7 +1126,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     return this;
   };
 
-
   function setShadow ($el, edge) {
     if (o_shadows) {
       $el.removeClass(shadowsLeftClass + ' ' + shadowsRightClass);
@@ -1166,7 +1179,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     unloadVideo($videoPlaying, true, true);
     return this;
   };
-
 
   function unloadVideo ($video, unloadActiveFLAG, releaseAutoplayFLAG) {
     console.log('unloadVideo', $video, unloadActiveFLAG, releaseAutoplayFLAG);
@@ -1384,13 +1396,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }
 
-
-
-  $WINDOW
-      .on('resize', that.resize);
-
   reset();
 };
+
+$.Fotorama.cache = {};
 
 $.fn.fotorama = function (opts) {
   return this.each(function () {
@@ -1463,11 +1472,6 @@ $.fn.fotorama = function (opts) {
     }
   });
 };
-
-$.Fotorama.cache = {};
-
-var _size = 0;
-$.Fotorama.size = 0;
 
 $(function () {
   $('.' + _fotoramaClass + ':not([data-auto="false"])').fotorama();
