@@ -132,7 +132,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     if (FLAG) {
       $DOCUMENT
-          .off(keydownLocal)
           .on(keydownLocal, function (e) {
             console.log('keydownIndexed', e, that.index);
             if ($videoPlaying && e.keyCode === 27) {
