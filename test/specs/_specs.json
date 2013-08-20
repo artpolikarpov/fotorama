@@ -95,5 +95,12 @@
       "styles": "product/fotorama.css",
       "specs": "test/specs/video.js"
     }
+  },
+  "data": {
+    "src": ["test/jquery/jquery-1.10.2.min.js", "product/fotorama.js"],
+    "options": {
+      "styles": "product/fotorama.css",
+      "specs": "test/specs/data.js"
+    }
   }
 }

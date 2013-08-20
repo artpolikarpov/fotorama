@@ -31,13 +31,13 @@ $time: 300ms;
 }
 
 .fotorama--fullscreen {
-  position: absolute;
+  position: absolute !important;
   top: 0 !important;
   left: 0 !important;
   right: 0 !important;
   bottom: 0 !important;
-  float: none;
-  z-index: 2147483647;
+  float: none !important;
+  z-index: 2147483647 !important;
   background: #000;
   width: auto !important;
   height: auto !important;
@@ -63,6 +63,13 @@ $time: 300ms;
 .fotorama__nav {
   overflow: hidden;
   position: relative;
+}
+
+.fotorama__wrap--pan-y {
+  //.fotorama__stage__shaft,
+  //.fotorama__nav__shaft {
+    -ms-touch-action: pan-y;
+  //}
 }
 
 .fotorama__stage__shaft {
@@ -92,12 +99,7 @@ $time: 300ms;
 }
 
 .fotorama__grabbing * {
-  cursor: move !important;
-  cursor: -webkit-grabbing !important;
-  cursor: -moz-grabbing !important;
-  cursor: -o-grabbing !important;
-  cursor: -ms-grabbing !important;
-  cursor: grabbing !important;
+  @extend %grabbing-cursor;
 }
 
 .fotorama__img {
@@ -106,6 +108,7 @@ $time: 300ms;
   max-height: 99999px !important;
   min-width: 0 !important;
   min-height: 0 !important;
+  border-radius: 0 !important;
   .fotorama__loaded &,
   .fotorama__error & {
     @include opacity(1);
@@ -328,9 +331,8 @@ $time: 300ms;
     }
   }
 
-  .fotorama__wrap--no-controls &,
   .fotorama__wrap--video & {
-    @include opacity(0);
+    display: none;
   }
 }
 

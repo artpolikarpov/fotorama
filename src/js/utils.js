@@ -5,7 +5,7 @@ function minMaxLimit (value, min, max) {
 }
 
 function readTransform (css) {
-  return css.match(/^m/) && css.match(/-?\d+/g)[4];
+  return css.match(/ma/) && css.match(/-?\d+(?!d)/g)[css.match(/3d/) ? 12 : 4];
 }
 
 function readPosition ($el) {
@@ -64,7 +64,6 @@ function bindTransitionEnd ($el) {
         transition: 'transitionend'
       };
   el.addEventListener(transitionEndEvent[Modernizr.prefixed('transition')], function (e) {
-    //console.log('NATIVE transitionend', e.propertyName, elData.tProp && e.propertyName.match(elData.tProp) && 'CALL');
     elData.tProp && e.propertyName.match(elData.tProp) && elData.onEndFn();
   });
   elData.tEnd = true;
@@ -79,15 +78,15 @@ function afterTransition ($el, property, fn, time) {
       if (ok) return;
       ok = true;
       clearTimeout(elData.tT);
-      //console.log('elData.onEndFn', $el.attr('class').split(' ')[0]);
-      //console.log('skipReposition');
       fn();
     };
     elData.tProp = property;
 
     // Passive call, just in case of fail of native transition-end event
     clearTimeout(elData.tT);
-    elData.tT = setTimeout(elData.onEndFn, time * 1.5);
+    elData.tT = setTimeout(function () {
+      elData.onEndFn();
+    }, time * 1.5);
 
     bindTransitionEnd($el);
   }
@@ -104,10 +103,25 @@ function stop ($el, left) {
     } else {
       $el.stop();
     }
-    var lockedLeft = left || readPosition($el);
-    $el.css(getTranslate(lockedLeft));
+    var lockedLeft = getNumber(left, function () {
+      return readPosition($el);
+    });
+
+    $el.css(getTranslate(lockedLeft));//.width(); // `.width()` for reflow
     return lockedLeft;
   }
+}
+
+function getNumber () {
+  var number;
+  for (var _i = 0, _l = arguments.length; _i < _l; _i++) {
+    number = _i ? arguments[_i]() : arguments[_i];
+    if (typeof number === 'number') {
+      break;
+    }
+  }
+
+  return number;
 }
 
 function edgeResistance (pos, edge) {
@@ -218,7 +232,7 @@ function getDataFromHtml ($el) {
     if (video) {
       _imgHref = false;
     } else {
-      video = findVideoId(_video, _video);
+      video = _video;
     }
 
     var img = imgData.img || _imgHref || _imgSrc || _thumbSrc,
@@ -285,8 +299,6 @@ function setHash (hash) {
 }
 
 function fit ($el, measuresToFit, method) {
-  //console.log('fit');
-
   var elData = $el.data(),
       measures = elData.measures;
 
@@ -297,9 +309,6 @@ function fit ($el, measuresToFit, method) {
       elData.l.w !== measuresToFit.w ||
       elData.l.h !== measuresToFit.h ||
       elData.l.m !== method)) {
-
-    //console.log('fit execute', measuresToFit, measures, elData.l);
-
     var width = measures.width,
         height = measures.height,
         ratio = measuresToFit.w / measuresToFit.h,
@@ -400,7 +409,7 @@ function div (classes, child) {
 
 // Fisher–Yates Shuffle
 // http://bost.ocks.org/mike/shuffle/
-function shuffle(array) {
+function shuffle (array) {
   // While there remain elements to shuffle
   var l = array.length;
   while (l) {
@@ -414,6 +423,13 @@ function shuffle(array) {
   }
 
   return array;
+}
+
+function clone (array) {
+  return Object.prototype.toString.call(array) == '[object Array]'
+      && $.map(array, function (frame) {
+       return $.extend({}, frame);
+      });
 }
 
 function lockScroll (left, top) {

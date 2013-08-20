@@ -14,6 +14,7 @@
 
   <style type="text/css">
     * {
+      /* try to break fotorama layout */
       box-sizing: border-box;
     }
   </style>
@@ -31,7 +32,7 @@
 <pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div class="fotorama"
      <mark>data-nav="thumbs"</mark>></code></pre>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aliquam at autem debitis ea exercitationem, expedita
+<p style="width: 50%;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aliquam at autem debitis ea exercitationem, expedita
   fuga impedit labore magnam maiores natus, necessitatibus officia officiis optio quo quos ratione, soluta?</p>
 
 <p>Accusamus debitis dolorum nesciunt! A, blanditiis deleniti est harum maxime nostrum omnis perferendis possimus, quos,
@@ -44,6 +45,9 @@
 <!-- Fotorama -->
 <div class="fotorama"
      data-thumb-width="96"
+     data-width="100%"
+     data-ratio="3/2"
+     data-hash="true"
      data-nav="thumbs">
 	<a href="i/okonechnikov/1-lo.jpg"><img src="i/okonechnikov/1-thumb.jpg" width="144" height="96px"></a>
 	<a href="i/okonechnikov/2-lo.jpg" data-width="700" data-height="467"><img src="i/okonechnikov/2-thumb.jpg"></a>

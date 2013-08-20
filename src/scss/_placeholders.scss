@@ -17,6 +17,16 @@
   cursor: grab;
 }
 
+%grabbing-cursor {
+  cursor: move;
+  cursor: -webkit-grabbing;
+  cursor: -moz-grabbing;
+  cursor: -o-grabbing;
+  cursor: -ms-grabbing;
+  cursor: grabbing;
+}
+
+
 %center {
   position: absolute;
   top: 50%;
@@ -113,5 +123,6 @@
 }
 
 %before-load-bg {
+  background-color: mix(black, white);
   background-color: rgba(mix(black, white), .2);
 }

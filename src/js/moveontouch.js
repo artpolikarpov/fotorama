@@ -8,25 +8,28 @@ function moveOnTouch ($el, options) {
       moveElPos,
       edge,
       moveTrack,
+      startTime,
       endTime,
       min,
       max,
       snap,
       slowFLAG,
       controlFLAG,
-      movedFLAG,
-      stableFLAG;
+      movedFLAG;
 
   function startTracking (e) {
     startCoo = coo = e._x;
+    startTime = $.now();
 
     moveTrack = [
-      [+ new Date, startCoo]
+      [startTime, startCoo]
     ];
 
     startElPos = moveElPos = stop($el, options.getPos && options.getPos());
 
-    (options.onStart || noop).call(el, e, {pos: startElPos});
+    // startTime - endTime < TOUCH_TIMEOUT * 3 && e.preventDefault(); // double tap
+
+    (options.onStart || noop).call(el, e);
   }
 
   function onStart (e, result) {
@@ -53,7 +56,7 @@ function moveOnTouch ($el, options) {
     if (!tail.noSwipe) {
       coo = e._x;
 
-      moveTrack.push([new Date().getTime(), coo]);
+      moveTrack.push([$.now(), coo]);
 
       moveElPos = startElPos - (startCoo - coo);
 
@@ -70,7 +73,7 @@ function moveOnTouch ($el, options) {
         if (!movedFLAG) {
           movedFLAG = true;
           // only for mouse
-          result.touch || $el.addClass(grabbingClass);
+          result.touch || MS_POINTER || $el.addClass(grabbingClass);
         }
 
         (options.onMove || noop).call(el, e, {pos: moveElPos, edge: edge});
@@ -81,7 +84,7 @@ function moveOnTouch ($el, options) {
   function onEnd (result) {
     if (controlFLAG) return;
 
-    result.touch || $el.removeClass(grabbingClass);
+    result.touch || MS_POINTER || $el.removeClass(grabbingClass);
 
     endTime = new Date().getTime();
 

@@ -18,16 +18,16 @@ describe('Events', function () {
     if (!binded) {
       $fotorama.on(
           'fotorama:ready ' + //
-              'fotorama:load ' + //
-              'fotorama:error ' + //
-              'fotorama:show ' + //
-              'fotorama:showend ' + //
-              'fotorama:fullscreenenter ' + //
-              'fotorama:fullscreenexit ' + //
-              'fotorama:loadvideo ' + //
-              'fotorama:unloadvideo ' + //
-              'fotorama:startautoplay ' + //
-              'fotorama:stopautoplay', //
+          'fotorama:load ' + //
+          'fotorama:error ' + //
+          'fotorama:show ' + //
+          'fotorama:showend ' + //
+          'fotorama:fullscreenenter ' + //
+          'fotorama:fullscreenexit ' + //
+          'fotorama:loadvideo ' + //
+          'fotorama:unloadvideo ' + //
+          'fotorama:startautoplay ' + //
+          'fotorama:stopautoplay', //
           function (event, fotorama, extra) {
             var type = event.type.replace(/^fotorama:/, '');
             e[type] = e[type] || {i: 0, fotorama: fotorama};

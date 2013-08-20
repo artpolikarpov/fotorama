@@ -17,6 +17,28 @@
       max-width: 100px;
     }
   </style>
+
+  <script type="text/javascript">
+    //<![CDATA[
+      $(function(){
+      $('.fotorama')
+          .on('fotorama:fullscreenenter fotorama:fullscreenexit', function (e, fotorama) {
+          if (e.type === 'fotorama:fullscreenenter') {
+              // Настройки для полного экрана
+              fotorama.setOptions({
+                  nav: 'thumbs'
+              });
+          } else {
+              // Возврат к обычным настройкам
+              fotorama.setOptions({
+                  nav: 'dots'
+              });
+          }
+      }).fotorama();
+      });//]]>
+
+
+  </script>
 </head>
 
 <body>
@@ -39,11 +61,8 @@
   numquam odit pariatur quaerat quisquam, ut! Accusamus deserunt doloremque doloribus explicabo id nemo rerum temporibus
   voluptatum!</p>
 
-<div style="width: 50%; float: left;">
-
 <!-- Fotorama -->
 <div class="fotorama"
-     style="width: 50%; position: relative;"
      data-width="700"
      data-ratio="3/2"
      data-max-width="100%"
@@ -54,8 +73,6 @@
 	<a href="i/okonechnikov/14-lo.jpg"></a>
 	<a href="i/okonechnikov/15-lo.jpg"></a>
 	<a href="i/okonechnikov/16-lo.jpg"></a>
-</div>
-
 </div>
 
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad amet aperiam aspernatur assumenda autem beatae
