@@ -439,10 +439,12 @@ function lockScroll (left, top) {
 }
 
 function optionsToLowerCase (options) {
-  var opts = {};
-  $.each(options, function (key, value) {
-    opts[key.toLowerCase()] = value;
-  });
+  if (options) {
+    var opts = {};
+    $.each(options, function (key, value) {
+      opts[key.toLowerCase()] = value;
+    });
 
-  return opts;
+    return opts;
+  }
 }

@@ -222,7 +222,7 @@ describe('Events', function () {
     expect(fotorama.options).toEqual(jasmine.any(Object));
     expect(fotorama.options.auto).toBe(false);
     expect(fotorama.options.width).toBe(700);
-    expect(fotorama.options.allowFullScreen).toBe(true);
+    expect(fotorama.options.allowfullscreen).toBe(true);
 
     expect(fotorama.options.keyboard).toBe(false);
     fotorama.setOptions({keyboard: true});
