@@ -249,7 +249,7 @@ function getDataFromHtml ($el) {
       width: width || undefined,
       height: height || undefined,
       thumb: thumb,
-      thumbRatio: thumbwidth / thumbheight || undefined
+      thumbratio: thumbwidth / thumbheight || undefined
     }
   }
 

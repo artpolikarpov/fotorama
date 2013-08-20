@@ -3,9 +3,10 @@ var $WINDOW = $(window),
     $HTML,
     $BODY,
 
-    COMPAT = document.compatMode === 'CSS1Compat',
     QUIRKS_FORCE = location.hash.replace('#', '') === 'quirks',
-    CSS3 = Modernizr.csstransforms3d && !QUIRKS_FORCE,
+    TRANSFORMS3D = Modernizr.csstransforms3d,
+    CSS3 = TRANSFORMS3D && !QUIRKS_FORCE,
+    COMPAT = TRANSFORMS3D || document.compatMode === 'CSS1Compat',
     FULLSCREEN = fullScreenApi.ok,
 
     MOBILE = navigator.userAgent.match(/Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i),

@@ -651,11 +651,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
               if (!thumbsFLAG) return;
 
-
-
               var $this = $(this),
                   frameData = $this.data(),
-                  thumbwidth = Math.round(o_thumbSide2 * frameData.data.thumbRatio) || o_thumbSide;
+                  thumbwidth = Math.round(o_thumbSide2 * frameData.data.thumbratio) || o_thumbSide;
 
               frameData.l = left;
               frameData.w = thumbwidth;
@@ -1356,7 +1354,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (!ready.ok) {
       // Only first time
       if (opts.hash && location.hash) {
-        startIndex = getIndexFromHash(location.hash.replace(/^#/, ''), data, index === 0);
+        startIndex = getIndexFromHash(location.hash.replace(/^#/, ''), data, that.index === 0);
       }
       activeIndex = repositionIndex = dirtyIndex = lastActiveIndex = startIndex = edgeIndex(startIndex) || 0;
     }

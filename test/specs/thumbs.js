@@ -63,27 +63,27 @@ describe('Thumbs', function () {
   });
 
   it('thumbs dimenstions are read correctly', function () {
-    expect(data[0].thumbRatio).toBe(500 / 335);
+    expect(data[0].thumbratio).toBe(500 / 335);
 
-    expect(data[1].thumbRatio).toBeUndefined();
+    expect(data[1].thumbratio).toBeUndefined();
 
-    expect(data[2].thumbRatio).toBe(450 / 591);
+    expect(data[2].thumbratio).toBe(450 / 591);
 
-    expect(data[3].thumbRatio).toBe(55 / 34);
+    expect(data[3].thumbratio).toBe(55 / 34);
 
-    expect(data[4].thumbRatio).toBeUndefined();
+    expect(data[4].thumbratio).toBeUndefined();
 
-    expect(data[5].thumbRatio).toBe(50 / 36);
+    expect(data[5].thumbratio).toBe(50 / 36);
 
-    expect(data[6].thumbRatio).toBe(500 / 383);
+    expect(data[6].thumbratio).toBe(500 / 383);
 
-    expect(data[7].thumbRatio).toBe(50 / 49);
+    expect(data[7].thumbratio).toBe(50 / 49);
 
-    expect(data[8].thumbRatio).toBeUndefined();
+    expect(data[8].thumbratio).toBeUndefined();
 
-    expect(data[9].thumbRatio).toBe(443 / 525);
+    expect(data[9].thumbratio).toBe(443 / 525);
 
-    expect(data[10].thumbRatio).toBeUndefined();
+    expect(data[10].thumbratio).toBeUndefined();
   });
 
   it('positions are good', function () {
