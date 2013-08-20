@@ -104,7 +104,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   fotoramaData.fotorama = this;
-  that.options = opts;
 
   function checkForVideo () {
     $.each(data, function (i, dataFrame) {
@@ -128,7 +127,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   function bindGlobalEvents (FLAG) {
     var keydownCommon = 'keydown.' + _fotoramaClass,
         keydownLocal = 'keydown.' + _fotoramaClass + stamp,
-        resizeLocal = 'resize' + _fotoramaClass + stamp;
+        resizeLocal = 'resize.' + _fotoramaClass + stamp;
 
     if (FLAG) {
       $DOCUMENT
@@ -229,17 +228,19 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * Options on the fly
    * */
   function setOptions () {
+    that.options = opts.opts = optionsToLowerCase(opts);
+
     o_fade = opts.transition === 'crossfade' || opts.transition === 'dissolve';
 
     o_loop = opts.loop && (size > 2 || o_fade);
 
-    o_transitionDuration = +opts.transitionDuration || TRANSITION_DURATION;
+    o_transitionDuration = +opts.transitionduration || TRANSITION_DURATION;
 
     var classes = {add: [], remove: []};
 
     if (size > 1) {
       o_nav = opts.nav;
-      o_navTop = opts.navPosition === 'top';
+      o_navTop = opts.navposition === 'top';
       classes.remove.push(selectClass);
 
       $arrs.toggle(opts.arrows);
@@ -252,8 +253,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     if (opts.autoplay) setAutoplayInterval(opts.autoplay);
 
-    o_thumbSide = numberFromMeasure(opts.thumbWidth) || THUMB_SIZE;
-    o_thumbSide2 = numberFromMeasure(opts.thumbHeight) || THUMB_SIZE;
+    o_thumbSide = numberFromMeasure(opts.thumbwidth) || THUMB_SIZE;
+    o_thumbSide2 = numberFromMeasure(opts.thumbheight) || THUMB_SIZE;
 
     stageNoMove();
 
@@ -296,7 +297,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       frameAppend($navFrame, $navShaft, 'nav');
     }
 
-    o_allowFullScreen = opts.allowFullScreen;
+    o_allowFullScreen = opts.allowfullscreen;
 
     if (o_allowFullScreen) {
       $fullscreenIcon.appendTo($stage);
@@ -654,14 +655,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
               var $this = $(this),
                   frameData = $this.data(),
-                  thumbWidth = Math.round(o_thumbSide2 * frameData.data.thumbRatio) || o_thumbSide;
+                  thumbwidth = Math.round(o_thumbSide2 * frameData.data.thumbRatio) || o_thumbSide;
 
               frameData.l = left;
-              frameData.w = thumbWidth;
+              frameData.w = thumbwidth;
 
-              $this.css({width: thumbWidth});
+              $this.css({width: thumbwidth});
 
-              left += thumbWidth + MARGIN;
+              left += thumbwidth + MARGIN;
             })
       );
 
@@ -790,10 +791,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
     options && $.extend(measures, {
       width: options.width || measures.width,
       height: options.height,
-      minWidth: options.minWidth,
-      maxWidth: options.maxWidth,
-      minHeight: options.minHeight,
-      maxHeight: options.maxHeight,
+      minwidth: options.minwidth,
+      maxwidth: options.maxwidth,
+      minheight: options.minheight,
+      maxheight: options.maxheight,
       ratio: (function (_ratio) {
         if (!_ratio) return;
         var ratio = Number(_ratio);
@@ -808,10 +809,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
         && !optsLeave && $.extend(opts, {
       width: measures.width,
       height: measures.height,
-      minWidth: measures.minWidth,
-      maxWidth: measures.maxWidth,
-      minHeight: measures.minHeight,
-      maxHeight: measures.maxHeight,
+      minwidth: measures.minwidth,
+      maxwidth: measures.maxwidth,
+      minheight: measures.minheight,
+      maxheight: measures.maxheight,
       ratio: measures.ratio
     });
   }
@@ -824,7 +825,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     clearTimeout(onTouchEnd.t);
     touchedFLAG = 1;
 
-    if (opts.stopAutoplayOnTouch) {
+    if (opts.stopautoplayontouch) {
       that.stopAutoplay();
     } else {
       pausedAutoplayFLAG = true;
@@ -1066,7 +1067,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   that.resize = function (options) {
     if (!data) return this;
 
-    extendMeasures(!that.fullScreen ? options : {width: '100%', maxWidth: null, minWidth: null, height: '100%', maxHeight: null, minHeight: null}, that.fullScreen);
+    extendMeasures(!that.fullScreen ? options : {width: '100%', maxwidth: null, minwidth: null, height: '100%', maxheight: null, minheight: null}, that.fullScreen);
 
     var time = arguments[1] || 0,
         setFLAG = arguments[2],
@@ -1076,7 +1077,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         windowHeight = $WINDOW.height() - (o_nav ? $nav.height() : 0);
 
     if (measureIsValid(width)) {
-      $wrap.css({width: width, minWidth: measures.minWidth, maxWidth: measures.maxWidth});
+      $wrap.css({width: width, minWidth: measures.minwidth, maxWidth: measures.maxwidth});
 
       width = measures.w = $wrap.width();
       height = numberFromPercent(height) / 100 * windowHeight || numberFromMeasure(height);
@@ -1085,7 +1086,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       if (height) {
         width = Math.round(width);
-        height = measures.h = Math.round(minMaxLimit(height, numberFromPercent(measures.minHeight) / 100 * windowHeight || numberFromMeasure(measures.minHeight), numberFromPercent(measures.maxHeight) / 100 * windowHeight || numberFromMeasure(measures.maxHeight)));
+        height = measures.h = Math.round(minMaxLimit(height, numberFromPercent(measures.minheight) / 100 * windowHeight || numberFromMeasure(measures.minheight), numberFromPercent(measures.maxheight) / 100 * windowHeight || numberFromMeasure(measures.maxheight)));
 
         stageShaftReposition();
 
@@ -1422,36 +1423,36 @@ $.fn.fotorama = function (opts) {
                 {
                   // dimensions
                   width: null, // 500 || '100%'
-                  minWidth: null,
-                  maxWidth: null, // '100%'
+                  minwidth: null,
+                  maxwidth: null, // '100%'
                   height: null,
-                  minHeight: null,
-                  maxHeight: null,
+                  minheight: null,
+                  maxheight: null,
                   ratio: null, // '16/9' || 500/333 || 1.5
 
                   // navigation, thumbs
                   nav: 'dots', // 'thumbs' || false
-                  navPosition: 'bottom', // 'top'
-                  thumbWidth: THUMB_SIZE,
-                  thumbHeight: THUMB_SIZE,
+                  navposition: 'bottom', // 'top'
+                  thumbwidth: THUMB_SIZE,
+                  thumbheight: THUMB_SIZE,
 
                   arrows: true,
                   click: true,
                   swipe: true,
 
-                  allowFullScreen: false, // true || 'native'
+                  allowfullscreen: false, // true || 'native'
 
                   fit: 'contain', // 'cover' || 'scale-down' || 'none'
 
                   transition: 'slide', // 'crossfade' || 'dissolve'
-                  transitionDuration: TRANSITION_DURATION,
+                  transitionduration: TRANSITION_DURATION,
 
                   captions: true,
 
                   hash: false,
 
                   autoplay: false,
-                  stopAutoplayOnTouch: true,
+                  stopautoplayontouch: true,
 
                   keyboard: false,
 

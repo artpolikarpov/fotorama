@@ -240,8 +240,8 @@ function getDataFromHtml ($el) {
         separateThumbFLAG = img !== thumb,
         width = numberFromMeasure(imgData.width || $img.attr('width')),
         height = numberFromMeasure(imgData.height || $img.attr('height')),
-        thumbWidth = numberFromMeasure(imgData.thumbWidth || $child.attr('width') || separateThumbFLAG || width),
-        thumbHeight = numberFromMeasure(imgData.thumbHeight || $child.attr('height') || separateThumbFLAG || height);
+        thumbwidth = numberFromMeasure(imgData.thumbwidth || $child.attr('width') || separateThumbFLAG || width),
+        thumbheight = numberFromMeasure(imgData.thumbheight || $child.attr('height') || separateThumbFLAG || height);
 
     return {
       video: video,
@@ -249,7 +249,7 @@ function getDataFromHtml ($el) {
       width: width || undefined,
       height: height || undefined,
       thumb: thumb,
-      thumbRatio: thumbWidth / thumbHeight || undefined
+      thumbRatio: thumbwidth / thumbheight || undefined
     }
   }
 
@@ -436,4 +436,13 @@ function lockScroll (left, top) {
   $WINDOW
     .scrollLeft(left)
     .scrollTop(top);
+}
+
+function optionsToLowerCase (options) {
+  var opts = {};
+  $.each(options, function (key, value) {
+    opts[key.toLowerCase()] = value;
+  });
+
+  return opts;
 }
