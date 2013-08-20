@@ -391,6 +391,7 @@ $time: 300ms;
   .fotorama__html,
   .fotorama__caption {
     @extend %initial-translate;
+    -webkit-backface-visibility: hidden;
   }
   .fotorama__img,
   .fotorama__html,
