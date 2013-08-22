@@ -8,6 +8,17 @@
   bottom: 0;
 }
 
+%image-reset {
+  max-width: 99999px !important;
+  max-height: 99999px !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0;
+  margin: 0;
+}
+
 %grab-cursor {
   cursor: move;
   cursor: -webkit-grab;
@@ -25,7 +36,6 @@
   cursor: -ms-grabbing;
   cursor: grabbing;
 }
-
 
 %center {
   position: absolute;

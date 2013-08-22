@@ -1,6 +1,6 @@
 document.write(
     '<div style="position: relative; width: 50%;">' +
-        '<div class="fotorama" id="fotorama" style="position: absolute; width: 50%; top: 12px; left: 17px;">' +
+        '<div class="fotorama" id="fotorama" style="position: absolute; width: 50%; max-width: 199px; top: 12px; left: 17px;">' +
         '<img src="test/i/okonechnikov/1-lo.jpg">' +
         '<img src="test/i/okonechnikov/2-lo.jpg">' +
         '<img src="test/i/okonechnikov/9-lo.jpg">' +
