@@ -19,8 +19,11 @@ module.exports = function (grunt) {
         'src/js/moveontouch.js',
 		    'src/js/oooo.js',
         'src/js/fotorama.js',
+        'src/js/fn-fotorama.js',
         'src/js/instances.js',
+        'src/js/cache.js',
         'src/templates/compiled.js',
+        'src/js/auto-initialization.js',
         'src/js/outro.js'
       ]
     },

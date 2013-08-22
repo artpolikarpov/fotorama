@@ -90,7 +90,7 @@ describe('Thumbs', function () {
     $thumb.each(function () {
       var $this = $(this);
 
-      expect($this.position().left).toBe($this.data('l'));
+      expect(Math.round($this.position().left)).toBe($this.data('l'));
     });
   });
 
