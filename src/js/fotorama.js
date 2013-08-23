@@ -365,7 +365,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
     return $.each(indexes, function (i, index) {
       if (rangeFLAG) index = i;
-      if (typeof(index) === 'number') {
+      if (typeof index === 'number') {
         var dataFrame = data[normalizeIndex(index)];
 
         if (dataFrame !== undefined) {
