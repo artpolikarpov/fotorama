@@ -220,9 +220,8 @@ function updateData (data, _dataFrame, i, api) {
 function getDataFromHtml ($el) {
   var data = [];
 
-  function getDataFromImg ($img, checkVideo) {
-    var imgData = $img.data(),
-        $child = $img.children('img').eq(0),
+  function getDataFromImg ($img, imgData, checkVideo) {
+    var $child = $img.children('img').eq(0),
         _imgHref = $img.attr('href'),
         _imgSrc = $img.attr('src'),
         _thumbSrc = $child.attr('src'),
@@ -255,9 +254,9 @@ function getDataFromHtml ($el) {
 
   $el.children().each(function (i) {
     var $this = $(this),
-        dataFrame = $.extend($this.data(), {id: $this.attr('id')});
+        dataFrame = optionsToLowerCase($.extend($this.data(), {id: $this.attr('id')}));
     if ($this.is('a, img')) {
-      $.extend(dataFrame, getDataFromImg($this, true));
+      $.extend(dataFrame, getDataFromImg($this, dataFrame, true));
     } else if (!$this.is(':empty')) {
       $.extend(dataFrame, {
         html: this,
