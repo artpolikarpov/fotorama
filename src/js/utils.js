@@ -238,9 +238,7 @@ function getDataFromHtml ($el) {
         thumb = imgData.thumb || _thumbSrc || _imgSrc || _imgHref,
         separateThumbFLAG = img !== thumb,
         width = numberFromMeasure(imgData.width || $img.attr('width')),
-        height = numberFromMeasure(imgData.height || $img.attr('height')),
-        thumbwidth = numberFromMeasure(imgData.thumbwidth || $child.attr('width') || separateThumbFLAG || width),
-        thumbheight = numberFromMeasure(imgData.thumbheight || $child.attr('height') || separateThumbFLAG || height);
+        height = numberFromMeasure(imgData.height || $img.attr('height'));
 
     return {
       video: video,
@@ -248,7 +246,9 @@ function getDataFromHtml ($el) {
       width: width || undefined,
       height: height || undefined,
       thumb: thumb,
-      thumbratio: thumbwidth / thumbheight || undefined
+      thumbratio: getRatio(imgData.thumbratio
+          || (numberFromMeasure(imgData.thumbwidth || $child.attr('width') || separateThumbFLAG || width)
+              / numberFromMeasure(imgData.thumbheight || $child.attr('height') || separateThumbFLAG || height)))
     }
   }
 
@@ -445,5 +445,16 @@ function optionsToLowerCase (options) {
     });
 
     return opts;
+  }
+}
+
+function getRatio (_ratio) {
+  if (!_ratio) return;
+  var ratio = +_ratio;
+  if (!isNaN(ratio)) {
+    return ratio;
+  } else {
+    ratio = _ratio.split('/');
+    return +ratio[0] / +ratio[1] || undefined;
   }
 }

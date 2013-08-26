@@ -796,16 +796,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       maxwidth: options.maxwidth,
       minheight: options.minheight,
       maxheight: options.maxheight,
-      ratio: (function (_ratio) {
-        if (!_ratio) return;
-        var ratio = Number(_ratio);
-        if (!isNaN(ratio)) {
-          return ratio;
-        } else {
-          ratio = _ratio.split('/');
-          return Number(ratio[0] / ratio[1]) || undefined;
-        }
-      })(options.ratio)
+      ratio: getRatio(options.ratio)
     })
         && !optsLeave && $.extend(opts, {
       width: measures.width,

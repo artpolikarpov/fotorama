@@ -11,7 +11,7 @@ document.write(
         '<a href="test/i/nyc/flipoff.jpg" data-caption="Flip off"></a>' +
         '<a href="test/i/nyc/freakout.jpg" data-thumb="test/i/nyc/freakout.jpg" data-width="443" data-height="525"></a>' +
         '<a href="test/i/nyc/guy-in-park.jpg" data-thumb="test/i/nyc/homeless-sleeping.jpg" data-width="500" data-height="335"></a>' +
-        '<a href="test/i/nyc/italianguy.jpg" data-caption="Italian guy"></a>' +
+        '<a href="test/i/nyc/italianguy.jpg" data-caption="Italian guy" data-thumbratio="34/75"></a>' +
         '<a href="test/i/nyc/KIOSK.jpg" data-caption="Kiosk"></a>' +
         '<a href="test/i/nyc/ladies-riding.jpg" data-caption="Ladies riding"></a>' +
         '<a href="test/i/nyc/lift-dude.jpg" data-caption="Lift dude"></a>' +
@@ -84,6 +84,8 @@ describe('Thumbs', function () {
     expect(data[9].thumbratio).toBe(443 / 525);
 
     expect(data[10].thumbratio).toBeUndefined();
+
+    expect(data[11].thumbratio).toBe(34/75);
   });
 
   it('positions are good', function () {
