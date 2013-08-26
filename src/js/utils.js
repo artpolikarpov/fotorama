@@ -31,7 +31,7 @@ function getDuration (time) {
 }
 
 function numberFromMeasure (value, measure) {
-  return +String(value).replace(measure || 'px', '');
+  return +String(value).replace(measure || 'px', '') || undefined;
 }
 
 function numberFromPercent (value) {
@@ -234,34 +234,37 @@ function getDataFromHtml ($el) {
       video = _video;
     }
 
-    var img = imgData.img || _imgHref || _imgSrc || _thumbSrc,
-        thumb = imgData.thumb || _thumbSrc || _imgSrc || _imgHref,
-        separateThumbFLAG = img !== thumb,
+    getDimensions($img, $child, $.extend(imgData, {
+      video: video,
+      img: imgData.img || _imgHref || _imgSrc || _thumbSrc,
+      thumb: imgData.thumb || _thumbSrc || _imgSrc || _imgHref
+    }));
+  }
+
+  function getDimensions ($img, $child, imgData) {
+    var separateThumbFLAG = imgData.thumb && imgData.img !== imgData.thumb,
         width = numberFromMeasure(imgData.width || $img.attr('width')),
         height = numberFromMeasure(imgData.height || $img.attr('height'));
 
-    return {
-      video: video,
-      img: img,
-      width: width || undefined,
-      height: height || undefined,
-      thumb: thumb,
+    $.extend(imgData, {
+      width: width,
+      height: height,
       thumbratio: getRatio(imgData.thumbratio
-          || (numberFromMeasure(imgData.thumbwidth || $child.attr('width') || separateThumbFLAG || width)
-              / numberFromMeasure(imgData.thumbheight || $child.attr('height') || separateThumbFLAG || height)))
-    }
+          || (numberFromMeasure(imgData.thumbwidth || ($child && $child.attr('width')) || separateThumbFLAG || width)
+              / numberFromMeasure(imgData.thumbheight || ($child && $child.attr('height')) || separateThumbFLAG || height)))
+    });
   }
 
-  $el.children().each(function (i) {
+  $el.children().each(function () {
     var $this = $(this),
         dataFrame = optionsToLowerCase($.extend($this.data(), {id: $this.attr('id')}));
     if ($this.is('a, img')) {
-      $.extend(dataFrame, getDataFromImg($this, dataFrame, true));
+      getDataFromImg($this, dataFrame, true);
     } else if (!$this.is(':empty')) {
-      $.extend(dataFrame, {
+      getDimensions($this, null, $.extend(dataFrame, {
         html: this,
         _html: $this.html() // Because of IE
-      });
+      }));
     } else return;
 
     data.push(dataFrame);
