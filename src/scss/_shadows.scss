@@ -9,6 +9,7 @@
     width: 10px;
     height: auto;
     z-index: 10;
+    pointer-events: none;
     background-repeat: no-repeat;
     background-size: 1px 100%, 5px 100%;
     @extend %no-select;
