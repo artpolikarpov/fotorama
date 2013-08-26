@@ -118,14 +118,13 @@ module.exports = function (grunt) {
         }
       }
     },
-    csso: {
+    cssmin: {
       product: {
         files: {
           'product/fotorama.css': 'product/fotorama.css'
         },
         options: {
-          banner: '<%= meta.banner.replace(/\\n$/, "") %>',
-          report: 'gzip'
+          banner: '<%= meta.banner.replace(/\\n$/, "") %>'
         }
       }
     },
@@ -177,8 +176,7 @@ module.exports = function (grunt) {
     uglify: {
       product: {
         options: {
-          banner: '<%= meta.banner %>',
-          report: 'gzip'
+          banner: '<%= meta.banner %>'
         },
         files: {
           'product/fotorama.js': 'product/fotorama.uncompressed.js'
@@ -296,7 +294,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jst');
 	grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-csso');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-autoprefixer');
@@ -309,11 +307,11 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-shell');
 
-	var defaultTask = 'copy sass autoprefixer jst string-replace:jst concat:js string-replace:console concat:css jasmine uglify csso jasmine clean compress';
-  var build =       'copy sass autoprefixer jst string-replace:jst concat:js string-replace:console concat:css uglify csso clean compress'.split(' ');
+	var defaultTask = 'copy sass autoprefixer jst string-replace:jst concat:js string-replace:console concat:css jasmine uglify cssmin jasmine clean compress'.split(' ');
+  var build =       'copy sass autoprefixer jst string-replace:jst concat:js string-replace:console concat:css uglify cssmin clean compress'.split(' ');
 
   // Compile
-  grunt.registerTask('default', defaultTask.split(' '));
+  grunt.registerTask('default', defaultTask);
   grunt.registerTask('build', build);
 
 	// Publish, will fail without secret details ;-)
