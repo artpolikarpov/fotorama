@@ -1,5 +1,5 @@
 document.write(
-    '<div class="fotorama" data-width="700" data-height="467" data-auto="false" id="fotorama">' +
+    '<div class="fotorama" data-width="700" data-height="467" data-max-width="false" data-auto="false" id="fotorama">' +
         '<img src="test/i/okonechnikov/1-lo.jpg">' +
         '<img src="test/i/okonechnikov/2-lo.jpg">' +
         '<img src="test/i/okonechnikov/9-lo.jpg">' +

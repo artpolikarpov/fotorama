@@ -102,6 +102,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
   toDeactivate[NAV_DOT_FRAME_KEY] = [];
   toDetach[STAGE_FRAME_KEY] = {};
 
+  that.prevent = {};
+
   if (CSS3) {
     $wrap.addClass(wrapCss3Class);
   }
@@ -135,12 +137,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (FLAG) {
       $DOCUMENT
           .on(keydownLocal, function (e) {
-            console.log('keydownIndexed', e, that.index);
             if ($videoPlaying && e.keyCode === 27) {
               e.preventDefault();
               unloadVideo($videoPlaying, true, true);
             } else if (that.fullScreen || (opts.keyboard && !that.index)) {
-              console.log('that.index', that.index, e);
               if (e.keyCode === 27) {
                 e.preventDefault();
                 that.cancelFullScreen();
@@ -354,10 +354,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   function setNavShaftMinmax () {
     navShaftData.min = Math.min(0, measures.w - $navShaft.width());
     navShaftData.max = 0;
-
-    navShaftTouchTail.noMove = navShaftData.min === navShaftData.max;
-
-    $navShaft.toggleClass(grabClass, !navShaftTouchTail.noMove);
+    $navShaft.toggleClass(grabClass, !(navShaftTouchTail.noMove = navShaftData.min === navShaftData.max));
   }
 
   function eachIndex (indexes, type, fn) {
@@ -370,7 +367,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       if (typeof index === 'number') {
         var dataFrame = data[normalizeIndex(index)];
 
-        if (dataFrame !== undefined) {
+        if (dataFrame) {
           var key = '$' + type + 'Frame',
               $frame = dataFrame[key];
 
@@ -596,7 +593,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       if (isDetached($frame[0])) {
         $frame.appendTo($stageShaft);
-        console.log('stageFramePosition → unloadVideo');
         unloadVideo(dataFrame.$video);
       }
 
@@ -783,7 +779,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       toDeactivate[STAGE_FRAME_KEY].push($frame.addClass(activeClass));
 
       skipOnEnd || that.show.onEnd(true);
-      stop($stageShaft, 0);
+      stop($stageShaft, 0, true);
 
       detachFrames(STAGE_FRAME_KEY);
       stageFramePosition(activeIndexes);
@@ -822,8 +818,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
     });
   }
 
-  function triggerEvent (event, extra) {
+  function triggerEvent (event, extra, fn) {
     $fotorama.trigger(_fotoramaClass + ':' + event, [that, extra]);
+    if (!that.prevent[event]) {
+      (fn || noop)();
+    } else {
+     delete that.prevent[event];
+    }
   }
 
   function onTouchStart () {
@@ -924,15 +925,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     that.activeFrame = activeFrame = data[activeIndex];
 
-    console.log('that.show → unloadVideo');
     unloadVideo($videoPlaying, activeFrame.i !== data[normalizeIndex(repositionIndex)].i);
 
     frameDraw(activeIndexes, 'stage');
     stageFramePosition([dirtyIndex, getPrevIndex(dirtyIndex), getNextIndex(dirtyIndex)]);
 
-    triggerEvent('show', options.direct);
-
     updateTouchTails('go', true);
+
+    triggerEvent('show', options.direct);
 
     var onEnd = that.show.onEnd = function (skipReposition) {
       if (onEnd.ok) return;
@@ -956,7 +956,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
         pos: -getPosByIndex(dirtyIndex, measures.w, MARGIN, repositionIndex),
         overPos: overPos,
         time: time,
-        onEnd: onEnd
+        onEnd: onEnd,
+        _001: true
       });
     } else {
       var $activeFrame = activeFrame[STAGE_FRAME_KEY],
@@ -1187,7 +1188,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
   };
 
   function unloadVideo ($video, unloadActiveFLAG, releaseAutoplayFLAG) {
-    console.log('unloadVideo', $video, unloadActiveFLAG, releaseAutoplayFLAG);
     if (unloadActiveFLAG) {
       $wrap.removeClass(wrapVideoClass);
       $videoPlaying = false;
@@ -1237,11 +1237,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
     } else if ($videoPlaying) {
       target === videoClose && unloadVideo($videoPlaying, true, true);
     } else {
-      if (toggleControlsFLAG) {
-        toggleControlsClass();
-      } else if (opts.click) {
-        that.show({index: e.shiftKey || !getDirection(e._x) ? '<' : '>', slow: e.altKey, direct: true});
-      }
+      triggerEvent('stagetap', undefined, function () {
+        if (toggleControlsFLAG) {
+          toggleControlsClass();
+        } else if (opts.click) {
+          that.show({index: e.shiftKey || !getDirection(e._x) ? '<' : '>', slow: e.altKey, direct: true});
+        }
+      });
     }
   }
 

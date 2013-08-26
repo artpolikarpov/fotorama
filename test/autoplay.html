@@ -11,6 +11,14 @@
 	<!-- Fotorama -->
 	<link  href="../product/fotorama.css" rel="stylesheet">
 	<script src="../product/fotorama.js"></script>
+
+  <script type="text/javascript">
+    $(function () {
+      $('.fotorama').on('fotorama:startautoplay fotorama:stopautoplay', function (e) {
+        console.log(e.type);
+      });
+    });
+  </script>
 </head>
 
 <body>
@@ -26,7 +34,8 @@
 
 <!-- Fotorama -->
 <div class="fotorama"
-     data-autoplay="true"
+     data-autoplay="2000"
+     data-stop-autoplay-on-touch="true"
      data-width="700"
      data-ratio="3/2"
      data-max-width="100%"

@@ -16,10 +16,10 @@ function readPosition ($el) {
   }
 }
 
-function getTranslate (pos) {
+function getTranslate (pos, _001) {
   var obj = {};
   if (CSS3) {
-    obj.transform = 'translate3d(' + (pos + 0.001) + 'px,0,0)'; // 0.001 to remove Retina artifacts
+    obj.transform = 'translate3d(' + (pos + (_001 ? 0.001 : 0)) + 'px,0,0)'; // 0.001 to remove Retina artifacts
   } else {
     obj.left = pos;
   }
@@ -93,7 +93,7 @@ function afterTransition ($el, property, fn, time) {
 }
 
 
-function stop ($el, left) {
+function stop ($el, left, _001) {
   if ($el.length) {
     var elData = $el.data();
     if (CSS3) {
@@ -107,7 +107,7 @@ function stop ($el, left) {
       return readPosition($el);
     });
 
-    $el.css(getTranslate(lockedLeft));//.width(); // `.width()` for reflow
+    $el.css(getTranslate(lockedLeft, _001));//.width(); // `.width()` for reflow
     return lockedLeft;
   }
 }
@@ -312,7 +312,7 @@ function fit ($el, measuresToFit, method) {
         height = measures.height,
         ratio = measuresToFit.w / measuresToFit.h,
         biggerRatioFLAG = measures.ratio >= ratio,
-        fitFLAG = method === 'scale-down',
+        fitFLAG = method === 'scaledown',
         containFLAG = method === 'contain',
         coverFLAG = method === 'cover';
 

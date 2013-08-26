@@ -21,7 +21,7 @@ $.fn.fotorama = function (opts) {
                   // dimensions
                   width: null, // 500 || '100%'
                   minwidth: null,
-                  maxwidth: null, // '100%'
+                  maxwidth: '100%', // '100%'
                   height: null,
                   minheight: null,
                   maxheight: null,
@@ -39,7 +39,7 @@ $.fn.fotorama = function (opts) {
 
                   allowfullscreen: false, // true || 'native'
 
-                  fit: 'contain', // 'cover' || 'scale-down' || 'none'
+                  fit: 'contain', // 'cover' || 'scaledown' || 'none'
 
                   transition: 'slide', // 'crossfade' || 'dissolve'
                   transitionduration: TRANSITION_DURATION,

@@ -1,5 +1,5 @@
 document.write(
-    '<div class="fotorama" data-nav="thumbs" id="fotorama1">' +
+    '<div class="fotorama" data-max-width="false" data-nav="thumbs" id="fotorama1">' +
         '<img src="test/i/okonechnikov/1-lo.jpg">' +
         '<img src="test/i/okonechnikov/2-lo.jpg">' +
         '<img src="test/i/okonechnikov/9-lo.jpg">' +
@@ -9,7 +9,7 @@ document.write(
 );
 
 document.write(
-    '<div class="fotorama" data-width="500" data-ratio="3.14/5.6" data-nav="dots" id="fotorama2">' +
+    '<div class="fotorama" data-width="500" data-max-width="false" data-ratio="3.14/5.6" data-nav="dots" id="fotorama2">' +
         '<img src="test/i/okonechnikov/3-lo.jpg">' +
         '<img src="test/i/okonechnikov/4-lo.jpg">' +
         '<img src="test/i/okonechnikov/7-lo.jpg">' +
