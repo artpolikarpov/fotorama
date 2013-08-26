@@ -154,6 +154,6 @@ $arrSize: 32px;
   .fotorama__fullscreen-icon,
   .fotorama__video-play,
   .fotorama__video-close {
-    transition: all $time;
+    transition: top $time, right $time, bottom $time, left $time, opacity $time;
   }
 }
