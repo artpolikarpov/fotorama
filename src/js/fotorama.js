@@ -89,7 +89,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
       hoverFLAG,
 
       navFrameKey,
-      stageLeft = 0;
+      stageLeft = 0,
+
+      fadeStack = [];
 
   $wrap[STAGE_FRAME_KEY] = $(div(stageFrameClass));
   $wrap[NAV_THUMB_FRAME_KEY] = $(div(navFrameClass + ' ' + navFrameThumbClass, div(thumbClass)));
@@ -594,6 +596,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       if (isDetached($frame[0])) {
         $frame.appendTo($stageShaft);
+        console.log('stageFramePosition → unloadVideo');
         unloadVideo(dataFrame.$video);
       }
 
@@ -921,6 +924,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     that.activeFrame = activeFrame = data[activeIndex];
 
+    console.log('that.show → unloadVideo');
     unloadVideo($videoPlaying, activeFrame.i !== data[normalizeIndex(repositionIndex)].i);
 
     frameDraw(activeIndexes, 'stage');
@@ -962,7 +966,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         time: time,
         method: opts.transition,
         onEnd: onEnd
-      });
+      }, fadeStack);
     }
 
     arrsUpdate();

@@ -172,7 +172,7 @@ function findVideoId (href, forceVideo) {
   return id ? {id: id, type: type} : false;
 }
 
-function getVideoThumbs (dataFrame, data, api) {
+function getVideoThumbs (dataFrame, data, fotorama) {
   var img, thumb, video = dataFrame.video;
   if (video.type === 'youtube') {
     thumb = getProtocol() + 'img.youtube.com/vi/' + video.id + '/default.jpg';
@@ -184,7 +184,7 @@ function getVideoThumbs (dataFrame, data, api) {
       dataType: 'jsonp',
       success: function (json) {
         dataFrame.thumbsReady = true;
-        updateData(data, {img: json[0].thumbnail_large, thumb: json[0].thumbnail_small}, dataFrame.i, api);
+        updateData(data, {img: json[0].thumbnail_large, thumb: json[0].thumbnail_small}, dataFrame.i, fotorama);
       }
     });
   } else {
@@ -197,7 +197,7 @@ function getVideoThumbs (dataFrame, data, api) {
   }
 }
 
-function updateData (data, _dataFrame, i, api) {
+function updateData (data, _dataFrame, i, fotorama) {
   for (var _i = 0, _l = data.length; _i < _l; _i++) {
     var dataFrame = data[_i];
 
@@ -205,7 +205,7 @@ function updateData (data, _dataFrame, i, api) {
       var clear = {videoReady: true};
       clear[STAGE_FRAME_KEY] = clear[NAV_THUMB_FRAME_KEY] = clear[NAV_DOT_FRAME_KEY] = false;
 
-      api.splice(_i, 1, $.extend(
+      fotorama.splice(_i, 1, $.extend(
           {},
           dataFrame,
           clear,
