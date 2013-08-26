@@ -1,5 +1,6 @@
 @import url(_normalize.css);
 @import url(_typo.css);
+@import url(_global.css);
 @import url(_header.css);
 @import url(_content.css);
 /*@import url(_social-likes.css);*/
