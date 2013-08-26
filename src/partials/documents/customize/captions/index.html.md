@@ -10,8 +10,7 @@ _Captions example (<a href="/examples/captions.html" target="_blank">new window<
 
 <div class="fotorama-wrap"><div class="fotorama"
      data-width="500"
-     data-ratio="3/2"
-     data-max-width="100%">
+     data-ratio="3/2">
 	<a href="http://fotorama.s3.amazonaws.com/i/nyc/guy-in-car.jpg" data-caption="Guy in car"></a>
 	<a href="http://fotorama.s3.amazonaws.com/i/nyc/acapella.jpg" data-caption="Acapella"></a>
 	<a href="http://fotorama.s3.amazonaws.com/i/nyc/crazyjohn.jpg" data-caption="Crazy John"></a>

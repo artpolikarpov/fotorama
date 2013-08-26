@@ -6,7 +6,7 @@ _Default method._ Stretching the image to&nbsp;be&nbsp;fully displayed while fit
 **`cover`**<br>
 Stretching and cropping the image to&nbsp;completely cover the fotorama.
 
-**`scale-down`**<br>
+**`scaledown`**<br>
 Stretching the image if&nbsp;it&nbsp;is&nbsp;bigger than the fotorama.
 
 **`none`**<br>
@@ -29,16 +29,16 @@ The 200×300 frog:
 ...fit the 240×180 fotorama like so:
 
 <div class="fotorama-wrap fit-example">
-<div class="fotorama" data-width="240" data-ratio="240/180" data-max-width="100%" data-fit="contain">
+<div class="fotorama" data-width="240" data-ratio="240/180"  data-fit="contain">
 	<a href="http://fotorama.s3.amazonaws.com/i/fit/frog.png" data-caption="contain"></a>
 </div>
-<div class="fotorama" data-width="240" data-ratio="240/180" data-max-width="100%" data-fit="cover">
+<div class="fotorama" data-width="240" data-ratio="240/180"  data-fit="cover">
 	<a href="http://fotorama.s3.amazonaws.com/i/fit/frog.png" data-caption="cover"></a>
 </div>
-<div class="fotorama" data-width="240" data-ratio="240/180" data-max-width="100%" data-fit="scale-down">
-	<a href="http://fotorama.s3.amazonaws.com/i/fit/frog.png" data-caption="scale-down"></a>
+<div class="fotorama" data-width="240" data-ratio="240/180"  data-fit="scaledown">
+	<a href="http://fotorama.s3.amazonaws.com/i/fit/frog.png" data-caption="scaledown"></a>
 </div>
-<div class="fotorama" data-width="240" data-ratio="240/180" data-max-width="100%" data-fit="none">
+<div class="fotorama" data-width="240" data-ratio="240/180"  data-fit="none">
 	<a href="http://fotorama.s3.amazonaws.com/i/fit/frog.png" data-caption="none"></a>
 </div>
 </div>
@@ -50,16 +50,16 @@ The 200×125 elephant:
 ...fit the 240×180 fotorama like so:
 
 <div class="fotorama-wrap fit-example">
-<div class="fotorama" data-width="240" data-ratio="240/180" data-max-width="100%" data-fit="contain">
+<div class="fotorama" data-width="240" data-ratio="240/180"  data-fit="contain">
 	<a href="http://fotorama.s3.amazonaws.com/i/fit/elephant.png" data-caption="contain"></a>
 </div>
-<div class="fotorama" data-width="240" data-ratio="240/180" data-max-width="100%" data-fit="cover">
+<div class="fotorama" data-width="240" data-ratio="240/180"  data-fit="cover">
 	<a href="http://fotorama.s3.amazonaws.com/i/fit/elephant.png" data-caption="cover"></a>
 </div>
-<div class="fotorama" data-width="240" data-ratio="240/180" data-max-width="100%" data-fit="scale-down">
-	<a href="http://fotorama.s3.amazonaws.com/i/fit/elephant.png" data-caption="scale-down"></a>
+<div class="fotorama" data-width="240" data-ratio="240/180"  data-fit="scaledown">
+	<a href="http://fotorama.s3.amazonaws.com/i/fit/elephant.png" data-caption="scaledown"></a>
 </div>
-<div class="fotorama" data-width="240" data-ratio="240/180" data-max-width="100%" data-fit="none">
+<div class="fotorama" data-width="240" data-ratio="240/180"  data-fit="none">
 	<a href="http://fotorama.s3.amazonaws.com/i/fit/elephant.png" data-caption="none"></a>
 </div>
 </div>

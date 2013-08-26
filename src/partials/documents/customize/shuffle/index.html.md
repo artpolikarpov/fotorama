@@ -18,7 +18,6 @@ Shuffle frames by&nbsp;adding `data-shuffle="true"`:
      data-shuffle="true"
      data-width="658"
      data-ratio="3/2"
-     data-max-width="100%"
      data-fit="cover"
      data-loop="true"
      data-nav="thumbs">

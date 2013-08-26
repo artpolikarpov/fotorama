@@ -21,9 +21,8 @@ _Thumbnails example (<a href="/examples/thumbnails.html" target="_blank">new win
 <div class="fotorama-wrap"><div class="fotorama"
      data-width="700"
      data-ratio="3/2"
-     data-max-width="100%"
      data-nav="thumbs"
-     data-thumb-height="48">
+     data-thumbheight="48">
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/1-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/1-thumb.jpg" width="144" height="96"></a>
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/2-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/2-thumb.jpg" width="144" height="96"></a>
   <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/3-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/3-thumb.jpg" width="144" height="96"></a>
@@ -50,9 +49,9 @@ _Thumbnails example (<a href="/examples/thumbnails.html" target="_blank">new win
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/19-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/19-thumb.jpg" width="144" height="96"></a>
 </div></div>
 
-By&nbsp;default, thumbnail is&nbsp;a&nbsp;64&times;64&nbsp;square. Adjust this with `data-thumb-width` and `data-thumb-height`.
+By&nbsp;default, thumbnail is&nbsp;a&nbsp;64&times;64&nbsp;square. Adjust this with `data-thumbwidth` and `data-thumbheight`.
 
-If you need to have each thumbnail had its own aspect ratio, set the `width` and `height`:
+If you need to have each thumbnail had its own aspect ratio, set `width` and `height`:
 
 ```
 <div class="fotorama"
@@ -63,6 +62,6 @@ If you need to have each thumbnail had its own aspect ratio, set the `width` and
 </div>
 ```
 
-In that case height will be 64 pixels or what you’ve set in `data-thumb-height`, and width will be arbitrary.
+In that case height will be 64 pixels or what you’ve set in `data-thumbheight`, and width will be arbitrary.
 
 Fotorama automatically generates the missing thumbnails.

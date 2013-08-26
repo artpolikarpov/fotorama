@@ -13,7 +13,8 @@
 @import url(_form.css);
 @import url(_contact.css);
 @import url(_noise.css);
-
+@import url(_shake.css);
+@import url(_promo.css);
 @import url(_footer.css);
 
 html {

@@ -19,7 +19,6 @@ _Transition example (<a href="/examples/transition.html" target="_blank">new win
      id="transition"
      data-width="700"
      data-ratio="3/2"
-     data-max-width="100%"
      data-fit="cover">
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/10-lo.jpg"></a>
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/11-lo.jpg"></a>
@@ -44,7 +43,6 @@ _Dissolve example (<a href="/examples/dissolve.html" target="_blank">new window<
      data-transition="dissolve"
      data-width="700"
      data-ratio="700/467"
-     data-max-width="100%"
      data-fit="cover"
      data-loop="true">
 	<a href="http://fotorama.s3.amazonaws.com/i/orion-art/5-a.jpg"></a>

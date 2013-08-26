@@ -14,8 +14,7 @@ _Hash example (<a href="/examples/hash.html" target="_blank">new window</a>):_
 <div class="fotorama-wrap"><div class="fotorama"
      data-hash="true"
      data-width="500"
-     data-ratio="3/2"
-     data-max-width="100%">
+     data-ratio="3/2">
 	<a href="http://fotorama.s3.amazonaws.com/i/nyc/guy-in-car.jpg"></a>
 	<a href="http://fotorama.s3.amazonaws.com/i/nyc/acapella.jpg"></a>
 	<a href="http://fotorama.s3.amazonaws.com/i/nyc/crazyjohn.jpg" id="three"></a>

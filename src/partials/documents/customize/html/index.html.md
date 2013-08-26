@@ -28,7 +28,7 @@ Work with links, divs, tables, paragraphs and more. Write the <abbr>CSS</abbr> f
 
 _Custom <abbr>HTML</abbr> example (<a href="/examples/html.html" target="_blank">new window</a>):_
 
-<div class="fotorama-wrap"><div class="fotorama" data-width="500" data-height="281" data-max-width="100%">
+<div class="fotorama-wrap"><div class="fotorama" data-width="500" data-height="281">
 	<div class="any" style="background: rgba(255, 0, 0, .1);">One</div>
 	<div class="any" style="background: rgba(0, 255, 0, .1);"><strong>Two</strong></div>
 	<div class="any" style="background: rgba(0, 0, 255, .1);"><em>Three</em></div>
@@ -45,7 +45,7 @@ Make text selectable with `fotorama__select` class:
 
 _Selectable text example (<a href="/examples/html-selectable.html" target="_blank">new window</a>):_
 
-<div class="fotorama-wrap"><div class="fotorama" data-width="500" data-height="281" data-max-width="100%">
+<div class="fotorama-wrap"><div class="fotorama" data-width="500" data-height="281">
 	<div class="any" style="background: rgba(255, 0, 0, .1);"><span class="fotorama__select">One</span></div>
 	<div class="any" style="background: rgba(0, 255, 0, .1);"><strong class="fotorama__select">Two</strong></div>
 	<div class="any" style="background: rgba(0, 0, 255, .1);"><em class="fotorama__select">Three</em></div>
@@ -60,6 +60,16 @@ To&nbsp;define a&nbsp;thumbnail for such frame, use `data-thumb`:
 	  <div data-thumb="3_thumb.jpg"><em>Three</em></div>
 	</div>
 
+If you need to have each thumbnail had its own aspect ratio, set `data-thumbratio` for every frame:
+
+```xml
+<div class="fotorama">
+  <div data-thumb="1_thumb.jpg" data-thumbratio="144/96">One</div>
+  <div data-thumb="2_thumb.jpg" data-thumbratio="64/128"><strong>Two</strong></div>
+  <div data-thumb="3_thumb.jpg" data-thumbratio="1"><em>Three</em></div>
+</div>
+```
+
 ## Images
 Combine with the fotorama images using `data-img`:
 
@@ -71,7 +81,7 @@ Combine with the fotorama images using `data-img`:
 
 _Custom <abbr>HTML</abbr> with the fotorama images (<a href="/examples/html-with-images.html" target="_blank">new window</a>):_
 
-<div class="fotorama-wrap"><div class="fotorama" data-width="500" data-height="281" data-max-width="100%" data-fit="cover">
+<div class="fotorama-wrap"><div class="fotorama" data-width="500" data-height="281"  data-fit="cover">
 	<div data-img="http://fotorama.s3.amazonaws.com/i/okonechnikov/19-lo.jpg" class="any inverse">One</div>
 	<div data-img="http://fotorama.s3.amazonaws.com/i/okonechnikov/20-lo.jpg" class="any inverse"><strong>Two</strong></div>
 	<div data-img="http://fotorama.s3.amazonaws.com/i/okonechnikov/30-lo.jpg" class="any inverse"><em>Three</em></div>

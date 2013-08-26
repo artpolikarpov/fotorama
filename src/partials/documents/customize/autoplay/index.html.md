@@ -15,7 +15,6 @@ By&nbsp;default, a&nbsp;pause between images is&nbsp;5&nbsp;seconds. Set any int
      data-autoplay="3000"
      data-width="700"
      data-ratio="3/2"
-     data-max-width="100%"
      data-nav="thumbs">
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/1-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/1-thumb.jpg"></a>
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/2-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/2-thumb.jpg"></a>
@@ -43,4 +42,4 @@ By&nbsp;default, a&nbsp;pause between images is&nbsp;5&nbsp;seconds. Set any int
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/19-lo.jpg"><img src="http://fotorama.s3.amazonaws.com/i/okonechnikov/19-thumb.jpg"></a>
 </div></div>
 
-The show stops on&nbsp;touch. Change this with `data-stop-autoplay-on-touch="false"`.
+The show stops on&nbsp;touch. Change this with `data-stopautoplayontouch="false"`.

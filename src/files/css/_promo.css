@@ -1,0 +1,25 @@
+.promo {
+
+}
+
+.promo .part {
+  overflow: hidden;
+  position: relative;
+  *zoom: 1;
+}
+
+.promo .part p {
+  float: left;
+  width: 30%;
+  margin-right: 3%;
+}
+
+.promo .part p:nth-child(1),
+.promo .part p:nth-child(3) {
+  margin-right: 0;
+}
+
+.promo .part p:nth-child(2) {
+  margin-left: 5%;
+  margin-right: 5%;
+}

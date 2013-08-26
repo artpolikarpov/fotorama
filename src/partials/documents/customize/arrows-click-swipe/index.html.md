@@ -25,8 +25,7 @@ Control the way your users interact with the fotorama with three attributes `dat
 <div class="fotorama-wrap"><div class="fotorama"
      id="slide-controls"
      data-width="700"
-     data-ratio="3/2"
-     data-max-width="100%">
+     data-ratio="3/2">
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/1-lo.jpg"></a>
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/2-lo.jpg"></a>
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/9-lo.jpg"></a>

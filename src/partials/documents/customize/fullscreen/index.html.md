@@ -1,7 +1,7 @@
-Allow fotorama to&nbsp;enter fullscreen using `data-allow-full-screen`:
+Allow fotorama to&nbsp;enter fullscreen using `data-allowfullscreen`:
 
 	<div class="fotorama"
-	     data-allow-full-screen="true">
+	     data-allowfullscreen="true">
 	  <img src="1.jpg">
 	  <img src="2.jpg">
 	  <img src="3.jpg">
@@ -14,9 +14,8 @@ _Fullscreen example (<a href="/examples/fullscreen.html" target="_blank">new win
 <div class="fotorama-wrap"><div class="fotorama"
      data-width="500"
      data-ratio="3/2"
-     data-max-width="100%"
      data-fit="cover"
-     data-allow-full-screen="true">
+     data-allowfullscreen="true">
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/9-lo.jpg"></a>
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/23-lo.jpg"></a>
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/14-lo.jpg"></a>
@@ -25,10 +24,10 @@ _Fullscreen example (<a href="/examples/fullscreen.html" target="_blank">new win
 </div></div>
 
 ## Native fullscreen
-To&nbsp;use modern Fullscreen <abbr>API</abbr>, set `data-allow-full-screen` to `native`:
+To&nbsp;use modern Fullscreen <abbr>API</abbr>, set `data-allowfullscreen` to `native`:
 
 	<div class="fotorama"
-	     data-allow-full-screen="native">
+	     data-allowfullscreen="native">
 	  <img src="1.jpg">
 	  <img src="2.jpg">
 	  <img src="3.jpg">
@@ -39,9 +38,8 @@ _Native fullscreen example (<a href="/examples/fullscreen-native.html" target="_
 <div class="fotorama-wrap"><div class="fotorama"
      data-width="500"
      data-ratio="3/2"
-     data-max-width="100%"
      data-fit="cover"
-     data-allow-full-screen="native">
+     data-allowfullscreen="native">
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/9-lo.jpg" data-full="http://fotorama.s3.amazonaws.com/i/okonechnikov/9.jpg"></a>
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/23-lo.jpg" data-full="http://fotorama.s3.amazonaws.com/i/okonechnikov/23.jpg"></a>
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/14-lo.jpg" data-full="http://fotorama.s3.amazonaws.com/i/okonechnikov/14.jpg"></a>
@@ -53,7 +51,7 @@ _Native fullscreen example (<a href="/examples/fullscreen-native.html" target="_
 Add a&nbsp;separate image for fullscreen using `data-full`:
 
 	<div class="fotorama"
-	     data-allow-full-screen="native">
+	     data-allowfullscreen="native">
 	  <img src="1.jpg" data-full="1_full.jpg">
 	  <img src="2.jpg" data-full="2_full.jpg">
 	  <img src="3.jpg" data-full="3_full.jpg">

@@ -12,7 +12,6 @@ _Loop example (<a href="/examples/loop.html" target="_blank">new window</a>):_
 <div class="fotorama-wrap"><div class="fotorama"
      data-width="700"
      data-ratio="3/2"
-     data-max-width="100%"
      data-loop="true">
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/25-lo.jpg"></a>
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/9-lo.jpg"></a>

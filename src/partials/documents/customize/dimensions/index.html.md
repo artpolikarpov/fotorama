@@ -34,15 +34,15 @@ _Responsive example (<a href="/examples/responsive.html" target="_blank">new win
 	<a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/19.jpg"></a>
 </div></div>
 
-Constrain fotorama’s size to&nbsp;a&nbsp;certain range with `data-min-width`, `data-max-width`, `data-min-height`, and `data-max-height`:
+Constrain fotorama’s size to&nbsp;a&nbsp;certain range with `data-minwidth`, `data-maxwidth`, `data-minheight`, and `data-maxheight`:
 
 	<div class="fotorama"
 	     data-width="100%"
 	     data-ratio="800/600"
-	     data-min-width="400"
-	     data-max-width="1000"
-	     data-min-height="300"
-	     data-max-height="100%">
+	     data-minwidth="400"
+	     data-maxwidth="1000"
+	     data-minheight="300"
+	     data-maxheight="100%">
 	  <img src="1.jpg">
 	  <img src="2.jpg">
 	  <img src="3.jpg">
