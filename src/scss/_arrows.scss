@@ -55,6 +55,7 @@ $arrSize: 32px;
   *display: none;
   filter: alpha(opacity=0);
   opacity: .1;
+  pointer-events: none;
 }
 
 .fotorama__fullscreen-icon {
