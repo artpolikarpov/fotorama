@@ -265,6 +265,8 @@ $time: 300ms;
 }
 
 .fotorama__nav__frame.fotorama__active {
+  pointer-events: none;
+
   .fotorama__dot {
     width: 6px;
     height: 6px;
