@@ -69,7 +69,7 @@ function moveOnTouch ($el, options) {
       }
 
       if (!tail.noMove) {
-        $el.css(getTranslate(moveElPos));
+        $el.css(getTranslate(moveElPos, options._001));
         if (!movedFLAG) {
           movedFLAG = true;
           // only for mouse
