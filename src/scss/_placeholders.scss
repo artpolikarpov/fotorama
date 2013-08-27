@@ -58,7 +58,7 @@
   transform: none !important;
 }
 
-%transition-for-touch {
+%transition-for-slide {
   transition-property: transform, width;
   transition-timing-function: cubic-bezier(.1, 0, .25, 1);
   transition-duration: 0ms;

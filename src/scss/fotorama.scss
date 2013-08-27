@@ -1,5 +1,4 @@
-$time: 300ms;
-
+$time: .3s;
 
 @import 'mixins';
 @import 'placeholders';
@@ -266,7 +265,7 @@ $time: 300ms;
 
 .fotorama__nav__frame.fotorama__active {
   pointer-events: none;
-
+  cursor: default;
   .fotorama__dot {
     width: 6px;
     height: 6px;
@@ -370,7 +369,7 @@ $time: 300ms;
   .fotorama__stage__shaft,
   .fotorama__nav__shaft,
   .fotorama__thumb-border {
-    @extend %transition-for-touch;
+    @extend %transition-for-slide;
   }
   .fotorama__stage__shaft,
   .fotorama__nav__shaft,
