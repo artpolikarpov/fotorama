@@ -17,7 +17,7 @@ module.exports = function (grunt) {
         'src/js/animate.js',
         'src/js/touch.js',
         'src/js/moveontouch.js',
-		    'src/js/oooo.js',
+        'src/js/oooo.js',
         'src/js/fotorama.js',
         'src/js/fn-fotorama.js',
         'src/js/instances.js',
@@ -56,13 +56,13 @@ module.exports = function (grunt) {
         files: '<%= meta.js %>',
         tasks: 'concat:js'
       },
-	    i: {
-		    files: 'src/i/*',
-		    tasks: 'copy:i'
-	    }
+      i: {
+        files: 'src/i/*',
+        tasks: 'copy:i'
+      }
     },
     sass: {
-			mixdown: {
+      mixdown: {
         options: {
         },
         files: {
@@ -80,26 +80,26 @@ module.exports = function (grunt) {
         }
       }
     },
-	  copy: {
-		  i: {
-			  files: [
-					{
-						expand: true,
-						flatten: true,
-						src: ['src/i/*.png'],
-						dest: 'product/'
-					}
-				]
-		  },
-		  example: {
-			  files: [
-				  {
-					  src: 'src/example/example.html',
-					  dest: 'product/example.html'
-				  }
-			  ]
-		  }
-	  },
+    copy: {
+      i: {
+        files: [
+          {
+            expand: true,
+            flatten: true,
+            src: ['src/i/*.png'],
+            dest: 'product/'
+          }
+        ]
+      },
+      example: {
+        files: [
+          {
+            src: 'src/example/example.html',
+            dest: 'product/example.html'
+          }
+        ]
+      }
+    },
     concat: {
       js: {
         files: {
@@ -129,23 +129,23 @@ module.exports = function (grunt) {
       }
     },
     'string-replace': {
-	    jst: {
-		    files: {
-			    'src/templates/compiled.js': 'src/templates/compiled.js'
-		    },
-		    options: {
-			    replacements: [
+      jst: {
+        files: {
+          'src/templates/compiled.js': 'src/templates/compiled.js'
+        },
+        options: {
+          replacements: [
             {
               pattern: /this\[\"(\$)\"\]/g,
               replacement: "$"
             },
-				    {
-					    pattern: /\[\"([a-z]+)\"\]/gi,
-					    replacement: ".$1"
-				    }
+            {
+              pattern: /\[\"([a-z]+)\"\]/gi,
+              replacement: ".$1"
+            }
           ]
-		    }
-	    },
+        }
+      },
       console: {
         files: {
           'product/fotorama.uncompressed.js': 'product/fotorama.js'
@@ -159,19 +159,19 @@ module.exports = function (grunt) {
           ]
         }
       },
-	    version: {
-		    files: {
-			    'fotorama.jquery.json': 'fotorama.jquery.json'
-		    },
-		    options: {
-			    replacements: [
-				    {
-					    pattern: /\d+.\d+.\d+/g,
-					    replacement: '<%= pkg.version %>'
-				    }
-			    ]
-		    }
-	    }
+      version: {
+        files: {
+          'fotorama.jquery.json': 'fotorama.jquery.json'
+        },
+        options: {
+          replacements: [
+            {
+              pattern: /\d+.\d+.\d+/g,
+              replacement: '<%= pkg.version %>'
+            }
+          ]
+        }
+      }
     },
     uglify: {
       product: {
@@ -183,137 +183,137 @@ module.exports = function (grunt) {
         }
       }
     },
-		clean: {
-			zip: ['product/fotorama*.zip']
-		},
-		compress: {
-			uncompressed: {
-				options: {
-					archive: 'product/fotorama-<%= pkg.version %>.uncompressed.zip'
-				},
+    clean: {
+      zip: ['product/fotorama*.zip']
+    },
+    compress: {
+      uncompressed: {
+        options: {
+          archive: 'product/fotorama-<%= pkg.version %>.uncompressed.zip'
+        },
         files: [
-					{expand: true, cwd: 'product/', src: 'fotorama.uncompressed.css', dest: 'fotorama-<%= pkg.version %>.uncompressed/'},
-					{expand: true, cwd: 'product/', src: 'fotorama.uncompressed.js', dest: 'fotorama-<%= pkg.version %>.uncompressed/'},
-					{expand: true, cwd: 'product/', src: 'fotorama.png', dest: 'fotorama-<%= pkg.version %>.uncompressed/'},
-					{expand: true, cwd: 'product/', src: 'fotorama@2x.png', dest: 'fotorama-<%= pkg.version %>.uncompressed/'}
-				]
-			},
+          {expand: true, cwd: 'product/', src: 'fotorama.uncompressed.css', dest: 'fotorama-<%= pkg.version %>.uncompressed/'},
+          {expand: true, cwd: 'product/', src: 'fotorama.uncompressed.js', dest: 'fotorama-<%= pkg.version %>.uncompressed/'},
+          {expand: true, cwd: 'product/', src: 'fotorama.png', dest: 'fotorama-<%= pkg.version %>.uncompressed/'},
+          {expand: true, cwd: 'product/', src: 'fotorama@2x.png', dest: 'fotorama-<%= pkg.version %>.uncompressed/'}
+        ]
+      },
       product: {
-				options: {
-					archive: 'product/fotorama-<%= pkg.version %>.zip'
-				},
+        options: {
+          archive: 'product/fotorama-<%= pkg.version %>.zip'
+        },
         files: [
-					{expand: true, cwd: 'product/', src: 'fotorama.css', dest: 'fotorama-<%= pkg.version %>/'},
-					{expand: true, cwd: 'product/', src: 'fotorama.js', dest: 'fotorama-<%= pkg.version %>/'},
-					{expand: true, cwd: 'product/', src: 'fotorama.png', dest: 'fotorama-<%= pkg.version %>/'},
-					{expand: true, cwd: 'product/', src: 'fotorama@2x.png', dest: 'fotorama-<%= pkg.version %>/'},
-		      {expand: true, cwd: 'product/', src: 'example.html', dest: 'fotorama-<%= pkg.version %>/'}
-				]
+          {expand: true, cwd: 'product/', src: 'fotorama.css', dest: 'fotorama-<%= pkg.version %>/'},
+          {expand: true, cwd: 'product/', src: 'fotorama.js', dest: 'fotorama-<%= pkg.version %>/'},
+          {expand: true, cwd: 'product/', src: 'fotorama.png', dest: 'fotorama-<%= pkg.version %>/'},
+          {expand: true, cwd: 'product/', src: 'fotorama@2x.png', dest: 'fotorama-<%= pkg.version %>/'},
+          {expand: true, cwd: 'product/', src: 'example.html', dest: 'fotorama-<%= pkg.version %>/'}
+        ]
       }
-		},
-		s3: {
-			options: {
-				key: '<%= grunt.file.readJSON("grunt-s3.json").key %>',
-				secret: '<%= grunt.file.readJSON("grunt-s3.json").secret %>',
-				bucket: 'fotorama',
-				access: 'public-read',
+    },
+    s3: {
+      options: {
+        key: '<%= grunt.file.readJSON("grunt-s3.json").key %>',
+        secret: '<%= grunt.file.readJSON("grunt-s3.json").secret %>',
+        bucket: 'fotorama',
+        access: 'public-read',
         gzip: true,
-				secure: false
-			},
-			product: {
+        secure: false
+      },
+      product: {
         options: {
           headers: {'Cache-Control': 'max-age=2592000'}
         },
-				upload: [
-						// Separate version to separate folder
-					{
-						src: 'product/*',
-						dest: '<%= pkg.version %>/'
-					}
-				]
-			},
+        upload: [
+            // Separate version to separate folder
+          {
+            src: 'product/*',
+            dest: '<%= pkg.version %>/'
+          }
+        ]
+      },
       edge: {
         // Latest to the root
         options: {
           headers: {'Cache-Control': 'max-age=1'}
         },
-				upload: [
-					{
-						src: 'product/fotorama.*',
-						dest: ''
-					},
-					{
-						src: 'product/fotorama@2x.png',
-						dest: 'fotorama@2x.png'
-					}
-				]
-			}
-		},
+        upload: [
+          {
+            src: 'product/fotorama.*',
+            dest: ''
+          },
+          {
+            src: 'product/fotorama@2x.png',
+            dest: 'fotorama@2x.png'
+          }
+        ]
+      }
+    },
 
-		connect: {
-			server: {
-				options: {
-					hostname: '*',
-					port: 9001,
-					keepalive: true
-				}
-			}
-		},
+    connect: {
+      server: {
+        options: {
+          hostname: '*',
+          port: 9001,
+          keepalive: true
+        }
+      }
+    },
 
-	  shell: {
-		  commit: {
-			  command: 'git commit fotorama.jquery.json -m \'Tagging the <%= pkg.version %> release\'',
-			  stdout: true,
-			  stderr: true,
-			  failOnError: true
-		  },
-		  tag: {
-			  command: 'git tag <%= pkg.version %>',
-			  stdout: true,
-			  stderr: true,
-			  failOnError: true
-		  },
-		  push: {
-			  command: 'git push --tags --progress origin master:master',
-			  stdout: true,
-			  stderr: true,
-			  failOnError: true
-		  },
-		  publish: {
-			  command: 'heroku config:add FOTORAMA_VERSION=<%= pkg.version %>',
-			  stdout: true,
-			  stderr: true,
-			  failOnError: true
-		  }
-	  },
+    shell: {
+      commit: {
+        command: 'git commit fotorama.jquery.json -m \'Tagging the <%= pkg.version %> release\'',
+        stdout: true,
+        stderr: true,
+        failOnError: true
+      },
+      tag: {
+        command: 'git tag <%= pkg.version %>',
+        stdout: true,
+        stderr: true,
+        failOnError: true
+      },
+      push: {
+        command: 'git push --tags --progress origin master:master',
+        stdout: true,
+        stderr: true,
+        failOnError: true
+      },
+      publish: {
+        command: 'heroku config:add FOTORAMA_VERSION=<%= pkg.version %>',
+        stdout: true,
+        stderr: true,
+        failOnError: true
+      }
+    },
 
-	  jasmine: grunt.file.readJSON('test/specs/_specs.json')
+    jasmine: grunt.file.readJSON('test/specs/_specs.json')
   });
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jst');
-	grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-autoprefixer');
   grunt.loadNpmTasks('grunt-string-replace');
-	grunt.loadNpmTasks('grunt-contrib-jasmine');
-	grunt.loadNpmTasks('grunt-contrib-clean');
-	grunt.loadNpmTasks('grunt-contrib-compress');
+  grunt.loadNpmTasks('grunt-contrib-jasmine');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-compress');
 
-	grunt.loadNpmTasks('grunt-s3');
-	grunt.loadNpmTasks('grunt-contrib-connect');
-	grunt.loadNpmTasks('grunt-shell');
+  grunt.loadNpmTasks('grunt-s3');
+  grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-shell');
 
-	var defaultTask = 'copy sass autoprefixer jst string-replace:jst concat:js string-replace:console concat:css jasmine uglify cssmin jasmine clean compress';
+  var defaultTask = 'copy sass autoprefixer jst string-replace:jst concat:js string-replace:console concat:css jasmine uglify cssmin jasmine clean compress';
   var build = 'copy sass autoprefixer jst string-replace:jst concat:js string-replace:console concat:css uglify cssmin clean compress'.split(' ');
 
   // Compile
   grunt.registerTask('default', defaultTask.split(' '));
   grunt.registerTask('build', build);
 
-	// Publish, will fail without secret details ;-)
-	grunt.registerTask('publish', (defaultTask + ' ' + 's3 string-replace:version shell').split(' '));
+  // Publish, will fail without secret details ;-)
+  grunt.registerTask('publish', (defaultTask + ' ' + 's3 string-replace:version shell').split(' '));
 };
