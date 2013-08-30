@@ -54,7 +54,7 @@ _Selectable text example (<a href="/examples/html-selectable.html" target="_blan
 ## Thumbnails
 To&nbsp;define a&nbsp;thumbnail for such frame, use `data-thumb`:
 
-	<div class="fotorama">
+	<div class="fotorama" data-nav="thumbs">
 	  <div data-thumb="1_thumb.jpg">One</div>
 	  <div data-thumb="2_thumb.jpg"><strong>Two</strong></div>
 	  <div data-thumb="3_thumb.jpg"><em>Three</em></div>
@@ -63,7 +63,7 @@ To&nbsp;define a&nbsp;thumbnail for such frame, use `data-thumb`:
 If you need to have each thumbnail had its own aspect ratio, set `data-thumbratio` for every frame:
 
 ```xml
-<div class="fotorama">
+<div class="fotorama" data-nav="thumbs">
   <div data-thumb="1_thumb.jpg" data-thumbratio="144/96">One</div>
   <div data-thumb="2_thumb.jpg" data-thumbratio="64/128"><strong>Two</strong></div>
   <div data-thumb="3_thumb.jpg" data-thumbratio="1"><em>Three</em></div>
