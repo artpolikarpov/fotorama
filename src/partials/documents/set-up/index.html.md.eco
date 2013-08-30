@@ -26,5 +26,5 @@ Or&nbsp;download zipped, unpack and host it&nbsp;on&nbsp;your server if&nbsp;you
 
 <a href="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama-<%= process.env.FOTORAMA_VERSION %>.zip" class="download noise"><strong><i class="icon-cloud-download"></i> fotorama-<%= process.env.FOTORAMA_VERSION %>.zip</strong></a>
 
-<!--<p class="after-pre">Read <a href="/set-up/changelog/">the changelog</a>.</p>-->
+<p class="after-pre">Read <a href="https://github.com/artpolikarpov/fotorama/releases">the changelog</a>.</p>
 
