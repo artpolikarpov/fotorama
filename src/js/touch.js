@@ -114,19 +114,19 @@ function touch ($el, options) {
   }
 
   if (MS_POINTER) {
-    el[addEventListener]('MSPointerDown', onStart);
-    document[addEventListener]('MSPointerMove', onMove);
-    document[addEventListener]('MSPointerCancel', onEnd);
-    document[addEventListener]('MSPointerUp', onEnd);
+    el[addEventListener]('MSPointerDown', onStart, false);
+    document[addEventListener]('MSPointerMove', onMove, false);
+    document[addEventListener]('MSPointerCancel', onEnd, false);
+    document[addEventListener]('MSPointerUp', onEnd, false);
   } else {
     if (el[addEventListener]) {
-      el[addEventListener]('touchstart', onStart);
-      el[addEventListener]('touchmove', onMove);
-      el[addEventListener]('touchend', onEnd);
+      el[addEventListener]('touchstart', onStart, false);
+      el[addEventListener]('touchmove', onMove, false);
+      el[addEventListener]('touchend', onEnd, false);
 
-      document[addEventListener]('touchstart', onOtherStart);
-      document[addEventListener]('touchend', onOtherEnd);
-      window[addEventListener]('scroll', onOtherEnd);
+      document[addEventListener]('touchstart', onOtherStart, false);
+      document[addEventListener]('touchend', onOtherEnd, false);
+      window[addEventListener]('scroll', onOtherEnd, false);
     }
 
     $el.on('mousedown', onStart);

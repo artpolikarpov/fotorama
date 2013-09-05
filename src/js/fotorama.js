@@ -1083,7 +1083,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       if (data && !fullScreenApi.is() && !$videoPlaying) {
         cancelFullScreen();
       }
-    });
+    }, false);
   }
 
   that.resize = function (options) {
