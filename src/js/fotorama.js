@@ -548,7 +548,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     leave || $oooo.detach();
     clearInterval(ooooInterval);
   }
-  
+
   function updateFotoramaState () {
     var $frame = that.activeFrame[STAGE_FRAME_KEY];
 
@@ -879,15 +879,17 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     var _activeIndex = activeIndex;
 
-    changeAutoplay.t = setTimeout(function () {
-      var frameData = that.activeFrame[STAGE_FRAME_KEY].data();
-      waitFor(function () {
-        return frameData.state || _activeIndex !== activeIndex;
-      }, function () {
+
+    var frameData = that.activeFrame[STAGE_FRAME_KEY].data();
+    waitFor(function () {
+      return frameData.state || _activeIndex !== activeIndex;
+    }, function () {
+      changeAutoplay.t = setTimeout(function () {
         if (pausedAutoplayFLAG || _activeIndex !== activeIndex) return;
         that.show(o_loop ? '>' : normalizeIndex(activeIndex + 1));
-      });
-    }, opts.autoplay);
+      }, opts.autoplay);
+    });
+
   }
 
   that.startAutoplay = function (interval) {
