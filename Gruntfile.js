@@ -47,6 +47,30 @@ module.exports = function(grunt) {
         }
       }
     },
+    autoprefixer: {
+      main: {
+        files: [
+          {
+            expand: true,
+            flatten: true,
+            src: 'out/c/*',
+            dest: 'out/c/'
+          }
+        ]
+      }
+    },
+    csso: {
+      main: {
+        files: [
+          {
+            expand: true,
+            flatten: true,
+            src: 'out/c/*',
+            dest: 'out/c/'
+          }
+        ]
+      }
+    },
 	  s3: {
 			options: {
 				key: '<%= grunt.file.readJSON("grunt-s3.json").key %>',
@@ -77,7 +101,9 @@ module.exports = function(grunt) {
 
 
   grunt.loadNpmTasks('grunt-frontend');
+  grunt.loadNpmTasks('grunt-autoprefixer');
+  grunt.loadNpmTasks('grunt-csso');
 	grunt.loadNpmTasks('grunt-s3');
 
-  grunt.registerTask('default', process.env.NODE_ENV ? ['frontend', 's3'] : ['frontend']);
+  grunt.registerTask('default', process.env.NODE_ENV ? ['frontend', 'autoprefixer', 'csso', 's3'] : ['frontend', 'autoprefixer', 'csso']);
 };

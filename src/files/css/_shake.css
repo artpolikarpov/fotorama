@@ -1,72 +1,3 @@
-@-moz-keyframes shake {
-  0% {
-    -moz-transform: translateX(0);
-    transform: translateX(0) 
-  }
-  25% {
-    -moz-transform: translateX(-3px);
-    transform: translateX(-3px)
-  }
-  50% {
-    -moz-transform: translateX(3px);
-    transform: translateX(3px) 
-  }
-  75% {
-    -moz-transform: translateX(-3px);
-    transform: translateX(-3px) 
-  }
-  100% {
-    -moz-transform: translateX(0);
-    transform: translateX(0) 
-  }
-}
-
-@-webkit-keyframes shake {
-  0% {
-    -webkit-transform: translateX(0);
-    transform: translateX(0) 
-  }
-  25% {
-    -webkit-transform: translateX(-3px);
-    transform: translateX(-3px) 
-  }
-  50% {
-    -webkit-transform: translateX(3px);
-    transform: translateX(3px) 
-  }
-  75% {
-    -webkit-transform: translateX(-3px);
-    transform: translateX(-3px) 
-  }
-  100% {
-    -webkit-transform: translateX(0);
-    transform: translateX(0) 
-  }
-}
-
-@-o-keyframes shake {
-  0% {
-    -o-transform: translateX(0);
-    transform: translateX(0) 
-  }
-  25% {
-    -o-transform: translateX(-3px);
-    transform: translateX(-3px) 
-  }
-  50% {
-    -o-transform: translateX(3px);
-    transform: translateX(3px) 
-  }
-  75% {
-    -o-transform: translateX(-3px);
-    transform: translateX(-3px) 
-  }
-  100% {
-    -o-transform: translateX(0);
-    transform: translateX(0) 
-  }
-}
-
 @keyframes shake {
   0% {
     transform: translateX(0)
@@ -86,8 +17,5 @@
 }
 
 .shake {
-  -webkit-animation: shake .3s 1;
-  -moz-animation-name: shake .3s 1;
-  -o-animation-name: shake .3s 1;
   animation-name: shake .3s 1;
 }

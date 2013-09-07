@@ -21,6 +21,8 @@
   },
   "main": "node_modules/docpad/bin/docpad-server",
   "devDependencies": {
-    "grunt-s3": "~0.2.0-alpha.2"
+    "grunt-s3": "~0.2.0-alpha.2",
+    "grunt-autoprefixer": "~0.3.0",
+    "grunt-csso": "~0.5.0"
   }
 }
