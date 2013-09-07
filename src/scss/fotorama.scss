@@ -58,6 +58,14 @@ $time: .3s;
    }
 }
 
+//.fotorama__wrap,
+//.fotorama__stage,
+//.fotorama__stage__shaft,
+//.fotorama__stage__frame,
+//.fotorama__img {
+//
+//}
+
 .fotorama__stage,
 .fotorama__nav {
   overflow: hidden;
@@ -92,15 +100,6 @@ $time: .3s;
 
 .fotorama__grabbing * {
   @extend %grabbing-cursor;
-}
-
-.fotorama__img {
-  @include opacity(0);
-  @extend %image-reset;
-  .fotorama__loaded &,
-  .fotorama__error & {
-    @include opacity(1);
-  }
 }
 
 .fotorama__stage__frame {
@@ -155,9 +154,15 @@ $time: .3s;
 }
 
 .fotorama__img {
+  @include opacity(0);
+  @extend %image-reset;
   border: 0;
-  overflow: hidden;
+  //overflow: hidden;
   @extend %stretch-for-fit;
+  .fotorama__loaded &,
+  .fotorama__error & {
+    @include opacity(1);
+  }
 }
 
 .fotorama__img--full {

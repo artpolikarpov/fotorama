@@ -73,6 +73,7 @@ function touch ($el, options) {
         e.preventDefault();
       }
     } else {
+      console.log('onMove e.preventDefault');
       e.preventDefault();
       (options.onMove || noop).call(el, e, {touch: touchFLAG});
     }
