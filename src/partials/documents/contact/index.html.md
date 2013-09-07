@@ -16,6 +16,7 @@ If&nbsp;you’ve found a&nbsp;bug in&nbsp;Fotorama or&nbsp;have an&nbsp;enhancem
 <center>...</center>
 To&nbsp;showcase your Fotorama site or&nbsp;anything else, you can reach me&nbsp;by&nbsp;email at&nbsp;<a href="mailto:fotoramajs@gmail.com">fotoramajs@gmail.com</a>.
 
+<a name="donate"></a>
 ## Donate <i class="icon-thumbs-up-alt"></i>
 * PayPal for satisfied users: [fotoramajs@gmail.com](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7M9KK5AQPG6CC)
 * Yandex.Money: [4100139676157](https://money.yandex.ru/direct-payment.xml?receiver=4100139676157)
