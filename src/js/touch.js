@@ -52,11 +52,14 @@ function touch ($el, options) {
   }
 
   function onMove (e) {
+    console.log('onMove');
+    console.log('touchEnabledFLAG', touchEnabledFLAG);
     if ((e.touches && e.touches.length > 1)
         || (MS_POINTER && !e.isPrimary)
         || moveEventType !== e.type
         || !touchEnabledFLAG) {
       touchEnabledFLAG && onEnd();
+      console.log('return from onMove');
       return;
     }
 
@@ -69,8 +72,9 @@ function touch ($el, options) {
         yWin = xyDiff < 0;
 
     if (touchFLAG && !tail.checked) {
-      touchEnabledFLAG = xWin;
-      touchEnabledFLAG && e.preventDefault();
+      if (touchEnabledFLAG = xWin) {
+        e.preventDefault();
+      }
     } else {
       e.preventDefault();
       (options.onMove || noop).call(el, e, {touch: touchFLAG});
@@ -80,6 +84,8 @@ function touch ($el, options) {
   }
 
   function onEnd (e) {
+    console.log('onEnd');
+
     var _touchEnabledFLAG = touchEnabledFLAG;
     tail.control = touchEnabledFLAG = false;
 
@@ -99,14 +105,16 @@ function touch ($el, options) {
     (options.onEnd || noop).call(el, {moved: tail.checked, $target: $target, control: controlTouch, touch: touchFLAG, startEvent: startEvent, aborted: !e});
   }
 
-  function onOtherStart () {
+  function onOtherStart (e) {
+    console.log('onOtherStart', e.type);
     clearTimeout(docTouchTimeout);
     docTouchTimeout = setTimeout(function () {
       tail.flow = true;
     }, 10);
   }
 
-  function onOtherEnd () {
+  function onOtherEnd (e) {
+    console.log('onOtherEnd', e && e.type, tail.flow);
     clearTimeout(docTouchTimeout);
     docTouchTimeout = setTimeout(function () {
       tail.flow = false;
@@ -126,6 +134,7 @@ function touch ($el, options) {
 
       document[addEventListener]('touchstart', onOtherStart, false);
       document[addEventListener]('touchend', onOtherEnd, false);
+      document[addEventListener]('touchcancel', onOtherEnd, false);
       window[addEventListener]('scroll', onOtherEnd, false);
     }
 
