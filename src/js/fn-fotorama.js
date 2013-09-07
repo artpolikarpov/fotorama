@@ -47,6 +47,7 @@ $.fn.fotorama = function (opts) {
                   captions: true,
 
                   hash: false,
+                  startindex: 0,
 
                   autoplay: false,
                   stopautoplayontouch: true,

@@ -360,9 +360,9 @@ function findShadowEdge (pos, min, max) {
   return min === max ? false : pos <= min ? 'left' : pos >= max ? 'right' : 'left right';
 }
 
-function getIndexFromHash (hash, data, ok) {
+function getIndexFromHash (hash, data, ok, startindex) {
   if (!ok) return false;
-  if (!isNaN(hash)) return hash - 1;
+  if (!isNaN(hash)) return hash - (startindex ? 0 : 1);
 
   var index;
 

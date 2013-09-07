@@ -1378,9 +1378,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
     setOptions();
 
     if (!ready.ok) {
+      var _startindex;
       // Only first time
-      if (opts.hash && location.hash) {
-        startIndex = getIndexFromHash(location.hash.replace(/^#/, ''), data, that.index === 0);
+      if ((_startindex = opts.startindex) || opts.hash && location.hash) {
+        startIndex = getIndexFromHash(_startindex || location.hash.replace(/^#/, ''), data, that.index === 0 || _startindex, _startindex);
       }
       activeIndex = repositionIndex = dirtyIndex = lastActiveIndex = startIndex = edgeIndex(startIndex) || 0;
     }

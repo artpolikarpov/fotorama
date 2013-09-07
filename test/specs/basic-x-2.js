@@ -1,5 +1,5 @@
 document.write(
-    '<div class="fotorama" data-max-width="false" data-nav="thumbs" id="fotorama1">' +
+    '<div class="fotorama" data-max-width="false" data-startindex="2" data-nav="thumbs" id="fotorama1">' +
         '<img src="test/i/okonechnikov/1-lo.jpg">' +
         '<img src="test/i/okonechnikov/2-lo.jpg">' +
         '<img src="test/i/okonechnikov/9-lo.jpg">' +
@@ -9,7 +9,7 @@ document.write(
 );
 
 document.write(
-    '<div class="fotorama" data-width="500" data-max-width="false" data-ratio="3.14/5.6" data-nav="dots" id="fotorama2">' +
+    '<div class="fotorama" data-width="500" data-startindex="3" data-max-width="false" data-ratio="3.14/5.6" data-nav="dots" id="fotorama2">' +
         '<img src="test/i/okonechnikov/3-lo.jpg">' +
         '<img src="test/i/okonechnikov/4-lo.jpg">' +
         '<img src="test/i/okonechnikov/7-lo.jpg">' +
@@ -54,7 +54,7 @@ describe('Two fotoramas', function () {
       expect($('.fotorama__nav', $fotorama).size()).toEqual(1);
       expect($('.fotorama__nav__shaft', $fotorama).size()).toEqual(1);
       expect($('.fotorama__arr', $fotorama).size()).toEqual(2);
-      expect($('.fotorama__stage__frame', $fotorama).size()).toEqual(2);
+      expect($('.fotorama__stage__frame', $fotorama).size()).toEqual(i ? 2 : 3);
       expect($('.fotorama__nav__frame', $fotorama).size()).toEqual(5 - i);
     });
   });
@@ -78,6 +78,12 @@ describe('Two fotoramas', function () {
     });
   });
 
+  it('`data-startindex` works', function () {
+    eachFotorama(function (i, fotorama) {
+      expect(fotorama.activeIndex).toBe(i ? 3 : 2);
+    });
+  });
+
   it('thumbs and dots are ok', function () {
     eachFotorama(function (i, fotorama) {
       var $fotorama = $('#fotorama' + (i + 1)),
@@ -89,4 +95,6 @@ describe('Two fotoramas', function () {
       expect($navFrames.index($navFrames.filter('.fotorama__active'))).toBe(index);
     });
   });
+
+
 });
