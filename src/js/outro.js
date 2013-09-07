@@ -1,1 +1,1 @@
-})(window, document, jQuery);
+})(window, document, location, jQuery);
