@@ -1,4 +1,4 @@
-To move dots or thumbs on top, use `data-navposition="top"`.
+To move dots or thumbs on top, use `data-navposition="top"`:
 
 	<div class="fotorama"
 	     data-navposition="top">
