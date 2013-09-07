@@ -417,5 +417,12 @@ $time: .3s;
   }
 }
 
+// Strange fix of the #66 issue (Firefox bug while sliding backwards)
+@-moz-document url-prefix(){
+  .fotorama__active {
+    box-shadow: 0 0 0 transparent;
+  }
+}
+
 @import 'arrows';
 @import 'shadows';
