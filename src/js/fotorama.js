@@ -175,7 +175,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (FLAG) {
       $fotorama
           .html('')
-          .addClass(stampClass)
+          .addClass(_fotoramaClass + ' ' + stampClass)
           .append($wrap)
           .before($style)
           .before($anchor);

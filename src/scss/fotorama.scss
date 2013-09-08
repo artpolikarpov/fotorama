@@ -6,6 +6,7 @@ $time: .3s;
 .fotorama {
   // /test/specs/initialization.js
   min-width: 1px;
+  overflow: hidden;
 
   > * {
     visibility: hidden;
