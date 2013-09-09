@@ -23,7 +23,6 @@ var $WINDOW = $(window),
     WIDTH = 500,
     HEIGHT = 333,
 
-
     STAGE_FRAME_KEY = '$stageFrame',
     NAV_DOT_FRAME_KEY = '$navDotFrame',
     NAV_THUMB_FRAME_KEY = '$navThumbFrame',
