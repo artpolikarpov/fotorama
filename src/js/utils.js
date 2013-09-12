@@ -461,3 +461,12 @@ function getRatio (_ratio) {
     return +ratio[0] / +ratio[1] || undefined;
   }
 }
+
+function stopEvent (e, stopPropagation) {
+  e.preventDefault();
+  stopPropagation && e.stopPropagation();
+}
+
+function getDirectionSign (forward) {
+  return forward ? '>' : '<';
+}

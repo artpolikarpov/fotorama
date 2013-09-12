@@ -17,6 +17,7 @@ module.exports = function (grunt) {
         'src/js/animate.js',
         'src/js/touch.js',
         'src/js/moveontouch.js',
+        'src/js/wheel.js',
         'src/js/oooo.js',
         'src/js/fotorama.js',
         'src/js/fn-fotorama.js',
@@ -59,6 +60,10 @@ module.exports = function (grunt) {
       i: {
         files: 'src/i/*',
         tasks: 'copy:i'
+      },
+      test: {
+        files: ['test/**/*', '!test/index.html', '!test/*/index.html', '!test/*/*/index.html', '!test/*/*/*/index.html'],
+        tasks: 'shell:indexes'
       }
     },
     sass: {
@@ -261,29 +266,25 @@ module.exports = function (grunt) {
     },
 
     shell: {
-      commit: {
-        command: 'git commit fotorama.jquery.json -m \'Tagging the <%= pkg.version %> release\'',
+      options: {
         stdout: true,
         stderr: true,
         failOnError: true
+      },
+      commit: {
+        command: 'git commit fotorama.jquery.json -m \'Tagging the <%= pkg.version %> release\''
       },
       tag: {
-        command: 'git tag <%= pkg.version %>',
-        stdout: true,
-        stderr: true,
-        failOnError: true
+        command: 'git tag <%= pkg.version %>'
       },
       push: {
-        command: 'git push --tags --progress origin master:master',
-        stdout: true,
-        stderr: true,
-        failOnError: true
+        command: 'git push --tags --progress origin master:master'
       },
       publish: {
-        command: 'heroku config:add FOTORAMA_VERSION=<%= pkg.version %>',
-        stdout: true,
-        stderr: true,
-        failOnError: true
+        command: 'heroku config:add FOTORAMA_VERSION=<%= pkg.version %>'
+      },
+      indexes: {
+        command: './test/index.sh'
       }
     },
 

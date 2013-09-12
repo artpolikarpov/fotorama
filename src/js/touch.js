@@ -1,8 +1,7 @@
 var lastEvent,
     moveEventType,
     preventEvent,
-    preventEventTimeout,
-    addEventListener = 'addEventListener';
+    preventEventTimeout;
 
 function extendEvent (e) {
   var touch = (e.touches || [])[0] || e;
@@ -12,7 +11,6 @@ function extendEvent (e) {
 
 function touch ($el, options) {
   var el = $el[0],
-      docTouchTimeout,
       tail = {},
       touchEnabledFLAG,
       startEvent,
@@ -46,9 +44,7 @@ function touch ($el, options) {
 
     touchEnabledFLAG = tail.flow = true;
 
-    if (!touchFLAG || tail.go) {
-      e.preventDefault();
-    }
+    if (!touchFLAG || tail.go) stopEvent(e);
   }
 
   function onMove (e) {
@@ -70,11 +66,11 @@ function touch ($el, options) {
 
     if (touchFLAG && !tail.checked) {
       if (touchEnabledFLAG = xWin) {
-        e.preventDefault();
+        stopEvent(e);
       }
     } else {
       console.log('onMove e.preventDefault');
-      e.preventDefault();
+      stopEvent(e);
       (options.onMove || noop).call(el, e, {touch: touchFLAG});
     }
 
@@ -91,7 +87,7 @@ function touch ($el, options) {
 
     if (!_touchEnabledFLAG || (targetIsLinkFlag && !tail.checked)) return;
 
-    e && e.preventDefault();
+    e && stopEvent(e);
 
     preventEvent = true;
     clearTimeout(preventEventTimeout);
@@ -103,35 +99,33 @@ function touch ($el, options) {
 
   function onOtherStart () {
     if (tail.flow) return;
-    clearTimeout(docTouchTimeout);
-    docTouchTimeout = setTimeout(function () {
+    setTimeout(function () {
       tail.flow = true;
     }, 10);
   }
 
   function onOtherEnd () {
     if (!tail.flow) return;
-    clearTimeout(docTouchTimeout);
-    docTouchTimeout = setTimeout(function () {
+    setTimeout(function () {
       tail.flow = false;
     }, TOUCH_TIMEOUT);
   }
 
   if (MS_POINTER) {
-    el[addEventListener]('MSPointerDown', onStart, false);
-    document[addEventListener]('MSPointerMove', onMove, false);
-    document[addEventListener]('MSPointerCancel', onEnd, false);
-    document[addEventListener]('MSPointerUp', onEnd, false);
+    el[ADD_EVENT_LISTENER]('MSPointerDown', onStart, false);
+    document[ADD_EVENT_LISTENER]('MSPointerMove', onMove, false);
+    document[ADD_EVENT_LISTENER]('MSPointerCancel', onEnd, false);
+    document[ADD_EVENT_LISTENER]('MSPointerUp', onEnd, false);
   } else {
-    if (el[addEventListener]) {
-      el[addEventListener]('touchstart', onStart, false);
-      el[addEventListener]('touchmove', onMove, false);
-      el[addEventListener]('touchend', onEnd, false);
+    if (el[ADD_EVENT_LISTENER]) {
+      el[ADD_EVENT_LISTENER]('touchstart', onStart, false);
+      el[ADD_EVENT_LISTENER]('touchmove', onMove, false);
+      el[ADD_EVENT_LISTENER]('touchend', onEnd, false);
 
-      document[addEventListener]('touchstart', onOtherStart, false);
-      document[addEventListener]('touchend', onOtherEnd, false);
-      document[addEventListener]('touchcancel', onOtherEnd, false);
-      window[addEventListener]('scroll', onOtherEnd, false);
+      document[ADD_EVENT_LISTENER]('touchstart', onOtherStart, false);
+      document[ADD_EVENT_LISTENER]('touchend', onOtherEnd, false);
+      document[ADD_EVENT_LISTENER]('touchcancel', onOtherEnd, false);
+      window[ADD_EVENT_LISTENER]('scroll', onOtherEnd, false);
     }
 
     $el.on('mousedown', onStart);
@@ -141,7 +135,7 @@ function touch ($el, options) {
   }
 
   $el.on('click', 'a', function (e) {
-    tail.checked && e.preventDefault();
+    tail.checked && stopEvent(e);
   });
 
   return tail;

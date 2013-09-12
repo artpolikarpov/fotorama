@@ -12,10 +12,17 @@ var $WINDOW = $(window),
     MOBILE = navigator.userAgent.match(/Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i),
     SLOW = !CSS3 || MOBILE,
 
+    ADD_EVENT_LISTENER = 'addEventListener',
+
     MS_POINTER = window.navigator.msPointerEnabled,
+
+    WHEEL = "onwheel" in document.createElement("div") ? "wheel" : document.onmousewheel !== undefined ? "mousewheel" : "DOMMouseScroll",
 
     TOUCH_TIMEOUT = 250,
     TRANSITION_DURATION = 300,
+
+    SCROLL_LOCK_TIMEOUT = 1400,
+
     AUTOPLAY_INTERVAL = 5000,
     MARGIN = 2,
     THUMB_SIZE = 64,

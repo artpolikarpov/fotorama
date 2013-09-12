@@ -70,7 +70,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
       measuresSetFLAG,
 
       stageShaftTouchTail = {},
+      stageWheelTail = {},
       navShaftTouchTail = {},
+      navWheelTail = {},
 
       scrollTop,
       scrollLeft,
@@ -138,17 +140,17 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $DOCUMENT
           .on(keydownLocal, function (e) {
             if ($videoPlaying && e.keyCode === 27) {
-              e.preventDefault();
+              stopEvent(e);
               unloadVideo($videoPlaying, true, true);
             } else if (that.fullScreen || (opts.keyboard && !that.index)) {
               if (e.keyCode === 27) {
-                e.preventDefault();
+                stopEvent(e);
                 that.cancelFullScreen();
               } else if (e.keyCode === 39 || (e.keyCode === 40 && that.fullScreen)) {
-                e.preventDefault();
+                stopEvent(e);
                 that.show({index: '>', slow: e.altKey, direct: true});
               } else if (e.keyCode === 37 || (e.keyCode === 38 && that.fullScreen)) {
-                e.preventDefault();
+                stopEvent(e);
                 that.show({index: '<', slow: e.altKey, direct: true});
               }
             }
@@ -247,17 +249,20 @@ jQuery.Fotorama = function ($fotorama, opts) {
       classes.remove.push(selectClass);
 
       $arrs.toggle(opts.arrows);
-
-      arrsUpdate();
     } else {
       o_nav = false;
       $arrs.hide();
     }
 
+    arrsUpdate();
+    stageWheelUpdate();
+
     if (opts.autoplay) setAutoplayInterval(opts.autoplay);
 
     o_thumbSide = numberFromMeasure(opts.thumbwidth) || THUMB_SIZE;
     o_thumbSide2 = numberFromMeasure(opts.thumbheight) || THUMB_SIZE;
+
+    stageWheelTail.ok = navWheelTail.ok = opts.wheel;
 
     stageNoMove();
 
@@ -702,12 +707,18 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function arrsUpdate () {
-    $arrs.each(function (i) {
-      $(this).toggleClass(
-          arrDisabledClass,
-          disableDirrection(i)
-      );
-    });
+    $arrPrev.toggleClass(
+      arrDisabledClass,
+      disableDirrection(0)
+    );
+    $arrNext.toggleClass(
+      arrDisabledClass,
+      disableDirrection(1)
+    );
+  }
+
+  function stageWheelUpdate () {
+    stageWheelTail.prevent = {'<': disableDirrection(0), '>': disableDirrection(1)};
   }
 
   function getNavFrameBounds ($navFrame) {
@@ -960,6 +971,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       triggerEvent('showend', options.direct);
 
       updateTouchTails('go', false);
+      stageWheelUpdate();
 
       stageCursor();
       releaseAutoplay();
@@ -1256,7 +1268,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         if (toggleControlsFLAG) {
           toggleControlsClass();
         } else if (opts.click) {
-          that.show({index: e.shiftKey || !getDirection(e._x) ? '<' : '>', slow: e.altKey, direct: true});
+          that.show({index: e.shiftKey || getDirectionSign(getDirection(e._x)), slow: e.altKey, direct: true});
         }
       });
     }
@@ -1338,6 +1350,31 @@ jQuery.Fotorama = function ($fotorama, opts) {
     $wrap: $nav
   });
 
+  stageWheelTail = wheel($stage, {
+    shift: true,
+    onEnd: function (e, direction) {
+      console.log('wheel $stage onEnd', direction);
+      onTouchStart();
+      that.show({index: direction, slow: e.altKey})
+    }
+  });
+
+  navWheelTail = wheel($nav, {
+    onEnd: function (e, direction) {
+      console.log('wheel $nav onEnd', direction);
+      onTouchStart();
+      var newPos = stop($navShaft) + direction * .25;
+      $navShaft.css(getTranslate(minMaxLimit(newPos, navShaftData.min, navShaftData.max)));
+      setShadow($nav, findShadowEdge(newPos, navShaftData.min, navShaftData.max));
+      navWheelTail.prevent = {'<': newPos >= navShaftData.max, '>': newPos <= navShaftData.min};
+      clearTimeout(navWheelTail.t);
+      navWheelTail.t = setTimeout(function () {
+        thumbsDraw(newPos, true)
+      }, TOUCH_TIMEOUT);
+      thumbsDraw(newPos);
+    }
+  });
+
   $wrap.hover(
       function () {
         setTimeout(function () {
@@ -1358,7 +1395,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   smartClick($arrs, function (e) {
-    e.preventDefault();
+    stopEvent(e);
     if ($videoPlaying) {
       unloadVideo($videoPlaying, true, true);
     } else {
