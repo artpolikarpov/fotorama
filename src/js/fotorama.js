@@ -351,9 +351,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function setStageShaftMinmaxAndSnap () {
-    stageShaftData.min = o_loop ? -Infinity : -getPosByIndex(size - 1, measures.w, MARGIN, repositionIndex);
-    stageShaftData.max = o_loop ? Infinity : -getPosByIndex(0, measures.w, MARGIN, repositionIndex);
-    stageShaftData.snap = measures.w + MARGIN;
+    stageShaftData.min = o_loop ? -Infinity : -getPosByIndex(size - 1, measures.w, opts.margin, repositionIndex);
+    stageShaftData.max = o_loop ? Infinity : -getPosByIndex(0, measures.w, opts.margin, repositionIndex);
+    stageShaftData.snap = measures.w + opts.margin;
   }
 
   function setNavShaftMinmax () {
@@ -616,7 +616,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     eachIndex(indexes, 'stage', function (i, index, dataFrame, $frame, key, frameData) {
       if (!$frame) return;
 
-      toDetach[STAGE_FRAME_KEY][normalizeIndex(index)] = $frame.css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, MARGIN, repositionIndex)}, o_fade && getDuration(0)));
+      toDetach[STAGE_FRAME_KEY][normalizeIndex(index)] = $frame.css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, opts.margin, repositionIndex)}, o_fade && getDuration(0)));
 
       if (isDetached($frame[0])) {
         $frame.appendTo($stageShaft);
@@ -980,7 +980,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     if (!o_fade) {
       slide($stageShaft, {
-        pos: -getPosByIndex(dirtyIndex, measures.w, MARGIN, repositionIndex),
+        pos: -getPosByIndex(dirtyIndex, measures.w, opts.margin, repositionIndex),
         overPos: overPos,
         time: time,
         onEnd: onEnd,
@@ -1291,7 +1291,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       var toggleControlsFLAG = (MS_POINTER && !hoverFLAG || result.touch) && opts.arrows;
 
       if (result.moved || (toggleControlsFLAG && result.pos !== result.newPos)) {
-        var index = getIndexByPos(result.newPos, measures.w, MARGIN, repositionIndex);
+        var index = getIndexByPos(result.newPos, measures.w, opts.margin, repositionIndex);
         that.show({
           index: index,
           time: o_fade ? o_transitionDuration : result.time,
@@ -1303,7 +1303,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
     },
     getPos: function () {
-      return -getPosByIndex(dirtyIndex, measures.w, MARGIN, repositionIndex);
+      return -getPosByIndex(dirtyIndex, measures.w, opts.margin, repositionIndex);
     },
     _001: true,
     timeLow: 1,
