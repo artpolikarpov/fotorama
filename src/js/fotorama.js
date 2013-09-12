@@ -268,7 +268,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     extendMeasures(opts, true);
 
-    o_navThumbs = o_nav === 'thumbs'
+    o_navThumbs = o_nav === 'thumbs';
 
     if (o_navThumbs) {
       frameDraw(size, 'navThumb');
@@ -323,6 +323,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     ooooStop();
 
+    // Glimpse
+    $stageShaft.css({left: opts.glimpse, right: opts.glimpse, width: 'auto'});
+
     $wrap
         .addClass(classes.add.join(' '))
         .removeClass(classes.remove.join(' '));
@@ -357,7 +360,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function setNavShaftMinmax () {
-    navShaftData.min = Math.min(0, measures.w - $navShaft.width());
+    navShaftData.min = Math.min(0, measures.W - $navShaft.width());
     navShaftData.max = 0;
     $navShaft.toggleClass(grabClass, !(navShaftTouchTail.noMove = navShaftData.min === navShaftData.max));
   }
@@ -1113,7 +1116,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (measureIsValid(width)) {
       $wrap.css({width: width, minWidth: measures.minwidth, maxWidth: measures.maxwidth});
 
-      width = measures.w = $wrap.width();
+      width = measures.W = $wrap.width();
+      measures.w = $stageShaft.width() || width;
       height = numberFromPercent(height) / 100 * windowHeight || numberFromMeasure(height);
 
       height = height || (ratio && width / ratio);
