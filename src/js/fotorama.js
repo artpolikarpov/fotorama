@@ -435,7 +435,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           dataFrame[srcKey] = src = dummy;
           loadImg([index], type, specialMeasures, specialFit, true);
         } else {
-          if (src && !dataFrame.html) {
+          if (src && !dataFrame.html && !fullFLAG) {
             $frame
                 .trigger('f:error')
                 .removeClass(loadingClass)
@@ -483,8 +483,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
         fit($img, specialMeasures || measures, specialFit || dataFrame.fit || opts.fit);
 
-        $.Fotorama.cache[src] = 'loaded';
-        frameData.state = 'loaded';
+        $.Fotorama.cache[src] = frameData.state = 'loaded';
 
         setTimeout(function () {
           $frame
@@ -531,6 +530,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         })();
       }
 
+      frameData.state = '';
       img.src = src;
     });
   }
@@ -1046,6 +1046,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       that.resize();
       loadImg(activeIndexes, 'stage');
+      updateFotoramaState();
 
       triggerEvent('fullscreenenter');
     }
@@ -1116,8 +1117,15 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (measureIsValid(width)) {
       $wrap.css({width: width, minWidth: measures.minwidth, maxWidth: measures.maxwidth});
 
-      width = measures.W = $wrap.width();
-      measures.w = $stageShaft.width() || width;
+      width = measures.W = measures.w = $wrap.width();
+
+      if (opts.glimpse) {
+        measures.w -= Math.round((numberFromPercent(opts.glimpse) / 100 * width || numberFromMeasure(opts.glimpse)) * 2);
+      }
+
+      console.log('measures.W', measures.W);
+      console.log('measures.w', measures.w);
+
       height = numberFromPercent(height) / 100 * windowHeight || numberFromMeasure(height);
 
       height = height || (ratio && width / ratio);
