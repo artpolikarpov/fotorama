@@ -276,7 +276,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $navFrame = $navThumbFrame;
       navFrameKey = NAV_THUMB_FRAME_KEY;
 
-      setStyle($style, $.Fotorama.jst.style({w: o_thumbSide, h: o_thumbSide2, m: MARGIN, s: stamp, q: !COMPAT}));
+      setStyle($style, $.Fotorama.jst.style({w: o_thumbSide, h: o_thumbSide2, b: opts.thumbborderwidth, m: opts.thumbmargin, s: stamp, q: !COMPAT}));
 
       $nav
           .addClass(navThumbsClass)
@@ -690,7 +690,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
               $this.css({width: thumbwidth});
 
-              left += thumbwidth + MARGIN;
+              left += thumbwidth + opts.thumbmargin;
             })
       );
 
@@ -736,8 +736,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     return {
       c: left + width / 2,
-      min: -left + MARGIN * 10,
-      max: -left + measures.w - width - MARGIN * 10
+      min: -left + opts.thumbmargin * 10,
+      max: -left + measures.w - width - opts.thumbmargin * 10
     };
   }
 
@@ -746,7 +746,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     slide($thumbBorder, {
       time: time * .9,
       pos: navFrameData.l,
-      width: navFrameData.w - MARGIN * 2
+      width: navFrameData.w - opts.thumbborderwidth * 2
     });
   }
 
