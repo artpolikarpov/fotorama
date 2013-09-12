@@ -7,7 +7,7 @@
 
 .footer > p {
 	opacity: .6;
-  font-size: 14px;
+  font-size: 88%;
 }
 
 .footer .social {
@@ -21,6 +21,6 @@
 }
 
 .footer .social li .small {
-  font-size: 12px;
+  font-size: 75%;
 }
 

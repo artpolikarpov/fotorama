@@ -8,7 +8,7 @@
   font-size: 11px;
   line-height: 36px;
   list-style: none;
-  margin: 0 0 27px;
+  margin: -10px 0 27px -10px;
   padding: 0;
 }
 
@@ -51,7 +51,7 @@
   position: absolute;
   text-transform: none;
   font-size: 14px;
-  line-height: 24px;
+  line-height: 1.7;
   top: 30px;
   left: 0;
   z-index: 100;

@@ -6,7 +6,7 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
 
 tt, code {
 	font-family: Menlo, Monaco, Consolas, 'Courier New', monospase;
-	font-size: 14px;
+	font-size: 15px;
 	color: #454b43;
 	background-color: #fcfcfb;
   /*text-shadow: 0 1px 0 #fff;*/
@@ -24,7 +24,7 @@ pre {
 pre code {
 	display: block;
 	color: #657b83;
-	line-height: 20px;
+	line-height: 1.4;
 	padding: 5px 10px 10px;
 	overflow: auto;
 	white-space: pre;
