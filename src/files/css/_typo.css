@@ -79,6 +79,12 @@ h1 a.icon-link {
   display: none;
 }
 
+@media (max-width:840px) {
+  a.icon-link {
+    display: none !important;
+  }
+}
+
 #root h2 + h2 {
 	margin-top: .5em;
 }
