@@ -28,6 +28,7 @@ $.fn.fotorama = function (opts) {
                   ratio: null, // '16/9' || 500/333 || 1.5
 
                   margin: MARGIN,
+                  
 
                   // navigation, thumbs
                   nav: 'dots', // 'thumbs' || false
