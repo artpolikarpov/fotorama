@@ -4,9 +4,79 @@ body {
 	/*text-shadow: 0 1px 0 rgba(255,255,255,.5);*/
 }
 
-h1, h2, h3 {
+a, .header a:visited, h2 a:visited,
+a u, .header a:visited u, h2 a:visited u,
+.social a:visited, .social a:visited u {
+  text-decoration: none;
+  border-bottom: 1px solid;
+  color: rgb(3, 112, 154);
+  border-color: rgba(3, 112, 154, .3);
+}
+
+a.no-u {
+	border-bottom: none !important;
+}
+
+a:visited,
+a:visited u,
+.header .menu .menu a:visited,
+.header .menu .menu a:visited u {
+	color: rgb(85, 26, 139);
+	border-color: rgba(85, 26, 139, .3);
+}
+
+a.black, a.black u, a.black:visited, a.black:visited u {
+  color: rgb(33, 33, 30);
+  border-color: rgba(33, 33, 30, .3);
+}
+
+a.green, a.green u, a.green:visited, a.green:visited u {
+  color: rgb(102,162,57);
+  border-color: rgba(102,162,57, .3);
+}
+
+#root a:hover,
+#root a:hover u,
+.switch:hover {
+  color: rgb(170, 0, 0);
+  border-color: rgba(170, 0, 0, .3);
+}
+
+#root .selected > a,
+#root .selected > a u {
+	color: rgb(170, 0, 0);
+	border-color: rgb(170, 0, 0);
+}
+
+h1, h2, h3, h4 {
   margin-top: 1em;
   margin-bottom: .1em;
+  margin-left: -1.2em;
+  padding-left: 1.2em;
+  position: relative;
+}
+
+a.icon-link,
+a.icon-link:visited {
+  border-bottom: none;
+  color: #000;
+  position: absolute;
+  left: 0;
+  top: -.5em;
+  padding-top: .8em;
+  display: none;
+  outline: none;
+}
+
+h2:hover a.icon-link,
+h3:hover a.icon-link,
+h4:hover a.icon-link,
+a.icon-link:target {
+  display: block;
+}
+
+h1 a.icon-link {
+  display: none;
 }
 
 #root h2 + h2 {
@@ -57,52 +127,6 @@ body .fotorama-wrap, body .image {
 
 pre + .after-pre {
 	margin-top: -1em;
-}
-
-a, .header a:visited, h2 a:visited,
-a u, .header a:visited u, h2 a:visited u,
-.social a:visited, .social a:visited u {
-  text-decoration: none;
-  border-bottom: 1px solid;
-  color: rgb(3, 112, 154);
-  border-color: rgba(3, 112, 154, .3);
-}
-
-a.no-u {
-	border-bottom: none !important;
-}
-
-a:visited,
-a:visited u,
-.header .menu .menu a:visited,
-.header .menu .menu a:visited u {
-	color: rgb(85, 26, 139);
-	border-color: rgba(85, 26, 139, .3);
-}
-
-a.black, a.black u, a.black:visited, a.black:visited u {
-  color: rgb(33, 33, 30);
-  border-color: rgba(33, 33, 30, .3);
-}
-
-a.green, a.green u, a.green:visited, a.green:visited u {
-  color: rgb(102,162,57);
-  border-color: rgba(102,162,57, .3);
-}
-
-
-
-#root a:hover,
-#root a:hover u,
-.switch:hover {
-  color: rgb(170, 0, 0);
-  border-color: rgba(170, 0, 0, .3);
-}
-
-#root .selected > a,
-#root .selected > a u {
-	color: rgb(170, 0, 0);
-	border-color: rgb(170, 0, 0);
 }
 
 /*a {

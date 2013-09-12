@@ -33,13 +33,13 @@ There is&nbsp;one more transition, `dissolve`. This variation of&nbsp;fade is&nb
 _Dissolve example (<a href="/examples/dissolve.html" target="_blank">new window</a>):_
 
 <p class="switch-group">
-	<span class="switch js-transition-switch active" data-fotorama="#dissolve">Dissolve</span>
+	<span class="switch js-transition-switch active" data-fotorama="#dissolve-example">Dissolve</span>
 	&nbsp;
-	<span class="switch js-transition-switch" data-fotorama="#dissolve">Crossfade</span>
+	<span class="switch js-transition-switch" data-fotorama="#dissolve-example">Crossfade</span>
 </p>
 
 <div class="fotorama-wrap"><div class="fotorama"
-     id="dissolve"
+     id="dissolve-example"
      data-transition="dissolve"
      data-width="700"
      data-ratio="700/467"
