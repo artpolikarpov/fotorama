@@ -60,6 +60,12 @@ $time: .3s;
    }
 }
 
+.fotorama__wrap--rtl {
+  .fotorama__stage__frame {
+    direction: rtl;
+  }
+}
+
 //.fotorama__wrap,
 //.fotorama__stage,
 //.fotorama__stage__shaft,
@@ -329,6 +335,11 @@ $time: .3s;
 
   .fotorama__wrap--video & {
     display: none;
+  }
+
+  .fotorama__wrap--rtl & {
+    left: auto;
+    right: 0;
   }
 }
 

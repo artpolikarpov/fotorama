@@ -64,7 +64,9 @@ $.fn.fotorama = function (opts) {
 
                   shuffle: false,
 
-                  shadows: true
+                  shadows: true,
+
+                  direction: 'ltr' // 'rtl'
                 },
                 opts,
                 fotoramaData

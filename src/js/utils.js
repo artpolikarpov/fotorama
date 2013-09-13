@@ -169,7 +169,7 @@ function findVideoId (href, forceVideo) {
     type = 'custom';
   }
 
-  return id ? {id: id, type: type} : false;
+  return id ? {id: id, type: type, s: href.search.replace(/^\?/, '')} : false;
 }
 
 function getVideoThumbs (dataFrame, data, fotorama) {

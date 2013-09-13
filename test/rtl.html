@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Right to left direction</title>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.10.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../product/fotorama.css" rel="stylesheet">
+	<script src="../product/fotorama.js"></script>
+
+  <script type="text/javascript">
+    $(function () {
+      f = $('.fotorama').data('fotorama');
+    })
+  </script>
+</head>
+
+<body>
+
+<p>Right to left direction:<p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div class="fotorama"
+     <mark>data-direction="rtl"</mark>></code></pre>
+
+<!-- Just don’t want to repeat this prefix in every img[src] -->
+<base href="i/nyc/">
+
+<!-- Fotorama -->
+<div class="fotorama"
+     data-width="500"
+     data-direction="rtl"
+     data-autoplay="1000"
+     data-loop="true"
+     data-ratio="3/2"
+     data-max-width="100%">
+	<a href="guy-in-car.jpg" data-caption="1. Guy in car"></a>
+	<a href="acapella.jpg" data-caption="<a href='http://acapella.com/' target='_blank'>2. Acapella</a>"></a>
+	<a href="crazyjohn.jpg" data-caption="3. Crazy John"></a>
+	<a href="dudeintheground.jpg" data-caption="4. Dude in the ground"></a>
+	<a href="dudes.jpg" data-caption="5. Dudes"></a>
+</div>
+
+<!-- © -->
+<p>Photos <a href="http://alexeilebedev.com/">by Alexei Lebedev</a></p>
+</body>
+</html>

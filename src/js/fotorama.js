@@ -64,6 +64,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       o_thumbSide2,
       o_transitionDuration,
       o_shadows,
+      o_rtl,
       lastOptions = {},
 
       measures = {},
@@ -241,6 +242,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     o_transitionDuration = +opts.transitionduration || TRANSITION_DURATION;
 
+    o_rtl = opts.direction === 'rtl';
+
     var classes = {add: [], remove: []};
 
     if (size > 1) {
@@ -317,6 +320,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     classes[addOrRemove(o_fade)].push(wrapFadeClass);
     classes[addOrRemove(!o_fade)].push(wrapSlideClass);
+
+    classes[addOrRemove(o_rtl)].push(wrapRtlClass);
 
     o_shadows = opts.shadows && !SLOW;
     classes[addOrRemove(!o_shadows)].push(wrapNoShadowsClass);
@@ -902,7 +907,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }, function () {
       changeAutoplay.t = setTimeout(function () {
         if (pausedAutoplayFLAG || _activeIndex !== activeIndex) return;
-        that.show(o_loop ? '>' : normalizeIndex(activeIndex + 1));
+        that.show(o_loop ? getDirectionSign(!o_rtl) : normalizeIndex(activeIndex + (o_rtl ? -1 : 1)));
       }, opts.autoplay);
     });
 
@@ -1428,16 +1433,21 @@ jQuery.Fotorama = function ($fotorama, opts) {
     setData();
     setOptions();
 
-    if (!ready.ok) {
-      var _startindex;
-      // Only first time
-      if ((_startindex = opts.startindex) || opts.hash && location.hash) {
+    if (!reset.i) {
+      reset.i = true;
+      // Only once
+      var _startindex = opts.startindex;
+      if (_startindex || opts.hash && location.hash) {
         startIndex = getIndexFromHash(_startindex || location.hash.replace(/^#/, ''), data, that.index === 0 || _startindex, _startindex);
       }
-      activeIndex = repositionIndex = dirtyIndex = lastActiveIndex = startIndex = edgeIndex(startIndex) || 0;
+      activeIndex = repositionIndex = dirtyIndex = lastActiveIndex = startIndex = edgeIndex(startIndex) || 0;/*(o_rtl ? size - 1 : 0)*/;
     }
 
     if (size) {
+      console.log('activeIndex', activeIndex);
+      if (changeToRtl()) return;
+      console.log('No changeToRtl, activeIndex is', activeIndex);
+
       if ($videoPlaying) {
         unloadVideo($videoPlaying, true);
       }
@@ -1449,6 +1459,18 @@ jQuery.Fotorama = function ($fotorama, opts) {
       that.resize();
     } else {
       that.destroy();
+    }
+  }
+
+  function changeToRtl () {
+    console.log('changeToRtl');
+    if (!changeToRtl.f === o_rtl) {
+      changeToRtl.f = o_rtl;
+      activeIndex = size - 1 - activeIndex;
+      console.log('changeToRtl execute, activeIndex is', activeIndex);
+      that.reverse();
+
+      return true;
     }
   }
 
