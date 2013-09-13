@@ -68,6 +68,7 @@ $.fn.fotorama = function (opts) {
 
                   direction: 'ltr' // 'rtl'
                 },
+                window.fotoramaDefaults,
                 opts,
                 fotoramaData
             )
