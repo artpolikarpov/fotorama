@@ -48,40 +48,48 @@ a.green, a.green u, a.green:visited, a.green:visited u {
 	border-color: rgb(170, 0, 0);
 }
 
+a.icon-link {
+  display: none;
+}
+
 h1, h2, h3, h4 {
-  margin-top: 1em;
-  margin-bottom: .1em;
-  margin-left: -1.2em;
-  padding-left: 1.2em;
-  position: relative;
+    margin-top: 1em;
+    margin-bottom: .1em;
+    margin-left: -1.2em;
+    padding-left: 1.2em;
 }
 
-a.icon-link,
-a.icon-link:visited {
-  border-bottom: none;
-  color: #000;
-  position: absolute;
-  left: 0;
-  top: -.5em;
-  padding-top: .8em;
-  display: none;
-  outline: none;
-}
+@media (min-width:840px) {
+  h1, h2, h3, h4 {
+    margin-top: 1em;
+    margin-bottom: .1em;
+    margin-left: -1.2em;
+    padding-left: 1.2em;
+    position: relative;
+    -webkit-backface-visibility: hidden;
+  }
 
-h2:hover a.icon-link,
-h3:hover a.icon-link,
-h4:hover a.icon-link,
-a.icon-link:target {
-  display: block;
-}
+  a.icon-link,
+  a.icon-link:visited {
+    border-bottom: none;
+    color: #000;
+    position: absolute;
+    left: 0;
+    top: -.5em;
+    padding-top: .8em;
+    display: none;
+    outline: none;
+  }
 
-h1 a.icon-link {
-  display: none;
-}
+  h2:hover a.icon-link,
+  h3:hover a.icon-link,
+  h4:hover a.icon-link,
+  a.icon-link:target {
+    display: block;
+  }
 
-@media (max-width:840px) {
-  a.icon-link {
-    display: none !important;
+  h1 a.icon-link {
+    display: none;
   }
 }
 
