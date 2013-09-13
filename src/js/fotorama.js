@@ -406,7 +406,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       if (!$frame) return;
 
-      var fullFLAG = that.fullScreen && dataFrame.full && !frameData.$full && type === 'stage';
+      var fullFLAG = that.fullScreen && dataFrame.full && dataFrame.full !== dataFrame.img && !frameData.$full && type === 'stage';
 
       if (frameData.$img && !again && !fullFLAG) return;
 
