@@ -262,7 +262,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     o_thumbSide = numberFromMeasure(opts.thumbwidth) || THUMB_SIZE;
     o_thumbSide2 = numberFromMeasure(opts.thumbheight) || THUMB_SIZE;
 
-    stageWheelTail.ok = navWheelTail.ok = opts.wheel;
+    stageWheelTail.ok = navWheelTail.ok = opts.wheel && !SLOW;
 
     stageNoMove();
 
@@ -721,7 +721,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function stageWheelUpdate () {
-    stageWheelTail.prevent = {'<': disableDirrection(0), '>': disableDirrection(1)};
+    if (stageWheelTail.ok) {
+      stageWheelTail.prevent = {'<': disableDirrection(0), '>': disableDirrection(1)};
+    }
   }
 
   function getNavFrameBounds ($navFrame) {
@@ -1351,7 +1353,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           onEnd: onEnd
         });
         thumbsDraw(result.newPos);
-        setShadow($nav, findShadowEdge(result.newPos, navShaftData.min, navShaftData.max));
+        o_shadows && setShadow($nav, findShadowEdge(result.newPos, navShaftData.min, navShaftData.max));
       } else {
         onEnd();
       }
@@ -1377,7 +1379,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       onTouchStart();
       var newPos = stop($navShaft) + direction * .25;
       $navShaft.css(getTranslate(minMaxLimit(newPos, navShaftData.min, navShaftData.max)));
-      setShadow($nav, findShadowEdge(newPos, navShaftData.min, navShaftData.max));
+      o_shadows && setShadow($nav, findShadowEdge(newPos, navShaftData.min, navShaftData.max));
       navWheelTail.prevent = {'<': newPos >= navShaftData.max, '>': newPos <= navShaftData.min};
       clearTimeout(navWheelTail.t);
       navWheelTail.t = setTimeout(function () {
