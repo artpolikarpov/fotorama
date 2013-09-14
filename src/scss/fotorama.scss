@@ -8,15 +8,13 @@ $time: .3s;
   min-width: 1px;
   overflow: hidden;
 
-  > * {
-    visibility: hidden;
-  }
-
-  &.fotorama--noscript > *,
   > .fotorama__wrap {
-
     visibility: visible;
   }
+}
+
+.fotorama--hidden-before-ready > * {
+  visibility: hidden;
 }
 
 .fullscreen {
