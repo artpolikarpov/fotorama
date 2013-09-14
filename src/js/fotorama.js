@@ -1260,7 +1260,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (stageShaftTouchTail.flow) return;
 
     var x = e ? e.pageX : stageCursor.x,
-        pointerFLAG = e && !disableDirrection(getDirection(x)) && opts.click;
+        pointerFLAG = x && !disableDirrection(getDirection(x)) && opts.click;
 
     if (stageCursor.p !== pointerFLAG
         && (o_fade || !opts.swipe)
