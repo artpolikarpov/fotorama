@@ -41,7 +41,7 @@ $.fn.fotorama = function (opts) {
                   arrows: true,
                   click: true,
                   swipe: true,
-                  wheel: true,
+                  trackpad: true,
 
                   allowfullscreen: false, // true || 'native'
 

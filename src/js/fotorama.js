@@ -265,7 +265,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     o_thumbSide = numberFromMeasure(opts.thumbwidth) || THUMB_SIZE;
     o_thumbSide2 = numberFromMeasure(opts.thumbheight) || THUMB_SIZE;
 
-    stageWheelTail.ok = navWheelTail.ok = opts.wheel && !SLOW;
+    stageWheelTail.ok = navWheelTail.ok = opts.trackpad && !SLOW;
 
     stageNoMove();
 
