@@ -7,11 +7,12 @@ module.exports = function (grunt) {
       sass: ['src/scss/*'],
       js: [
         'src/js/intro.js',
+        'src/js/css-classes.js',
+        'src/js/skip.js',
         'src/js/_.js',
         'src/js/modernizr.js',
         'src/js/fullscreen.js',
         'src/js/bez.js',
-        'src/js/css-classes.js',
         'src/js/basevars.js',
         'src/js/utils.js',
         'src/js/animate.js',
@@ -314,6 +315,7 @@ module.exports = function (grunt) {
   // Compile
   grunt.registerTask('default', defaultTask.split(' '));
   grunt.registerTask('build', build);
+  grunt.registerTask('look', 'copy:i sass autoprefixer jst string-replace:jst concat:js watch'.split(' '));
 
   // Publish, will fail without secret details ;-)
   grunt.registerTask('publish', (defaultTask + ' ' + 's3 string-replace:version shell').split(' '));
