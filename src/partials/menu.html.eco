@@ -1,11 +1,11 @@
 <% renderMenu = (items) => %>
 <ul class="menu">
-  <% for item in items: %><li<% if item.state: %> class="selected"<% end %>>
+  <% for item in items: %><li class="<% if item.state: %>selected<% end %> <% if !(item.order % 100): %>divider<% end %>">
   <% if item.state != 'current': %>
-  <a href="<%= item.url %>" class="no-u"><u><%- item.title %></u></a><% if item.children: %><i class="icon-caret-down js-menu-down"></i>
+  <a href="<%= item.url %>" class="no-u"><u><%- item.title %></u></a><% else: %>
+  <span><%- item.title %></span><% end %><% if item.children: %><i class="icon-caret-down <% if item.state != 'current': %>js-menu-down<% else: %>icon-disabled<% end %>"></i>
   <%- renderMenu(item.children) %>
-  <% end %><% else: %>
-  <span><%- item.title %></span><% if item.children: %><i class="icon-caret-down icon-disabled"></i><% end %><% end %>
+  <% end %>
   </li><% end %>
 </ul>
 <% end %>

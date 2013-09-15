@@ -1,0 +1,182 @@
+Options can be passed via data attributes:
+
+    <div class="fotorama"
+         data-width="700"
+         data-maxwidth="100%"
+         data-ratio="16/9"
+         data-allowfullscreen="true"
+         data-nav="thumbs">
+      <img src="1.jpg">
+      <img src="2.jpg">
+    </div>
+
+...or JavaScript:
+
+    $('.fotorama').fotorama({
+      width: 700,
+      maxwidth: '100%',
+      ratio: 16/9,
+      allowfullscreen: true,
+      nav: 'thumbs'
+    });
+
+<center>...</center>
+### `width` <small>Number or String</small>
+Stage container width in pixels or percents.
+
+### `minwidth` <small>Number or String</small>
+Stage container minimum width in pixels or percents.
+
+### `maxwidth` <small>Number or String</small>
+Stage container maximum width in pixels or percents.
+
+### `height` <small>Number or String</small>
+Stage container height in pixels or percents.
+
+### `minheight` <small>Number or String</small>
+Stage container minimum height in pixels or percents.
+
+### `maxheight` <small>Number or String</small>
+Stage container maximum height in pixels or percents.
+
+### `ratio` <small>Number or String</small>
+Width divided by height.
+
+> *Article: [Dimensions](/customize/dimensions/)*
+
+### `margin` <small>Number</small>
+Horizontal margins for frames in pixels.
+
+### `glimpse` <small>Number or String</small>
+Glimpse size of nearby frames in pixels or percents.
+
+### `nav` <small>String or Boolean</small>
+Navigation style:
+
+* `'dots'` <small>Default</small><br>
+iPhone-style dots.
+* `'thumbs'`<br>
+Thumbnails.
+* `false`<br>
+Nothing.
+
+> *Article: [Thumbnails](/customize/thumbnails/)*
+
+### `navposition` <small>String</small>
+Navigation block position relative to images: `'bottom'` or `'top'`.
+
+> *Article: [Navigation position](/customize/navigation-position/)*
+
+### `thumbwidth` <small>Number</small>
+Tumbnail width in pixels.
+
+### `thumbheight` <small>Number</small>
+Tumbnail height in pixels.
+
+### `thumbmargin` <small>Number</small>
+Size of thumbnail margins.
+
+### `thumbborderwidth` <small>Number</small>
+Border width of the active thumbnail.
+
+### `allowfullscreen` <small>Boolean or String</small>
+Allows fullscreen:
+
+* `false` <small>Default</small><br>
+* `true`
+* `'native'`
+
+> *Article: [Fullscreen](/customize/fullscreen/)*
+
+### `fit` <small>String</small>
+How to fit an image into a fotorama:
+
+* `'contain'` <small>Default</small>
+* `'cover'`
+* `'scaledown'`
+* `'none'`
+
+> *Article: [Fit](/customize/fit/)*
+
+### `transition` <small>String</small>
+Defines what transition to use:
+
+* `'slide'` <small>Default</small>
+* `'crossfade'`
+* `'dissolve'`
+
+### `transitionduration` <small>Number</small>
+Animation length in milliseconds.
+
+> *Article: [Transition](/customize/transition/)*
+
+### `captions` <small>Boolean</small>
+Captions visibility.
+
+> *Article: [Captions](/customize/captions/)*
+
+### `hash` <small>Boolean</small>
+
+> *Article: [Hash](/customize/hash/)*
+
+### `startindex` <small>Number or String</small>
+Index or id of the frame that will be shown upon initialization of the fotorama.
+
+### `loop` <small>Boolean</small>
+Enables loop.
+
+> *Article: [Loop](/customize/loop/)*
+
+### `autoplay` <small>Boolean or Number</small>
+Enables slideshow. Turn it on with `true` or any interval in milliseconds.
+
+### `stopautoplayontouch` <small>Boolean</small>
+Stops slideshow at any user action with the fotorama.
+
+> *Article: [Autoplay](/customize/autoplay/)*
+
+### `keyboard` <small>Boolean</small>
+Enables keyboard navigation.
+
+> *Article: [Keyboard](/customize/keyboard/)*
+
+### `arrows` <small>Boolean</small>
+Turns on navigation arrows over the frames.
+
+### `click` <small>Boolean</small>
+Moving between frames by clicking.
+
+### `swipe` <small>Boolean</small>
+Moving between frames by swiping.
+
+### `trackpad` <small>Boolean</small>
+Enables trackpad support and horizontal mouse wheel as well.
+
+> *Article: [Arrows, click, swipe](/customize/arrows-click-swipe/)*
+
+### `shuffle` <small>Boolean</small>
+Shuffles frames at launch.
+
+> *Article: [Shuffle](/customize/shuffle/)*
+
+### `direction` <small>String</small>
+Sets the frames direction: `ltr` or `rtl`.
+
+> *Article: [Right-to-left](/customize/right-to-left/)*
+
+### `shadows` <small>Boolean</small>
+Enables shadows.
+
+## Defaults
+Override defaults by defining `fotoramaDefaults` before loading Fotorama:
+
+    <script>
+      fotoramaDefaults = {
+        width: 700,
+        maxwidth: '100%',
+        ratio: 16/9,
+        allowfullscreen: true,
+        nav: 'thumbs'
+      }
+    </script>
+    <script src="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.js"></script>

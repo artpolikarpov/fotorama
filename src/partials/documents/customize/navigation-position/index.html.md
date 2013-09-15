@@ -4,7 +4,6 @@ To move dots or thumbs on top, use `data-navposition="top"`:
 	     data-navposition="top">
 	  <img src="1.jpg">
 	  <img src="2.jpg">
-	  <img src="3.jpg">
 	</div>
 
 *Navigation position example (<a href="/examples/navigation-position.html" target="_blank">new window</a>):*

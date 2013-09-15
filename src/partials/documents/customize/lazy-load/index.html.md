@@ -3,7 +3,6 @@ Browsers load images even if&nbsp;they are removed with JavaScript. All images i
 	<div class="fotorama">
 	  <img src="1.jpg">
 	  <img src="2.jpg">
-	  <img src="3.jpg">
 	</div>
 
 If&nbsp;you don&rsquo;t worry about browsers with no&nbsp;JavaScript, turn on&nbsp;lazy loading by&nbsp;altering your <abbr>HTML</abbr>:

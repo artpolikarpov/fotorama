@@ -4,7 +4,6 @@ Shuffle frames by&nbsp;adding `data-shuffle="true"`:
 	     data-shuffle="true">
 	  <img src="1.jpg">
 	  <img src="2.jpg">
-	  <img src="3.jpg">
 	</div>
 
 *Shuffle example (<a href="/examples/shuffle.html" target="_blank">new window</a>):*

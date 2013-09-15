@@ -9,6 +9,10 @@ $(function () {
       });
     }
 
-    $fotorama.fotorama();
+    $fotorama
+        .fotorama()
+        .parent()
+        .next('.photos-by')
+        .show();
   }
 });

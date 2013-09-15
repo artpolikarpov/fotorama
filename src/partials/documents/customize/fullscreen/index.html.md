@@ -4,7 +4,6 @@ Allow fotorama to&nbsp;enter fullscreen using `data-allowfullscreen`:
 	     data-allowfullscreen="true">
 	  <img src="1.jpg">
 	  <img src="2.jpg">
-	  <img src="3.jpg">
 	</div>
 
 This will show an&nbsp;icon at&nbsp;the top-right that toggles the fullscreen.
@@ -30,7 +29,6 @@ To&nbsp;use modern Fullscreen <abbr>API</abbr>, set `data-allowfullscreen` to `n
 	     data-allowfullscreen="native">
 	  <img src="1.jpg">
 	  <img src="2.jpg">
-	  <img src="3.jpg">
 	</div>
 
 _Native fullscreen example (<a href="/examples/fullscreen-native.html" target="_blank">new window</a>):_

@@ -6,7 +6,7 @@ Integrate Fotorama with your favorite framework or <abbr>CMS</abbr>.
 3. Say Hi to Fotorama!
 
 <div style="position: relative; width: 100%; padding-bottom: 56.25%;">
-  <iframe style="position: absolute; width: 100%; height: 100%; top: 0; right: 0; bottom: 0; left: 0;" src="http://www.youtube.com/embed/gsObwOvtt_o?vq=hd720" frameborder="0" allowfullscreen></iframe>
+  <iframe style="position: absolute; width: 100%; height: 100%; top: 0; right: 0; bottom: 0; left: 0;" src="http://www.youtube.com/embed/gsObwOvtt_o?vq=hd720&rel=0" frameborder="0" allowfullscreen></iframe>
 </div>
 
 

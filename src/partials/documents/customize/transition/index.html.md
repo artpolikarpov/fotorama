@@ -4,7 +4,6 @@ Define which transition to&nbsp;use&nbsp;&mdash; `slide` or `crossfade` &mdash; 
 	     data-transition="crossfade">
 	  <img src="1.jpg">
 	  <img src="2.jpg">
-	  <img src="3.jpg">
 	</div>
 
 _Transition example (<a href="/examples/transition.html" target="_blank">new window</a>):_

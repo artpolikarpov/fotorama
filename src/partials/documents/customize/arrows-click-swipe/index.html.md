@@ -1,4 +1,4 @@
-Control the way your users interact with the fotorama with three attributes `data-arrows`, `data-click`, and `data-swipe`:
+Control the way your users interact with the fotorama with three attributes `data-arrows`, `data-click`, `data-swipe` and `data-trackpad`:
 
 ```
 <div class="fotorama"
@@ -7,7 +7,6 @@ Control the way your users interact with the fotorama with three attributes `dat
      data-swipe="false">
   <img src="1.jpg">
   <img src="2.jpg">
-  <img src="3.jpg">
 </div>
 ```
 
@@ -19,6 +18,8 @@ Control the way your users interact with the fotorama with three attributes `dat
   <label><input type="checkbox" name="click" checked> Click</label>
   &nbsp;
   <label><input type="checkbox" name="swipe" checked> Swipe</label>
+  &nbsp;
+  <label><input type="checkbox" name="trackpad" checked> Trackpad</label>
 </form>
 
 <!-- Fotorama -->

@@ -4,7 +4,7 @@ layout: "default"
 ---
 
 <div class="fotorama-wrap-frontpage noise">
-  <div class="fotorama fotorama-frontpage" data-auto="false" data-width="100%" data-ratio="16/9" data-hash="true" data-maxheight="100%" data-minheight="200" data-nav="thumbs" data-keyboard="true" data-allowfullscreen="native" data-thumbheight="48">
+  <div class="fotorama-frontpage" data-auto="false" data-width="100%" data-ratio="16/9" data-hash="true" data-maxheight="100%" data-minheight="200" data-nav="thumbs" data-keyboard="true" data-allowfullscreen="native" data-shadows="false" data-thumbheight="48">
     <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/1-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/1-thumb.jpg" data-thumbwidth="144" data-thumbheight="96"></a>
     <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/2-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/2-thumb.jpg" data-thumbwidth="144" data-thumbheight="96"></a>
     <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/3-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/3-thumb.jpg" data-thumbwidth="144" data-thumbheight="96"></a>
@@ -38,7 +38,7 @@ layout: "default"
   </div>
 </div>
 
-<p class="photos-by">Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
+<p class="photos-by" style="display: none;">Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
 
 <div class="content">
   <h1>Fotorama</h1>

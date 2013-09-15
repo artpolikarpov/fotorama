@@ -59,6 +59,14 @@ h1, h2, h3, h4 {
     padding-left: 1.2em;
 }
 
+h1 small,
+h2 small,
+h3 small,
+h4 small {
+  font-weight: normal;
+  color: rgb(133, 133, 130);
+}
+
 @media (min-width:840px) {
   h1, h2, h3, h4 {
     margin-top: 1em;
@@ -83,8 +91,8 @@ h1, h2, h3, h4 {
 
   h2:hover a.icon-link,
   h3:hover a.icon-link,
-  h4:hover a.icon-link,
-  a.icon-link:target {
+  h4:hover a.icon-link/*,
+  a.icon-link:target*/ {
     display: block;
   }
 
@@ -116,23 +124,30 @@ ol {
 }
 
 .content ul li {
-	margin-bottom: .2em;
+	margin-bottom: .3em;
 }
 
-.content ul li:before {
+/*.content ul li:before {
 	content: '—';
 	display: inline-block;
 	width: 1em;
 	margin-left: -1em;
 	margin-right: .33em;
 	color: #aaa;
-}
+}*/
 
 p + ul, p + ol, p + pre, .after-pre, form + .fotorama-wrap, p + .fotorama-wrap, p + .image {
 	margin-top: -.5em;
 	margin-left: 40px;
 	margin-bottom: 1.5em;
 	padding-left: 0;
+}
+
+h2 + ul,
+h3 + ul,
+h2 + ol,
+h3 + ol {
+  margin-top: .5em;
 }
 
 body .fotorama-wrap, body .image {

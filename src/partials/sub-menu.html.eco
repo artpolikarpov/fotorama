@@ -1,9 +1,11 @@
+<!--
+<ul class="menu menu-in-page">
 <% renderMenu = (items) => %>
 <% for item in items: %>
 <% if item.state && item.children: %>
-<ul>
+<ul class="menu">
 	<% for item in item.children: %>
-  <li <% if item.state: %>class="selected"<% end %>>
+  <li class="<% if item.state: %>selected<% end %> <% if !(item.order % 100): %>divider<% end %>">
   <% if item.state != 'current': %>
   <a href="<%= item.url %>"><%- item.title %></a>
   <% else: %>
@@ -16,3 +18,4 @@
 <% end %>
 <% end %>
 <%= renderMenu @menuItems %>
+</ul>-->

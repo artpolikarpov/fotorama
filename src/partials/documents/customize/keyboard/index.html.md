@@ -4,7 +4,6 @@ Turn on&nbsp;keyboard navigation with the arrows by&nbsp;adding `data-keyboard="
 	     data-keyboard="true">
 	  <img src="1.jpg">
 	  <img src="2.jpg">
-	  <img src="3.jpg">
 	</div>
 
 *Keyboard example (<a href="/examples/keyboard.html" target="_blank">new window</a>):*

@@ -51,7 +51,7 @@
   position: absolute;
   text-transform: none;
   font-size: 14px;
-  line-height: 1.7;
+  line-height: 1.8;
   top: 30px;
   left: 0;
   z-index: 100;
@@ -67,6 +67,12 @@
   display: block;
 }
 
+.menu li .menu li.divider {
+  border-top: 2px solid #bbb;
+  margin: 10px -15px 0 -10px;
+  padding: 5px 15px 0 10px;
+}
+
 .menu li .menu li a,
 .menu li .menu li span {
   padding: .3em 0;
@@ -78,4 +84,46 @@
 
 .menu li .menu li i {
   display: none;
+}
+
+/* Меню в контенте */
+.content .menu {
+  display: block;
+  font-size: 100%;
+  min-width: 30%;
+  margin: 0 0 1.5em 40px;
+}
+
+.content .menu li,
+.content .menu li i,
+.content .menu li span {
+  display: none;
+}
+
+.content .menu li.selected {
+  display: block;
+}
+
+.content .menu li.selected:before,
+.content .menu li.selected .menu li:before {
+  content: '';
+  display: none;
+}
+
+.content .menu li.selected .menu {
+  display: inline-block;
+  position: relative;
+  top: 0;
+  font-size: 100%;
+  margin: 0;
+  box-shadow: 0 1px 10px -3px rgba(0, 0, 0, .3) inset;
+}
+
+.content .menu li.selected .menu li {
+  display: block;
+  margin-bottom: 0;
+}
+
+.content .menu li.selected .menu li span {
+  display: inline;
 }

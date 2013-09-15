@@ -2,6 +2,10 @@
   margin-bottom: 5px;
 }
 
+.fotorama > * {
+  visibility: hidden;
+}
+
 .photos-by {
 	font-size: 88%;
 	text-align: right;

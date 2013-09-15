@@ -55,8 +55,9 @@ docpadConfig = {
 
           # strip tags
           # console.log header
-          anchor = header.replace /<\/?\w+(?:\s.+?)*>/g, '';
+          anchor = header.replace /<\/\w+(?:\s.+?)*>.*/g, '';
           anchor = anchor
+            .replace(/<\w+(?:\s.+?)*>/g, '')
             .trim()
             .replace(/\s+/g, '-')
             .replace(/[^\w\-]/g, '')

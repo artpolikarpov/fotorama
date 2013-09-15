@@ -4,7 +4,6 @@ Change navigation style from iPhone-style dots to&nbsp;thumbnails by&nbsp;adding
 	     data-nav="thumbs">
 	  <img src="1.jpg">
 	  <img src="2.jpg">
-	  <img src="3.jpg">
 	</div>
 
 For better performance with thumbnails, have smaller images ready and include them in&nbsp;<abbr>HTML</abbr>. Like&nbsp;so:

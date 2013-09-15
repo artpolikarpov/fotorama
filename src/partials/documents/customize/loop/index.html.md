@@ -4,7 +4,6 @@ Loop the last and the first frame for seamless transition using `data-loop="true
 	     data-loop="true">
 	  <img src="1.jpg">
 	  <img src="2.jpg">
-	  <img src="3.jpg">
 	</div>
 
 _Loop example (<a href="/examples/loop.html" target="_blank">new window</a>):_
