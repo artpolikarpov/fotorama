@@ -51,6 +51,7 @@ $time: .3s;
   -webkit-text-size-adjust: 100%;
   position: relative;
   @extend %no-select;
+  direction: ltr;
 
   * {
      // /test/specs/thumbs.js
