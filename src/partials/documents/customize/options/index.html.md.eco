@@ -20,7 +20,6 @@ Options can be passed via data attributes:
       nav: 'thumbs'
     });
 
-<center>...</center>
 ### `width` <small>Number or String</small>
 Stage container width in pixels or percents.
 
@@ -40,7 +39,7 @@ Stage container minimum height in pixels or percents.
 Stage container maximum height in pixels or percents.
 
 ### `ratio` <small>Number or String</small>
-Width divided by height.
+Width divided by height. Recommended if you’re using percentage width.
 
 > *Article: [Dimensions](/customize/dimensions/)*
 
@@ -63,7 +62,7 @@ Nothing.
 > *Article: [Thumbnails](/customize/thumbnails/)*
 
 ### `navposition` <small>String</small>
-Navigation block position relative to images: `'bottom'` or `'top'`.
+Navigation block position relative to stage: `'bottom'` or `'top'`.
 
 > *Article: [Navigation position](/customize/navigation-position/)*
 
