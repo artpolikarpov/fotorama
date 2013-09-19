@@ -1374,6 +1374,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     onEnd: function (e, direction) {
       console.log('wheel $stage onEnd', direction);
       onTouchStart();
+      onTouchEnd();
       that.show({index: direction, slow: e.altKey})
     }
   });
@@ -1382,6 +1383,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     onEnd: function (e, direction) {
       console.log('wheel $nav onEnd', direction);
       onTouchStart();
+      onTouchEnd();
       var newPos = stop($navShaft) + direction * .25;
       $navShaft.css(getTranslate(minMaxLimit(newPos, navShaftData.min, navShaftData.max)));
       o_shadows && setShadow($nav, findShadowEdge(newPos, navShaftData.min, navShaftData.max));
