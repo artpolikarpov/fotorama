@@ -2,7 +2,7 @@ function wheel ($el, options) {
   var el = $el[0],
       lockFLAG,
       lastDirection,
-      /*unlockTimestamp,*/
+      lastNow,
       tail = {
         prevent: {}
       };
@@ -12,25 +12,26 @@ function wheel ($el, options) {
         xDelta = e.wheelDeltaX || -1 * e.deltaX || 0,
         xWin = Math.abs(xDelta) > Math.abs(yDelta),
         direction = getDirectionSign(xDelta < 0),
-        sameDirection = lastDirection === direction;
-
-    console.log('direction', direction);
-    console.log('lastDirection', lastDirection);
+        sameDirection = lastDirection === direction,
+        now = $.now(),
+        tooFast = now - lastNow < TOUCH_TIMEOUT / 2;
 
     lastDirection = direction;
+    lastNow = now;
 
     if (!xWin || !tail.ok || tail.prevent[direction] && !lockFLAG) {
       return;
     } else {
       stopEvent(e, true);
-      if (lockFLAG && sameDirection /*|| $.now() - unlockTimestamp < TOUCH_TIMEOUT / 2*/) return;
+      if (lockFLAG && sameDirection && tooFast) {
+        return;
+      }
     }
 
     if (options.shift) {
       lockFLAG = true;
       clearTimeout(tail.t);
       tail.t = setTimeout(function () {
-        //unlockTimestamp = $.now();
         lockFLAG = false;
       }, SCROLL_LOCK_TIMEOUT);
     }
