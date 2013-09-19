@@ -20,6 +20,7 @@ Options can be passed via data attributes:
       nav: 'thumbs'
     });
 
+<center>...</center>
 ### `width` <small>Number or String</small>
 Stage container width in pixels or percents.
 

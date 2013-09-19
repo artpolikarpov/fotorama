@@ -143,6 +143,13 @@ p + ul, p + ol, p + pre, .after-pre, form + .fotorama-wrap, p + .fotorama-wrap, 
 	padding-left: 0;
 }
 
+blockquote {
+  margin-left: -2px;
+  padding-left: 40px;
+  margin-bottom: 1.5em;
+  border-left: 2px solid #ddddda;
+}
+
 h2 + ul,
 h3 + ul,
 h2 + ol,
