@@ -14,7 +14,7 @@ function wheel ($el, options) {
         direction = getDirectionSign(xDelta < 0),
         sameDirection = lastDirection === direction,
         now = $.now(),
-        tooFast = now - lastNow < TOUCH_TIMEOUT / 2;
+        tooFast = now - lastNow < TOUCH_TIMEOUT;
 
     lastDirection = direction;
     lastNow = now;
