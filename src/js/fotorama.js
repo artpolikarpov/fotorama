@@ -328,9 +328,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     ooooStop();
 
-    // Glimpse
-    $stageShaft.css({left: opts.glimpse, right: opts.glimpse, width: 'auto'});
-
     $wrap
         .addClass(classes.add.join(' '))
         .removeClass(classes.remove.join(' '));
@@ -351,11 +348,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function getPrevIndex (index) {
-    return index > 0 || o_loop ? index - 1 : false;
+    return index > 0 || o_loop ? normalizeIndex(index - 1) : false;
   }
 
   function getNextIndex (index) {
-    return index < size - 1 || o_loop ? index + 1 : false;
+    return index < size - 1 || o_loop ? normalizeIndex(index + 1) : false;
   }
 
   function setStageShaftMinmaxAndSnap () {
@@ -627,6 +624,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       toDetach[STAGE_FRAME_KEY][normalizeIndex(index)] = $frame.css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, opts.margin, repositionIndex)}, o_fade && getDuration(0)));
 
       if (isDetached($frame[0])) {
+        console.log('Append', normalizeIndex(index));
         $frame.appendTo($stageShaft);
         unloadVideo(dataFrame.$video);
       }
@@ -800,12 +798,17 @@ jQuery.Fotorama = function ($fotorama, opts) {
   function detachFrames (key) {
     var _toDetach = toDetach[key];
 
+    console.log('_toDetach', _toDetach);
+    console.log('activeIndexes', activeIndexes);
+
     $.each(activeIndexes, function (i, index) {
+      console.log(i, index);
       delete _toDetach[index];
     });
 
     $.each(_toDetach, function (index, $frame) {
       delete _toDetach[index];
+      console.log('Detach', index);
       $frame.detach();
     });
   }
@@ -1127,7 +1130,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
       width = measures.W = measures.w = $wrap.width();
 
       if (opts.glimpse) {
-        measures.w -= Math.round((numberFromPercent(opts.glimpse) / 100 * width || numberFromMeasure(opts.glimpse)) * 2);
+        // Glimpse
+        measures.w -= Math.round((numberFromPercent(opts.glimpse) / 100 * width || numberFromMeasure(opts.glimpse)) * 2)
+        $stageShaft.css({width: measures.w, marginLeft: (measures.W - measures.w) / 2});
       }
 
       console.log('measures.W', measures.W);
