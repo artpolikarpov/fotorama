@@ -363,7 +363,7 @@ $time: .3s;
     width: $size;
     height: $size;
     border-radius: $size;
-    background-color: mix(mix(black, white), white);
+    background-color: mix(black, white);
     background-color: rgba(mix(black, white), .5);
   }
   &:before {
@@ -397,7 +397,6 @@ $time: .3s;
   .fotorama__html,
   .fotorama__caption {
     @extend %initial-translate;
-    -webkit-backface-visibility: hidden;
   }
   .fotorama__img,
   .fotorama__html,
@@ -434,7 +433,26 @@ $time: .3s;
   }
 }
 
-// Strange fix of the #66 issue (Firefox bug while sliding backwards)
+//details,
+//figcaption,
+//figure,
+//hgroup,
+//summary,
+body,
+div,
+article,
+aside,
+footer,
+header,
+main,
+nav,
+section {
+  /* Force improvement of webkit mobile performance on sites using fotorama */
+  -webkit-backface-visibility: hidden;
+  //-webkit-font-smoothing: subpixel-antialiased;
+}
+
+/* Strange fix of the #66 issue (Firefox bug while sliding backwards) */
 @-moz-document url-prefix(){
   .fotorama__active {
     box-shadow: 0 0 0 transparent;

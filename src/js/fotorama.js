@@ -17,7 +17,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $wrap = $(div(wrapClass)),
       $stage = $(div(stageClass)).appendTo($wrap),
       stage = $stage[0],
-      
+
       $stageShaft = $(div(stageShaftClass)).appendTo($stage),
       $stageFrame = $(),
       $arrPrev = $(div(arrClass + ' ' + arrPrevClass, div(arrArrClass))),
@@ -328,9 +328,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     ooooStop();
 
-    // Glimpse
-    $stageShaft.css({left: opts.glimpse, right: opts.glimpse, width: 'auto'});
-
     $wrap
         .addClass(classes.add.join(' '))
         .removeClass(classes.remove.join(' '));
@@ -627,6 +624,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       toDetach[STAGE_FRAME_KEY][normalizeIndex(index)] = $frame.css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, opts.margin, repositionIndex)}, o_fade && getDuration(0)));
 
       if (isDetached($frame[0])) {
+        console.log('Append', normalizeIndex(index));
         $frame.appendTo($stageShaft);
         unloadVideo(dataFrame.$video);
       }
@@ -800,12 +798,16 @@ jQuery.Fotorama = function ($fotorama, opts) {
   function detachFrames (key) {
     var _toDetach = toDetach[key];
 
+    console.log('_toDetach', _toDetach);
+    console.log('activeIndexes', activeIndexes);
+
     $.each(activeIndexes, function (i, index) {
-      delete _toDetach[index];
+      delete _toDetach[normalizeIndex(index)];
     });
 
     $.each(_toDetach, function (index, $frame) {
       delete _toDetach[index];
+      console.log('Detach', index);
       $frame.detach();
     });
   }
@@ -961,14 +963,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     that.activeFrame = activeFrame = data[activeIndex];
 
-    unloadVideo($videoPlaying, activeFrame.i !== data[normalizeIndex(repositionIndex)].i);
-
-    frameDraw(activeIndexes, 'stage');
-    stageFramePosition([dirtyIndex, getPrevIndex(dirtyIndex), getNextIndex(dirtyIndex)]);
-
-    updateTouchTails('go', true);
-
-    triggerEvent('show', options.direct);
+    //setTimeout(function () {
+      unloadVideo($videoPlaying, activeFrame.i !== data[normalizeIndex(repositionIndex)].i);
+      frameDraw(activeIndexes, 'stage');
+      stageFramePosition([dirtyIndex, getPrevIndex(dirtyIndex), getNextIndex(dirtyIndex)]);
+      updateTouchTails('go', true);
+      triggerEvent('show', options.direct);
+    //}, 0);
 
     var onEnd = that.show.onEnd = function (skipReposition) {
       if (onEnd.ok) return;
@@ -1127,7 +1128,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
       width = measures.W = measures.w = $wrap.width();
 
       if (opts.glimpse) {
-        measures.w -= Math.round((numberFromPercent(opts.glimpse) / 100 * width || numberFromMeasure(opts.glimpse)) * 2);
+        // Glimpse
+        measures.w -= Math.round((numberFromPercent(opts.glimpse) / 100 * width || numberFromMeasure(opts.glimpse)) * 2)
+        $stageShaft.css({width: measures.w, marginLeft: (measures.W - measures.w) / 2});
       }
 
       console.log('measures.W', measures.W);
