@@ -36,7 +36,11 @@
   margin-bottom: 0;
 }
 
-.fotorama-frontpage .fotorama__active .fotorama__dot {
+.fotorama-frontpage .fotorama__active .fotorama__dot,
+.fotorama-frontpage .fotorama__oooo--1:before,
+.fotorama-frontpage .fotorama__oooo--2:after,
+.fotorama-frontpage .fotorama__oooo--3 .fotorama__oooo:before,
+.fotorama-frontpage .fotorama__oooo--4 .fotorama__oooo:after {
   background-color: #fff;
 }
 

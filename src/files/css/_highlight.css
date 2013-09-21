@@ -30,11 +30,8 @@ pre code {
 	white-space: pre;
 
 	background:
-		/* Shadow covers */
 		linear-gradient(to right, #fcfcfb, rgba(255,255,255,0)),
 		linear-gradient(to right, rgba(255,255,255,0), #fcfcfb) 100% 0,
-
-			/* Shadows */
 		radial-gradient(farthest-side at 0 50%, rgba(0,0,0,.4), rgba(0,0,0,0)),
 		radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,.4), rgba(0,0,0,0)) 100% 0;
 	background-repeat: no-repeat;
