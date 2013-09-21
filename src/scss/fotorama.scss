@@ -163,7 +163,7 @@ $time: .3s;
 .fotorama__img {
   @include opacity(0);
   @extend %image-reset;
-  border: 0;
+  border: none !important;
   //overflow: hidden;
   @extend %stretch-for-fit;
   .fotorama__loaded &,
