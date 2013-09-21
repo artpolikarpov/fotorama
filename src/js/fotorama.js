@@ -17,7 +17,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $wrap = $(div(wrapClass)),
       $stage = $(div(stageClass)).appendTo($wrap),
       stage = $stage[0],
-      
+
       $stageShaft = $(div(stageShaftClass)).appendTo($stage),
       $stageFrame = $(),
       $arrPrev = $(div(arrClass + ' ' + arrPrevClass, div(arrArrClass))),
@@ -348,11 +348,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function getPrevIndex (index) {
-    return index > 0 || o_loop ? normalizeIndex(index - 1) : false;
+    return index > 0 || o_loop ? index - 1 : false;
   }
 
   function getNextIndex (index) {
-    return index < size - 1 || o_loop ? normalizeIndex(index + 1) : false;
+    return index < size - 1 || o_loop ? index + 1 : false;
   }
 
   function setStageShaftMinmaxAndSnap () {
@@ -802,8 +802,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     console.log('activeIndexes', activeIndexes);
 
     $.each(activeIndexes, function (i, index) {
-      console.log(i, index);
-      delete _toDetach[index];
+      delete _toDetach[normalizeIndex(index)];
     });
 
     $.each(_toDetach, function (index, $frame) {
@@ -964,14 +963,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     that.activeFrame = activeFrame = data[activeIndex];
 
-    unloadVideo($videoPlaying, activeFrame.i !== data[normalizeIndex(repositionIndex)].i);
-
-    frameDraw(activeIndexes, 'stage');
-    stageFramePosition([dirtyIndex, getPrevIndex(dirtyIndex), getNextIndex(dirtyIndex)]);
-
-    updateTouchTails('go', true);
-
-    triggerEvent('show', options.direct);
+    //setTimeout(function () {
+      unloadVideo($videoPlaying, activeFrame.i !== data[normalizeIndex(repositionIndex)].i);
+      frameDraw(activeIndexes, 'stage');
+      stageFramePosition([dirtyIndex, getPrevIndex(dirtyIndex), getNextIndex(dirtyIndex)]);
+      updateTouchTails('go', true);
+      triggerEvent('show', options.direct);
+    //}, 0);
 
     var onEnd = that.show.onEnd = function (skipReposition) {
       if (onEnd.ok) return;

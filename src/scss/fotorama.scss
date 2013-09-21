@@ -397,7 +397,6 @@ $time: .3s;
   .fotorama__html,
   .fotorama__caption {
     @extend %initial-translate;
-    -webkit-backface-visibility: hidden;
   }
   .fotorama__img,
   .fotorama__html,
@@ -434,7 +433,27 @@ $time: .3s;
   }
 }
 
-// Strange fix of the #66 issue (Firefox bug while sliding backwards)
+body,
+div,
+img,
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+  /* Force improvement of webkit mobile performance on sites using fotorama */
+  -webkit-backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+/* Strange fix of the #66 issue (Firefox bug while sliding backwards) */
 @-moz-document url-prefix(){
   .fotorama__active {
     box-shadow: 0 0 0 transparent;
