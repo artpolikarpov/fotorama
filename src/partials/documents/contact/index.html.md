@@ -19,4 +19,5 @@ To&nbsp;showcase your Fotorama site or&nbsp;anything else, you can reach me&nbsp
 ## Donate <i class="icon-thumbs-up-alt"></i>
 * PayPal for satisfied users: [fotoramajs@gmail.com](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7M9KK5AQPG6CC).
 * Yandex.Money: [4100139676157](https://money.yandex.ru/direct-payment.xml?receiver=4100139676157).
+* Bitcoin: [1AbXUmE6xzinqKaHuTVFRXtnxffFqvKkka](bitcoin:1AbXUmE6xzinqKaHuTVFRXtnxffFqvKkka).
 * Flattr: in the footer ↓
