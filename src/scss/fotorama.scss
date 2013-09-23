@@ -433,25 +433,6 @@ $time: .3s;
   }
 }
 
-//details,
-//figcaption,
-//figure,
-//hgroup,
-//summary,
-body,
-div,
-article,
-aside,
-footer,
-header,
-main,
-nav,
-section {
-  /* Force improvement of webkit mobile performance on sites using fotorama */
-  -webkit-backface-visibility: hidden;
-  //-webkit-font-smoothing: subpixel-antialiased;
-}
-
 /* Strange fix of the #66 issue (Firefox bug while sliding backwards) */
 @-moz-document url-prefix(){
   .fotorama__active {
