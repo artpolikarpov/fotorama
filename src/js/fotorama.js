@@ -1490,7 +1490,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       if (method !== 'load') {
         Array.prototype[method].apply(data, arguments);
       } else if (arguments[0] && typeof arguments[0] === 'object' && arguments[0].length) {
-        data = arguments[0];
+        data = clone(arguments[0]);
       }
       reset();
       return that;

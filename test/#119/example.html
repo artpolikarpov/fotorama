@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+  <title>Basic fotorama</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+
+  <!-- jQuery -->
+  <script src="jquery-1.9.1.min.js"></script>
+  
+  <script src="angular-1.1.5.min.js"></script>
+  <script src="app.js"></script>
+  
+
+  <!-- Fotorama -->
+  <link href="../../product/fotorama.css" rel="stylesheet">
+  <script src="../../product/fotorama.js"></script>
+
+  <!-- Just don’t want to repeat this prefix in every img[src] -->
+  <base href="http://fotorama.s3.amazonaws.com/i/okonechnikov/">
+</head>
+
+<body ng-controller="AppController">
+
+<!-- Fotorama -->
+<div ng-fotorama data="model.items[ model.index ]">
+    <!-- мама фоторама -->
+</div>
+
+<p>После двух нажатий кнопки "Change" пропадают навигационные точки.<br/>
+      Еще наблюдается ряд багов, которые не отражены в демке, но связаны со сменой данных (fotorama.data) по средставм метода load()</p>
+<input type="button" ng-click="Controller.change()" value="Change" />
+
+<!-- © -->
+<p>Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
+</body>
+</html>
