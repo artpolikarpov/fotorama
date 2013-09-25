@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>EXIF in captions</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="http://fotorama.s3.amazonaws.com/fotorama.css" rel="stylesheet">
+	<script src="http://fotorama.s3.amazonaws.com/fotorama.js"></script>
+
+  <!-- EXIF Reader: http://www.nihilogic.dk/labs/exif/
+       Since it’s using XHR, you can only access the data from images on your own domain. -->
+  <script src="/examples/assets/binaryajax.js"></script>
+  <script src="/examples/assets/exif.js"></script>
+
+  <script>
+    $(function () {
+      function waitFor (test, fn, timeout, takes) {
+        takes = +takes || Infinity;
+        var i = 0;
+        if (test()) {
+          i++ <= takes && fn();
+        } else {
+          setTimeout(function () {
+            waitFor(test, fn);
+          }, timeout || 100);
+        }
+      }
+      
+      // Attribute data-auto="false" prevents fotorama from auto initialising,
+      // keep hidden copy to read EXIF, and initialise manually
+      $('.fotorama').each(function () {
+        var $fotoramaSrc = $(this).hide();
+
+        function catchFrame (activeFrame) {
+          if (activeFrame.exif) return;
+
+          var exif;
+          
+          waitFor(
+              function () {
+                return !$.isEmptyObject(exif = EXIF.getAllTags($('[src="' + activeFrame.img + '"]', $fotoramaSrc)[0]));
+              }, function () {
+                activeFrame.exif = exif;
+                console.log('exif', exif);
+
+                var $frame = activeFrame.$stageFrame,
+                    // print out EXIF
+                    exifHTML = (exif.Make || '') + ' ' + (exif.Model || '')
+                       + (exif.MaxApertureValue && exif.FocalLength ? ', ' + exif.MaxApertureValue + ' @ ' + exif.FocalLength + 'mm' : '')
+                       + (exif.ISOSpeedRatings ? ', ' + exif.ISOSpeedRatings + ' ISO' : '');
+
+                // Remove old caption
+                $('.fotorama__caption', $frame).remove();
+
+                // Make new one
+                $frame.append('<div class="fotorama__caption">' + exifHTML +'</div>')
+              },
+              100,
+              30
+          );
+        }
+
+        $fotoramaSrc
+            .clone()
+            .insertAfter($fotoramaSrc)
+            .on('fotorama:show', function (e, fotorama) {
+                catchFrame(fotorama.activeFrame)
+            })
+            .show()
+            .fotorama();
+      });
+    });
+  </script>
+</head>
+
+<body>
+
+<!-- Fotorama -->
+<div class="fotorama"
+     data-auto="false"
+     data-width="400"
+     data-ratio="3/2">
+  <img src="assets/DSCN0614_small.jpg" exif="true" />
+  <img src="assets/Bush-dog.jpg" exif="true" />
+  <img src="assets/dsc_09827.jpg" exif="true" />
+  <img src="assets/204928286_89ced49818.jpg" exif="true" />
+</div>
+
+</body>
+</html>
