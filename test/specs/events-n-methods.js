@@ -66,7 +66,8 @@ describe('Events', function () {
     expect(e.show.i).toBe(2);
     expect(fotorama.activeIndex).toBe(1);
     // auto event, no touch
-    expect(e.show.extra).toBeUndefined();
+    expect(e.show.extra.user).toBeUndefined();
+    expect(e.show.extra.time).toBe(fotorama.options.transitionduration);
 
     waitsFor(function () {
       return e.load.i === 3;
