@@ -48,7 +48,7 @@ module.exports = function (grunt) {
     watch: {
       jst: {
         files: 'src/templates/*.jst',
-        tasks: ['jst', 'string-replace:jst']
+        tasks: ['jst', 'replace:jst']
       },
       sass: {
         files: '<%= meta.sass %>',
@@ -134,19 +134,19 @@ module.exports = function (grunt) {
         }
       }
     },
-    'string-replace': {
+    replace: {
       jst: {
         files: {
           'src/templates/compiled.js': 'src/templates/compiled.js'
         },
         options: {
-          replacements: [
+          patterns: [
             {
-              pattern: /this\[\"(\$)\"\]/g,
+              match: /this\[\"(\$)\"\]/g,
               replacement: "$"
             },
             {
-              pattern: /\[\"([a-z]+)\"\]/gi,
+              match: /\[\"([a-z]+)\"\]/gi,
               replacement: ".$1"
             }
           ]
@@ -157,9 +157,9 @@ module.exports = function (grunt) {
           'product/fotorama.uncompressed.js': 'product/fotorama.js'
         },
         options: {
-          replacements: [
+          patterns: [
             {
-              pattern: /(console\.)/g,
+              match: /(console\.)/g,
               replacement: "//$1"
             }
           ]
@@ -170,10 +170,36 @@ module.exports = function (grunt) {
           'fotorama.jquery.json': 'fotorama.jquery.json'
         },
         options: {
-          replacements: [
+          patterns: [
             {
-              pattern: /\d+.\d+.\d+/g,
+              match: /(\.?\d+){3,4}/g,
               replacement: '<%= pkg.version %>'
+            }
+          ]
+        }
+      },
+      history: {
+        files: {
+          'history.json': 'README.md'
+        },
+        options: {
+          patterns: [
+            {
+              match: /[^\r]+/g,
+              replacement: function (file) {
+                // /<!--(.+)-->([^\r]+)<!--\/\1-->/g
+                var json = {};
+
+                file.replace(/<!--(.+)-->([^\r]+?)<!--\/\1-->/g, function (fragment, key, notes) {
+                  json[key] = notes
+                      .replace(/^\n+/, '')
+                      .replace(/\n+$/, '');
+                });
+
+                console.log('json', json);
+
+                return JSON.stringify(json, null, '  ');
+              }
             }
           ]
         }
@@ -219,8 +245,8 @@ module.exports = function (grunt) {
     },
     s3: {
       options: {
-        key: '<%= grunt.file.readJSON("grunt-s3.json").key %>',
-        secret: '<%= grunt.file.readJSON("grunt-s3.json").secret %>',
+        key: '<%= grunt.file.readJSON("secret.json").s3.key %>',
+        secret: '<%= grunt.file.readJSON("secret.json").s3.secret %>',
         bucket: 'fotorama',
         access: 'public-read',
         gzip: true,
@@ -289,7 +315,36 @@ module.exports = function (grunt) {
       }
     },
 
-    jasmine: grunt.file.readJSON('test/specs/_specs.json')
+    jasmine: grunt.file.readJSON('test/specs/_specs.json'),
+
+    tweet: {
+      options: grunt.file.readJSON('secret.json').twit,
+      release: {
+        options: {
+          crop: true
+        },
+        text: 'Fotorama <%= pkg.version %>',
+        url: 'https://github.com/artpolikarpov/fotorama/releases/tag/<%= pkg.version %>'
+      }
+    },
+
+  gh_release: {
+    options: {
+      token: grunt.file.readJSON('secret.json').github.token,
+      owner: 'artpolikarpov',
+      repo: 'fotorama'
+    },
+    release: {
+      tag_name: '<%= pkg.version %>', // required
+      name: '<%= grunt.file.readJSON("history.json")[pkg.version + ":name"] %>',
+      body: '<%= grunt.file.readJSON("history.json")[pkg.version + ":notes"] %>',
+      asset: {
+        name: 'fotorama-<%= pkg.version %>.zip',
+        file: 'product/fotorama-4.4.4.zip',
+        'Content-Type': 'application/zip'
+      }
+    }
+  }
   });
 
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -300,7 +355,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-autoprefixer');
-  grunt.loadNpmTasks('grunt-string-replace');
+  grunt.loadNpmTasks('grunt-replace');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-compress');
@@ -309,14 +364,18 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-shell');
 
-  var defaultTask = 'copy sass autoprefixer jst string-replace:jst concat:js string-replace:console concat:css jasmine uglify cssmin jasmine clean compress';
-  var build = 'copy sass autoprefixer jst string-replace:jst concat:js string-replace:console concat:css uglify cssmin clean compress'.split(' ');
+  grunt.loadNpmTasks('grunt-markdown-to-json');
+  grunt.loadNpmTasks('grunt-tweet');
+  grunt.loadNpmTasks('grunt-gh-release');
+
+  var defaultTask = 'copy sass autoprefixer jst replace:jst concat:js replace:console concat:css jasmine uglify cssmin jasmine clean compress';
+  var build = 'copy sass autoprefixer jst replace:jst concat:js replace:console concat:css uglify cssmin clean compress'.split(' ');
 
   // Compile
   grunt.registerTask('default', defaultTask.split(' '));
   grunt.registerTask('build', build);
-  grunt.registerTask('look', 'copy:i sass autoprefixer jst string-replace:jst concat:js watch'.split(' '));
+  grunt.registerTask('look', 'copy:i sass autoprefixer jst replace:jst concat:js watch'.split(' '));
 
   // Publish, will fail without secret details ;-)
-  grunt.registerTask('publish', (defaultTask + ' ' + 's3 string-replace:version shell').split(' '));
+  grunt.registerTask('publish', (defaultTask + ' ' + 's3 replace:version shell').split(' '));
 };

@@ -11,7 +11,9 @@ profile
 node_modules
 *.zip
 product
-grunt-s3.json
+secret.json
 src/templates/compiled.js
 .grunt
 _SpecRunner.html
+
+history.json

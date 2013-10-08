@@ -24,3 +24,37 @@ The built version of Fotorama will be put in the `product/` subdirectory.
 3. Push to your fork and submit a pull request to Fotorama’s `develop` branch.
 
 Regarding code style like indentation and whitespace, follow the conventions you see used in the source already.
+
+## [Release History](https://github.com/artpolikarpov/fotorama/releases)
+
+### 4.4.2
+
+<!--0.4.12:name-->
+
+Minor but sensitive.
+
+<!--/0.4.12:name-->
+
+<!--0.4.12:notes-->
+
+* Fix pointer blinking.
+* More friendly to browsers without JS and search engines.
+* Fine-tuning of wheel and trackpad behaviour.
+* Fix scroll on IE Mobile
+
+<!--/0.4.12:notes-->
+
+### 4.4.0
+
+<!--4.4.4:notes-->
+
+* Horizontal wheel (two fingers on trackpad) enabled, disable with `data-wheel="false"`.
+* New options: `margin`, `thumbmargin`, `thumbborderwidth`, `glimpse`.
+* Preloader for big images on fullscreen.
+* Right-to-left direction in Fotorama: `data-direction="rtl"` option.
+* Support for additional params for YouTube and Vimeo links (like `&rel=0&vq=hd1080`).
+* Ability to simply override defaults with `fotoramaDefaults = {some: 'option'}`.
+
+Minor optimizations.
+
+<!--/4.4.4:notes-->
