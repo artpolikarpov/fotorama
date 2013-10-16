@@ -1,4 +1,5 @@
 $time: .3s;
+$arrSize: 32px;
 
 @import 'mixins';
 @import 'placeholders';
@@ -310,16 +311,11 @@ $time: .3s;
   z-index: 12;
   bottom: 0;
   left: 0;
-  max-width: 100%;
+  right: 0;
   font-family: 'Helvetica Neue', Arial, sans-serif;
   font-size: 14px;
   line-height: 1.5;
   color: #000;
-  background-color: #fff;
-  background-color: rgba(#fff, .9);
-
-  @extend %border-box;
-  padding: 5px 10px;
 
   a {
     text-decoration: none;
@@ -340,6 +336,14 @@ $time: .3s;
     left: auto;
     right: 0;
   }
+}
+
+.fotorama__caption__wrap {
+  background-color: #fff;
+  background-color: rgba(#fff, .9);
+  @extend %border-box;
+  padding: 5px 10px;
+  @extend %inline-block;
 }
 
 .fotorama--hidden {
@@ -390,17 +394,21 @@ $time: .3s;
   }
   .fotorama__stage__shaft,
   .fotorama__nav__shaft,
-  .fotorama__thumb-border,
-  .fotorama__stage__frame,
-  .fotorama__nav__frame,
-  .fotorama__img,
-  .fotorama__html,
-  .fotorama__caption {
+  .fotorama__thumb-border {
     @extend %initial-translate;
+  }
+  .fotorama__stage,
+  .fotorama__nav,
+  //.fotorama__stage__frame,
+  //.fotorama__nav__frame,
+  .fotorama__stage__frame .fotorama__img,
+  .fotorama__html,
+  .fotorama__caption
+  {
+    @extend %gpu;
   }
   .fotorama__img,
   .fotorama__html,
-  &.fotorama__wrap--fade .fotorama__stage__frame,
   .fotorama__caption {
     transition-property: opacity;
     transition-timing-function: linear;

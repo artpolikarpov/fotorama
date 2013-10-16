@@ -53,12 +53,16 @@
   transform: translate3d(0, 0, 0);
 }
 
+%gpu {
+  transform: translateZ(0);
+}
+
 %no-transform {
   transform: none !important;
 }
 
 %transition-for-slide {
-  transition-property: transform, width;
+  transition-property: transform;
   transition-timing-function: cubic-bezier(.1, 0, .25, 1);
   transition-duration: 0ms;
 }

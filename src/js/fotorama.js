@@ -20,8 +20,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       $stageShaft = $(div(stageShaftClass)).appendTo($stage),
       $stageFrame = $(),
-      $arrPrev = $(div(arrClass + ' ' + arrPrevClass, div(arrArrClass))),
-      $arrNext = $(div(arrClass + ' ' + arrNextClass, div(arrArrClass))),
+      $arrPrev = $(div(arrClass + ' ' + arrPrevClass/*, div(arrArrClass)*/)),
+      $arrNext = $(div(arrClass + ' ' + arrNextClass/*, div(arrArrClass)*/)),
       $arrs = $arrPrev.add($arrNext).appendTo($stage),
       $navWrap = $(div(navWrapClass)),
       $nav = $(div(navClass)).appendTo($navWrap),
@@ -107,9 +107,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   that.prevent = {};
 
-  if (CSS3) {
-    $wrap.addClass(wrapCss3Class);
-  }
+  $wrap.addClass(CSS3 ? wrapCss3Class : wrapCss2Class);
 
   fotoramaData.fotorama = this;
 
@@ -593,7 +591,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         }
 
         if (opts.captions && dataFrame.caption) {
-          $('<div class="' + captionClass + '"></div>').append(dataFrame.caption).appendTo($frame);
+          $(div(captionClass, div(captionWrapClass, dataFrame.caption))).appendTo($frame);
         }
 
         dataFrame.video && $frame
