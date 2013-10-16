@@ -12,14 +12,14 @@ GPU & Refreshing
 
 <!--4.4.5:notes-->
 
-* Optimize and reduce GPU layers, speedup Fotorama
-* Merge #131
-* #119 Fix load method
+* Optimize and reduce GPU layers, speedup Fotorama.
+* Merge #131.
+* #119 Fix load method.
 * Better `startAutoplay` method and autoplay itself.
 * Throw error if no jQuery or it’s outdated.
-* Fix glimpse unsetting.
-* Update arrows in fotorama.png
-* #116 Ability to center captions with `.fotorama__caption { text-align: center; }`
+* Fix glimpse unsetting with `setOptions`.
+* Update arrows in `fotorama.png`.
+* #116 Ability to center captions with `.fotorama__caption { text-align: center; }`.
 
 <!--/4.4.5:notes-->
 
@@ -36,7 +36,7 @@ Fine-tuning
 * Fix pointer blinking.
 * More friendly to browsers without JS and search engines.
 * Fine-tuning of wheel and trackpad behaviour.
-* Fix scroll on IE Mobile
+* Fix scroll on IE Mobile.
 
 <!--/4.4.2:notes-->
 
