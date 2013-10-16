@@ -8,7 +8,7 @@ Change this with `data-auto="false"`:
       <img src="2.jpg">
     </div>
 
-And turn it on manually:
+...and turn it on manually:
 
     $(function () {
       $('.fotorama').fotorama();

@@ -1,0 +1,27 @@
+Get it:
+
+    $(function () {
+      // DOM is ready.
+      // Fotorama should be automatically initialised.
+      var fotorama = $('#your-fotorama-id').data('fotorama');
+
+      // Inspect the API object in console:
+      console.log(fotorama);
+    });
+
+Prevent automatic initialization to take more control:
+
+    <div class="fotorama"
+         data-auto="false"
+         id="your-fotorama-id">
+      <img src="1.jpg">
+      <img src="2.jpg">
+    </div>
+
+    <script>
+      var fotorama = $('#your-fotorama-id')
+          // Initialize first:
+          .fotorama()
+          // ...and return the API object:
+          .data('fotorama');
+    </script>

@@ -12,7 +12,6 @@ For better performance with thumbnails, have smaller images ready and include th
 	     data-nav="thumbs">
 	  <a href="1.jpg"><img src="1_thumb.jpg"></a>
 	  <a href="2.jpg"><img src="2_thumb.jpg"></a>
-	  <a href="3.jpg"><img src="3_thumb.jpg"></a>
 	</div>
 
 _Thumbnails example (<a href="/examples/thumbnails.html" target="_blank">new window</a>):_
@@ -57,7 +56,6 @@ If you need to have each thumbnail had its own aspect ratio, set `width` and `he
      data-nav="thumbs">
   <a href="1.jpg"><img src="1_thumb.jpg" width="144" height="96"></a>
   <a href="2.jpg"><img src="2_thumb.jpg" width="64" height="128"></a>
-  <a href="3.jpg"><img src="3_thumb.jpg" width="100" height="100"></a>
 </div>
 ```
 

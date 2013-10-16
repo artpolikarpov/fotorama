@@ -28,7 +28,7 @@ body {
   /*min-height: 100%;
   height: auto;*/
 
-  padding-bottom: 7em;
+  /*padding-bottom: 7em;*/
 }
 
 .body-wrap {
@@ -39,6 +39,7 @@ body {
   z-index: 9;
 }
 
+/*
 .footer-fixed {
   position: fixed;
   bottom: 0;
@@ -46,4 +47,4 @@ body {
   right: 0;
   left: 0;
   height: 7em;
-}
+}*/

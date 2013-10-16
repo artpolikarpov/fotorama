@@ -10,7 +10,7 @@
   letter-spacing: 1px;
   margin-bottom: 30px;
 	margin-right: 20px;
-  -webkit-backface-visibility: hidden;
+  /*-webkit-backface-visibility: hidden;*/
 }
 
 .logo > span, .logo > a > span {

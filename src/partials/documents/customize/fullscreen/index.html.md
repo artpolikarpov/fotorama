@@ -52,5 +52,4 @@ Add a&nbsp;separate image for fullscreen using `data-full`:
 	     data-allowfullscreen="native">
 	  <img src="1.jpg" data-full="1_full.jpg">
 	  <img src="2.jpg" data-full="2_full.jpg">
-	  <img src="3.jpg" data-full="3_full.jpg">
 	</div>

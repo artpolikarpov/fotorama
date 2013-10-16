@@ -74,7 +74,7 @@ h4 small {
     margin-left: -1.2em;
     padding-left: 1.2em;
     position: relative;
-    -webkit-backface-visibility: hidden;
+    /*-webkit-backface-visibility: hidden;*/
   }
 
   a.icon-link,

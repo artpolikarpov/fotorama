@@ -14,8 +14,8 @@ To&nbsp;make fotorama responsive, define width in&nbsp;percents and aspect ratio
 	<div class="fotorama"
 	     data-width="100%"
 	     data-ratio="800/600">
-	     <!-- the same as data-ratio="4/3"
-	          or data-ratio="1.3333333333" -->
+	<!-- ↑ The same as data-ratio="4/3"
+	       or data-ratio="1.3333333333". -->
 	  <img src="1.jpg">
 	  <img src="2.jpg">
 	</div>

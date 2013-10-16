@@ -3,7 +3,6 @@ Add a captions using `data-caption`:
 	<div class="fotorama">
 	  <img src="1.jpg" data-caption="One">
 	  <img src="2.jpg" data-caption="Two">
-	  <img src="3.jpg" data-caption="Three">
 	</div>
 
 _Captions example (<a href="/examples/captions.html" target="_blank">new window</a>):_
