@@ -19,7 +19,6 @@ meta: {
     'src/js/touch.js',
     'src/js/moveontouch.js',
     'src/js/wheel.js',
-    'src/js/oooo.js',
     'src/js/fotorama.js',
     'src/js/fn-fotorama.js',
     'src/js/instances.js',
