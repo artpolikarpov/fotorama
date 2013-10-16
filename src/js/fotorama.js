@@ -1133,8 +1133,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
       if (opts.glimpse) {
         // Glimpse
         measures.w -= Math.round((numberFromPercent(opts.glimpse) / 100 * width || numberFromMeasure(opts.glimpse)) * 2)
-        $stageShaft.css({width: measures.w, marginLeft: (measures.W - measures.w) / 2});
       }
+
+      $stageShaft.css({width: measures.w, marginLeft: (measures.W - measures.w) / 2});
 
       console.log('measures.W', measures.W);
       console.log('measures.w', measures.w);
