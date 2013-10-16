@@ -2,6 +2,27 @@
 
 > https://github.com/artpolikarpov/fotorama/releases
 
+## 4.4.5, Oct 17 2013
+
+<!--4.4.5:name-->
+
+GPU & Refreshing
+
+<!--/4.4.5:name-->
+
+<!--4.4.5:notes-->
+
+* Optimize and reduce GPU layers, speedup Fotorama
+* Merge #131
+* #119 Fix load method
+* Better `startAutoplay` method and autoplay itself.
+* Throw error if no jQuery or it’s outdated.
+* Fix glimpse unsetting.
+* Update arrows in fotorama.png
+* #116 Ability to center captions with `.fotorama__caption { text-align: center; }`
+
+<!--/4.4.5:notes-->
+
 ## 4.4.2
 
 <!--4.4.2:name-->

@@ -375,5 +375,5 @@ grunt.registerTask('build', build);
 grunt.registerTask('look', 'copy:i sass autoprefixer jst replace:jst concat:js watch'.split(' '));
 
 // Publish, will fail without secret details ;-)
-grunt.registerTask('publish', (defaultTask + ' ' + 's3 replace:version shell gh_release tweet').split(' '));
+grunt.registerTask('publish', (defaultTask + ' ' + 's3 replace:version shell replace:history gh_release tweet').split(' '));
 };
