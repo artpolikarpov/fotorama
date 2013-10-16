@@ -339,7 +339,7 @@ gh_release: {
     body: '<%= grunt.file.readJSON("history.json")[pkg.version + ":notes"] %>',
     asset: {
       name: 'fotorama-<%= pkg.version %>.zip',
-      file: 'product/fotorama-4.4.4.zip',
+      file: 'product/fotorama-<%= pkg.version %>.zip',
       'Content-Type': 'application/zip'
     }
   }
