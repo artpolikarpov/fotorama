@@ -179,7 +179,7 @@ replace: {
   },
   history: {
     files: {
-      'history.json': 'README.md'
+      'history.json': 'HISTORY.md'
     },
     options: {
       patterns: [
@@ -300,9 +300,9 @@ shell: {
   commit: {
     command: 'git commit fotorama.jquery.json -m \'Tagging the <%= pkg.version %> release\''
   },
-  tag: {
+  /*tag: {
     command: 'git tag <%= pkg.version %>'
-  },
+  },*/
   push: {
     command: 'git push --tags --progress origin master:master'
   },
@@ -317,7 +317,7 @@ shell: {
 jasmine: grunt.file.readJSON('test/specs/_specs.json'),
 
 tweet: {
-  options: grunt.file.readJSON('secret.json').twit,
+  options: grunt.file.readJSON('secret.json').tweet,
   release: {
     options: {
       crop: true
@@ -375,5 +375,5 @@ grunt.registerTask('build', build);
 grunt.registerTask('look', 'copy:i sass autoprefixer jst replace:jst concat:js watch'.split(' '));
 
 // Publish, will fail without secret details ;-)
-grunt.registerTask('publish', (defaultTask + ' ' + 's3 replace:version shell').split(' '));
+grunt.registerTask('publish', (defaultTask + ' ' + 's3 replace:version shell gh_release tweet').split(' '));
 };
