@@ -249,9 +249,7 @@ function getDataFromHtml ($el) {
     $.extend(imgData, {
       width: width,
       height: height,
-      thumbratio: getRatio(imgData.thumbratio
-          || (numberFromMeasure(imgData.thumbwidth || ($child && $child.attr('width')) || separateThumbFLAG || width)
-              / numberFromMeasure(imgData.thumbheight || ($child && $child.attr('height')) || separateThumbFLAG || height)))
+      thumbratio: getRatio(imgData.thumbratio || (numberFromMeasure(imgData.thumbwidth || ($child && $child.attr('width')) || separateThumbFLAG || width) / numberFromMeasure(imgData.thumbheight || ($child && $child.attr('height')) || separateThumbFLAG || height)))
     });
   }
 
