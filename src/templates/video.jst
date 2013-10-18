@@ -1,1 +1,1 @@
-<div class="fotorama__video"><iframe src="<% print(v.type == 'youtube' ? 'http://youtube.com/embed/' + v.id +'?autoplay=1' : v.type == 'vimeo' ? 'http://player.vimeo.com/video/' + v.id + '?autoplay=1&amp;badge=0' : v.id) %>" frameborder="0" allowfullscreen></iframe></div>
+<div class="fotorama__video"><iframe src="<% print((v.type == 'youtube' ? 'http://youtube.com/embed/' + v.id +'?autoplay=1' : v.type == 'vimeo' ? 'http://player.vimeo.com/video/' + v.id + '?autoplay=1&badge=0' : v.id)  + (v.s ? '&' + v.s : '')) %>" frameborder="0" allowfullscreen></iframe></div>

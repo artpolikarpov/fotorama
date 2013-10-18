@@ -1,5 +1,5 @@
 document.write(
-    '<div class="fotorama" data-nav="thumbs" data-width="500" data-height="333" data-thumb-width="48" data-thumb-height="48" id="fotorama">' +
+    '<div class="fotorama" data-nav="thumbs" data-width="500" data-height="333" data-thumb-width="48" data-thumbheight="48" id="fotorama">' +
         '<a href="test/i/nyc/guy-in-car.jpg" width="500" height="335" data-caption="Guy in car"></a>' +
         '<a href="test/i/nyc/acapella.jpg" data-caption="Acapella"></a>' +
         '<img src="test/i/nyc/crazyjohn.jpg" data-caption="Crazy John" width="450" height="591px">' +
@@ -11,13 +11,13 @@ document.write(
         '<a href="test/i/nyc/flipoff.jpg" data-caption="Flip off"></a>' +
         '<a href="test/i/nyc/freakout.jpg" data-thumb="test/i/nyc/freakout.jpg" data-width="443" data-height="525"></a>' +
         '<a href="test/i/nyc/guy-in-park.jpg" data-thumb="test/i/nyc/homeless-sleeping.jpg" data-width="500" data-height="335"></a>' +
-        '<a href="test/i/nyc/italianguy.jpg" data-caption="Italian guy"></a>' +
-        '<a href="test/i/nyc/KIOSK.jpg" data-caption="Kiosk"></a>' +
-        '<a href="test/i/nyc/ladies-riding.jpg" data-caption="Ladies riding"></a>' +
-        '<a href="test/i/nyc/lift-dude.jpg" data-caption="Lift dude"></a>' +
-        '<a href="test/i/nyc/severedhead-lo.jpg" data-thumb-width="550" data-thumb-height="455" data-caption="Severed head"></a>' +
-        '<a href="test/i/nyc/smoking.jpg" data-thumb-width="500" data-thumb-height="394" data-caption="Smoking"></a>' +
-        '<a href="test/i/nyc/streetlook.jpg" data-thumb-width="500" data-thumb-height="333" data-caption="Streetlook"></a>' +
+        '<a href="test/i/nyc/italianguy.jpg" data-caption="Italian guy" data-thumbratio="34/75"></a>' +
+        '<div data-img="test/i/nyc/KIOSK.jpg" data-width="443" data-height="525">Kiosk</div>' +
+        '<div data-thumb="test/i/nyc/ladies-riding.jpg" data-width="443" data-height="525">Ladies riding</div>' +
+        '<div data-thumb="test/i/nyc/lift-dude.jpg" data-thumbwidth="70" data-thumbheight="47">Hmm...</div>' +
+        '<div data-img="test/i/nyc/severedhead-lo.jpg" data-thumbratio="1.5">Severed head</div>' +
+        '<div data-img="test/i/nyc/smoking.jpg" data-thumbratio="500/394">Smoking</div>' +
+        '<a href="test/i/nyc/streetlook.jpg" data-thumb-width="500" data-thumbheight="333" data-caption="Streetlook"></a>' +
         '<a href="test/i/nyc/two-umbrellas.jpg" data-caption="Two umbrellas"></a>' +
         '<a href="test/i/nyc/woman-reading.jpg" data-caption="Woman reading"></a>' +
     '</div>'
@@ -63,34 +63,30 @@ describe('Thumbs', function () {
   });
 
   it('thumbs dimenstions are read correctly', function () {
-    expect(data[0].thumbRatio).toBe(500 / 335);
-
-    expect(data[1].thumbRatio).toBeUndefined();
-
-    expect(data[2].thumbRatio).toBe(450 / 591);
-
-    expect(data[3].thumbRatio).toBe(55 / 34);
-
-    expect(data[4].thumbRatio).toBeUndefined();
-
-    expect(data[5].thumbRatio).toBe(50 / 36);
-
-    expect(data[6].thumbRatio).toBe(500 / 383);
-
-    expect(data[7].thumbRatio).toBe(50 / 49);
-
-    expect(data[8].thumbRatio).toBeUndefined();
-
-    expect(data[9].thumbRatio).toBe(443 / 525);
-
-    expect(data[10].thumbRatio).toBeUndefined();
+    expect(data[0].thumbratio).toBe(500 / 335);
+    expect(data[1].thumbratio).toBeUndefined();
+    expect(data[2].thumbratio).toBe(450 / 591);
+    expect(data[3].thumbratio).toBe(55 / 34);
+    expect(data[4].thumbratio).toBeUndefined();
+    expect(data[5].thumbratio).toBe(50 / 36);
+    expect(data[6].thumbratio).toBe(500 / 383);
+    expect(data[7].thumbratio).toBe(50 / 49);
+    expect(data[8].thumbratio).toBeUndefined();
+    expect(data[9].thumbratio).toBe(443 / 525);
+    expect(data[10].thumbratio).toBeUndefined();
+    expect(data[11].thumbratio).toBe(34/75);
+    expect(data[12].thumbratio).toBe(443/525); //
+    expect(data[13].thumbratio).toBe(undefined);
+    expect(data[14].thumbratio).toBe(70/47);
+    expect(data[15].thumbratio).toBe(1.5);
+    expect(data[16].thumbratio).toBe(500/394);
   });
 
   it('positions are good', function () {
     $thumb.each(function () {
       var $this = $(this);
 
-      expect($this.position().left).toBe($this.data('l'));
+      expect(Math.round($this.position().left)).toBe($this.data('l'));
     });
   });
 

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Custom HTML in fotorama</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.9.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../product/fotorama.css" rel="stylesheet">
+	<script src="../product/fotorama.js"></script>
+
+	<!-- Just don’t want to repeat this prefix in every img[src] -->
+	<base href="i/okonechnikov/">
+</head>
+
+<body>
+
+<p>Custom HTML:<p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div class="fotorama">
+  <mark>&lt;div class="any">One&lt;/div></mark>
+&lt;/div></code></pre>
+
+<!-- Style for custom HTML -->
+<style>
+  .square {
+    position: absolute;
+    box-sizing: border-box;
+    width: 250px;
+    left: 125px;
+    height: 250px;
+    top: 25px;
+    border: 10px solid;
+  }
+</style>
+
+<!-- Fotorama -->
+<div class="fotorama" data-width="500" data-height="300" data-max-width="100%">
+	<div class="square" style="border-color: rgba(255, 100, 0, .5);">1</div>
+	<div class="square" style="border-color: rgba(0, 255, 100, .5);">2</div>
+	<div class="square" style="border-color: rgba(100, 0, 255, .5);">3</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+
+<button id="doanimate">doAnimate()</button> <span id="counter">0</span><br><br>
+
+<div style="position: relative;">
+  <div id="square" style="background-color: #ddd; width: 100px; height: 100px; position: relative; font-size: 13px;"></div>
+</div>
+
+<script src="../jquery/jquery-2.0.2.js"></script>
+  <script>
+    var $square = $('#square'),
+        time = 1000;
+
+    function updateText (text) {
+      $square.html(text || $square.position().top + 'px');
+    }
+
+    updateText();
+
+    function fade (chain) {
+      var chainedFLAG = typeof chain !== 'undefined';
+      fade.s = fade.s || [];
+      if (!chainedFLAG) {
+        fade.s.push(arguments);
+        Array.prototype.push.call(arguments, fade.s.length);
+        if (fade.s.length > 1) return;
+      }
+
+      var _time = Math.round(time / (chain || 1)),
+          top = $square.position().top + 50;
+
+      updateText(top + 'px (' + _time + 'ms)');
+
+      $square.animate({top: top}, _time, function () {
+        updateText();
+
+        var args = (chainedFLAG || fade.s.shift()) && fade.s.shift();
+        args && fade.apply(this, args);
+      });
+    }
+
+    var $counter = $('#counter');
+
+    $('#doanimate').click(function () {
+      fade();
+      $counter.text(+$counter.text() + 50);
+    });
+  </script>
+</body>
+</html>

@@ -3,7 +3,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
   $BODY = $BODY || $('body');
 
   var that = this,
-      index = _size,
       stamp = $.now(),
       stampClass = _fotoramaClass + stamp,
       fotorama = $fotorama[0],
@@ -18,10 +17,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $wrap = $(div(wrapClass)),
       $stage = $(div(stageClass)).appendTo($wrap),
       stage = $stage[0],
+
       $stageShaft = $(div(stageShaftClass)).appendTo($stage),
       $stageFrame = $(),
-      $arrPrev = $(div(arrClass + ' ' + arrPrevClass, div(arrArrClass))),
-      $arrNext = $(div(arrClass + ' ' + arrNextClass, div(arrArrClass))),
+      $arrPrev = $(div(arrClass + ' ' + arrPrevClass/*, div(arrArrClass)*/)),
+      $arrNext = $(div(arrClass + ' ' + arrNextClass/*, div(arrArrClass)*/)),
       $arrs = $arrPrev.add($arrNext).appendTo($stage),
       $navWrap = $(div(navWrapClass)),
       $nav = $(div(navClass)).appendTo($navWrap),
@@ -64,13 +64,16 @@ jQuery.Fotorama = function ($fotorama, opts) {
       o_thumbSide2,
       o_transitionDuration,
       o_shadows,
+      o_rtl,
       lastOptions = {},
 
       measures = {},
       measuresSetFLAG,
 
       stageShaftTouchTail = {},
+      stageWheelTail = {},
       navShaftTouchTail = {},
+      navWheelTail = {},
 
       scrollTop,
       scrollLeft,
@@ -89,7 +92,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
       hoverFLAG,
 
       navFrameKey,
-      stageLeft = 0;
+      stageLeft = 0,
+
+      fadeStack = [];
 
   $wrap[STAGE_FRAME_KEY] = $(div(stageFrameClass));
   $wrap[NAV_THUMB_FRAME_KEY] = $(div(navFrameClass + ' ' + navFrameThumbClass, div(thumbClass)));
@@ -100,13 +105,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
   toDeactivate[NAV_DOT_FRAME_KEY] = [];
   toDetach[STAGE_FRAME_KEY] = {};
 
-  if (CSS3) {
-    $wrap.addClass(wrapCss3Class);
-  }
+  that.prevent = {};
+
+  $wrap.addClass(CSS3 ? wrapCss3Class : wrapCss2Class);
 
   fotoramaData.fotorama = this;
-  that.options = opts;
-  _size++;
 
   function checkForVideo () {
     $.each(data, function (i, dataFrame) {
@@ -127,18 +130,58 @@ jQuery.Fotorama = function ($fotorama, opts) {
     });
   }
 
+  function bindGlobalEvents (FLAG) {
+    var keydownCommon = 'keydown.' + _fotoramaClass,
+        keydownLocal = 'keydown.' + _fotoramaClass + stamp,
+        resizeLocal = 'resize.' + _fotoramaClass + stamp;
+
+    if (FLAG) {
+      $DOCUMENT
+          .on(keydownLocal, function (e) {
+            if ($videoPlaying && e.keyCode === 27) {
+              stopEvent(e);
+              unloadVideo($videoPlaying, true, true);
+            } else if (that.fullScreen || (opts.keyboard && !that.index)) {
+              if (e.keyCode === 27) {
+                stopEvent(e);
+                that.cancelFullScreen();
+              } else if (e.keyCode === 39 || (e.keyCode === 40 && that.fullScreen)) {
+                stopEvent(e);
+                that.show({index: '>', slow: e.altKey, user: true});
+              } else if (e.keyCode === 37 || (e.keyCode === 38 && that.fullScreen)) {
+                stopEvent(e);
+                that.show({index: '<', slow: e.altKey, user: true});
+              }
+            }
+          });
+
+      if (!that.index) {
+        $DOCUMENT
+            .off(keydownCommon)
+            .on(keydownCommon, 'textarea, input, select', function (e) {
+              !$BODY.hasClass(_fullscreenClass) && e.stopPropagation();
+            });
+      }
+
+      $WINDOW.on(resizeLocal, that.resize);
+    } else {
+      $DOCUMENT.off(keydownLocal);
+      $WINDOW.off(resizeLocal);
+    }
+  }
+
   function appendElements (FLAG) {
     if (FLAG === appendElements.f) return;
 
     if (FLAG) {
       $fotorama
           .html('')
-          .addClass(stampClass)
+          .addClass(_fotoramaClass + ' ' + stampClass)
           .append($wrap)
           .before($style)
           .before($anchor);
 
-      $.Fotorama.size++;
+      addInstance(that);
     } else {
       $wrap.detach();
       $style.detach();
@@ -147,9 +190,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
           .html(fotoramaData.urtext)
           .removeClass(stampClass);
 
-      $.Fotorama.size--;
+      hideInstance(that);
     }
 
+    bindGlobalEvents(FLAG);
     appendElements.f = FLAG;
   }
 
@@ -188,37 +232,44 @@ jQuery.Fotorama = function ($fotorama, opts) {
    * Options on the fly
    * */
   function setOptions () {
+    that.options = opts = optionsToLowerCase(opts);
+
     o_fade = opts.transition === 'crossfade' || opts.transition === 'dissolve';
 
     o_loop = opts.loop && (size > 2 || o_fade);
 
-    o_transitionDuration = +opts.transitionDuration || TRANSITION_DURATION;
+    o_transitionDuration = +opts.transitionduration || TRANSITION_DURATION;
+
+    o_rtl = opts.direction === 'rtl';
 
     var classes = {add: [], remove: []};
 
     if (size > 1) {
       o_nav = opts.nav;
-      o_navTop = opts.navPosition === 'top';
+      o_navTop = opts.navposition === 'top';
       classes.remove.push(selectClass);
 
       $arrs.toggle(opts.arrows);
-
-      arrsUpdate();
     } else {
       o_nav = false;
       $arrs.hide();
     }
 
+    arrsUpdate();
+    stageWheelUpdate();
+
     if (opts.autoplay) setAutoplayInterval(opts.autoplay);
 
-    o_thumbSide = numberFromMeasure(opts.thumbWidth) || THUMB_SIZE;
-    o_thumbSide2 = numberFromMeasure(opts.thumbHeight) || THUMB_SIZE;
+    o_thumbSide = numberFromMeasure(opts.thumbwidth) || THUMB_SIZE;
+    o_thumbSide2 = numberFromMeasure(opts.thumbheight) || THUMB_SIZE;
+
+    stageWheelTail.ok = navWheelTail.ok = opts.trackpad && !SLOW;
 
     stageNoMove();
 
     extendMeasures(opts, true);
 
-    o_navThumbs = o_nav === 'thumbs'
+    o_navThumbs = o_nav === 'thumbs';
 
     if (o_navThumbs) {
       frameDraw(size, 'navThumb');
@@ -226,7 +277,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $navFrame = $navThumbFrame;
       navFrameKey = NAV_THUMB_FRAME_KEY;
 
-      setStyle($style, $.Fotorama.jst.style({w: o_thumbSide, h: o_thumbSide2, m: MARGIN, s: stamp, q: !COMPAT}));
+      setStyle($style, $.Fotorama.jst.style({w: o_thumbSide, h: o_thumbSide2, b: opts.thumbborderwidth, m: opts.thumbmargin, s: stamp, q: !COMPAT}));
 
       $nav
           .addClass(navThumbsClass)
@@ -255,7 +306,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       frameAppend($navFrame, $navShaft, 'nav');
     }
 
-    o_allowFullScreen = opts.allowFullScreen;
+    o_allowFullScreen = opts.allowfullscreen;
 
     if (o_allowFullScreen) {
       $fullscreenIcon.appendTo($stage);
@@ -267,6 +318,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     classes[addOrRemove(o_fade)].push(wrapFadeClass);
     classes[addOrRemove(!o_fade)].push(wrapSlideClass);
+
+    classes[addOrRemove(o_rtl)].push(wrapRtlClass);
 
     o_shadows = opts.shadows && !SLOW;
     classes[addOrRemove(!o_shadows)].push(wrapNoShadowsClass);
@@ -301,18 +354,15 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function setStageShaftMinmaxAndSnap () {
-    stageShaftData.min = o_loop ? -Infinity : -getPosByIndex(size - 1, measures.w, MARGIN, repositionIndex);
-    stageShaftData.max = o_loop ? Infinity : -getPosByIndex(0, measures.w, MARGIN, repositionIndex);
-    stageShaftData.snap = measures.w + MARGIN;
+    stageShaftData.min = o_loop ? -Infinity : -getPosByIndex(size - 1, measures.w, opts.margin, repositionIndex);
+    stageShaftData.max = o_loop ? Infinity : -getPosByIndex(0, measures.w, opts.margin, repositionIndex);
+    stageShaftData.snap = measures.w + opts.margin;
   }
 
   function setNavShaftMinmax () {
-    navShaftData.min = Math.min(0, measures.w - $navShaft.width());
+    navShaftData.min = Math.min(0, measures.W - $navShaft.width());
     navShaftData.max = 0;
-
-    navShaftTouchTail.noMove = navShaftData.min === navShaftData.max;
-
-    $navShaft.toggleClass(grabClass, !navShaftTouchTail.noMove);
+    $navShaft.toggleClass(grabClass, !(navShaftTouchTail.noMove = navShaftData.min === navShaftData.max));
   }
 
   function eachIndex (indexes, type, fn) {
@@ -322,12 +372,15 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
     return $.each(indexes, function (i, index) {
       if (rangeFLAG) index = i;
-      if (typeof(index) === 'number') {
-        var dataFrame = data[normalizeIndex(index)],
-            key = '$' + type + 'Frame',
-            $frame = dataFrame[key];
+      if (typeof index === 'number') {
+        var dataFrame = data[normalizeIndex(index)];
 
-        fn.call(this, i, index, dataFrame, $frame, key, $frame && $frame.data());
+        if (dataFrame) {
+          var key = '$' + type + 'Frame',
+              $frame = dataFrame[key];
+
+          fn.call(this, i, index, dataFrame, $frame, key, $frame && $frame.data());
+        }
       }
     });
   }
@@ -348,7 +401,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       if (!$frame) return;
 
-      var fullFLAG = that.fullScreen && dataFrame.full && !frameData.$full && type === 'stage';
+      var fullFLAG = that.fullScreen && dataFrame.full && dataFrame.full !== dataFrame.img && !frameData.$full && type === 'stage';
 
       if (frameData.$img && !again && !fullFLAG) return;
 
@@ -382,7 +435,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           dataFrame[srcKey] = src = dummy;
           loadImg([index], type, specialMeasures, specialFit, true);
         } else {
-          if (src && !dataFrame.html) {
+          if (src && !dataFrame.html && !fullFLAG) {
             $frame
                 .trigger('f:error')
                 .removeClass(loadingClass)
@@ -430,8 +483,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
         fit($img, specialMeasures || measures, specialFit || dataFrame.fit || opts.fit);
 
-        $.Fotorama.cache[src] = 'loaded';
-        frameData.state = 'loaded';
+        $.Fotorama.cache[src] = frameData.state = 'loaded';
 
         setTimeout(function () {
           $frame
@@ -478,8 +530,31 @@ jQuery.Fotorama = function ($fotorama, opts) {
         })();
       }
 
+      frameData.state = '';
       img.src = src;
     });
+  }
+
+  var $oooo = $(div('', div(ooooClass))),
+      ooooInterval,
+      ooooStep = function () {
+        $oooo.attr('class', ooooClass + ' ' + ooooClass + '--' + ooooI);
+        ooooI++;
+        if (ooooI > 4) ooooI = 0;
+      },
+      ooooI;
+
+  function ooooStart ($el) {
+    ooooStop(true);
+    $oooo.appendTo($el);
+    ooooI = 0;
+    ooooStep();
+    ooooInterval = setInterval(ooooStep, 200);
+  }
+
+  function ooooStop (leave) {
+    leave || $oooo.detach();
+    clearInterval(ooooInterval);
   }
 
   function updateFotoramaState () {
@@ -516,7 +591,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         }
 
         if (opts.captions && dataFrame.caption) {
-          $('<div class="' + captionClass + '"></div>').append(dataFrame.caption).appendTo($frame);
+          $(div(captionClass, div(captionWrapClass, dataFrame.caption))).appendTo($frame);
         }
 
         dataFrame.video && $frame
@@ -544,9 +619,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
     eachIndex(indexes, 'stage', function (i, index, dataFrame, $frame, key, frameData) {
       if (!$frame) return;
 
-      toDetach[STAGE_FRAME_KEY][normalizeIndex(index)] = $frame.css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, MARGIN, repositionIndex)}, o_fade && getDuration(0)));
+      toDetach[STAGE_FRAME_KEY][normalizeIndex(index)] = $frame.css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, opts.margin, repositionIndex)}, o_fade && getDuration(0)));
 
       if (isDetached($frame[0])) {
+        console.log('Append', normalizeIndex(index));
         $frame.appendTo($stageShaft);
         unloadVideo(dataFrame.$video);
       }
@@ -609,18 +685,16 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
               if (!thumbsFLAG) return;
 
-
-
               var $this = $(this),
                   frameData = $this.data(),
-                  thumbWidth = Math.round(o_thumbSide2 * frameData.data.thumbRatio) || o_thumbSide;
+                  thumbwidth = Math.round(o_thumbSide2 * frameData.data.thumbratio) || o_thumbSide;
 
               frameData.l = left;
-              frameData.w = thumbWidth;
+              frameData.w = thumbwidth;
 
-              $this.css({width: thumbWidth});
+              $this.css({width: thumbwidth});
 
-              left += thumbWidth + MARGIN;
+              left += thumbwidth + opts.thumbmargin;
             })
       );
 
@@ -637,12 +711,20 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function arrsUpdate () {
-    $arrs.each(function (i) {
-      $(this).toggleClass(
-          arrDisabledClass,
-          disableDirrection(i)
-      );
-    });
+    $arrPrev.toggleClass(
+      arrDisabledClass,
+      disableDirrection(0)
+    );
+    $arrNext.toggleClass(
+      arrDisabledClass,
+      disableDirrection(1)
+    );
+  }
+
+  function stageWheelUpdate () {
+    if (stageWheelTail.ok) {
+      stageWheelTail.prevent = {'<': disableDirrection(0), '>': disableDirrection(1)};
+    }
   }
 
   function getNavFrameBounds ($navFrame) {
@@ -660,8 +742,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     return {
       c: left + width / 2,
-      min: -left + MARGIN * 10,
-      max: -left + measures.w - width - MARGIN * 10
+      min: -left + opts.thumbmargin * 10,
+      max: -left + measures.w - width - opts.thumbmargin * 10
     };
   }
 
@@ -670,7 +752,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     slide($thumbBorder, {
       time: time * .9,
       pos: navFrameData.l,
-      width: navFrameData.w - MARGIN * 2
+      width: navFrameData.w - opts.thumbborderwidth * 2
     });
   }
 
@@ -711,16 +793,19 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }
 
-
   function detachFrames (key) {
     var _toDetach = toDetach[key];
 
+    console.log('_toDetach', _toDetach);
+    console.log('activeIndexes', activeIndexes);
+
     $.each(activeIndexes, function (i, index) {
-      delete _toDetach[index];
+      delete _toDetach[normalizeIndex(index)];
     });
 
     $.each(_toDetach, function (index, $frame) {
       delete _toDetach[index];
+      console.log('Detach', index);
       $frame.detach();
     });
   }
@@ -737,7 +822,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       toDeactivate[STAGE_FRAME_KEY].push($frame.addClass(activeClass));
 
       skipOnEnd || that.show.onEnd(true);
-      stop($stageShaft, 0);
+      stop($stageShaft, 0, true);
 
       detachFrames(STAGE_FRAME_KEY);
       stageFramePosition(activeIndexes);
@@ -750,41 +835,37 @@ jQuery.Fotorama = function ($fotorama, opts) {
     options && $.extend(measures, {
       width: options.width || measures.width,
       height: options.height,
-      minWidth: options.minWidth,
-      maxWidth: options.maxWidth,
-      minHeight: options.minHeight,
-      maxHeight: options.maxHeight,
-      ratio: (function (_ratio) {
-        if (!_ratio) return;
-        var ratio = Number(_ratio);
-        if (!isNaN(ratio)) {
-          return ratio;
-        } else {
-          ratio = _ratio.split('/');
-          return Number(ratio[0] / ratio[1]) || undefined;
-        }
-      })(options.ratio)
+      minwidth: options.minwidth,
+      maxwidth: options.maxwidth,
+      minheight: options.minheight,
+      maxheight: options.maxheight,
+      ratio: getRatio(options.ratio)
     })
         && !optsLeave && $.extend(opts, {
       width: measures.width,
       height: measures.height,
-      minWidth: measures.minWidth,
-      maxWidth: measures.maxWidth,
-      minHeight: measures.minHeight,
-      maxHeight: measures.maxHeight,
+      minwidth: measures.minwidth,
+      maxwidth: measures.maxwidth,
+      minheight: measures.minheight,
+      maxheight: measures.maxheight,
       ratio: measures.ratio
     });
   }
 
-  function triggerEvent (event, extra) {
+  function triggerEvent (event, extra, fn) {
     $fotorama.trigger(_fotoramaClass + ':' + event, [that, extra]);
+    if (!that.prevent[event]) {
+      (fn || noop)();
+    } else {
+     delete that.prevent[event];
+    }
   }
 
   function onTouchStart () {
     clearTimeout(onTouchEnd.t);
     touchedFLAG = 1;
 
-    if (opts.stopAutoplayOnTouch) {
+    if (opts.stopautoplayontouch) {
       that.stopAutoplay();
     } else {
       pausedAutoplayFLAG = true;
@@ -819,17 +900,18 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     var _activeIndex = activeIndex;
 
-    changeAutoplay.t = setTimeout(function () {
-      var frameData = that.activeFrame[STAGE_FRAME_KEY].data();
-      waitFor(function () {
-        return frameData.state || _activeIndex !== activeIndex;
-      }, function () {
-        if (pausedAutoplayFLAG || _activeIndex !== activeIndex) return;
-        that.show(o_loop ? '>' : normalizeIndex(activeIndex + 1));
-      });
-    }, opts.autoplay);
-  }
 
+    var frameData = that.activeFrame[STAGE_FRAME_KEY].data();
+    waitFor(function () {
+      return frameData.state || _activeIndex !== activeIndex;
+    }, function () {
+      changeAutoplay.t = setTimeout(function () {
+        if (pausedAutoplayFLAG || _activeIndex !== activeIndex) return;
+        that.show(o_loop ? getDirectionSign(!o_rtl) : normalizeIndex(activeIndex + (o_rtl ? -1 : 1)));
+      }, opts.autoplay);
+    });
+
+  }
 
   that.startAutoplay = function (interval) {
     if (that.autoplay) return this;
@@ -879,14 +961,16 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     that.activeFrame = activeFrame = data[activeIndex];
 
-    unloadVideo($videoPlaying, activeFrame.i !== data[normalizeIndex(repositionIndex)].i);
-
-    frameDraw(activeIndexes, 'stage');
-    stageFramePosition([dirtyIndex, getPrevIndex(dirtyIndex), getNextIndex(dirtyIndex)]);
-
-    triggerEvent('show', options.direct);
-
-    updateTouchTails('go', true);
+    //setTimeout(function () {
+      unloadVideo($videoPlaying, activeFrame.i !== data[normalizeIndex(repositionIndex)].i);
+      frameDraw(activeIndexes, 'stage');
+      stageFramePosition([dirtyIndex, getPrevIndex(dirtyIndex), getNextIndex(dirtyIndex)]);
+      updateTouchTails('go', true);
+      triggerEvent('show', {
+        user: options.user,
+        time: time
+      });
+    //}, 0);
 
     var onEnd = that.show.onEnd = function (skipReposition) {
       if (onEnd.ok) return;
@@ -896,9 +980,12 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       skipReposition || stageShaftReposition(true);
 
-      triggerEvent('showend', options.direct);
+      triggerEvent('showend', {
+        user: options.user
+      });
 
       updateTouchTails('go', false);
+      stageWheelUpdate();
 
       stageCursor();
       releaseAutoplay();
@@ -907,10 +994,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     if (!o_fade) {
       slide($stageShaft, {
-        pos: -getPosByIndex(dirtyIndex, measures.w, MARGIN, repositionIndex),
+        pos: -getPosByIndex(dirtyIndex, measures.w, opts.margin, repositionIndex),
         overPos: overPos,
         time: time,
-        onEnd: onEnd
+        onEnd: onEnd,
+        _001: true
       });
     } else {
       var $activeFrame = activeFrame[STAGE_FRAME_KEY],
@@ -920,7 +1008,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         time: time,
         method: opts.transition,
         onEnd: onEnd
-      });
+      }, fadeStack);
     }
 
     arrsUpdate();
@@ -969,6 +1057,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       that.resize();
       loadImg(activeIndexes, 'stage');
+      updateFotoramaState();
 
       triggerEvent('fullscreenenter');
     }
@@ -1018,42 +1107,16 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   if (document.addEventListener) {
     document.addEventListener(fullScreenApi.event, function () {
-      if (!fullScreenApi.is() && !$videoPlaying) {
+      if (data && !fullScreenApi.is() && !$videoPlaying) {
         cancelFullScreen();
       }
-    });
-  }
-
-  $DOCUMENT.on('keydown', function (e) {
-    if ($videoPlaying && e.keyCode === 27) {
-      e.preventDefault();
-      unloadVideo($videoPlaying, true, true);
-    } else if (that.fullScreen || (opts.keyboard && !index)) {
-      if (e.keyCode === 27) {
-        e.preventDefault();
-        that.cancelFullScreen();
-      } else if (e.keyCode === 39 || (e.keyCode === 40 && that.fullScreen)) {
-        e.preventDefault();
-        that.show({index: '>', slow: e.altKey, direct: true});
-      } else if (e.keyCode === 37 || (e.keyCode === 38 && that.fullScreen)) {
-        e.preventDefault();
-        that.show({index: '<', slow: e.altKey, direct: true});
-      }
-    }
-  });
-
-  if (!index) {
-    $DOCUMENT.on('keydown', 'textarea, input, select', function (e) {
-      if (!that.fullScreen) {
-        e.stopPropagation();
-      }
-    });
+    }, false);
   }
 
   that.resize = function (options) {
     if (!data) return this;
 
-    extendMeasures(!that.fullScreen ? options : {width: '100%', maxWidth: null, minWidth: null, height: '100%', maxHeight: null, minHeight: null}, that.fullScreen);
+    extendMeasures(!that.fullScreen ? optionsToLowerCase(options) : {width: '100%', maxwidth: null, minwidth: null, height: '100%', maxheight: null, minheight: null}, that.fullScreen);
 
     var time = arguments[1] || 0,
         setFLAG = arguments[2],
@@ -1063,16 +1126,27 @@ jQuery.Fotorama = function ($fotorama, opts) {
         windowHeight = $WINDOW.height() - (o_nav ? $nav.height() : 0);
 
     if (measureIsValid(width)) {
-      $wrap.css({width: width, minWidth: measures.minWidth, maxWidth: measures.maxWidth});
+      $wrap.css({width: width, minWidth: measures.minwidth, maxWidth: measures.maxwidth});
 
-      width = measures.w = $wrap.width();
+      width = measures.W = measures.w = $wrap.width();
+
+      if (opts.glimpse) {
+        // Glimpse
+        measures.w -= Math.round((numberFromPercent(opts.glimpse) / 100 * width || numberFromMeasure(opts.glimpse)) * 2)
+      }
+
+      $stageShaft.css({width: measures.w, marginLeft: (measures.W - measures.w) / 2});
+
+      console.log('measures.W', measures.W);
+      console.log('measures.w', measures.w);
+
       height = numberFromPercent(height) / 100 * windowHeight || numberFromMeasure(height);
 
       height = height || (ratio && width / ratio);
 
       if (height) {
         width = Math.round(width);
-        height = measures.h = Math.round(minMaxLimit(height, numberFromPercent(measures.minHeight) / 100 * windowHeight || numberFromMeasure(measures.minHeight), numberFromPercent(measures.maxHeight) / 100 * windowHeight || numberFromMeasure(measures.maxHeight)));
+        height = measures.h = Math.round(minMaxLimit(height, numberFromPercent(measures.minheight) / 100 * windowHeight || numberFromMeasure(measures.minheight), numberFromPercent(measures.maxheight) / 100 * windowHeight || numberFromMeasure(measures.maxheight)));
 
         stageShaftReposition();
 
@@ -1111,7 +1185,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     data && shuffle(data) && reset();
     return this;
   };
-
 
   function setShadow ($el, edge) {
     if (o_shadows) {
@@ -1167,9 +1240,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     return this;
   };
 
-
   function unloadVideo ($video, unloadActiveFLAG, releaseAutoplayFLAG) {
-    console.log('unloadVideo', $video, unloadActiveFLAG, releaseAutoplayFLAG);
     if (unloadActiveFLAG) {
       $wrap.removeClass(wrapVideoClass);
       $videoPlaying = false;
@@ -1196,7 +1267,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (stageShaftTouchTail.flow) return;
 
     var x = e ? e.pageX : stageCursor.x,
-        pointerFLAG = !disableDirrection(getDirection(x)) && opts.click;
+        pointerFLAG = x && !disableDirrection(getDirection(x)) && opts.click;
 
     if (stageCursor.p !== pointerFLAG
         && (o_fade || !opts.swipe)
@@ -1219,11 +1290,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
     } else if ($videoPlaying) {
       target === videoClose && unloadVideo($videoPlaying, true, true);
     } else {
-      if (toggleControlsFLAG) {
-        toggleControlsClass();
-      } else if (opts.click) {
-        that.show({index: e.shiftKey || !getDirection(e._x) ? '<' : '>', slow: e.altKey, direct: true});
-      }
+      triggerEvent('stagetap', undefined, function () {
+        if (toggleControlsFLAG) {
+          toggleControlsClass();
+        } else if (opts.click) {
+          that.show({index: e.shiftKey || getDirectionSign(getDirection(e._x)), slow: e.altKey, user: true});
+        }
+      });
     }
   }
 
@@ -1244,20 +1317,21 @@ jQuery.Fotorama = function ($fotorama, opts) {
       var toggleControlsFLAG = (MS_POINTER && !hoverFLAG || result.touch) && opts.arrows;
 
       if (result.moved || (toggleControlsFLAG && result.pos !== result.newPos)) {
-        var index = getIndexByPos(result.newPos, measures.w, MARGIN, repositionIndex);
+        var index = getIndexByPos(result.newPos, measures.w, opts.margin, repositionIndex);
         that.show({
           index: index,
           time: o_fade ? o_transitionDuration : result.time,
           overPos: result.overPos,
-          direct: true
+          user: true
         });
       } else if (!result.aborted) {
         onStageTap(result.startEvent, toggleControlsFLAG);
       }
     },
     getPos: function () {
-      return - getPosByIndex(dirtyIndex, measures.w, MARGIN, repositionIndex);
+      return -getPosByIndex(dirtyIndex, measures.w, opts.margin, repositionIndex);
     },
+    _001: true,
     timeLow: 1,
     timeHigh: 1,
     friction: 2,
@@ -1291,7 +1365,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           onEnd: onEnd
         });
         thumbsDraw(result.newPos);
-        setShadow($nav, findShadowEdge(result.newPos, navShaftData.min, navShaftData.max));
+        o_shadows && setShadow($nav, findShadowEdge(result.newPos, navShaftData.min, navShaftData.max));
       } else {
         onEnd();
       }
@@ -1300,6 +1374,33 @@ jQuery.Fotorama = function ($fotorama, opts) {
     timeHigh: 2,
     friction: 5,
     $wrap: $nav
+  });
+
+  stageWheelTail = wheel($stage, {
+    shift: true,
+    onEnd: function (e, direction) {
+      console.log('wheel $stage onEnd', direction);
+      onTouchStart();
+      onTouchEnd();
+      that.show({index: direction, slow: e.altKey})
+    }
+  });
+
+  navWheelTail = wheel($nav, {
+    onEnd: function (e, direction) {
+      console.log('wheel $nav onEnd', direction);
+      onTouchStart();
+      onTouchEnd();
+      var newPos = stop($navShaft) + direction * .25;
+      $navShaft.css(getTranslate(minMaxLimit(newPos, navShaftData.min, navShaftData.max)));
+      o_shadows && setShadow($nav, findShadowEdge(newPos, navShaftData.min, navShaftData.max));
+      navWheelTail.prevent = {'<': newPos >= navShaftData.max, '>': newPos <= navShaftData.min};
+      clearTimeout(navWheelTail.t);
+      navWheelTail.t = setTimeout(function () {
+        thumbsDraw(newPos, true)
+      }, TOUCH_TIMEOUT);
+      thumbsDraw(newPos);
+    }
   });
 
   $wrap.hover(
@@ -1318,16 +1419,16 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function onNavFrameClick (e, time) {
     var index = $(this).data().eq;
-    that.show({index: index, slow: e.altKey, direct: true, coo: e._x - $nav.offset().left, time: time});
+    that.show({index: index, slow: e.altKey, user: true, coo: e._x - $nav.offset().left, time: time});
   }
 
   smartClick($arrs, function (e) {
-    e.preventDefault();
+    stopEvent(e);
     if ($videoPlaying) {
       unloadVideo($videoPlaying, true, true);
     } else {
       onTouchEnd();
-      that.show({index: $arrs.index(this) ? '>' : '<', slow: e.altKey, direct: true});
+      that.show({index: $arrs.index(this) ? '>' : '<', slow: e.altKey, user: true});
     }
   }, {
     onStart: function () {
@@ -1341,15 +1442,21 @@ jQuery.Fotorama = function ($fotorama, opts) {
     setData();
     setOptions();
 
-    if (!ready.ok) {
-      // Only first time
-      if (opts.hash && location.hash) {
-        startIndex = getIndexFromHash(location.hash.replace(/^#/, ''), data, index === 0);
+    if (!reset.i) {
+      reset.i = true;
+      // Only once
+      var _startindex = opts.startindex;
+      if (_startindex || opts.hash && location.hash) {
+        startIndex = getIndexFromHash(_startindex || location.hash.replace(/^#/, ''), data, that.index === 0 || _startindex, _startindex);
       }
-      activeIndex = repositionIndex = dirtyIndex = lastActiveIndex = startIndex = edgeIndex(startIndex) || 0;
+      activeIndex = repositionIndex = dirtyIndex = lastActiveIndex = startIndex = edgeIndex(startIndex) || 0;/*(o_rtl ? size - 1 : 0)*/;
     }
 
     if (size) {
+      console.log('activeIndex', activeIndex);
+      if (changeToRtl()) return;
+      console.log('No changeToRtl, activeIndex is', activeIndex);
+
       if ($videoPlaying) {
         unloadVideo($videoPlaying, true);
       }
@@ -1364,13 +1471,25 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }
 
+  function changeToRtl () {
+    console.log('changeToRtl');
+    if (!changeToRtl.f === o_rtl) {
+      changeToRtl.f = o_rtl;
+      activeIndex = size - 1 - activeIndex;
+      console.log('changeToRtl execute, activeIndex is', activeIndex);
+      that.reverse();
+
+      return true;
+    }
+  }
+
   $.each('load push pop shift unshift reverse sort splice'.split(' '), function (i, method) {
     that[method] = function () {
       data = data || [];
       if (method !== 'load') {
         Array.prototype[method].apply(data, arguments);
       } else if (arguments[0] && typeof arguments[0] === 'object' && arguments[0].length) {
-        data = arguments[0];
+        data = clone(arguments[0]);
       }
       reset();
       return that;
@@ -1384,91 +1503,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }
 
-
-
-  $WINDOW
-      .on('resize', that.resize);
-
   reset();
 };
 
-$.fn.fotorama = function (opts) {
-  return this.each(function () {
-    var that = this,
-        $fotorama = $(this),
-        fotoramaData = $fotorama.data(),
-        fotorama = fotoramaData.fotorama;
-
-    if (!fotorama) {
-      waitFor(function () {
-        return !isHidden(that);
-      }, function () {
-        fotoramaData.urtext = $fotorama.html();
-        new $.Fotorama($fotorama,
-            /* Priority for options:
-             * 1. <div data-loop="true"></div>
-             * 2. $('div').fotorama({loop: false})
-             * 3. Defaults */
-            $.extend(
-                {},
-                {
-                  // dimensions
-                  width: null, // 500 || '100%'
-                  minWidth: null,
-                  maxWidth: null, // '100%'
-                  height: null,
-                  minHeight: null,
-                  maxHeight: null,
-                  ratio: null, // '16/9' || 500/333 || 1.5
-
-                  // navigation, thumbs
-                  nav: 'dots', // 'thumbs' || false
-                  navPosition: 'bottom', // 'top'
-                  thumbWidth: THUMB_SIZE,
-                  thumbHeight: THUMB_SIZE,
-
-                  arrows: true,
-                  click: true,
-                  swipe: true,
-
-                  allowFullScreen: false, // true || 'native'
-
-                  fit: 'contain', // 'cover' || 'scale-down' || 'none'
-
-                  transition: 'slide', // 'crossfade' || 'dissolve'
-                  transitionDuration: TRANSITION_DURATION,
-
-                  captions: true,
-
-                  hash: false,
-
-                  autoplay: false,
-                  stopAutoplayOnTouch: true,
-
-                  keyboard: false,
-
-                  loop: false,
-
-                  shuffle: false,
-
-                  shadows: true
-                },
-                opts,
-                fotoramaData
-            )
-        );
-      });
-    } else {
-      fotorama.setOptions(opts);
-    }
-  });
-};
-
-$.Fotorama.cache = {};
-
-var _size = 0;
-$.Fotorama.size = 0;
-
-$(function () {
-  $('.' + _fotoramaClass + ':not([data-auto="false"])').fotorama();
-});

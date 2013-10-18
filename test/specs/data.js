@@ -29,7 +29,8 @@ describe('Initialization with data', function () {
           data: [
             {img: 'test/i/okonechnikov/4-lo.jpg'},
             {img: 'test/i/okonechnikov/5-lo.jpg'}
-          ]
+          ],
+          maxwidth: null
         });
 
     waitsFor(function () {

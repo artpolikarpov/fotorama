@@ -1,8 +1,7 @@
 var lastEvent,
     moveEventType,
     preventEvent,
-    preventEventTimeout,
-    addEventListener = 'addEventListener';
+    preventEventTimeout;
 
 function extendEvent (e) {
   var touch = (e.touches || [])[0] || e;
@@ -12,7 +11,6 @@ function extendEvent (e) {
 
 function touch ($el, options) {
   var el = $el[0],
-      docTouchTimeout,
       tail = {},
       touchEnabledFLAG,
       startEvent,
@@ -33,7 +31,7 @@ function touch ($el, options) {
         || (lastEvent && lastEvent.type !== e.type && preventEvent)
         || (targetIsSelectFLAG = options.select && $target.is(options.select, el))) return targetIsSelectFLAG;
 
-    touchFLAG = e.type.match(/^t/);
+    touchFLAG = e.type === 'touchstart';
     targetIsLinkFlag = $target.is('a, a *', el);
 
     extendEvent(e);
@@ -46,9 +44,7 @@ function touch ($el, options) {
 
     touchEnabledFLAG = tail.flow = true;
 
-    if (!touchFLAG || tail.go) {
-      e.preventDefault();
-    }
+    if (!touchFLAG || tail.go) stopEvent(e);
   }
 
   function onMove (e) {
@@ -69,10 +65,12 @@ function touch ($el, options) {
         yWin = xyDiff < 0;
 
     if (touchFLAG && !tail.checked) {
-      touchEnabledFLAG = xWin;
-      touchEnabledFLAG && e.preventDefault();
+      if (touchEnabledFLAG = xWin) {
+        stopEvent(e);
+      }
     } else {
-      e.preventDefault();
+      console.log('onMove e.preventDefault');
+      stopEvent(e);
       (options.onMove || noop).call(el, e, {touch: touchFLAG});
     }
 
@@ -89,44 +87,45 @@ function touch ($el, options) {
 
     if (!_touchEnabledFLAG || (targetIsLinkFlag && !tail.checked)) return;
 
-    e && e.preventDefault();
+    e && stopEvent(e);
 
     preventEvent = true;
     clearTimeout(preventEventTimeout);
     preventEventTimeout = setTimeout(function () {
       preventEvent = false;
     }, 1000);
-    (options.onEnd || noop).call(el, {moved: tail.checked, $target: $target, control: controlTouch, touch: touchFLAG, startEvent: startEvent, aborted: !e});
+    (options.onEnd || noop).call(el, {moved: tail.checked, $target: $target, control: controlTouch, touch: touchFLAG, startEvent: startEvent, aborted: !e || e.type === 'MSPointerCancel'});
   }
 
   function onOtherStart () {
-    clearTimeout(docTouchTimeout);
-    docTouchTimeout = setTimeout(function () {
+    if (tail.flow) return;
+    setTimeout(function () {
       tail.flow = true;
     }, 10);
   }
 
   function onOtherEnd () {
-    clearTimeout(docTouchTimeout);
-    docTouchTimeout = setTimeout(function () {
+    if (!tail.flow) return;
+    setTimeout(function () {
       tail.flow = false;
     }, TOUCH_TIMEOUT);
   }
 
   if (MS_POINTER) {
-    el[addEventListener]('MSPointerDown', onStart);
-    document[addEventListener]('MSPointerMove', onMove);
-    document[addEventListener]('MSPointerCancel', onEnd);
-    document[addEventListener]('MSPointerUp', onEnd);
+    el[ADD_EVENT_LISTENER]('MSPointerDown', onStart, false);
+    document[ADD_EVENT_LISTENER]('MSPointerMove', onMove, false);
+    document[ADD_EVENT_LISTENER]('MSPointerCancel', onEnd, false);
+    document[ADD_EVENT_LISTENER]('MSPointerUp', onEnd, false);
   } else {
-    if (el[addEventListener]) {
-      el[addEventListener]('touchstart', onStart);
-      el[addEventListener]('touchmove', onMove);
-      el[addEventListener]('touchend', onEnd);
+    if (el[ADD_EVENT_LISTENER]) {
+      el[ADD_EVENT_LISTENER]('touchstart', onStart, false);
+      el[ADD_EVENT_LISTENER]('touchmove', onMove, false);
+      el[ADD_EVENT_LISTENER]('touchend', onEnd, false);
 
-      document[addEventListener]('touchstart', onOtherStart);
-      document[addEventListener]('touchend', onOtherEnd);
-      window[addEventListener]('scroll', onOtherEnd);
+      document[ADD_EVENT_LISTENER]('touchstart', onOtherStart, false);
+      document[ADD_EVENT_LISTENER]('touchend', onOtherEnd, false);
+      document[ADD_EVENT_LISTENER]('touchcancel', onOtherEnd, false);
+      window[ADD_EVENT_LISTENER]('scroll', onOtherEnd, false);
     }
 
     $el.on('mousedown', onStart);
@@ -136,7 +135,7 @@ function touch ($el, options) {
   }
 
   $el.on('click', 'a', function (e) {
-    tail.checked && e.preventDefault();
+    tail.checked && stopEvent(e);
   });
 
   return tail;

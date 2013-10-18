@@ -1,5 +1,5 @@
-$time: 300ms;
-
+$time: .3s;
+$arrSize: 32px;
 
 @import 'mixins';
 @import 'placeholders';
@@ -7,16 +7,15 @@ $time: 300ms;
 .fotorama {
   // /test/specs/initialization.js
   min-width: 1px;
+  overflow: hidden;
 
-  > * {
-    visibility: hidden;
-  }
-
-  &.fotorama--noscript > *,
   > .fotorama__wrap {
-
     visibility: visible;
   }
+}
+
+.fotorama--hidden-before-ready > * {
+  visibility: hidden;
 }
 
 .fullscreen {
@@ -24,9 +23,9 @@ $time: 300ms;
   height: 100% !important;
   max-width: 100% !important;
   max-height: 100% !important;
-  overflow: hidden !important;
   margin: 0 !important;
   padding: 0 !important;
+  overflow: hidden !important;
   background: #000;
 }
 
@@ -39,9 +38,10 @@ $time: 300ms;
   float: none !important;
   z-index: 2147483647 !important;
   background: #000;
-  width: auto !important;
-  height: auto !important;
+  width: 100% !important;
+  height: 100% !important;
   margin: 0 !important;
+  @extend %image-reset;
   .fotorama__stage,
   .fotorama__nav {
     background: #000;
@@ -52,12 +52,27 @@ $time: 300ms;
   -webkit-text-size-adjust: 100%;
   position: relative;
   @extend %no-select;
+  direction: ltr;
 
   * {
      // /test/specs/thumbs.js
      @extend %content-box;
    }
 }
+
+.fotorama__wrap--rtl {
+  .fotorama__stage__frame {
+    direction: rtl;
+  }
+}
+
+//.fotorama__wrap,
+//.fotorama__stage,
+//.fotorama__stage__shaft,
+//.fotorama__stage__frame,
+//.fotorama__img {
+//
+//}
 
 .fotorama__stage,
 .fotorama__nav {
@@ -66,10 +81,7 @@ $time: 300ms;
 }
 
 .fotorama__wrap--pan-y {
-  //.fotorama__stage__shaft,
-  //.fotorama__nav__shaft {
-    -ms-touch-action: pan-y;
-  //}
+  -ms-touch-action: pan-y;
 }
 
 .fotorama__stage__shaft {
@@ -91,29 +103,11 @@ $time: 300ms;
 .fotorama__wrap--slide {
   .fotorama__stage__frame {
     opacity: 1 !important;
-    //@extend %before-load-bg;
-    //&.fotorama__loaded {
-    //  background-color: transparent;
-    //}
   }
 }
 
 .fotorama__grabbing * {
   @extend %grabbing-cursor;
-}
-
-.fotorama__img {
-  @include opacity(0);
-  max-width: 99999px !important;
-  max-height: 99999px !important;
-  min-width: 0 !important;
-  min-height: 0 !important;
-  border-radius: 0 !important;
-  .fotorama__loaded &,
-  .fotorama__error & {
-    @include opacity(1);
-    //@extend %backface-visibility;
-  }
 }
 
 .fotorama__stage__frame {
@@ -168,9 +162,15 @@ $time: 300ms;
 }
 
 .fotorama__img {
-  border: 0;
-  overflow: hidden;
+  @include opacity(0);
+  @extend %image-reset;
+  border: none !important;
+  //overflow: hidden;
   @extend %stretch-for-fit;
+  .fotorama__loaded &,
+  .fotorama__error & {
+    @include opacity(1);
+  }
 }
 
 .fotorama__img--full {
@@ -277,6 +277,8 @@ $time: 300ms;
 }
 
 .fotorama__nav__frame.fotorama__active {
+  pointer-events: none;
+  cursor: default;
   .fotorama__dot {
     width: 6px;
     height: 6px;
@@ -301,7 +303,7 @@ $time: 300ms;
   left: 0;
   border-style: solid;
   border-color: mix(#00d1ff, #008ed6);
-  background-image: linear-gradient(top left, rgba(255, 255, 255, .25), rgba(64, 64, 64, .1));
+  background-image: linear-gradient(to bottom right, rgba(255, 255, 255, .25), rgba(64, 64, 64, .1));
 }
 
 .fotorama__caption {
@@ -309,16 +311,11 @@ $time: 300ms;
   z-index: 12;
   bottom: 0;
   left: 0;
-  max-width: 100%;
+  right: 0;
   font-family: 'Helvetica Neue', Arial, sans-serif;
   font-size: 14px;
   line-height: 1.5;
   color: #000;
-  background-color: #fff;
-  background-color: rgba(#fff, .9);
-
-  @extend %border-box;
-  padding: 5px 10px;
 
   a {
     text-decoration: none;
@@ -334,6 +331,19 @@ $time: 300ms;
   .fotorama__wrap--video & {
     display: none;
   }
+
+  .fotorama__wrap--rtl & {
+    left: auto;
+    right: 0;
+  }
+}
+
+.fotorama__caption__wrap {
+  background-color: #fff;
+  background-color: rgba(#fff, .9);
+  @extend %border-box;
+  padding: 5px 10px;
+  @extend %inline-block;
 }
 
 .fotorama--hidden {
@@ -357,7 +367,7 @@ $time: 300ms;
     width: $size;
     height: $size;
     border-radius: $size;
-    background-color: mix(mix(black, white), white);
+    background-color: mix(black, white);
     background-color: rgba(mix(black, white), .5);
   }
   &:before {
@@ -380,21 +390,26 @@ $time: 300ms;
   .fotorama__stage__shaft,
   .fotorama__nav__shaft,
   .fotorama__thumb-border {
-    @extend %transition-for-touch;
+    @extend %transition-for-slide;
   }
   .fotorama__stage__shaft,
   .fotorama__nav__shaft,
-  .fotorama__thumb-border,
-  .fotorama__stage__frame,
-  .fotorama__nav__frame,
-  .fotorama__img,
-  .fotorama__html,
-  .fotorama__caption {
+  .fotorama__thumb-border {
     @extend %initial-translate;
+  }
+  .fotorama__stage,
+  .fotorama__nav,
+  //.fotorama__stage__frame,
+  //.fotorama__nav__frame,
+  .fotorama__stage__frame,
+  .fotorama__stage__frame .fotorama__img,
+  .fotorama__html,
+  .fotorama__caption
+  {
+    @extend %gpu;
   }
   .fotorama__img,
   .fotorama__html,
-  &.fotorama__wrap--fade .fotorama__stage__frame,
   .fotorama__caption {
     transition-property: opacity;
     transition-timing-function: linear;
@@ -424,6 +439,13 @@ $time: 300ms;
   z-index: 10;
   iframe {
     @extend %stretch;
+  }
+}
+
+/* Strange fix of the #66 issue (Firefox bug while sliding backwards) */
+@-moz-document url-prefix(){
+  .fotorama__active {
+    box-shadow: 0 0 0 transparent;
   }
 }
 

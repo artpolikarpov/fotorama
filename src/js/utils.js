@@ -16,10 +16,10 @@ function readPosition ($el) {
   }
 }
 
-function getTranslate (pos) {
+function getTranslate (pos, _001) {
   var obj = {};
   if (CSS3) {
-    obj.transform = 'translate3d(' + pos + 'px,0,0)';
+    obj.transform = 'translate3d(' + (pos + (_001 ? 0.001 : 0)) + 'px,0,0)'; // 0.001 to remove Retina artifacts
   } else {
     obj.left = pos;
   }
@@ -31,7 +31,7 @@ function getDuration (time) {
 }
 
 function numberFromMeasure (value, measure) {
-  return +String(value).replace(measure || 'px', '');
+  return +String(value).replace(measure || 'px', '') || undefined;
 }
 
 function numberFromPercent (value) {
@@ -65,7 +65,7 @@ function bindTransitionEnd ($el) {
       };
   el.addEventListener(transitionEndEvent[Modernizr.prefixed('transition')], function (e) {
     elData.tProp && e.propertyName.match(elData.tProp) && elData.onEndFn();
-  });
+  }, false);
   elData.tEnd = true;
 }
 
@@ -93,7 +93,7 @@ function afterTransition ($el, property, fn, time) {
 }
 
 
-function stop ($el, left) {
+function stop ($el, left, _001) {
   if ($el.length) {
     var elData = $el.data();
     if (CSS3) {
@@ -107,7 +107,7 @@ function stop ($el, left) {
       return readPosition($el);
     });
 
-    $el.css(getTranslate(lockedLeft));//.width(); // `.width()` for reflow
+    $el.css(getTranslate(lockedLeft, _001));//.width(); // `.width()` for reflow
     return lockedLeft;
   }
 }
@@ -169,10 +169,10 @@ function findVideoId (href, forceVideo) {
     type = 'custom';
   }
 
-  return id ? {id: id, type: type} : false;
+  return id ? {id: id, type: type, s: href.search.replace(/^\?/, '')} : false;
 }
 
-function getVideoThumbs (dataFrame, data, api) {
+function getVideoThumbs (dataFrame, data, fotorama) {
   var img, thumb, video = dataFrame.video;
   if (video.type === 'youtube') {
     thumb = getProtocol() + 'img.youtube.com/vi/' + video.id + '/default.jpg';
@@ -184,7 +184,7 @@ function getVideoThumbs (dataFrame, data, api) {
       dataType: 'jsonp',
       success: function (json) {
         dataFrame.thumbsReady = true;
-        updateData(data, {img: json[0].thumbnail_large, thumb: json[0].thumbnail_small}, dataFrame.i, api);
+        updateData(data, {img: json[0].thumbnail_large, thumb: json[0].thumbnail_small}, dataFrame.i, fotorama);
       }
     });
   } else {
@@ -197,7 +197,7 @@ function getVideoThumbs (dataFrame, data, api) {
   }
 }
 
-function updateData (data, _dataFrame, i, api) {
+function updateData (data, _dataFrame, i, fotorama) {
   for (var _i = 0, _l = data.length; _i < _l; _i++) {
     var dataFrame = data[_i];
 
@@ -205,7 +205,7 @@ function updateData (data, _dataFrame, i, api) {
       var clear = {videoReady: true};
       clear[STAGE_FRAME_KEY] = clear[NAV_THUMB_FRAME_KEY] = clear[NAV_DOT_FRAME_KEY] = false;
 
-      api.splice(_i, 1, $.extend(
+      fotorama.splice(_i, 1, $.extend(
           {},
           dataFrame,
           clear,
@@ -220,9 +220,8 @@ function updateData (data, _dataFrame, i, api) {
 function getDataFromHtml ($el) {
   var data = [];
 
-  function getDataFromImg ($img, checkVideo) {
-    var imgData = $img.data(),
-        $child = $img.children('img').eq(0),
+  function getDataFromImg ($img, imgData, checkVideo) {
+    var $child = $img.children('img').eq(0),
         _imgHref = $img.attr('href'),
         _imgSrc = $img.attr('src'),
         _thumbSrc = $child.attr('src'),
@@ -235,34 +234,35 @@ function getDataFromHtml ($el) {
       video = _video;
     }
 
-    var img = imgData.img || _imgHref || _imgSrc || _thumbSrc,
-        thumb = imgData.thumb || _thumbSrc || _imgSrc || _imgHref,
-        separateThumbFLAG = img !== thumb,
-        width = numberFromMeasure(imgData.width || $img.attr('width')),
-        height = numberFromMeasure(imgData.height || $img.attr('height')),
-        thumbWidth = numberFromMeasure(imgData.thumbWidth || $child.attr('width') || separateThumbFLAG || width),
-        thumbHeight = numberFromMeasure(imgData.thumbHeight || $child.attr('height') || separateThumbFLAG || height);
-
-    return {
+    getDimensions($img, $child, $.extend(imgData, {
       video: video,
-      img: img,
-      width: width || undefined,
-      height: height || undefined,
-      thumb: thumb,
-      thumbRatio: thumbWidth / thumbHeight || undefined
-    }
+      img: imgData.img || _imgHref || _imgSrc || _thumbSrc,
+      thumb: imgData.thumb || _thumbSrc || _imgSrc || _imgHref
+    }));
   }
 
-  $el.children().each(function (i) {
+  function getDimensions ($img, $child, imgData) {
+    var separateThumbFLAG = imgData.thumb && imgData.img !== imgData.thumb,
+        width = numberFromMeasure(imgData.width || $img.attr('width')),
+        height = numberFromMeasure(imgData.height || $img.attr('height'));
+
+    $.extend(imgData, {
+      width: width,
+      height: height,
+      thumbratio: getRatio(imgData.thumbratio || (numberFromMeasure(imgData.thumbwidth || ($child && $child.attr('width')) || separateThumbFLAG || width) / numberFromMeasure(imgData.thumbheight || ($child && $child.attr('height')) || separateThumbFLAG || height)))
+    });
+  }
+
+  $el.children().each(function () {
     var $this = $(this),
-        dataFrame = $.extend($this.data(), {id: $this.attr('id')});
+        dataFrame = optionsToLowerCase($.extend($this.data(), {id: $this.attr('id')}));
     if ($this.is('a, img')) {
-      $.extend(dataFrame, getDataFromImg($this, true));
+      getDataFromImg($this, dataFrame, true);
     } else if (!$this.is(':empty')) {
-      $.extend(dataFrame, {
+      getDimensions($this, null, $.extend(dataFrame, {
         html: this,
         _html: $this.html() // Because of IE
-      });
+      }));
     } else return;
 
     data.push(dataFrame);
@@ -313,7 +313,7 @@ function fit ($el, measuresToFit, method) {
         height = measures.height,
         ratio = measuresToFit.w / measuresToFit.h,
         biggerRatioFLAG = measures.ratio >= ratio,
-        fitFLAG = method === 'scale-down',
+        fitFLAG = method === 'scaledown',
         containFLAG = method === 'contain',
         coverFLAG = method === 'cover';
 
@@ -358,9 +358,9 @@ function findShadowEdge (pos, min, max) {
   return min === max ? false : pos <= min ? 'left' : pos >= max ? 'right' : 'left right';
 }
 
-function getIndexFromHash (hash, data, ok) {
+function getIndexFromHash (hash, data, ok, startindex) {
   if (!ok) return false;
-  if (!isNaN(hash)) return hash - 1;
+  if (!isNaN(hash)) return hash - (startindex ? 0 : 1);
 
   var index;
 
@@ -436,4 +436,35 @@ function lockScroll (left, top) {
   $WINDOW
     .scrollLeft(left)
     .scrollTop(top);
+}
+
+function optionsToLowerCase (options) {
+  if (options) {
+    var opts = {};
+    $.each(options, function (key, value) {
+      opts[key.toLowerCase()] = value;
+    });
+
+    return opts;
+  }
+}
+
+function getRatio (_ratio) {
+  if (!_ratio) return;
+  var ratio = +_ratio;
+  if (!isNaN(ratio)) {
+    return ratio;
+  } else {
+    ratio = _ratio.split('/');
+    return +ratio[0] / +ratio[1] || undefined;
+  }
+}
+
+function stopEvent (e, stopPropagation) {
+  e.preventDefault();
+  stopPropagation && e.stopPropagation();
+}
+
+function getDirectionSign (forward) {
+  return forward ? '>' : '<';
 }

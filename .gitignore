@@ -10,8 +10,15 @@ profile
 
 node_modules
 *.zip
+<<<<<<< HEAD
 # product
 grunt-s3.json
+=======
+product
+secret.json
+>>>>>>> develop
 src/templates/compiled.js
 .grunt
 _SpecRunner.html
+
+history.json

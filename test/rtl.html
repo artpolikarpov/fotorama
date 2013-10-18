@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Right to left direction</title>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.10.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../product/fotorama.css" rel="stylesheet">
+	<script src="../product/fotorama.js"></script>
+
+  <script type="text/javascript">
+    $(function () {
+      f = $('.fotorama').data('fotorama');
+    })
+  </script>
+</head>
+
+<body>
+
+<p>Right to left direction:<p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div class="fotorama"
+     <mark>data-direction="rtl"</mark>></code></pre>
+
+<!-- Just don’t want to repeat this prefix in every img[src] -->
+<base href="i/nyc/">
+
+<!-- Fotorama -->
+<div class="fotorama"
+     data-direction="rtl"
+     data-autoplay="1500"
+     data-loop="true"
+     data-width="500"
+     data-ratio="3/2"
+     data-max-width="100%">
+	<a href="guy-in-car.jpg" data-caption="1. الرجل في سيارة"></a>
+	<a href="acapella.jpg" data-caption="2. جوقة"></a>
+	<a href="crazyjohn.jpg" data-caption="3. مجنون جون"></a>
+	<a href="dudeintheground.jpg" data-caption="4. المتأنق في الأرض"></a>
+	<a href="dudes.jpg" data-caption="5. الرجال"></a>
+</div>
+
+<!-- © -->
+<p>Photos <a href="http://alexeilebedev.com/">by Alexei Lebedev</a></p>
+</body>
+</html>

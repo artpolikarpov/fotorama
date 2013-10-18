@@ -8,6 +8,16 @@
   bottom: 0;
 }
 
+%image-reset {
+  max-width: 99999px !important;
+  max-height: 99999px !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
 %grab-cursor {
   cursor: move;
   cursor: -webkit-grab;
@@ -26,11 +36,10 @@
   cursor: grabbing;
 }
 
-
 %center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
 }
 
 %stretch-for-fit {
@@ -44,11 +53,15 @@
   transform: translate3d(0, 0, 0);
 }
 
+%gpu {
+  transform: translateZ(0);
+}
+
 %no-transform {
   transform: none !important;
 }
 
-%transition-for-touch {
+%transition-for-slide {
   transition-property: transform;
   transition-timing-function: cubic-bezier(.1, 0, .25, 1);
   transition-duration: 0ms;
@@ -60,10 +73,6 @@
 
 %select {
   user-select: text;
-}
-
-%backface-visibility {
-  -webkit-backface-visibility: hidden;
 }
 
 %empty-bg {

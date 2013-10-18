@@ -35,14 +35,16 @@ describe('Basic', function () {
     expect($('.fotorama__nav__frame', $fotorama).size()).toEqual(5);
   });
   it('dimensions are correct', function () {
-    var $stage = $('.fotorama__stage', $fotorama);
+    var $body = $('body'),
+        $stage = $('.fotorama__stage', $fotorama);
 
     waitsFor(function () {
-      return $stage.width() === 700
+      return $stage.height() > 0
     }, 'Waits for autosize...', 100);
 
     runs(function () {
-      expect($stage.height()).toEqual(467);
+      expect($stage.width()).toEqual($body.width());
+      expect($stage.height()).toEqual(Math.round($body.width()/(700/467)));
     });
   });
 });

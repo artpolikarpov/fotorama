@@ -21,6 +21,6 @@ The built version of Fotorama will be put in the `product/` subdirectory.
 ## Submitting pull requests
 1. Create a new branch, please don't work in your `master` branch directly.
 2. Add stuff.
-3. Push to your fork and submit a pull request.
+3. Push to your fork and submit a pull request to Fotorama’s `develop` branch.
 
 Regarding code style like indentation and whitespace, follow the conventions you see used in the source already.
