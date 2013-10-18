@@ -317,7 +317,7 @@ shell: {
 jasmine: grunt.file.readJSON('test/specs/_specs.json'),
 
 tweet: {
-  options: grunt.file.readJSON('secret.json').tweet,
+  options: '<%= grunt.file.readJSON("secret.json").tweet %>',
   release: {
     options: {
       crop: true
@@ -329,7 +329,7 @@ tweet: {
 
 gh_release: {
   options: {
-    token: grunt.file.readJSON('secret.json').github.token,
+    token: '<%= grunt.file.readJSON("secret.json").github.token %>',
     owner: 'artpolikarpov',
     repo: 'fotorama'
   },
