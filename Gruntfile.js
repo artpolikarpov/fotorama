@@ -103,6 +103,30 @@ copy: {
         dest: 'out/example.html'
       }
     ]
+  },
+  bower: {
+    files: [
+      {
+        src: 'out/fotorama.css',
+        dest: '.fotorama-bower/fotorama.css'
+      },
+        {
+        src: 'out/fotorama.png',
+        dest: '.fotorama-bower/fotorama.png'
+      },
+      {
+        src: 'out/fotorama@2x.png',
+        dest: '.fotorama-bower/fotorama@2x.png'
+      },
+      {
+        src: 'out/fotorama.js',
+        dest: '.fotorama-bower/fotorama.js'
+      },
+      {
+        src: 'out/example.html',
+        dest: '.fotorama-bower/example.html'
+      }
+    ]
   }
 },
 concat: {
@@ -297,20 +321,20 @@ shell: {
     stderr: true,
     failOnError: true
   },
+  indexes: {
+    command: './test/index.sh'
+  },
   commit: {
     command: 'git commit fotorama.jquery.json -m \'Tagging the <%= pkg.version %> release\''
   },
-  /*tag: {
-    command: 'git tag <%= pkg.version %>'
-  },*/
   push: {
     command: 'git push --tags --progress origin master:master'
   },
   publish: {
     command: 'heroku config:add FOTORAMA_VERSION=<%= pkg.version %>'
   },
-  indexes: {
-    command: './test/index.sh'
+  bower: {
+    command: 'cd .fotorama-bower && git add . && git commit -am \'Tagging the <%= pkg.version %> release\' && git tag <%= pkg.version %>'
   }
 },
 
@@ -366,8 +390,8 @@ grunt.loadNpmTasks('grunt-shell');
 grunt.loadNpmTasks('grunt-tweet');
 grunt.loadNpmTasks('grunt-gh-release');
 
-var defaultTask = 'copy sass autoprefixer jst replace:jst concat:js replace:console concat:css jasmine uglify cssmin jasmine clean compress';
-var build = 'copy sass autoprefixer jst replace:jst concat:js replace:console concat:css uglify cssmin clean compress'.split(' ');
+var defaultTask = 'copy:i sass autoprefixer jst replace:jst concat:js replace:console concat:css jasmine uglify cssmin jasmine clean copy:example compress';
+var build = 'copy:i sass autoprefixer jst replace:jst concat:js replace:console concat:css uglify cssmin clean copy:example compress'.split(' ');
 
 // Compile
 grunt.registerTask('default', defaultTask.split(' '));
@@ -375,5 +399,5 @@ grunt.registerTask('build', build);
 grunt.registerTask('look', 'copy:i sass autoprefixer jst replace:jst concat:js watch'.split(' '));
 
 // Publish, will fail without secret details ;-)
-grunt.registerTask('publish', (defaultTask + ' ' + 's3 replace:version shell replace:history gh_release tweet').split(' '));
+grunt.registerTask('publish', (defaultTask + ' ' + 's3 copy:bower replace:version shell replace:history gh_release tweet').split(' '));
 };

@@ -10,7 +10,7 @@ profile
 
 node_modules
 *.zip
-product
+out
 secret.json
 src/templates/compiled.js
 .grunt
