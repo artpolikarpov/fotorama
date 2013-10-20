@@ -346,7 +346,12 @@ shell: {
 jasmine: grunt.file.readJSON('test/specs/_specs.json'),
 
 tweet: {
-  options: '<%= grunt.file.readJSON("secret.json").tweet %>',
+  options: {
+    consumer_key: '<%= grunt.file.readJSON("secret.json").tweet.consumer_key %>',
+    consumer_secret: '<%= grunt.file.readJSON("secret.json").tweet.consumer_secret %>',
+    access_token: '<%= grunt.file.readJSON("secret.json").tweet.access_token %>',
+    access_token_secret: '<%= grunt.file.readJSON("secret.json").tweet.access_token_secret %>'
+  },
   release: {
     options: {
       crop: true
