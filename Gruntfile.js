@@ -190,7 +190,8 @@ replace: {
   },
   version: {
     files: {
-      'fotorama.jquery.json': 'fotorama.jquery.json'
+      'fotorama.jquery.json': 'fotorama.jquery.json',
+      '.fotorama-bower/bower.json': '.fotorama-bower/bower.json'
     },
     options: {
       patterns: [
@@ -334,7 +335,11 @@ shell: {
     command: 'heroku config:add FOTORAMA_VERSION=<%= pkg.version %>'
   },
   bower: {
-    command: 'cd .fotorama-bower && git add . && git commit -am \'Tagging the <%= pkg.version %> release\' && git tag <%= pkg.version %>'
+    command: 'cd .fotorama-bower ' +
+        '&& git add . ' +
+        '&& git commit -am \'Tagging the <%= pkg.version %> release\' ' +
+        '&& git tag <%= pkg.version %> ' +
+        '&& git push --tags --progress origin master:master'
   }
 },
 
