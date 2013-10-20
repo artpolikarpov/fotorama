@@ -16,7 +16,7 @@ To hack on use `grunt watch`.
 
 Assuming that you don't see any red, you're ready to go. Just be sure to run `grunt` after making any changes, to ensure that nothing is broken.
 
-The built version of Fotorama will be put in the `product/` subdirectory.
+The built version of Fotorama will be put in the `out/` subdirectory.
 
 ## Submitting pull requests
 1. Create a new branch, please don't work in your `master` branch directly.

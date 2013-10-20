@@ -71,7 +71,7 @@ sass: {
     options: {
     },
     files: {
-      'product/fotorama.css': 'src/scss/fotorama.scss'
+      'out/fotorama.css': 'src/scss/fotorama.scss'
     }
   }
 },
@@ -81,7 +81,7 @@ autoprefixer: {
       browsers: ['last 2 version', 'ie 8', 'ie 7']
     },
     files: {
-      'product/fotorama.css': 'product/fotorama.css'
+      'out/fotorama.css': 'out/fotorama.css'
     }
   }
 },
@@ -92,7 +92,7 @@ copy: {
         expand: true,
         flatten: true,
         src: ['src/i/*.png'],
-        dest: 'product/'
+        dest: 'out/'
       }
     ]
   },
@@ -100,7 +100,7 @@ copy: {
     files: [
       {
         src: 'src/example/example.html',
-        dest: 'product/example.html'
+        dest: 'out/example.html'
       }
     ]
   }
@@ -108,7 +108,7 @@ copy: {
 concat: {
   js: {
     files: {
-      'product/fotorama.js': '<%= meta.js %>'
+      'out/fotorama.js': '<%= meta.js %>'
     },
     options: {
       banner: '<%= meta.banner %>'
@@ -116,7 +116,7 @@ concat: {
   },
   css: {
     files: {
-      'product/fotorama.uncompressed.css': 'product/fotorama.css'
+      'out/fotorama.uncompressed.css': 'out/fotorama.css'
     },
     options: {
       banner: '<%= meta.banner %>'
@@ -124,9 +124,9 @@ concat: {
   }
 },
 cssmin: {
-  product: {
+  min: {
     files: {
-      'product/fotorama.css': 'product/fotorama.css'
+      'out/fotorama.css': 'out/fotorama.css'
     },
     options: {
       banner: '<%= meta.banner.replace(/\\n$/, "") %>'
@@ -153,7 +153,7 @@ replace: {
   },
   console: {
     files: {
-      'product/fotorama.uncompressed.js': 'product/fotorama.js'
+      'out/fotorama.uncompressed.js': 'out/fotorama.js'
     },
     options: {
       patterns: [
@@ -205,40 +205,40 @@ replace: {
   }
 },
 uglify: {
-  product: {
+  min: {
     options: {
       banner: '<%= meta.banner %>'
     },
     files: {
-      'product/fotorama.js': 'product/fotorama.uncompressed.js'
+      'out/fotorama.js': 'out/fotorama.uncompressed.js'
     }
   }
 },
 clean: {
-  zip: ['product/fotorama*.zip']
+  zip: ['out/fotorama*.zip']
 },
 compress: {
   uncompressed: {
     options: {
-      archive: 'product/fotorama-<%= pkg.version %>.uncompressed.zip'
+      archive: 'out/fotorama-<%= pkg.version %>.uncompressed.zip'
     },
     files: [
-      {expand: true, cwd: 'product/', src: 'fotorama.uncompressed.css', dest: 'fotorama-<%= pkg.version %>.uncompressed/'},
-      {expand: true, cwd: 'product/', src: 'fotorama.uncompressed.js', dest: 'fotorama-<%= pkg.version %>.uncompressed/'},
-      {expand: true, cwd: 'product/', src: 'fotorama.png', dest: 'fotorama-<%= pkg.version %>.uncompressed/'},
-      {expand: true, cwd: 'product/', src: 'fotorama@2x.png', dest: 'fotorama-<%= pkg.version %>.uncompressed/'}
+      {expand: true, cwd: 'out/', src: 'fotorama.uncompressed.css', dest: 'fotorama-<%= pkg.version %>.uncompressed/'},
+      {expand: true, cwd: 'out/', src: 'fotorama.uncompressed.js', dest: 'fotorama-<%= pkg.version %>.uncompressed/'},
+      {expand: true, cwd: 'out/', src: 'fotorama.png', dest: 'fotorama-<%= pkg.version %>.uncompressed/'},
+      {expand: true, cwd: 'out/', src: 'fotorama@2x.png', dest: 'fotorama-<%= pkg.version %>.uncompressed/'}
     ]
   },
-  product: {
+  min: {
     options: {
-      archive: 'product/fotorama-<%= pkg.version %>.zip'
+      archive: 'out/fotorama-<%= pkg.version %>.zip'
     },
     files: [
-      {expand: true, cwd: 'product/', src: 'fotorama.css', dest: 'fotorama-<%= pkg.version %>/'},
-      {expand: true, cwd: 'product/', src: 'fotorama.js', dest: 'fotorama-<%= pkg.version %>/'},
-      {expand: true, cwd: 'product/', src: 'fotorama.png', dest: 'fotorama-<%= pkg.version %>/'},
-      {expand: true, cwd: 'product/', src: 'fotorama@2x.png', dest: 'fotorama-<%= pkg.version %>/'},
-      {expand: true, cwd: 'product/', src: 'example.html', dest: 'fotorama-<%= pkg.version %>/'}
+      {expand: true, cwd: 'out/', src: 'fotorama.css', dest: 'fotorama-<%= pkg.version %>/'},
+      {expand: true, cwd: 'out/', src: 'fotorama.js', dest: 'fotorama-<%= pkg.version %>/'},
+      {expand: true, cwd: 'out/', src: 'fotorama.png', dest: 'fotorama-<%= pkg.version %>/'},
+      {expand: true, cwd: 'out/', src: 'fotorama@2x.png', dest: 'fotorama-<%= pkg.version %>/'},
+      {expand: true, cwd: 'out/', src: 'example.html', dest: 'fotorama-<%= pkg.version %>/'}
     ]
   }
 },
@@ -251,14 +251,14 @@ s3: {
     gzip: true,
     secure: false
   },
-  product: {
+  separate: {
     options: {
       headers: {'Cache-Control': 'max-age=2592000'}
     },
     upload: [
         // Separate version to separate folder
       {
-        src: 'product/*',
+        src: 'out/*',
         dest: '<%= pkg.version %>/'
       }
     ]
@@ -270,11 +270,11 @@ s3: {
     },
     upload: [
       {
-        src: 'product/fotorama.*',
+        src: 'out/fotorama.*',
         dest: ''
       },
       {
-        src: 'product/fotorama@2x.png',
+        src: 'out/fotorama@2x.png',
         dest: 'fotorama@2x.png'
       }
     ]
@@ -339,7 +339,7 @@ gh_release: {
     body: '<%= grunt.file.readJSON("history.json")[pkg.version + ":notes"] %>',
     asset: {
       name: 'fotorama-<%= pkg.version %>.zip',
-      file: 'product/fotorama-<%= pkg.version %>.zip',
+      file: 'out/fotorama-<%= pkg.version %>.zip',
       'Content-Type': 'application/zip'
     }
   }
