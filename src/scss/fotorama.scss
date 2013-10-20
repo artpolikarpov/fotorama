@@ -359,7 +359,9 @@ $arrSize: 32px;
   height: $size;
   margin-left: -($size + $margin/2);
   margin-top: -$size/2;
+  @extend %gpu;
   &:before, &:after {
+    @extend %gpu;
     content: '';
     position: absolute;
     left: 0;

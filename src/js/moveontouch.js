@@ -25,7 +25,7 @@ function moveOnTouch ($el, options) {
       [startTime, startCoo]
     ];
 
-    startElPos = moveElPos = tail.noMove ? 0 : stop($el, options.getPos && options.getPos(), options._001);
+    startElPos = moveElPos = tail.noMove ? 0 : stop($el, (options.getPos || noop)(), options._001);
 
     // startTime - endTime < TOUCH_TIMEOUT * 3 && e.preventDefault(); // double tap
 
