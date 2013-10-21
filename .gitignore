@@ -16,4 +16,4 @@ src/templates/compiled.js
 .grunt
 _SpecRunner.html
 history.json
-.*/
+.*
