@@ -2,6 +2,20 @@
 
 > https://github.com/artpolikarpov/fotorama/releases
 
+## 4.4.6, Oct 20 2013
+
+<!--4.4.6:name-->
+
+Optimizations
+
+<!--/4.4.6:name-->
+
+<!--4.4.6:notes-->
+
+* More optimizations of GPU and CPU rendering.
+
+<!--/4.4.6:notes-->
+
 ## 4.4.5, Oct 17 2013
 
 <!--4.4.5:name-->

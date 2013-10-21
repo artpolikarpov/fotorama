@@ -25,7 +25,7 @@ function moveOnTouch ($el, options) {
       [startTime, startCoo]
     ];
 
-    startElPos = moveElPos = tail.noMove ? 0 : stop($el, options.getPos && options.getPos(), options._001);
+    startElPos = moveElPos = tail.noMove ? 0 : stop($el, (options.getPos || noop)(), options._001);
 
     // startTime - endTime < TOUCH_TIMEOUT * 3 && e.preventDefault(); // double tap
 
@@ -82,6 +82,7 @@ function moveOnTouch ($el, options) {
   }
 
   function onEnd (result) {
+    //console.time('moveontouch.js onEnd');
     if (controlFLAG) return;
 
     result.touch || MS_POINTER || $el.removeClass(grabbingClass);
@@ -150,6 +151,7 @@ function moveOnTouch ($el, options) {
     time *= slowFLAG ? 10 : 1;
 
     (options.onEnd || noop).call(el, $.extend(result, {pos: moveElPos, newPos: newPos, overPos: overPos, time: time, moved: longTouchFLAG ? snap : Math.abs(moveElPos - startElPos) > (snap ? 0 : 3)}));
+    //console.timeEnd('moveontouch.js onEnd');
   }
 
   tail = $.extend(touch(options.$wrap, {

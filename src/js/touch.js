@@ -78,6 +78,7 @@ function touch ($el, options) {
   }
 
   function onEnd (e) {
+    //console.time('touch.js onEnd');
     var _touchEnabledFLAG = touchEnabledFLAG;
     tail.control = touchEnabledFLAG = false;
 
@@ -95,6 +96,7 @@ function touch ($el, options) {
       preventEvent = false;
     }, 1000);
     (options.onEnd || noop).call(el, {moved: tail.checked, $target: $target, control: controlTouch, touch: touchFLAG, startEvent: startEvent, aborted: !e || e.type === 'MSPointerCancel'});
+    //console.timeEnd('touch.js onEnd');
   }
 
   function onOtherStart () {

@@ -71,7 +71,7 @@ sass: {
     options: {
     },
     files: {
-      'product/fotorama.css': 'src/scss/fotorama.scss'
+      'out/fotorama.css': 'src/scss/fotorama.scss'
     }
   }
 },
@@ -81,7 +81,7 @@ autoprefixer: {
       browsers: ['last 2 version', 'ie 8', 'ie 7']
     },
     files: {
-      'product/fotorama.css': 'product/fotorama.css'
+      'out/fotorama.css': 'out/fotorama.css'
     }
   }
 },
@@ -92,7 +92,7 @@ copy: {
         expand: true,
         flatten: true,
         src: ['src/i/*.png'],
-        dest: 'product/'
+        dest: 'out/'
       }
     ]
   },
@@ -100,7 +100,31 @@ copy: {
     files: [
       {
         src: 'src/example/example.html',
-        dest: 'product/example.html'
+        dest: 'out/example.html'
+      }
+    ]
+  },
+  bower: {
+    files: [
+      {
+        src: 'out/fotorama.css',
+        dest: '.fotorama-bower/fotorama.css'
+      },
+        {
+        src: 'out/fotorama.png',
+        dest: '.fotorama-bower/fotorama.png'
+      },
+      {
+        src: 'out/fotorama@2x.png',
+        dest: '.fotorama-bower/fotorama@2x.png'
+      },
+      {
+        src: 'out/fotorama.js',
+        dest: '.fotorama-bower/fotorama.js'
+      },
+      {
+        src: 'out/example.html',
+        dest: '.fotorama-bower/example.html'
       }
     ]
   }
@@ -108,7 +132,7 @@ copy: {
 concat: {
   js: {
     files: {
-      'product/fotorama.js': '<%= meta.js %>'
+      'out/fotorama.js': '<%= meta.js %>'
     },
     options: {
       banner: '<%= meta.banner %>'
@@ -116,7 +140,7 @@ concat: {
   },
   css: {
     files: {
-      'product/fotorama.uncompressed.css': 'product/fotorama.css'
+      'out/fotorama.uncompressed.css': 'out/fotorama.css'
     },
     options: {
       banner: '<%= meta.banner %>'
@@ -124,9 +148,9 @@ concat: {
   }
 },
 cssmin: {
-  product: {
+  min: {
     files: {
-      'product/fotorama.css': 'product/fotorama.css'
+      'out/fotorama.css': 'out/fotorama.css'
     },
     options: {
       banner: '<%= meta.banner.replace(/\\n$/, "") %>'
@@ -153,7 +177,7 @@ replace: {
   },
   console: {
     files: {
-      'product/fotorama.uncompressed.js': 'product/fotorama.js'
+      'out/fotorama.uncompressed.js': 'out/fotorama.js'
     },
     options: {
       patterns: [
@@ -166,7 +190,8 @@ replace: {
   },
   version: {
     files: {
-      'fotorama.jquery.json': 'fotorama.jquery.json'
+      'fotorama.jquery.json': 'fotorama.jquery.json',
+      '.fotorama-bower/bower.json': '.fotorama-bower/bower.json'
     },
     options: {
       patterns: [
@@ -205,40 +230,40 @@ replace: {
   }
 },
 uglify: {
-  product: {
+  min: {
     options: {
       banner: '<%= meta.banner %>'
     },
     files: {
-      'product/fotorama.js': 'product/fotorama.uncompressed.js'
+      'out/fotorama.js': 'out/fotorama.uncompressed.js'
     }
   }
 },
 clean: {
-  zip: ['product/fotorama*.zip']
+  zip: ['out/fotorama*.zip']
 },
 compress: {
   uncompressed: {
     options: {
-      archive: 'product/fotorama-<%= pkg.version %>.uncompressed.zip'
+      archive: 'out/fotorama-<%= pkg.version %>.uncompressed.zip'
     },
     files: [
-      {expand: true, cwd: 'product/', src: 'fotorama.uncompressed.css', dest: 'fotorama-<%= pkg.version %>.uncompressed/'},
-      {expand: true, cwd: 'product/', src: 'fotorama.uncompressed.js', dest: 'fotorama-<%= pkg.version %>.uncompressed/'},
-      {expand: true, cwd: 'product/', src: 'fotorama.png', dest: 'fotorama-<%= pkg.version %>.uncompressed/'},
-      {expand: true, cwd: 'product/', src: 'fotorama@2x.png', dest: 'fotorama-<%= pkg.version %>.uncompressed/'}
+      {expand: true, cwd: 'out/', src: 'fotorama.uncompressed.css', dest: 'fotorama-<%= pkg.version %>.uncompressed/'},
+      {expand: true, cwd: 'out/', src: 'fotorama.uncompressed.js', dest: 'fotorama-<%= pkg.version %>.uncompressed/'},
+      {expand: true, cwd: 'out/', src: 'fotorama.png', dest: 'fotorama-<%= pkg.version %>.uncompressed/'},
+      {expand: true, cwd: 'out/', src: 'fotorama@2x.png', dest: 'fotorama-<%= pkg.version %>.uncompressed/'}
     ]
   },
-  product: {
+  min: {
     options: {
-      archive: 'product/fotorama-<%= pkg.version %>.zip'
+      archive: 'out/fotorama-<%= pkg.version %>.zip'
     },
     files: [
-      {expand: true, cwd: 'product/', src: 'fotorama.css', dest: 'fotorama-<%= pkg.version %>/'},
-      {expand: true, cwd: 'product/', src: 'fotorama.js', dest: 'fotorama-<%= pkg.version %>/'},
-      {expand: true, cwd: 'product/', src: 'fotorama.png', dest: 'fotorama-<%= pkg.version %>/'},
-      {expand: true, cwd: 'product/', src: 'fotorama@2x.png', dest: 'fotorama-<%= pkg.version %>/'},
-      {expand: true, cwd: 'product/', src: 'example.html', dest: 'fotorama-<%= pkg.version %>/'}
+      {expand: true, cwd: 'out/', src: 'fotorama.css', dest: 'fotorama-<%= pkg.version %>/'},
+      {expand: true, cwd: 'out/', src: 'fotorama.js', dest: 'fotorama-<%= pkg.version %>/'},
+      {expand: true, cwd: 'out/', src: 'fotorama.png', dest: 'fotorama-<%= pkg.version %>/'},
+      {expand: true, cwd: 'out/', src: 'fotorama@2x.png', dest: 'fotorama-<%= pkg.version %>/'},
+      {expand: true, cwd: 'out/', src: 'example.html', dest: 'fotorama-<%= pkg.version %>/'}
     ]
   }
 },
@@ -251,14 +276,14 @@ s3: {
     gzip: true,
     secure: false
   },
-  product: {
+  separate: {
     options: {
       headers: {'Cache-Control': 'max-age=2592000'}
     },
     upload: [
         // Separate version to separate folder
       {
-        src: 'product/*',
+        src: 'out/*',
         dest: '<%= pkg.version %>/'
       }
     ]
@@ -270,11 +295,11 @@ s3: {
     },
     upload: [
       {
-        src: 'product/fotorama.*',
+        src: 'out/fotorama.*',
         dest: ''
       },
       {
-        src: 'product/fotorama@2x.png',
+        src: 'out/fotorama@2x.png',
         dest: 'fotorama@2x.png'
       }
     ]
@@ -297,27 +322,36 @@ shell: {
     stderr: true,
     failOnError: true
   },
+  indexes: {
+    command: './test/index.sh'
+  },
   commit: {
     command: 'git commit fotorama.jquery.json -m \'Tagging the <%= pkg.version %> release\''
   },
-  /*tag: {
-    command: 'git tag <%= pkg.version %>'
-  },*/
   push: {
     command: 'git push --tags --progress origin master:master'
   },
   publish: {
     command: 'heroku config:add FOTORAMA_VERSION=<%= pkg.version %>'
   },
-  indexes: {
-    command: './test/index.sh'
+  bower: {
+    command: 'cd .fotorama-bower ' +
+        '&& git add . ' +
+        '&& git commit -am \'Tagging the <%= pkg.version %> release\' ' +
+        '&& git tag <%= pkg.version %> ' +
+        '&& git push --tags --progress origin master:master'
   }
 },
 
 jasmine: grunt.file.readJSON('test/specs/_specs.json'),
 
 tweet: {
-  options: grunt.file.readJSON('secret.json').tweet,
+  options: {
+    consumer_key: '<%= grunt.file.readJSON("secret.json").tweet.consumer_key %>',
+    consumer_secret: '<%= grunt.file.readJSON("secret.json").tweet.consumer_secret %>',
+    access_token: '<%= grunt.file.readJSON("secret.json").tweet.access_token %>',
+    access_token_secret: '<%= grunt.file.readJSON("secret.json").tweet.access_token_secret %>'
+  },
   release: {
     options: {
       crop: true
@@ -329,7 +363,7 @@ tweet: {
 
 gh_release: {
   options: {
-    token: grunt.file.readJSON('secret.json').github.token,
+    token: '<%= grunt.file.readJSON("secret.json").github.token %>',
     owner: 'artpolikarpov',
     repo: 'fotorama'
   },
@@ -339,7 +373,7 @@ gh_release: {
     body: '<%= grunt.file.readJSON("history.json")[pkg.version + ":notes"] %>',
     asset: {
       name: 'fotorama-<%= pkg.version %>.zip',
-      file: 'product/fotorama-<%= pkg.version %>.zip',
+      file: 'out/fotorama-<%= pkg.version %>.zip',
       'Content-Type': 'application/zip'
     }
   }
@@ -366,8 +400,8 @@ grunt.loadNpmTasks('grunt-shell');
 grunt.loadNpmTasks('grunt-tweet');
 grunt.loadNpmTasks('grunt-gh-release');
 
-var defaultTask = 'copy sass autoprefixer jst replace:jst concat:js replace:console concat:css jasmine uglify cssmin jasmine clean compress';
-var build = 'copy sass autoprefixer jst replace:jst concat:js replace:console concat:css uglify cssmin clean compress'.split(' ');
+var defaultTask = 'copy:i sass autoprefixer jst replace:jst concat:js replace:console concat:css jasmine uglify cssmin jasmine clean copy:example compress';
+var build = 'copy:i sass autoprefixer jst replace:jst concat:js replace:console concat:css uglify cssmin clean copy:example compress'.split(' ');
 
 // Compile
 grunt.registerTask('default', defaultTask.split(' '));
@@ -375,5 +409,5 @@ grunt.registerTask('build', build);
 grunt.registerTask('look', 'copy:i sass autoprefixer jst replace:jst concat:js watch'.split(' '));
 
 // Publish, will fail without secret details ;-)
-grunt.registerTask('publish', (defaultTask + ' ' + 's3 replace:version shell replace:history gh_release tweet').split(' '));
+grunt.registerTask('publish', (defaultTask + ' ' + 's3 copy:bower replace:version shell replace:history gh_release tweet').split(' '));
 };

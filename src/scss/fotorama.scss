@@ -359,7 +359,9 @@ $arrSize: 32px;
   height: $size;
   margin-left: -($size + $margin/2);
   margin-top: -$size/2;
+  @extend %gpu;
   &:before, &:after {
+    @extend %gpu;
     content: '';
     position: absolute;
     left: 0;
@@ -399,16 +401,15 @@ $arrSize: 32px;
   }
   .fotorama__stage,
   .fotorama__nav,
-  //.fotorama__stage__frame,
-  //.fotorama__nav__frame,
   .fotorama__stage__frame,
   .fotorama__stage__frame .fotorama__img,
+  //.fotorama__nav__frame,
   .fotorama__html,
   .fotorama__caption
   {
     @extend %gpu;
   }
-  .fotorama__img,
+  .fotorama__stage .fotorama__img,
   .fotorama__html,
   .fotorama__caption {
     transition-property: opacity;

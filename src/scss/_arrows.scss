@@ -8,7 +8,10 @@
   cursor: pointer;
   @extend %no-tap;
   @extend %no-select;
-  @extend %initial-translate;
+
+  .fotorama__wrap--css3 & {
+    @extend %initial-translate;
+  }
 }
 
 //.fotorama__arr {

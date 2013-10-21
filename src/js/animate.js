@@ -9,12 +9,16 @@ function slide ($el, options) {
     };
   }
 
-  var translate = $.extend(getTranslate(elPos, options._001), {width: options.width});
+  console.time('var translate = $.extend');
+  var translate = $.extend(getTranslate(elPos, options._001), options.width && {width: options.width});
+  console.timeEnd('var translate = $.extend');
 
   if (CSS3) {
     $el.css($.extend(getDuration(options.time), translate));
     if (options.time > 10) {
+      console.time('afterTransition');
       afterTransition($el, 'transform', onEndFn, options.time);
+      console.timeEnd('afterTransition');
     } else {
       onEndFn();
     }

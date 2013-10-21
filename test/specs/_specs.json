@@ -1,105 +1,105 @@
 {
   "basic": {
-    "src": ["test/jquery/jquery-1.10.1.min.js", "product/fotorama.js"],
+    "src": ["test/jquery/jquery-1.10.1.min.js", "out/fotorama.js"],
     "options": {
-      "styles": "product/fotorama.css",
+      "styles": "out/fotorama.css",
       "specs": "test/specs/basic.js"
     }
   },
   "initialization": {
-    "src": ["test/jquery/jquery-1.10.1.min.js", "product/fotorama.js"],
+    "src": ["test/jquery/jquery-1.10.1.min.js", "out/fotorama.js"],
     "options": {
-      "styles": "product/fotorama.css",
+      "styles": "out/fotorama.css",
       "specs": "test/specs/initialization.js"
     }
   },
   "no-css-no-throw": {
-    "src": ["test/jquery/jquery-1.10.1.min.js", "product/fotorama.js"],
+    "src": ["test/jquery/jquery-1.10.1.min.js", "out/fotorama.js"],
     "options": {
       "specs": "test/specs/no-css-no-throw.js"
     }
   },
   "events-n-methods": {
-    "src": ["test/jquery/jquery-1.10.1.min.js", "product/fotorama.js"],
+    "src": ["test/jquery/jquery-1.10.1.min.js", "out/fotorama.js"],
     "options": {
-      "styles": "product/fotorama.css",
+      "styles": "out/fotorama.css",
       "specs": "test/specs/events-n-methods.js"
     }
   },
   "fullscreen": {
-    "src": ["test/jquery/jquery-1.10.1.min.js", "product/fotorama.js"],
+    "src": ["test/jquery/jquery-1.10.1.min.js", "out/fotorama.js"],
     "options": {
-      "styles": "product/fotorama.css",
+      "styles": "out/fotorama.css",
       "specs": "test/specs/fullscreen.js"
     }
   },
   "hash-n-show": {
-    "src": ["test/jquery/jquery-1.10.1.min.js", "product/fotorama.js"],
+    "src": ["test/jquery/jquery-1.10.1.min.js", "out/fotorama.js"],
     "options": {
-      "styles": "product/fotorama.css",
+      "styles": "out/fotorama.css",
       "specs": "test/specs/hash-n-show.js"
     }
   },
   "thumbs": {
-    "src": ["test/jquery/jquery-1.10.1.min.js", "product/fotorama.js"],
+    "src": ["test/jquery/jquery-1.10.1.min.js", "out/fotorama.js"],
     "options": {
-      "styles": "product/fotorama.css",
+      "styles": "out/fotorama.css",
       "specs": "test/specs/thumbs.js"
     }
   },
   "nav": {
-    "src": ["test/jquery/jquery-1.10.1.min.js", "product/fotorama.js"],
+    "src": ["test/jquery/jquery-1.10.1.min.js", "out/fotorama.js"],
     "options": {
-      "styles": "product/fotorama.css",
+      "styles": "out/fotorama.css",
       "specs": "test/specs/nav.js"
     }
   },
   "html": {
-    "src": ["test/jquery/jquery-1.10.1.min.js", "product/fotorama.js"],
+    "src": ["test/jquery/jquery-1.10.1.min.js", "out/fotorama.js"],
     "options": {
-      "styles": "product/fotorama.css",
+      "styles": "out/fotorama.css",
       "specs": "test/specs/html.js"
     }
   },
   "set-options": {
-    "src": ["test/jquery/jquery-1.10.1.min.js", "product/fotorama.js"],
+    "src": ["test/jquery/jquery-1.10.1.min.js", "out/fotorama.js"],
     "options": {
-      "styles": "product/fotorama.css",
+      "styles": "out/fotorama.css",
       "specs": "test/specs/set-options.js"
     }
   },
   "shuffle": {
-    "src": ["test/jquery/jquery-1.10.1.min.js", "product/fotorama.js"],
+    "src": ["test/jquery/jquery-1.10.1.min.js", "out/fotorama.js"],
     "options": {
-      "styles": "product/fotorama.css",
+      "styles": "out/fotorama.css",
       "specs": "test/specs/shuffle.js"
     }
   },
   "basic-x-2": {
-    "src": ["test/jquery/jquery-1.10.1.min.js", "product/fotorama.js"],
+    "src": ["test/jquery/jquery-1.10.1.min.js", "out/fotorama.js"],
     "options": {
-      "styles": "product/fotorama.css",
+      "styles": "out/fotorama.css",
       "specs": "test/specs/basic-x-2.js"
     }
   },
   "destroy": {
-    "src": ["test/jquery/jquery-1.10.2.min.js", "product/fotorama.js"],
+    "src": ["test/jquery/jquery-1.10.2.min.js", "out/fotorama.js"],
     "options": {
-      "styles": "product/fotorama.css",
+      "styles": "out/fotorama.css",
       "specs": "test/specs/destroy.js"
     }
   },
   "video": {
-    "src": ["test/jquery/jquery-1.10.1.min.js", "product/fotorama.js"],
+    "src": ["test/jquery/jquery-1.10.1.min.js", "out/fotorama.js"],
     "options": {
-      "styles": "product/fotorama.css",
+      "styles": "out/fotorama.css",
       "specs": "test/specs/video.js"
     }
   },
   "data": {
-    "src": ["test/jquery/jquery-1.10.2.min.js", "product/fotorama.js"],
+    "src": ["test/jquery/jquery-1.10.2.min.js", "out/fotorama.js"],
     "options": {
-      "styles": "product/fotorama.css",
+      "styles": "out/fotorama.css",
       "specs": "test/specs/data.js"
     }
   }
