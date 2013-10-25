@@ -49,7 +49,7 @@ a.green, a.green u, a.green:visited, a.green:visited u {
 }
 
 a.icon-link {
-  display: none;
+  visibility: hidden;
 }
 
 h1, h2, h3, h4 {
@@ -85,7 +85,7 @@ h4 small {
     left: 0;
     top: -.5em;
     padding-top: .8em;
-    display: none;
+    visibility: hidden;
     outline: none;
   }
 
@@ -93,11 +93,11 @@ h4 small {
   h3:hover a.icon-link,
   h4:hover a.icon-link/*,
   a.icon-link:target*/ {
-    display: block;
+    visibility: visible;
   }
 
   h1 a.icon-link {
-    display: none;
+    visibility: hidden;
   }
 }
 
