@@ -21,11 +21,12 @@ meta: {
     'src/js/wheel.js',
     'src/js/fotorama.js',
     'src/js/fn-fotorama.js',
+    'src/js/wordwrap.js',
     'src/js/instances.js',
     'src/js/cache.js',
     'src/templates/compiled.js',
     'src/js/auto-initialization.js',
-    'src/js/outro.js'
+    'src/js/outro.js',
   ]
 },
 jst: {
