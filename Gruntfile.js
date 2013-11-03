@@ -23,6 +23,7 @@ meta: {
     'src/js/fn-fotorama.js',
     'src/js/instances.js',
     'src/js/cache.js',
+    'src/js/measures.js',
     'src/templates/compiled.js',
     'src/js/auto-initialization.js',
     'src/js/outro.js'

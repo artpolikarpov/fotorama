@@ -464,17 +464,15 @@ jQuery.Fotorama = function ($fotorama, opts) {
       function loaded () {
         //console.log('loaded: ' + src);
 
-        var width = img.width,
-            height = img.height,
-            ratio = width / height;
+        console.log('$.Fotorama.measures[src]', $.Fotorama.measures[src]);
 
-        imgData.measures = {
-          width: width,
-          height: height,
-          ratio: ratio
+        $.Fotorama.measures[src] = imgData.measures = $.Fotorama.measures[src] || {
+          width: img.width,
+          height: img.height,
+          ratio: img.width / img.height
         };
 
-        setMeasures(width, height, ratio, index);
+        setMeasures(imgData.measures.width, imgData.measures.height, imgData.measures.ratio, index);
 
         $img
             .off('load error')
@@ -522,7 +520,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           if ($.Fotorama.cache[src] === 'error') {
             error();
           } else if ($.Fotorama.cache[src] === 'loaded') {
-            //console.log('take from cache: ' + src);
+            console.log('take from cache: ' + src);
             setTimeout(waitAndLoad, 0);
           } else {
             setTimeout(justWait, 100);
