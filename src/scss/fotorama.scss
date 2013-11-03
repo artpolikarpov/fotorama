@@ -148,19 +148,6 @@ $arrSize: 32px;
   }
 }
 
-.fotorama__wrap--video {
-  .fotorama__stage__shaft {
-    @extend %no-transform;
-  }
-  .fotorama__stage__frame--video {
-    @extend %no-transform;
-    .fotorama__img,
-    .fotorama__html {
-      @include opacity(0);
-    }
-  }
-}
-
 .fotorama__img {
   @include opacity(0);
   @extend %image-reset;
@@ -200,7 +187,6 @@ $arrSize: 32px;
   }
 }
 
-// Навигация, точечки
 .fotorama__nav {
   font-size: 0;
   line-height: 0;
@@ -328,10 +314,6 @@ $arrSize: 32px;
     }
   }
 
-  .fotorama__wrap--video & {
-    display: none;
-  }
-
   .fotorama__wrap--rtl & {
     left: auto;
     right: 0;
@@ -387,7 +369,6 @@ $arrSize: 32px;
   background-color: mix(black, white);
 }
 
-// Если разрешены ЦСС-анимации
 .fotorama__wrap--css3 {
   .fotorama__stage__shaft,
   .fotorama__nav__shaft,
@@ -403,7 +384,6 @@ $arrSize: 32px;
   .fotorama__nav,
   .fotorama__stage__frame,
   .fotorama__stage__frame .fotorama__img,
-  //.fotorama__nav__frame,
   .fotorama__html,
   .fotorama__caption
   {
@@ -415,6 +395,22 @@ $arrSize: 32px;
     transition-property: opacity;
     transition-timing-function: linear;
     transition-duration: $time;
+  }
+}
+
+.fotorama__wrap--video {
+  .fotorama__stage__shaft,
+  .fotorama__stage,
+  .fotorama__stage__frame--video {
+    @extend %no-transform;
+  }
+  .fotorama__stage__frame--video {
+    .fotorama__img,
+    .fotorama__html,
+    .fotorama__caption {
+      @extend %no-transform;
+      @include opacity(0);
+    }
   }
 }
 
