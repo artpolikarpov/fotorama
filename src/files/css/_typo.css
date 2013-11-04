@@ -9,8 +9,8 @@ a u, .header a:visited u, h2 a:visited u,
 .social a:visited, .social a:visited u {
   text-decoration: none;
   border-bottom: 1px solid;
-  color: rgb(0, 159, 218);
-  border-color: rgba(0, 159, 218, .3);
+  color: rgb(3, 112, 154);
+  border-color: rgba(3, 112, 154, .3);
 }
 
 a.no-u {
@@ -142,7 +142,7 @@ ol {
 	padding-left: 0 !important;
 }
 
-.indent + .after-indent, pre +  + .after-pre {
+.indent + .after-indent, pre + .after-pre {
   margin-top: -1em !important;
 }
 
