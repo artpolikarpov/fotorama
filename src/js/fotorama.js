@@ -41,6 +41,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $videoClose = $(div(videoCloseClass)).appendTo($stage),
       videoClose = $videoClose[0],
 
+      spinner,
+      $spinner = $(div(spinnerClass)),
+
       $videoPlaying,
 
       activeIndex = false,
@@ -255,6 +258,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $arrs.hide();
     }
 
+    spinner = new Spinner($.extend(spinnerDefaults, opts.spinner));
+
     arrsUpdate();
     stageWheelUpdate();
 
@@ -324,7 +329,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     o_shadows = opts.shadows && !SLOW;
     classes[addOrRemove(!o_shadows)].push(wrapNoShadowsClass);
 
-    ooooStop();
+    spinnerStop();
 
     $wrap
         .addClass(classes.add.join(' '))
@@ -533,36 +538,23 @@ jQuery.Fotorama = function ($fotorama, opts) {
     });
   }
 
-  var $oooo = $(div('', div(ooooClass))),
-      ooooInterval,
-      ooooStep = function () {
-        $oooo.attr('class', ooooClass + ' ' + ooooClass + '--' + ooooI);
-        ooooI++;
-        if (ooooI > 4) ooooI = 0;
-      },
-      ooooI;
-
-  function ooooStart ($el) {
-    ooooStop(true);
-    $oooo.appendTo($el);
-    ooooI = 0;
-    ooooStep();
-    ooooInterval = setInterval(ooooStep, 200);
+  function spinnerSpin ($el) {
+    $spinner.append(spinner.spin().el).appendTo($el);
   }
 
-  function ooooStop (leave) {
-    leave || $oooo.detach();
-    clearInterval(ooooInterval);
+  function spinnerStop () {
+    $spinner.detach();
+    spinner.stop();
   }
 
   function updateFotoramaState () {
     var $frame = that.activeFrame[STAGE_FRAME_KEY];
 
     if ($frame && !$frame.data().state) {
-      ooooStart($frame);
+      spinnerSpin($frame);
       $frame.on('f:load f:error', function () {
         $frame.off('f:load f:error');
-        ooooStop();
+        spinnerStop();
       });
     }
   }
@@ -1161,7 +1153,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       if (opts.glimpse) {
         // Glimpse
-        measures.w -= Math.round((numberFromPercent(opts.glimpse) / 100 * width || numberFromMeasure(opts.glimpse)) * 2)
+        measures.w -= Math.round((numberFromPercent(opts.glimpse) / 100 * width || numberFromMeasure(opts.glimpse) || 0) * 2);
       }
 
       $stageShaft.css({width: measures.w, marginLeft: (measures.W - measures.w) / 2});

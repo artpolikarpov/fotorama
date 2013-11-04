@@ -77,4 +77,4 @@ var _fotoramaClass = 'fotorama',
     captionClass = _fotoramaClass + '__caption',
     captionWrapClass = _fotoramaClass + '__caption__wrap',
 
-    ooooClass = _fotoramaClass + '__oooo';
+    spinnerClass = _fotoramaClass + '__spinner';
