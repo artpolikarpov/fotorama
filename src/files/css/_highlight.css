@@ -10,10 +10,10 @@ tt, code {
 	color: #454b43;
 	background-color: #fcfcfb;
   /*text-shadow: 0 1px 0 #fff;*/
-  border: 1px solid #ddddda;
 	white-space: nowrap;
 	border-radius: 3px;
 	padding: 1px 3px 2px;
+  border: 1px solid #ddddda;
 }
 
 pre {
@@ -31,8 +31,8 @@ pre code {
 	white-space: pre;
 
 	background:
-		linear-gradient(to right, #fcfcfb, rgba(255,255,255,0)),
-		linear-gradient(to right, rgba(255,255,255,0), #fcfcfb) 100% 0,
+		linear-gradient(to right, #fcfcfb, #fcfcfb 5px, rgba(252,252,251,0)),
+		linear-gradient(to right, rgba(252,252,251,0), #fcfcfb 45px, #fcfcfb) 100% 0,
 		radial-gradient(farthest-side at 0 50%, rgba(0,0,0,.4), rgba(0,0,0,0)),
 		radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,.4), rgba(0,0,0,0)) 100% 0;
 	background-repeat: no-repeat;

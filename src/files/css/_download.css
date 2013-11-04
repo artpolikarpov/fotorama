@@ -1,12 +1,14 @@
 .download {
-	margin-left: 40px;
 	display: inline-block;
-	background: #fafaf9;
-	border: 1px solid #999 !important;
+  color: #fff !important;
+	background: rgb(0, 159, 218);
   font-size: 115%;
 	line-height: 3;
 	padding: 0 2em;
 	box-shadow: 0 0 3px rgba(0, 0, 0, .3);
 	border-radius: 3px;
-  text-shadow: 0 1px 0 #fff;
+}
+
+.download:hover {
+  background: rgb(0, 139, 198);
 }

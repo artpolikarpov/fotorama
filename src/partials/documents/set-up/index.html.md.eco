@@ -23,7 +23,7 @@ Fotorama’s <abbr>CDN</abbr> is&nbsp;provided by&nbsp;Amazon&nbsp;S3, feel free
 
 Or&nbsp;download zipped, unpack and host it&nbsp;on&nbsp;your server if&nbsp;you want:
 
-<a href="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama-<%= process.env.FOTORAMA_VERSION %>.zip" class="download noise"><strong><i class="icon-cloud-download"></i> fotorama-<%= process.env.FOTORAMA_VERSION %>.zip</strong></a>
+<p class="indent"><a href="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama-<%= process.env.FOTORAMA_VERSION %>.zip" class="download noise"><strong><i class="icon-cloud-download"></i> fotorama-<%= process.env.FOTORAMA_VERSION %>.zip</strong></a></p>
 
-<p class="after-pre">Read <a href="https://github.com/artpolikarpov/fotorama/releases">the changelog</a>.</p>
+<p class="after-indent">Read <a href="https://github.com/artpolikarpov/fotorama/releases">the changelog</a>.</p>
 

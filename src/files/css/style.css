@@ -20,31 +20,35 @@
 @import url(_mq.css);
 
 html {
-  /*height: 100%;*/
-  background-color: #fafaf9;
+  background-color: #fcfcfb;
 }
 
 body {
-  /*min-height: 100%;
-  height: auto;*/
-
-  /*padding-bottom: 7em;*/
 }
 
 .body-wrap {
   padding: 10px 16px 40px;
   position: relative;
   background-color: #fff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
   z-index: 9;
 }
 
-/*
-.footer-fixed {
-  position: fixed;
-  bottom: 0;
-  overflow: hidden;
-  right: 0;
+.body-wrap:after {
+  content: '';
+  position: absolute;
+  top: 100%;
   left: 0;
-  height: 7em;
-}*/
+  right: 0;
+  width: 100%;
+  height: 5px;
+  background: radial-gradient(farthest-side at 50% 0, rgba(0,0,0,.4), rgba(0,0,0,0)), linear-gradient(#ddddda, #ddddda);
+  background-size: 100% 5px, 100% 1px;
+  background-repeat: no-repeat;
+}
+
+.clear {
+  clear: both;
+  height: 1px;
+  font-size: 1px;
+  line-height: 1px;
+}

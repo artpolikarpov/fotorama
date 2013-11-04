@@ -9,8 +9,8 @@ a u, .header a:visited u, h2 a:visited u,
 .social a:visited, .social a:visited u {
   text-decoration: none;
   border-bottom: 1px solid;
-  color: rgb(3, 112, 154);
-  border-color: rgba(3, 112, 154, .3);
+  color: rgb(0, 159, 218);
+  border-color: rgba(0, 159, 218, .3);
 }
 
 a.no-u {
@@ -50,6 +50,7 @@ a.green, a.green u, a.green:visited, a.green:visited u {
 
 a.icon-link {
   visibility: hidden;
+  position: absolute;
 }
 
 h1, h2, h3, h4 {
@@ -81,11 +82,9 @@ h4 small {
   a.icon-link:visited {
     border-bottom: none;
     color: #000;
-    position: absolute;
     left: 0;
     top: -.5em;
     padding-top: .8em;
-    visibility: hidden;
     outline: none;
   }
 
@@ -136,11 +135,15 @@ ol {
 	color: #aaa;
 }*/
 
-p + ul, p + ol, p + pre, .after-pre, form + .fotorama-wrap, p + .fotorama-wrap, p + .image {
-	margin-top: -.5em;
-	margin-left: 40px;
-	margin-bottom: 1.5em;
-	padding-left: 0;
+.indent, p + ul, p + ol, p + pre, .after-pre, .after-indent, form + .fotorama-wrap, p + .fotorama-wrap, p + .image {
+	margin-top: -.5em !important;
+	margin-left: 40px !important;
+	margin-bottom: 1.5em !important;
+	padding-left: 0 !important;
+}
+
+.indent + .after-indent, pre +  + .after-pre {
+  margin-top: -1em !important;
 }
 
 blockquote {
