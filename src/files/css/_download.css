@@ -1,7 +1,7 @@
 .download {
 	display: inline-block;
   color: #fff !important;
-	background: rgb(0, 159, 218);
+	background: linear-gradient(rgba(0, 159, 218, .8), rgba(0, 139, 198, .8)) rgb(0, 159, 218);
   font-size: 115%;
 	line-height: 3;
 	padding: 0 2em;
@@ -10,5 +10,5 @@
 }
 
 .download:hover {
-  background: rgb(0, 139, 198);
+  background-color: rgb(0, 109, 168);
 }

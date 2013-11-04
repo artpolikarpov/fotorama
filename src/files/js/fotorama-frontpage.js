@@ -10,7 +10,11 @@ $(function () {
     }
 
     $fotorama
-        .fotorama()
+        .fotorama({
+          spinner: {
+            color: 'rgba(255, 255, 255, .75)'
+          }
+        })
         .parent()
         .next('.photos-by')
         .show();
