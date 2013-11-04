@@ -155,7 +155,8 @@ cssmin: {
       'out/fotorama.css': 'out/fotorama.css'
     },
     options: {
-      banner: '<%= meta.banner.replace(/\\n$/, "") %>'
+      banner: '<%= meta.banner.replace(/\\n$/, "") %>',
+      report: 'gzip'
     }
   }
 },
@@ -234,7 +235,8 @@ replace: {
 uglify: {
   min: {
     options: {
-      banner: '<%= meta.banner %>'
+      banner: '<%= meta.banner %>',
+      report: 'gzip'
     },
     files: {
       'out/fotorama.js': 'out/fotorama.uncompressed.js'

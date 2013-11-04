@@ -11,7 +11,7 @@ var Spinner,
       length: 5, // The length of each line
       width: 2, // The line thickness
       radius: 7, // The radius of the inner circle
-      corners: 0, // Corner roundness (0..1)
+      corners: 1, // Corner roundness (0..1)
       rotate: 15, // The rotation offset
       color: 'rgba(128, 128, 128, .75)',
       hwaccel: true
