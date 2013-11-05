@@ -20,10 +20,12 @@
 @import url(_mq.css);
 
 html {
+  height: 100%;
   background-color: #fcfcfb;
 }
 
 body {
+  height: 100%;
 }
 
 .body-wrap {
@@ -31,6 +33,8 @@ body {
   position: relative;
   background-color: #fff;
   z-index: 9;
+  height: auto;
+  min-height: calc(100% - 200px);
 }
 
 .body-wrap:after {
