@@ -258,7 +258,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $arrs.hide();
     }
 
-    spinner = new Spinner($.extend(spinnerDefaults, opts.spinner));
+    spinner = new Spinner($.extend(spinnerDefaults, opts.spinner, spinnerOverride, {direction: o_rtl ? -1 : 1}));
 
     arrsUpdate();
     stageWheelUpdate();

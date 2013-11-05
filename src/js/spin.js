@@ -15,6 +15,10 @@ var Spinner,
       rotate: 15, // The rotation offset
       color: 'rgba(128, 128, 128, .75)',
       hwaccel: true
+    },
+    spinnerOverride = {
+      top: 'auto',
+      left: 'auto'
     };
 
 (function(root, factory) {
