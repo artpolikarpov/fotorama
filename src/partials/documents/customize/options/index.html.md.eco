@@ -12,13 +12,15 @@ Options can be passed via data attributes:
 
 ...or JavaScript:
 
-    $('.fotorama').fotorama({
-      width: 700,
-      maxwidth: '100%',
-      ratio: 16/9,
-      allowfullscreen: true,
-      nav: 'thumbs'
-    });
+```javascript
+$('.fotorama').fotorama({
+  width: 700,
+  maxwidth: '100%',
+  ratio: 16/9,
+  allowfullscreen: true,
+  nav: 'thumbs'
+});
+```
 
 <center>...</center>
 ### `width` <small>Number or String</small>
@@ -163,6 +165,19 @@ Shuffles frames at launch.
 Sets the frames direction: `ltr` or `rtl`.
 
 > *Article: [Right-to-left](/customize/right-to-left/)*
+
+### `spinner` <small>Object</small>
+Spinner options:
+
+```javascript
+$('.fotorama').fotorama({
+  spinner: {
+    color: '#000'
+  }
+});
+```
+
+<p class="after-pre">*[Spin.js docs](http://fgnass.github.io/spin.js/)*</p>
 
 ### `shadows` <small>Boolean</small>
 Enables shadows.
