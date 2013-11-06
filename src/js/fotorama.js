@@ -843,13 +843,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     });
   }
 
-  function triggerEvent (event, extra, fn) {
+  function triggerEvent (event, extra) {
     $fotorama.trigger(_fotoramaClass + ':' + event, [that, extra]);
-    if (!that.prevent[event]) {
-      (fn || noop)();
-    } else {
-     delete that.prevent[event];
-    }
   }
 
   function onTouchStart () {
@@ -1314,13 +1309,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
     } else if ($videoPlaying) {
       target === videoClose && unloadVideo($videoPlaying, true, true);
     } else {
-      triggerEvent('stagetap', undefined, function () {
-        if (toggleControlsFLAG) {
-          toggleControlsClass();
-        } else if (opts.click) {
-          that.show({index: e.shiftKey || getDirectionSign(getDirection(e._x)), slow: e.altKey, user: true});
-        }
-      });
+      if (toggleControlsFLAG) {
+        toggleControlsClass();
+      } else if (opts.click) {
+        that.show({index: e.shiftKey || getDirectionSign(getDirection(e._x)), slow: e.altKey, user: true});
+      }
     }
     //console.timeEnd('onStageTap');
   }
