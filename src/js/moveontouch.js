@@ -157,6 +157,7 @@ function moveOnTouch ($el, options) {
   tail = $.extend(touch(options.$wrap, {
     onStart: onStart,
     onMove: onMove,
+    onTouchEnd: options.onTouchEnd,
     onEnd: onEnd,
     select: options.select,
     control: options.control

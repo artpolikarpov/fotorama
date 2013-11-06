@@ -1334,11 +1334,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
     onMove: function (e, result) {
       setShadow($stage, result.edge);
     },
+    onTouchEnd: onTouchEnd,
     onEnd: function (result) {
       //console.time('stageShaftTouchTail.onEnd');
       setShadow($stage);
-
-      onTouchEnd();
 
       var toggleControlsFLAG = (MS_POINTER && !hoverFLAG || result.touch) && opts.arrows;
 
@@ -1371,9 +1370,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     onMove: function (e, result) {
       setShadow($nav, result.edge);
     },
+    onTouchEnd: onTouchEnd,
     onEnd: function (result) {
-      onTouchEnd();
-
       function onEnd () {
         slideNavShaft.l = result.newPos;
         releaseAutoplay();
@@ -1451,17 +1449,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   smartClick($arrs, function (e) {
     stopEvent(e);
-    if ($videoPlaying) {
-      unloadVideo($videoPlaying, true, true);
-    } else {
-      onTouchEnd();
-      that.show({index: $arrs.index(this) ? '>' : '<', slow: e.altKey, user: true});
-    }
+    that.show({index: $arrs.index(this) ? '>' : '<', slow: e.altKey, user: true});
   }, {
     onStart: function () {
       onTouchStart();
       stageShaftTouchTail.control = true;
     },
+    onTouchEnd: onTouchEnd,
     tail: stageShaftTouchTail
   });
 

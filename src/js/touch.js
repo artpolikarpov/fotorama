@@ -53,6 +53,7 @@ function touch ($el, options) {
         || moveEventType !== e.type
         || !touchEnabledFLAG) {
       touchEnabledFLAG && onEnd();
+      (options.onTouchEnd || noop)();
       return;
     }
 
@@ -79,6 +80,9 @@ function touch ($el, options) {
 
   function onEnd (e) {
     //console.time('touch.js onEnd');
+
+    (options.onTouchEnd || noop)();
+
     var _touchEnabledFLAG = touchEnabledFLAG;
     tail.control = touchEnabledFLAG = false;
 
