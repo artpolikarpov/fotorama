@@ -108,8 +108,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
   toDeactivate[NAV_DOT_FRAME_KEY] = [];
   toDetach[STAGE_FRAME_KEY] = {};
 
-  that.prevent = {};
-
   $wrap.addClass(CSS3 ? wrapCss3Class : wrapCss2Class);
 
   fotoramaData.fotorama = this;
