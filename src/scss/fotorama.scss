@@ -329,6 +329,15 @@ $arrSize: 32px;
   @extend %hidden;
 }
 
+@keyframes spinner {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg)
+  }
+}
+
 .fotorama__spinner {
   @extend %center;
 }
@@ -344,18 +353,20 @@ $arrSize: 32px;
   .fotorama__thumb-border {
     @extend %initial-translate;
   }
+  .fotorama__spinner {
+    animation: spinner 24s infinite linear;
+    @extend %gpu;
+  }
   .fotorama__stage,
   .fotorama__nav,
-  .fotorama__stage__frame,
-  .fotorama__stage__frame .fotorama__img,
-  .fotorama__html,
-  .fotorama__caption
+  .fotorama__stage__frame
   {
     @extend %gpu;
   }
   .fotorama__stage .fotorama__img,
   .fotorama__html,
   .fotorama__caption {
+    @extend %gpu;
     transition-property: opacity;
     transition-timing-function: linear;
     transition-duration: $time;

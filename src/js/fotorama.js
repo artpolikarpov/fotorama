@@ -256,6 +256,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $arrs.hide();
     }
 
+    spinnerStop();
     spinner = new Spinner($.extend(spinnerDefaults, opts.spinner, spinnerOverride, {direction: o_rtl ? -1 : 1}));
 
     arrsUpdate();
@@ -326,8 +327,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     o_shadows = opts.shadows && !SLOW;
     classes[addOrRemove(!o_shadows)].push(wrapNoShadowsClass);
-
-    spinnerStop();
 
     $wrap
         .addClass(classes.add.join(' '))
@@ -542,7 +541,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function spinnerStop () {
     $spinner.detach();
-    spinner.stop();
+    spinner && spinner.stop();
   }
 
   function updateFotoramaState () {

@@ -18,7 +18,8 @@ var Spinner,
     },
     spinnerOverride = {
       top: 'auto',
-      left: 'auto'
+      left: 'auto',
+      className: ''
     };
 
 (function(root, factory) {

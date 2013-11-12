@@ -47,6 +47,9 @@ jst: {
   }
 },
 watch: {
+  options: {
+    atBegin: true
+  },
   jst: {
     files: 'src/templates/*.jst',
     tasks: ['jst', 'replace:jst']
