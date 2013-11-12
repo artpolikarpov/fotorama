@@ -2,17 +2,20 @@
 
 > https://github.com/artpolikarpov/fotorama/releases
 
-## 4.4.8, Nov 5 2013
+## 4.4.8, Nov 13 2013
 
 <!--4.4.8:name-->
 
-Two hot fixes
+Five hot fixes
 
 <!--/4.4.8:name-->
 
 <!--4.4.8:notes-->
 
+* Counterclockwise spinner if `direction:rtl`.
+* Fix onTouchEnd call. Fix infinite spinner which sometimes happened
 * Fix doubled spinner.
+* Remove stagetap event.
 * More accurate deleting broken frames, good frames will not be flushed any more.
 
 <!--/4.4.8:notes-->
