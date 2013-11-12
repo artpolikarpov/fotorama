@@ -2,6 +2,21 @@
 
 > https://github.com/artpolikarpov/fotorama/releases
 
+## 4.4.8, Nov 5 2013
+
+<!--4.4.8:name-->
+
+Two hot fixes
+
+<!--/4.4.8:name-->
+
+<!--4.4.8:notes-->
+
+* Fix doubled spinner.
+* More accurate deleting broken frames, good frames will not be flushed any more.
+
+<!--/4.4.8:notes-->
+
 ## 4.4.7, Nov 5 2013
 
 <!--4.4.7:name-->
