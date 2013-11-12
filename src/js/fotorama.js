@@ -456,7 +456,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
           frameData.state = 'error';
 
-          if (size > 1 && !dataFrame.html && !dataFrame.deleted && !dataFrame.video && !fullFLAG) {
+          if (size > 1 && data[index] === dataFrame && !dataFrame.html && !dataFrame.deleted && !dataFrame.video && !fullFLAG) {
             dataFrame.deleted = true;
             that.splice(index, 1);
           }
