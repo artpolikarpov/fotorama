@@ -108,8 +108,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
   toDeactivate[NAV_DOT_FRAME_KEY] = [];
   toDetach[STAGE_FRAME_KEY] = {};
 
-  that.prevent = {};
-
   $wrap.addClass(CSS3 ? wrapCss3Class : wrapCss2Class);
 
   fotoramaData.fotorama = this;
@@ -258,7 +256,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $arrs.hide();
     }
 
-    spinner = new Spinner($.extend(spinnerDefaults, opts.spinner));
+    spinnerStop();
+    spinner = new Spinner($.extend(spinnerDefaults, opts.spinner, spinnerOverride, {direction: o_rtl ? -1 : 1}));
 
     arrsUpdate();
     stageWheelUpdate();
@@ -328,8 +327,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     o_shadows = opts.shadows && !SLOW;
     classes[addOrRemove(!o_shadows)].push(wrapNoShadowsClass);
-
-    spinnerStop();
 
     $wrap
         .addClass(classes.add.join(' '))
@@ -459,7 +456,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
           frameData.state = 'error';
 
-          if (size > 1 && !dataFrame.html && !dataFrame.deleted && !dataFrame.video && !fullFLAG) {
+          if (size > 1 && data[index] === dataFrame && !dataFrame.html && !dataFrame.deleted && !dataFrame.video && !fullFLAG) {
             dataFrame.deleted = true;
             that.splice(index, 1);
           }
@@ -544,7 +541,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function spinnerStop () {
     $spinner.detach();
-    spinner.stop();
+    spinner && spinner.stop();
   }
 
   function updateFotoramaState () {
@@ -843,13 +840,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     });
   }
 
-  function triggerEvent (event, extra, fn) {
+  function triggerEvent (event, extra) {
     $fotorama.trigger(_fotoramaClass + ':' + event, [that, extra]);
-    if (!that.prevent[event]) {
-      (fn || noop)();
-    } else {
-     delete that.prevent[event];
-    }
   }
 
   function onTouchStart () {
@@ -1314,13 +1306,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
     } else if ($videoPlaying) {
       target === videoClose && unloadVideo($videoPlaying, true, true);
     } else {
-      triggerEvent('stagetap', undefined, function () {
-        if (toggleControlsFLAG) {
-          toggleControlsClass();
-        } else if (opts.click) {
-          that.show({index: e.shiftKey || getDirectionSign(getDirection(e._x)), slow: e.altKey, user: true});
-        }
-      });
+      if (toggleControlsFLAG) {
+        toggleControlsClass();
+      } else if (opts.click) {
+        that.show({index: e.shiftKey || getDirectionSign(getDirection(e._x)), slow: e.altKey, user: true});
+      }
     }
     //console.timeEnd('onStageTap');
   }
@@ -1334,11 +1324,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
     onMove: function (e, result) {
       setShadow($stage, result.edge);
     },
+    onTouchEnd: onTouchEnd,
     onEnd: function (result) {
       //console.time('stageShaftTouchTail.onEnd');
       setShadow($stage);
-
-      onTouchEnd();
 
       var toggleControlsFLAG = (MS_POINTER && !hoverFLAG || result.touch) && opts.arrows;
 
@@ -1371,9 +1360,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     onMove: function (e, result) {
       setShadow($nav, result.edge);
     },
+    onTouchEnd: onTouchEnd,
     onEnd: function (result) {
-      onTouchEnd();
-
       function onEnd () {
         slideNavShaft.l = result.newPos;
         releaseAutoplay();
@@ -1451,17 +1439,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   smartClick($arrs, function (e) {
     stopEvent(e);
-    if ($videoPlaying) {
-      unloadVideo($videoPlaying, true, true);
-    } else {
-      onTouchEnd();
-      that.show({index: $arrs.index(this) ? '>' : '<', slow: e.altKey, user: true});
-    }
+    that.show({index: $arrs.index(this) ? '>' : '<', slow: e.altKey, user: true});
   }, {
     onStart: function () {
       onTouchStart();
       stageShaftTouchTail.control = true;
     },
+    onTouchEnd: onTouchEnd,
     tail: stageShaftTouchTail
   });
 

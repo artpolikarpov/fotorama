@@ -67,7 +67,8 @@ $.fn.fotorama = function (opts) {
 
                   direction: 'ltr', // 'rtl'
 
-                  shadows: true
+                  shadows: true,
+                  spinner: null
                 },
                 window.fotoramaDefaults,
                 opts,

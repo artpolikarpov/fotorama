@@ -396,12 +396,12 @@ function smartClick ($el, fn, _options) {
         (_options.onStart || noop).call(this, e);
       },
       onMove: _options.onMove || noop,
+      onTouchEnd: _options.onTouchEnd || noop,
       onEnd: function (result) {
         if (result.moved || _options.tail.checked) return;
         fn.call(this, startEvent);
       }
     }), _options.tail);
-
   });
 }
 
