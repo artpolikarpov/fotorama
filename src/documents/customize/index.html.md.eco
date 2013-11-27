@@ -8,8 +8,6 @@ menuOrder: 2
   <p>Fotorama’s default settings are good, so there’s no need to mess with them. Still, you can fine-tune:</p>
   <%- @partial('menu.html.eco', {menuItems: @generateMenu(@document.url)}) %>
 
-  <p>Fotorama has a great <abbr>API</abbr>. Docs are coming soon.</p>
-
   <h2>Dive deeper</h2>
   <p>Download the uncompressed, [development Fotorama <%= process.env.FOTORAMA_VERSION %>](http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama-<%= process.env.FOTORAMA_VERSION %>.uncompressed.zip).</p>
 
