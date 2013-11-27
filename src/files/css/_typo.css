@@ -111,6 +111,7 @@ h2.front-menu {
 .header + h1,
 h1:first-child,
 h1 + h2,
+h2 + h3,
 p,
 form,
 ul,
@@ -137,7 +138,7 @@ ol {
 
 .indent, p + ul, p + ol, p + pre, .after-pre, .after-indent, form + .fotorama-wrap, p + .fotorama-wrap, p + .image {
 	margin-top: -.5em !important;
-	margin-left: 40px !important;
+	margin-left: 40px;
 	margin-bottom: 1.5em !important;
 	padding-left: 0 !important;
 }

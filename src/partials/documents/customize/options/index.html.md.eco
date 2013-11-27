@@ -23,36 +23,36 @@ $('.fotorama').fotorama({
 ```
 
 <center>...</center>
-### `width` <small>Number or String</small>
+### width <small>Number or String</small>
 Stage container width in pixels or percents.
 
-### `minwidth` <small>Number or String</small>
+### minwidth <small>Number or String</small>
 Stage container minimum width in pixels or percents.
 
-### `maxwidth` <small>Number or String</small>
+### maxwidth <small>Number or String</small>
 Stage container maximum width in pixels or percents.
 
-### `height` <small>Number or String</small>
+### height <small>Number or String</small>
 Stage container height in pixels or percents.
 
-### `minheight` <small>Number or String</small>
+### minheight <small>Number or String</small>
 Stage container minimum height in pixels or percents.
 
-### `maxheight` <small>Number or String</small>
+### maxheight <small>Number or String</small>
 Stage container maximum height in pixels or percents.
 
-### `ratio` <small>Number or String</small>
+### ratio <small>Number or String</small>
 Width divided by height. Recommended if you’re using percentage width.
 
 > *Article: [Dimensions](/customize/dimensions/)*
 
-### `margin` <small>Number</small>
+### margin <small>Number</small>
 Horizontal margins for frames in pixels.
 
-### `glimpse` <small>Number or String</small>
+### glimpse <small>Number or String</small>
 Glimpse size of nearby frames in pixels or percents.
 
-### `nav` <small>String or Boolean</small>
+### nav <small>String or Boolean</small>
 Navigation style:
 
 * `'dots'` <small>Default</small><br>
@@ -64,24 +64,24 @@ Nothing.
 
 > *Article: [Thumbnails](/customize/thumbnails/)*
 
-### `navposition` <small>String</small>
+### navposition <small>String</small>
 Navigation block position relative to stage: `'bottom'` or `'top'`.
 
 > *Article: [Navigation position](/customize/navigation-position/)*
 
-### `thumbwidth` <small>Number</small>
+### thumbwidth <small>Number</small>
 Tumbnail width in pixels.
 
-### `thumbheight` <small>Number</small>
+### thumbheight <small>Number</small>
 Tumbnail height in pixels.
 
-### `thumbmargin` <small>Number</small>
+### thumbmargin <small>Number</small>
 Size of thumbnail margins.
 
-### `thumbborderwidth` <small>Number</small>
+### thumbborderwidth <small>Number</small>
 Border width of the active thumbnail.
 
-### `allowfullscreen` <small>Boolean or String</small>
+### allowfullscreen <small>Boolean or String</small>
 Allows fullscreen:
 
 * `false` <small>Default</small><br>
@@ -90,7 +90,7 @@ Allows fullscreen:
 
 > *Article: [Fullscreen](/customize/fullscreen/)*
 
-### `fit` <small>String</small>
+### fit <small>String</small>
 How to fit an image into a fotorama:
 
 * `'contain'` <small>Default</small>
@@ -100,86 +100,87 @@ How to fit an image into a fotorama:
 
 > *Article: [Fit](/customize/fit/)*
 
-### `transition` <small>String</small>
+### transition <small>String</small>
 Defines what transition to use:
 
 * `'slide'` <small>Default</small>
 * `'crossfade'`
 * `'dissolve'`
 
-### `transitionduration` <small>Number</small>
+### transitionduration <small>Number</small>
 Animation length in milliseconds.
 
 > *Article: [Transition](/customize/transition/)*
 
-### `captions` <small>Boolean</small>
+### captions <small>Boolean</small>
 Captions visibility.
 
 > *Article: [Captions](/customize/captions/)*
 
-### `hash` <small>Boolean</small>
+### hash <small>Boolean</small>
 
 > *Article: [Hash](/customize/hash/)*
 
-### `startindex` <small>Number or String</small>
+### startindex <small>Number or String</small>
 Index or id of the frame that will be shown upon initialization of the fotorama.
 
-### `loop` <small>Boolean</small>
+### loop <small>Boolean</small>
 Enables loop.
 
 > *Article: [Loop](/customize/loop/)*
 
-### `autoplay` <small>Boolean or Number</small>
+### autoplay <small>Boolean or Number</small>
 Enables slideshow. Turn it on with `true` or any interval in milliseconds.
 
-### `stopautoplayontouch` <small>Boolean</small>
+### stopautoplayontouch <small>Boolean</small>
 Stops slideshow at any user action with the fotorama.
 
 > *Article: [Autoplay](/customize/autoplay/)*
 
-### `keyboard` <small>Boolean</small>
+### keyboard <small>Boolean</small>
 Enables keyboard navigation.
 
 > *Article: [Keyboard](/customize/keyboard/)*
 
-### `arrows` <small>Boolean</small>
+### arrows <small>Boolean</small>
 Turns on navigation arrows over the frames.
 
-### `click` <small>Boolean</small>
+### click <small>Boolean</small>
 Moving between frames by clicking.
 
-### `swipe` <small>Boolean</small>
+### swipe <small>Boolean</small>
 Moving between frames by swiping.
 
-### `trackpad` <small>Boolean</small>
+### trackpad <small>Boolean</small>
 Enables trackpad support and horizontal mouse wheel as well.
 
 > *Article: [Arrows, click, swipe](/customize/arrows-click-swipe/)*
 
-### `shuffle` <small>Boolean</small>
+### shuffle <small>Boolean</small>
 Shuffles frames at launch.
 
 > *Article: [Shuffle](/customize/shuffle/)*
 
-### `direction` <small>String</small>
+### direction <small>String</small>
 Sets the frames direction: `ltr` or `rtl`.
 
 > *Article: [Right-to-left](/customize/right-to-left/)*
 
-### `spinner` <small>Object</small>
+### spinner <small>Object</small>
 Spinner options:
 
 ```javascript
 $('.fotorama').fotorama({
   spinner: {
-    color: '#000'
+    lines: 13,
+    color: 'rgba(0, 0, 0, .75)'
   }
 });
 ```
 
 <p class="after-pre">*[Spin.js docs](http://fgnass.github.io/spin.js/)*</p>
 
-### `shadows` <small>Boolean</small>
+### shadows <small>Boolean</small>
 Enables shadows.
 
 ## Defaults

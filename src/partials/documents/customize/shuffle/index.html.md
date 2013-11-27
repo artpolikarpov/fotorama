@@ -1,4 +1,4 @@
-Shuffle frames by&nbsp;adding `data-shuffle="true"`:
+Shuffle the frames by&nbsp;adding `data-shuffle="true"`:
 
 	<div class="fotorama"
 	     data-shuffle="true">
