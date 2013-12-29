@@ -1,5 +1,6 @@
 function moveOnTouch ($el, options) {
   var el = $el[0],
+      elData = $el.data(),
       tail = {},
       startCoo,
       coo,
@@ -14,19 +15,19 @@ function moveOnTouch ($el, options) {
       snap,
       slowFLAG,
       controlFLAG,
-      moved;
+      moved,
+      tracked;
 
   function startTracking (e) {
+    tracked = true;
     startCoo = coo = e._x;
-    startTime = $.now();
+    startTime = e._now;
 
     moveTrack = [
       [startTime, startCoo]
     ];
 
     startElPos = moveElPos = tail.noMove ? 0 : stop($el, (options.getPos || noop)(), options._001);
-
-    // startTime - endTime < TOUCH_TIMEOUT * 3 && e.preventDefault(); // double tap
 
     (options.onStart || noop).call(el, e);
   }
@@ -37,17 +38,17 @@ function moveOnTouch ($el, options) {
     snap = tail.snap;
 
     slowFLAG = e.altKey;
-    moved = false;
+    tracked = moved = false;
 
     controlFLAG = result.control;
 
-    if (!controlFLAG) {
+    if (!controlFLAG && !elData.sliding) {
       startTracking(e);
     }
   }
 
   function onMove (e, result) {
-    if (controlFLAG) {
+    if (!tracked) {
       controlFLAG = false;
       startTracking(e);
     }
@@ -55,7 +56,7 @@ function moveOnTouch ($el, options) {
     if (!tail.noSwipe) {
       coo = e._x;
 
-      moveTrack.push([$.now(), coo]);
+      moveTrack.push([e._now, coo]);
 
       moveElPos = startElPos - (startCoo - coo);
 
@@ -84,9 +85,13 @@ function moveOnTouch ($el, options) {
     //console.time('moveontouch.js onEnd');
     if (controlFLAG) return;
 
+    if (!tracked) {
+      startTracking(result.startEvent);
+    }
+
     result.touch || MS_POINTER || $el.removeClass(grabbingClass);
 
-    endTime = new Date().getTime();
+    endTime = $.now();
 
     var _backTimeIdeal = endTime - TOUCH_TIMEOUT,
         _backTime,
@@ -149,7 +154,7 @@ function moveOnTouch ($el, options) {
 
     time *= slowFLAG ? 10 : 1;
 
-    (options.onEnd || noop).call(el, $.extend(result, {pos: moveElPos, newPos: newPos, overPos: overPos, time: time}));
+    (options.onEnd || noop).call(el, $.extend(result, {moved: result.moved || longTouchFLAG && snap, pos: moveElPos, newPos: newPos, overPos: overPos, time: time}));
   }
 
   tail = $.extend(touch(options.$wrap, {

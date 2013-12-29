@@ -7,6 +7,7 @@ function extendEvent (e) {
   var touch = (e.touches || [])[0] || e;
   e._x = touch.pageX;
   e._y = touch.clientY;
+  e._now = $.now();
 }
 
 function touch ($el, options) {

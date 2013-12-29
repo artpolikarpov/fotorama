@@ -1,6 +1,10 @@
 function slide ($el, options) {
-  var elPos = Math.round(options.pos),
-      onEndFn = options.onEnd || noop;
+  var elData = $el.data(),
+      elPos = Math.round(options.pos),
+      onEndFn = function () {
+        elData.sliding = false;
+        (options.onEnd || noop)();
+      };
 
   if (typeof options.overPos !== 'undefined' && options.overPos !== options.pos) {
     elPos = options.overPos;
@@ -12,6 +16,8 @@ function slide ($el, options) {
   console.time('var translate = $.extend');
   var translate = $.extend(getTranslate(elPos, options._001), options.width && {width: options.width});
   console.timeEnd('var translate = $.extend');
+
+  elData.sliding = true;
 
   if (CSS3) {
     $el.css($.extend(getDuration(options.time), translate));

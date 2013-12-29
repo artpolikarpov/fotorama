@@ -1344,9 +1344,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
       //console.timeEnd('stageShaftTouchTail.onEnd');
     },
-    getPos: function () {
-      return -getPosByIndex(dirtyIndex, measures.w, opts.margin, repositionIndex);
-    },
+//    getPos: function () {
+//      return -getPosByIndex(dirtyIndex, measures.w, opts.margin, repositionIndex);
+//    },
     _001: true,
     timeLow: 1,
     timeHigh: 1,
