@@ -1,6 +1,5 @@
 function moveOnTouch ($el, options) {
   var el = $el[0],
-      elData = $el.data(),
       tail = {},
       startCoo,
       coo,
@@ -15,7 +14,7 @@ function moveOnTouch ($el, options) {
       snap,
       slowFLAG,
       controlFLAG,
-      movedFLAG;
+      moved;
 
   function startTracking (e) {
     startCoo = coo = e._x;
@@ -33,12 +32,12 @@ function moveOnTouch ($el, options) {
   }
 
   function onStart (e, result) {
-    min = elData.min;
-    max = elData.max;
-    snap = elData.snap;
+    min = tail.min;
+    max = tail.max;
+    snap = tail.snap;
 
     slowFLAG = e.altKey;
-    movedFLAG = false;
+    moved = false;
 
     controlFLAG = result.control;
 
@@ -70,8 +69,8 @@ function moveOnTouch ($el, options) {
 
       if (!tail.noMove) {
         $el.css(getTranslate(moveElPos, options._001));
-        if (!movedFLAG) {
-          movedFLAG = true;
+        if (!moved) {
+          moved = true;
           // only for mouse
           result.touch || MS_POINTER || $el.addClass(grabbingClass);
         }
@@ -150,8 +149,7 @@ function moveOnTouch ($el, options) {
 
     time *= slowFLAG ? 10 : 1;
 
-    (options.onEnd || noop).call(el, $.extend(result, {pos: moveElPos, newPos: newPos, overPos: overPos, time: time, moved: longTouchFLAG ? snap : Math.abs(moveElPos - startElPos) > (snap ? 0 : 3)}));
-    //console.timeEnd('moveontouch.js onEnd');
+    (options.onEnd || noop).call(el, $.extend(result, {pos: moveElPos, newPos: newPos, overPos: overPos, time: time}));
   }
 
   tail = $.extend(touch(options.$wrap, {
@@ -159,8 +157,7 @@ function moveOnTouch ($el, options) {
     onMove: onMove,
     onTouchEnd: options.onTouchEnd,
     onEnd: onEnd,
-    select: options.select,
-    control: options.control
+    select: options.select
   }), tail);
 
   return tail;

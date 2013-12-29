@@ -356,15 +356,15 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function setStageShaftMinmaxAndSnap () {
-    stageShaftData.min = o_loop ? -Infinity : -getPosByIndex(size - 1, measures.w, opts.margin, repositionIndex);
-    stageShaftData.max = o_loop ? Infinity : -getPosByIndex(0, measures.w, opts.margin, repositionIndex);
-    stageShaftData.snap = measures.w + opts.margin;
+    stageShaftTouchTail.min = o_loop ? -Infinity : -getPosByIndex(size - 1, measures.w, opts.margin, repositionIndex);
+    stageShaftTouchTail.max = o_loop ? Infinity : -getPosByIndex(0, measures.w, opts.margin, repositionIndex);
+    stageShaftTouchTail.snap = measures.w + opts.margin;
   }
 
   function setNavShaftMinmax () {
-    navShaftData.min = Math.min(0, measures.W - $navShaft.width());
-    navShaftData.max = 0;
-    $navShaft.toggleClass(grabClass, !(navShaftTouchTail.noMove = navShaftData.min === navShaftData.max));
+    navShaftTouchTail.min = Math.min(0, measures.W - $navShaft.width());
+    navShaftTouchTail.max = 0;
+    $navShaft.toggleClass(grabClass, !(navShaftTouchTail.noMove = navShaftTouchTail.min === navShaftTouchTail.max));
   }
 
   function eachIndex (indexes, type, fn) {
@@ -747,10 +747,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
   function slideNavShaft (options) {
     var $guessNavFrame = data[options.guessIndex][navFrameKey];
     if ($guessNavFrame) {
-      var overflowFLAG = navShaftData.min !== navShaftData.max,
+      var overflowFLAG = navShaftTouchTail.min !== navShaftTouchTail.max,
           activeNavFrameBounds = overflowFLAG && getNavFrameBounds(that.activeFrame[navFrameKey]),
           l = overflowFLAG && (options.keep && slideNavShaft.l ? slideNavShaft.l : minMaxLimit((options.coo || measures.w / 2) - getNavFrameBounds($guessNavFrame).c, activeNavFrameBounds.min, activeNavFrameBounds.max)),
-          pos = overflowFLAG && minMaxLimit(l, navShaftData.min, navShaftData.max),
+          pos = overflowFLAG && minMaxLimit(l, navShaftTouchTail.min, navShaftTouchTail.max),
           time = options.time * .9;
 
       slide($navShaft, {
@@ -763,7 +763,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       //if (time) thumbsDraw(pos);
 
-      setShadow($nav, findShadowEdge(pos, navShaftData.min, navShaftData.max));
+      setShadow($nav, findShadowEdge(pos, navShaftTouchTail.min, navShaftTouchTail.max));
       slideNavShaft.l = l;
     }
   }
@@ -1380,7 +1380,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           onEnd: onEnd
         });
         thumbsDraw(result.newPos);
-        o_shadows && setShadow($nav, findShadowEdge(result.newPos, navShaftData.min, navShaftData.max));
+        o_shadows && setShadow($nav, findShadowEdge(result.newPos, navShaftTouchTail.min, navShaftTouchTail.max));
       } else {
         onEnd();
       }
@@ -1407,9 +1407,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
       onTouchStart();
       onTouchEnd();
       var newPos = stop($navShaft) + direction * .25;
-      $navShaft.css(getTranslate(minMaxLimit(newPos, navShaftData.min, navShaftData.max)));
-      o_shadows && setShadow($nav, findShadowEdge(newPos, navShaftData.min, navShaftData.max));
-      navWheelTail.prevent = {'<': newPos >= navShaftData.max, '>': newPos <= navShaftData.min};
+      $navShaft.css(getTranslate(minMaxLimit(newPos, navShaftTouchTail.min, navShaftTouchTail.max)));
+      o_shadows && setShadow($nav, findShadowEdge(newPos, navShaftTouchTail.min, navShaftTouchTail.max));
+      navWheelTail.prevent = {'<': newPos >= navShaftTouchTail.max, '>': newPos <= navShaftTouchTail.min};
       clearTimeout(navWheelTail.t);
       navWheelTail.t = setTimeout(function () {
         thumbsDraw(newPos, true)
@@ -1445,8 +1445,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       onTouchStart();
       stageShaftTouchTail.control = true;
     },
-    onTouchEnd: onTouchEnd,
-    tail: stageShaftTouchTail
+    onTouchEnd: onTouchEnd
   });
 
   function reset () {

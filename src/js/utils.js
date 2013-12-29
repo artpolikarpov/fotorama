@@ -398,10 +398,11 @@ function smartClick ($el, fn, _options) {
       onMove: _options.onMove || noop,
       onTouchEnd: _options.onTouchEnd || noop,
       onEnd: function (result) {
-        if (result.moved || _options.tail.checked) return;
+        console.log('smartClick → result.moved', result.moved);
+        if (result.moved) return;
         fn.call(this, startEvent);
       }
-    }), _options.tail);
+    }), {noMove: true});
   });
 }
 
