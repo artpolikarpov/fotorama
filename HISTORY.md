@@ -2,6 +2,25 @@
 
 > https://github.com/artpolikarpov/fotorama/releases
 
+## 4.4.9, Dec 30 2013
+
+<!--4.4.9:name-->
+
+Making it even better
+
+<!--/4.4.9:name-->
+
+<!--4.4.9:notes-->
+
+Fixed issues:
+
+* #115 Partially hidden fullscreen-icon
+* #159 Some animation bugs.
+* #160 Move-click-swipe tolerances.
+* #161, #162 Recursion (when connecting some of the events and methods).
+
+<!--/4.4.9:notes-->
+
 ## 4.4.8, Nov 13 2013
 
 <!--4.4.8:name-->
