@@ -20,5 +20,5 @@ $(function () {
 
   count($('#github-counter'), 'https://api.github.com/repos/artpolikarpov/fotorama', function (json) { return json.data.watchers_count });
 
-  count($('#flattr-counter'), 'https://api.flattr.com/rest/v2/things/1845948/flattrs', function (json) { return json[0].thing.flattrs }, 'json');
+  //count($('#flattr-counter'), 'https://api.flattr.com/rest/v2/things/1845948/flattrs', function (json) { return json[0].thing.flattrs }, 'json');
 });
