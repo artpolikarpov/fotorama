@@ -78,6 +78,7 @@ $arrSize: 32px;
 .fotorama__nav {
   overflow: hidden;
   position: relative;
+  max-width: 100%;
 }
 
 .fotorama__wrap--pan-y {
@@ -175,7 +176,11 @@ $arrSize: 32px;
 
 }
 
-.fotorama__stage--only-active {
+.fotorama__wrap--only-active {
+  .fotorama__stage,
+  .fotorama__nav {
+    max-width: 99999px !important;
+  }
   .fotorama__stage__frame {
     visibility: hidden;
   }
