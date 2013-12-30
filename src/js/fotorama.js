@@ -1139,8 +1139,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
         windowHeight = $WINDOW.height() - (o_nav ? $nav.height() : 0);
 
     if (measureIsValid(width)) {
-    if (measureIsValid(width)) {
-      $wrap.css({width: width, minWidth: measures.minwidth, maxWidth: measures.maxwidth});
+      $wrap
+          .addClass(wrapOnlyActiveClass)
+          .css({width: width, minWidth: measures.minwidth, maxWidth: measures.maxwidth});
 
       width = measures.W = measures.w = $wrap.width();
 
@@ -1165,10 +1166,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
         stageShaftReposition();
 
         $stage
-            .addClass(stageOnlyActiveClass)
             .stop()
             .animate({width: width, height: height}, time, function () {
-              $stage.removeClass(stageOnlyActiveClass);
+              $wrap.removeClass(wrapOnlyActiveClass);
             });
 
         if (o_nav) {
