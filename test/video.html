@@ -8,6 +8,14 @@
 	<!-- jQuery, -->
 	<script src="jquery/jquery-1.10.2.min.js"></script>
 
+  <script type="text/javascript">
+    $(function () {
+      $('.fotorama').eq(0).on('fotorama:show', function (e) {
+        console.log(e.type);
+      });
+    })
+  </script>
+
 	<!-- Fotorama -->
 	<link  href="../out/fotorama.css" rel="stylesheet">
 	<script src="../out/fotorama.js"></script>

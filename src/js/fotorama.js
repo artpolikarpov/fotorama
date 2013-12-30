@@ -963,7 +963,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     updateTouchTails('go', true);
     //console.timeEnd('updateTouchTails');
     //console.time('triggerEvent');
-    triggerEvent('show', {
+    options.reset || triggerEvent('show', {
       user: options.user,
       time: time
     });
@@ -979,7 +979,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       skipReposition || stageShaftReposition(true);
 
-      triggerEvent('showend', {
+      options.reset || triggerEvent('showend', {
         user: options.user
       });
 
@@ -1138,6 +1138,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         ratio = measures.ratio,
         windowHeight = $WINDOW.height() - (o_nav ? $nav.height() : 0);
 
+    if (measureIsValid(width)) {
     if (measureIsValid(width)) {
       $wrap.css({width: width, minWidth: measures.minwidth, maxWidth: measures.maxwidth});
 
@@ -1463,9 +1464,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
 
     if (size) {
-      //console.log('activeIndex', activeIndex);
       if (changeToRtl()) return;
-      //console.log('No changeToRtl, activeIndex is', activeIndex);
 
       if ($videoPlaying) {
         unloadVideo($videoPlaying, true);
@@ -1474,11 +1473,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
       activeIndexes = [];
       detachFrames(STAGE_FRAME_KEY);
 
-      that.show({index: activeIndex, time: 0});
+      that.show({index: activeIndex, time: 0, reset: reset.ok});
       that.resize();
     } else {
       that.destroy();
     }
+
+    reset.ok = true;
   }
 
   function changeToRtl () {
