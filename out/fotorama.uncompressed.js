@@ -1456,14 +1456,14 @@ function touch ($el, options) {
 
     touchFLAG = e.type === 'touchstart';
     targetIsLinkFlag = $target.is('a, a *', el);
+    controlTouch = tail.control;
 
-    tolerance = (tail.noMove || tail.noSwipe) ? 16 : !tail.snap ? 4 : 0;
+    tolerance = (tail.noMove || tail.noSwipe || controlTouch) ? 16 : !tail.snap ? 4 : 0;
 
     extendEvent(e);
 
     startEvent = lastEvent = e;
     moveEventType = e.type.replace(/down|start/, 'move').replace(/Down/, 'Move');
-    controlTouch = tail.control;
 
     (options.onStart || noop).call(el, e, {control: controlTouch, $target: $target});
 
@@ -1629,7 +1629,6 @@ function moveOnTouch ($el, options) {
   function onMove (e, result) {
     if (!tail.noSwipe) {
       if (!tracked) {
-        controlFLAG = false;
         startTracking(e);
       }
 
@@ -1662,11 +1661,13 @@ function moveOnTouch ($el, options) {
 
   function onEnd (result) {
     ////console.time('moveontouch.js onEnd');
-    if (controlFLAG || (tail.noSwipe && result.moved)) return;
+    if (tail.noSwipe && result.moved) return;
 
     if (!tracked) {
       startTracking(result.startEvent, true);
     }
+
+    //console.log('onEnd');
 
     result.touch || MS_POINTER || $el.removeClass(grabbingClass);
 
@@ -2708,7 +2709,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   };
 
   that.show = function (options) {
-    ////console.time('that.show');
+    //console.log('that.show');
     ////console.time('that.show prepare');
     var index;
 
@@ -3122,9 +3123,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
       ////console.time('stageShaftTouchTail.onEnd');
       setShadow($stage);
 
+      //console.log('result', result);
+
       var toggleControlsFLAG = (MS_POINTER && !hoverFLAG || result.touch) && opts.arrows;
 
-      if (result.moved || (toggleControlsFLAG && result.pos !== result.newPos)) {
+      if (result.moved || (toggleControlsFLAG && result.pos !== result.newPos && !result.control)) {
         var index = getIndexByPos(result.newPos, measures.w, opts.margin, repositionIndex);
         that.show({
           index: index,
@@ -3132,7 +3135,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           overPos: result.overPos,
           user: true
         });
-      } else if (!result.aborted) {
+      } else if (!result.aborted && !result.control) {
         onStageTap(result.startEvent, toggleControlsFLAG);
       }
       ////console.timeEnd('stageShaftTouchTail.onEnd');
