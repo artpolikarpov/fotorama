@@ -48,12 +48,12 @@ function moveOnTouch ($el, options) {
   }
 
   function onMove (e, result) {
-    if (!tracked) {
-      controlFLAG = false;
-      startTracking(e);
-    }
-
     if (!tail.noSwipe) {
+      if (!tracked) {
+        controlFLAG = false;
+        startTracking(e);
+      }
+
       coo = e._x;
 
       moveTrack.push([e._now, coo]);
@@ -83,7 +83,7 @@ function moveOnTouch ($el, options) {
 
   function onEnd (result) {
     //console.time('moveontouch.js onEnd');
-    if (controlFLAG) return;
+    if (controlFLAG || (tail.noSwipe && result.moved)) return;
 
     if (!tracked) {
       startTracking(result.startEvent);
