@@ -36,14 +36,14 @@ function touch ($el, options) {
 
     touchFLAG = e.type === 'touchstart';
     targetIsLinkFlag = $target.is('a, a *', el);
+    controlTouch = tail.control;
 
-    tolerance = (tail.noMove || tail.noSwipe) ? 16 : !tail.snap ? 4 : 0;
+    tolerance = (tail.noMove || tail.noSwipe || controlTouch) ? 16 : !tail.snap ? 4 : 0;
 
     extendEvent(e);
 
     startEvent = lastEvent = e;
     moveEventType = e.type.replace(/down|start/, 'move').replace(/Down/, 'Move');
-    controlTouch = tail.control;
 
     (options.onStart || noop).call(el, e, {control: controlTouch, $target: $target});
 
