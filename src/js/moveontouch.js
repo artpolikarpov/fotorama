@@ -50,7 +50,6 @@ function moveOnTouch ($el, options) {
   function onMove (e, result) {
     if (!tail.noSwipe) {
       if (!tracked) {
-        controlFLAG = false;
         startTracking(e);
       }
 
@@ -83,11 +82,13 @@ function moveOnTouch ($el, options) {
 
   function onEnd (result) {
     //console.time('moveontouch.js onEnd');
-    if (controlFLAG || (tail.noSwipe && result.moved)) return;
+    if (tail.noSwipe && result.moved) return;
 
     if (!tracked) {
       startTracking(result.startEvent, true);
     }
+
+    console.log('onEnd');
 
     result.touch || MS_POINTER || $el.removeClass(grabbingClass);
 

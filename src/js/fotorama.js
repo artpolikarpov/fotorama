@@ -916,7 +916,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   };
 
   that.show = function (options) {
-    //console.time('that.show');
+    console.log('that.show');
     //console.time('that.show prepare');
     var index;
 
@@ -1330,9 +1330,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
       //console.time('stageShaftTouchTail.onEnd');
       setShadow($stage);
 
+      console.log('result', result);
+
       var toggleControlsFLAG = (MS_POINTER && !hoverFLAG || result.touch) && opts.arrows;
 
-      if (result.moved || (toggleControlsFLAG && result.pos !== result.newPos)) {
+      if (result.moved || (toggleControlsFLAG && result.pos !== result.newPos && !result.control)) {
         var index = getIndexByPos(result.newPos, measures.w, opts.margin, repositionIndex);
         that.show({
           index: index,
@@ -1340,7 +1342,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           overPos: result.overPos,
           user: true
         });
-      } else if (!result.aborted) {
+      } else if (!result.aborted && !result.control) {
         onStageTap(result.startEvent, toggleControlsFLAG);
       }
       //console.timeEnd('stageShaftTouchTail.onEnd');
