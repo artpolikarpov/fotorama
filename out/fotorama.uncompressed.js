@@ -1,5 +1,5 @@
 /*!
- * Fotorama 4.4.6 | http://fotorama.io/license/
+ * Fotorama 4.4.9 | http://fotorama.io/license/
  */
 (function (window, document, location, $, undefined) {
   "use strict";
@@ -16,12 +16,12 @@ var _fotoramaClass = 'fotorama',
     wrapNoShadowsClass = wrapClass + '--no-shadows',
     wrapPanYClass = wrapClass + '--pan-y',
     wrapRtlClass = wrapClass + '--rtl',
+    wrapOnlyActiveClass = wrapClass + '--only-active',
 
     stageClass = _fotoramaClass + '__stage',
     stageFrameClass = stageClass + '__frame',
     stageFrameVideoClass = stageFrameClass + '--video',
     stageShaftClass = stageClass + '__shaft',
-    stageOnlyActiveClass = stageClass + '--only-active',
 
     grabClass = _fotoramaClass + '__grab',
     pointerClass = _fotoramaClass + '__pointer',
@@ -82,7 +82,7 @@ var _fotoramaClass = 'fotorama',
     captionClass = _fotoramaClass + '__caption',
     captionWrapClass = _fotoramaClass + '__caption__wrap',
 
-    ooooClass = _fotoramaClass + '__oooo';
+    spinnerClass = _fotoramaClass + '__spinner';
 var JQUERY_VERSION = $ && $.fn.jquery.split('.');
 
 if (!JQUERY_VERSION
@@ -410,6 +410,382 @@ if (fullScreenApi.ok) {
     return (this.prefix === '') ? document.cancelFullScreen() : document[this.prefix + 'CancelFullScreen']();
   };
 }
+//fgnass.github.com/spin.js#v1.3.2
+
+/**
+ * Copyright (c) 2011-2013 Felix Gnass
+ * Licensed under the MIT license
+ */
+
+var Spinner,
+    spinnerDefaults = {
+      lines: 12, // The number of lines to draw
+      length: 5, // The length of each line
+      width: 2, // The line thickness
+      radius: 7, // The radius of the inner circle
+      corners: 1, // Corner roundness (0..1)
+      rotate: 15, // The rotation offset
+      color: 'rgba(128, 128, 128, .75)',
+      hwaccel: true
+    },
+    spinnerOverride = {
+      top: 'auto',
+      left: 'auto',
+      className: ''
+    };
+
+(function(root, factory) {
+
+  /* CommonJS */
+  //if (typeof exports == 'object')  module.exports = factory()
+
+  /* AMD module */
+  //else if (typeof define == 'function' && define.amd) define(factory)
+
+  /* Browser global */
+  //else root.Spinner = factory()
+
+  Spinner = factory();
+}
+(this, function() {
+  "use strict";
+
+  var prefixes = ['webkit', 'Moz', 'ms', 'O'] /* Vendor prefixes */
+    , animations = {} /* Animation rules keyed by their name */
+    , useCssAnimations /* Whether to use CSS animations or setTimeout */
+
+  /**
+   * Utility function to create elements. If no tag name is given,
+   * a DIV is created. Optionally properties can be passed.
+   */
+  function createEl(tag, prop) {
+    var el = document.createElement(tag || 'div')
+      , n
+
+    for(n in prop) el[n] = prop[n]
+    return el
+  }
+
+  /**
+   * Appends children and returns the parent.
+   */
+  function ins(parent /* child1, child2, ...*/) {
+    for (var i=1, n=arguments.length; i<n; i++)
+      parent.appendChild(arguments[i])
+
+    return parent
+  }
+
+  /**
+   * Insert a new stylesheet to hold the @keyframe or VML rules.
+   */
+  var sheet = (function() {
+    var el = createEl('style', {type : 'text/css'})
+    ins(document.getElementsByTagName('head')[0], el)
+    return el.sheet || el.styleSheet
+  }())
+
+  /**
+   * Creates an opacity keyframe animation rule and returns its name.
+   * Since most mobile Webkits have timing issues with animation-delay,
+   * we create separate rules for each line/segment.
+   */
+  function addAnimation(alpha, trail, i, lines) {
+    var name = ['opacity', trail, ~~(alpha*100), i, lines].join('-')
+      , start = 0.01 + i/lines * 100
+      , z = Math.max(1 - (1-alpha) / trail * (100-start), alpha)
+      , prefix = useCssAnimations.substring(0, useCssAnimations.indexOf('Animation')).toLowerCase()
+      , pre = prefix && '-' + prefix + '-' || ''
+
+    if (!animations[name]) {
+      sheet.insertRule(
+        '@' + pre + 'keyframes ' + name + '{' +
+        '0%{opacity:' + z + '}' +
+        start + '%{opacity:' + alpha + '}' +
+        (start+0.01) + '%{opacity:1}' +
+        (start+trail) % 100 + '%{opacity:' + alpha + '}' +
+        '100%{opacity:' + z + '}' +
+        '}', sheet.cssRules.length)
+
+      animations[name] = 1
+    }
+
+    return name
+  }
+
+  /**
+   * Tries various vendor prefixes and returns the first supported property.
+   */
+  function vendor(el, prop) {
+    var s = el.style
+      , pp
+      , i
+
+    prop = prop.charAt(0).toUpperCase() + prop.slice(1)
+    for(i=0; i<prefixes.length; i++) {
+      pp = prefixes[i]+prop
+      if(s[pp] !== undefined) return pp
+    }
+    if(s[prop] !== undefined) return prop
+  }
+
+  /**
+   * Sets multiple style properties at once.
+   */
+  function css(el, prop) {
+    for (var n in prop)
+      el.style[vendor(el, n)||n] = prop[n]
+
+    return el
+  }
+
+  /**
+   * Fills in default values.
+   */
+  function merge(obj) {
+    for (var i=1; i < arguments.length; i++) {
+      var def = arguments[i]
+      for (var n in def)
+        if (obj[n] === undefined) obj[n] = def[n]
+    }
+    return obj
+  }
+
+  /**
+   * Returns the absolute page-offset of the given element.
+   */
+  function pos(el) {
+    var o = { x:el.offsetLeft, y:el.offsetTop }
+    while((el = el.offsetParent))
+      o.x+=el.offsetLeft, o.y+=el.offsetTop
+
+    return o
+  }
+
+  /**
+   * Returns the line color from the given string or array.
+   */
+  function getColor(color, idx) {
+    return typeof color == 'string' ? color : color[idx % color.length]
+  }
+
+  // Built-in defaults
+
+  var defaults = {
+    lines: 12,            // The number of lines to draw
+    length: 7,            // The length of each line
+    width: 5,             // The line thickness
+    radius: 10,           // The radius of the inner circle
+    rotate: 0,            // Rotation offset
+    corners: 1,           // Roundness (0..1)
+    color: '#000',        // #rgb or #rrggbb
+    direction: 1,         // 1: clockwise, -1: counterclockwise
+    speed: 1,             // Rounds per second
+    trail: 100,           // Afterglow percentage
+    opacity: 1/4,         // Opacity of the lines
+    fps: 20,              // Frames per second when using setTimeout()
+    zIndex: 2e9,          // Use a high z-index by default
+    className: 'spinner', // CSS class to assign to the element
+    top: 'auto',          // center vertically
+    left: 'auto',         // center horizontally
+    position: 'relative'  // element position
+  }
+
+  /** The constructor */
+  function Spinner(o) {
+    if (typeof this == 'undefined') return new Spinner(o)
+    this.opts = merge(o || {}, Spinner.defaults, defaults)
+  }
+
+  // Global defaults that override the built-ins:
+  Spinner.defaults = {}
+
+  merge(Spinner.prototype, {
+
+    /**
+     * Adds the spinner to the given target element. If this instance is already
+     * spinning, it is automatically removed from its previous target b calling
+     * stop() internally.
+     */
+    spin: function(target) {
+      this.stop()
+
+      var self = this
+        , o = self.opts
+        , el = self.el = css(createEl(0, {className: o.className}), {position: o.position, width: 0, zIndex: o.zIndex})
+        , mid = o.radius+o.length+o.width
+        , ep // element position
+        , tp // target position
+
+      if (target) {
+        target.insertBefore(el, target.firstChild||null)
+        tp = pos(target)
+        ep = pos(el)
+        css(el, {
+          left: (o.left == 'auto' ? tp.x-ep.x + (target.offsetWidth >> 1) : parseInt(o.left, 10) + mid) + 'px',
+          top: (o.top == 'auto' ? tp.y-ep.y + (target.offsetHeight >> 1) : parseInt(o.top, 10) + mid)  + 'px'
+        })
+      }
+
+      el.setAttribute('role', 'progressbar')
+      self.lines(el, self.opts)
+
+      if (!useCssAnimations) {
+        // No CSS animation support, use setTimeout() instead
+        var i = 0
+          , start = (o.lines - 1) * (1 - o.direction) / 2
+          , alpha
+          , fps = o.fps
+          , f = fps/o.speed
+          , ostep = (1-o.opacity) / (f*o.trail / 100)
+          , astep = f/o.lines
+
+        ;(function anim() {
+          i++;
+          for (var j = 0; j < o.lines; j++) {
+            alpha = Math.max(1 - (i + (o.lines - j) * astep) % f * ostep, o.opacity)
+
+            self.opacity(el, j * o.direction + start, alpha, o)
+          }
+          self.timeout = self.el && setTimeout(anim, ~~(1000/fps))
+        })()
+      }
+      return self
+    },
+
+    /**
+     * Stops and removes the Spinner.
+     */
+    stop: function() {
+      var el = this.el
+      if (el) {
+        clearTimeout(this.timeout)
+        if (el.parentNode) el.parentNode.removeChild(el)
+        this.el = undefined
+      }
+      return this
+    },
+
+    /**
+     * Internal method that draws the individual lines. Will be overwritten
+     * in VML fallback mode below.
+     */
+    lines: function(el, o) {
+      var i = 0
+        , start = (o.lines - 1) * (1 - o.direction) / 2
+        , seg
+
+      function fill(color, shadow) {
+        return css(createEl(), {
+          position: 'absolute',
+          width: (o.length+o.width) + 'px',
+          height: o.width + 'px',
+          background: color,
+          boxShadow: shadow,
+          transformOrigin: 'left',
+          transform: 'rotate(' + ~~(360/o.lines*i+o.rotate) + 'deg) translate(' + o.radius+'px' +',0)',
+          borderRadius: (o.corners * o.width>>1) + 'px'
+        })
+      }
+
+      for (; i < o.lines; i++) {
+        seg = css(createEl(), {
+          position: 'absolute',
+          top: 1+~(o.width/2) + 'px',
+          transform: o.hwaccel ? 'translate3d(0,0,0)' : '',
+          opacity: o.opacity,
+          animation: useCssAnimations && addAnimation(o.opacity, o.trail, start + i * o.direction, o.lines) + ' ' + 1/o.speed + 's linear infinite'
+        })
+
+        if (o.shadow) ins(seg, css(fill('#000', '0 0 4px ' + '#000'), {top: 2+'px'}))
+        ins(el, ins(seg, fill(getColor(o.color, i), '0 0 1px rgba(0,0,0,.1)')))
+      }
+      return el
+    },
+
+    /**
+     * Internal method that adjusts the opacity of a single line.
+     * Will be overwritten in VML fallback mode below.
+     */
+    opacity: function(el, i, val) {
+      if (i < el.childNodes.length) el.childNodes[i].style.opacity = val
+    }
+
+  })
+
+
+  function initVML() {
+
+    /* Utility function to create a VML tag */
+    function vml(tag, attr) {
+      return createEl('<' + tag + ' xmlns="urn:schemas-microsoft.com:vml" class="spin-vml">', attr)
+    }
+
+    // No CSS transforms but VML support, add a CSS rule for VML elements:
+    sheet.addRule('.spin-vml', 'behavior:url(#default#VML)')
+
+    Spinner.prototype.lines = function(el, o) {
+      var r = o.length+o.width
+        , s = 2*r
+
+      function grp() {
+        return css(
+          vml('group', {
+            coordsize: s + ' ' + s,
+            coordorigin: -r + ' ' + -r
+          }),
+          { width: s, height: s }
+        )
+      }
+
+      var margin = -(o.width+o.length)*2 + 'px'
+        , g = css(grp(), {position: 'absolute', top: margin, left: margin})
+        , i
+
+      function seg(i, dx, filter) {
+        ins(g,
+          ins(css(grp(), {rotation: 360 / o.lines * i + 'deg', left: ~~dx}),
+            ins(css(vml('roundrect', {arcsize: o.corners}), {
+                width: r,
+                height: o.width,
+                left: o.radius,
+                top: -o.width>>1,
+                filter: filter
+              }),
+              vml('fill', {color: getColor(o.color, i), opacity: o.opacity}),
+              vml('stroke', {opacity: 0}) // transparent stroke to fix color bleeding upon opacity change
+            )
+          )
+        )
+      }
+
+      if (o.shadow)
+        for (i = 1; i <= o.lines; i++)
+          seg(i, -2, 'progid:DXImageTransform.Microsoft.Blur(pixelradius=2,makeshadow=1,shadowopacity=.3)')
+
+      for (i = 1; i <= o.lines; i++) seg(i)
+      return ins(el, g)
+    }
+
+    Spinner.prototype.opacity = function(el, i, val, o) {
+      var c = el.firstChild
+      o = o.shadow && o.lines || 0
+      if (c && i+o < c.childNodes.length) {
+        c = c.childNodes[i+o]; c = c && c.firstChild; c = c && c.firstChild
+        if (c) c.opacity = val
+      }
+    }
+  }
+
+  var probe = css(createEl('group'), {behavior: 'url(#default#VML)'})
+
+  if (!vendor(probe, 'transform') && probe.adj) initVML()
+  else useCssAnimations = vendor(probe, 'animation')
+
+  return Spinner
+
+}));
+
 /* Bez v1.0.10-g5ae0136
  * http://github.com/rdallasgray/bez
  *
@@ -891,12 +1267,13 @@ function smartClick ($el, fn, _options) {
         (_options.onStart || noop).call(this, e);
       },
       onMove: _options.onMove || noop,
+      onTouchEnd: _options.onTouchEnd || noop,
       onEnd: function (result) {
-        if (result.moved || _options.tail.checked) return;
+        //console.log('smartClick → result.moved', result.moved);
+        if (result.moved) return;
         fn.call(this, startEvent);
       }
-    }), _options.tail);
-
+    }), {noMove: true});
   });
 }
 
@@ -967,8 +1344,12 @@ function getDirectionSign (forward) {
 }
 
 function slide ($el, options) {
-  var elPos = Math.round(options.pos),
-      onEndFn = options.onEnd || noop;
+  var elData = $el.data(),
+      elPos = Math.round(options.pos),
+      onEndFn = function () {
+        elData.sliding = false;
+        (options.onEnd || noop)();
+      };
 
   if (typeof options.overPos !== 'undefined' && options.overPos !== options.pos) {
     elPos = options.overPos;
@@ -980,6 +1361,8 @@ function slide ($el, options) {
   //console.time('var translate = $.extend');
   var translate = $.extend(getTranslate(elPos, options._001), options.width && {width: options.width});
   //console.timeEnd('var translate = $.extend');
+
+  elData.sliding = true;
 
   if (CSS3) {
     $el.css($.extend(getDuration(options.time), translate));
@@ -1044,6 +1427,7 @@ function extendEvent (e) {
   var touch = (e.touches || [])[0] || e;
   e._x = touch.pageX;
   e._y = touch.clientY;
+  e._now = $.now();
 }
 
 function touch ($el, options) {
@@ -1055,11 +1439,13 @@ function touch ($el, options) {
       controlTouch,
       touchFLAG,
       targetIsSelectFLAG,
-      targetIsLinkFlag;
+      targetIsLinkFlag,
+      tolerance,
+      moved;
 
   function onStart (e) {
     $target = $(e.target);
-    tail.checked = targetIsSelectFLAG = targetIsLinkFlag = false;
+    tail.checked = targetIsSelectFLAG = targetIsLinkFlag = moved = false;
 
     if (touchEnabledFLAG
         || tail.flow
@@ -1070,6 +1456,8 @@ function touch ($el, options) {
 
     touchFLAG = e.type === 'touchstart';
     targetIsLinkFlag = $target.is('a, a *', el);
+
+    tolerance = (tail.noMove || tail.noSwipe) ? 16 : !tail.snap ? 4 : 0;
 
     extendEvent(e);
 
@@ -1090,6 +1478,7 @@ function touch ($el, options) {
         || moveEventType !== e.type
         || !touchEnabledFLAG) {
       touchEnabledFLAG && onEnd();
+      (options.onTouchEnd || noop)();
       return;
     }
 
@@ -1111,11 +1500,18 @@ function touch ($el, options) {
       (options.onMove || noop).call(el, e, {touch: touchFLAG});
     }
 
+    if (!moved && Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2)) > tolerance) {
+      moved = true;
+    }
+
     tail.checked = tail.checked || xWin || yWin;
   }
 
   function onEnd (e) {
     ////console.time('touch.js onEnd');
+
+    (options.onTouchEnd || noop)();
+
     var _touchEnabledFLAG = touchEnabledFLAG;
     tail.control = touchEnabledFLAG = false;
 
@@ -1132,7 +1528,8 @@ function touch ($el, options) {
     preventEventTimeout = setTimeout(function () {
       preventEvent = false;
     }, 1000);
-    (options.onEnd || noop).call(el, {moved: tail.checked, $target: $target, control: controlTouch, touch: touchFLAG, startEvent: startEvent, aborted: !e || e.type === 'MSPointerCancel'});
+
+    (options.onEnd || noop).call(el, {moved: moved, $target: $target, control: controlTouch, touch: touchFLAG, startEvent: startEvent, aborted: !e || e.type === 'MSPointerCancel'});
     ////console.timeEnd('touch.js onEnd');
   }
 
@@ -1197,11 +1594,13 @@ function moveOnTouch ($el, options) {
       snap,
       slowFLAG,
       controlFLAG,
-      movedFLAG;
+      moved,
+      tracked;
 
   function startTracking (e) {
+    tracked = true;
     startCoo = coo = e._x;
-    startTime = $.now();
+    startTime = e._now;
 
     moveTrack = [
       [startTime, startCoo]
@@ -1209,36 +1608,34 @@ function moveOnTouch ($el, options) {
 
     startElPos = moveElPos = tail.noMove ? 0 : stop($el, (options.getPos || noop)(), options._001);
 
-    // startTime - endTime < TOUCH_TIMEOUT * 3 && e.preventDefault(); // double tap
-
     (options.onStart || noop).call(el, e);
   }
 
   function onStart (e, result) {
-    min = elData.min;
-    max = elData.max;
-    snap = elData.snap;
+    min = tail.min;
+    max = tail.max;
+    snap = tail.snap;
 
     slowFLAG = e.altKey;
-    movedFLAG = false;
+    tracked = moved = false;
 
     controlFLAG = result.control;
 
-    if (!controlFLAG) {
+    if (!controlFLAG && !elData.sliding) {
       startTracking(e);
     }
   }
 
   function onMove (e, result) {
-    if (controlFLAG) {
-      controlFLAG = false;
-      startTracking(e);
-    }
-
     if (!tail.noSwipe) {
+      if (!tracked) {
+        controlFLAG = false;
+        startTracking(e);
+      }
+
       coo = e._x;
 
-      moveTrack.push([$.now(), coo]);
+      moveTrack.push([e._now, coo]);
 
       moveElPos = startElPos - (startCoo - coo);
 
@@ -1252,8 +1649,8 @@ function moveOnTouch ($el, options) {
 
       if (!tail.noMove) {
         $el.css(getTranslate(moveElPos, options._001));
-        if (!movedFLAG) {
-          movedFLAG = true;
+        if (!moved) {
+          moved = true;
           // only for mouse
           result.touch || MS_POINTER || $el.addClass(grabbingClass);
         }
@@ -1265,11 +1662,15 @@ function moveOnTouch ($el, options) {
 
   function onEnd (result) {
     ////console.time('moveontouch.js onEnd');
-    if (controlFLAG) return;
+    if (controlFLAG || (tail.noSwipe && result.moved)) return;
+
+    if (!tracked) {
+      startTracking(result.startEvent);
+    }
 
     result.touch || MS_POINTER || $el.removeClass(grabbingClass);
 
-    endTime = new Date().getTime();
+    endTime = $.now();
 
     var _backTimeIdeal = endTime - TOUCH_TIMEOUT,
         _backTime,
@@ -1332,16 +1733,15 @@ function moveOnTouch ($el, options) {
 
     time *= slowFLAG ? 10 : 1;
 
-    (options.onEnd || noop).call(el, $.extend(result, {pos: moveElPos, newPos: newPos, overPos: overPos, time: time, moved: longTouchFLAG ? snap : Math.abs(moveElPos - startElPos) > (snap ? 0 : 3)}));
-    ////console.timeEnd('moveontouch.js onEnd');
+    (options.onEnd || noop).call(el, $.extend(result, {moved: result.moved || longTouchFLAG && snap, pos: moveElPos, newPos: newPos, overPos: overPos, time: time}));
   }
 
   tail = $.extend(touch(options.$wrap, {
     onStart: onStart,
     onMove: onMove,
+    onTouchEnd: options.onTouchEnd,
     onEnd: onEnd,
-    select: options.select,
-    control: options.control
+    select: options.select
   }), tail);
 
   return tail;
@@ -1433,6 +1833,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $videoClose = $(div(videoCloseClass)).appendTo($stage),
       videoClose = $videoClose[0],
 
+      spinner,
+      $spinner = $(div(spinnerClass)),
+
       $videoPlaying,
 
       activeIndex = false,
@@ -1496,8 +1899,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
   toDeactivate[NAV_THUMB_FRAME_KEY] = [];
   toDeactivate[NAV_DOT_FRAME_KEY] = [];
   toDetach[STAGE_FRAME_KEY] = {};
-
-  that.prevent = {};
 
   $wrap.addClass(CSS3 ? wrapCss3Class : wrapCss2Class);
 
@@ -1647,6 +2048,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $arrs.hide();
     }
 
+    spinnerStop();
+    spinner = new Spinner($.extend(spinnerDefaults, opts.spinner, spinnerOverride, {direction: o_rtl ? -1 : 1}));
+
     arrsUpdate();
     stageWheelUpdate();
 
@@ -1716,8 +2120,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     o_shadows = opts.shadows && !SLOW;
     classes[addOrRemove(!o_shadows)].push(wrapNoShadowsClass);
 
-    ooooStop();
-
     $wrap
         .addClass(classes.add.join(' '))
         .removeClass(classes.remove.join(' '));
@@ -1746,15 +2148,15 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function setStageShaftMinmaxAndSnap () {
-    stageShaftData.min = o_loop ? -Infinity : -getPosByIndex(size - 1, measures.w, opts.margin, repositionIndex);
-    stageShaftData.max = o_loop ? Infinity : -getPosByIndex(0, measures.w, opts.margin, repositionIndex);
-    stageShaftData.snap = measures.w + opts.margin;
+    stageShaftTouchTail.min = o_loop ? -Infinity : -getPosByIndex(size - 1, measures.w, opts.margin, repositionIndex);
+    stageShaftTouchTail.max = o_loop ? Infinity : -getPosByIndex(0, measures.w, opts.margin, repositionIndex);
+    stageShaftTouchTail.snap = measures.w + opts.margin;
   }
 
   function setNavShaftMinmax () {
-    navShaftData.min = Math.min(0, measures.W - $navShaft.width());
-    navShaftData.max = 0;
-    $navShaft.toggleClass(grabClass, !(navShaftTouchTail.noMove = navShaftData.min === navShaftData.max));
+    navShaftTouchTail.min = Math.min(0, measures.W - $navShaft.width());
+    navShaftTouchTail.max = 0;
+    $navShaft.toggleClass(grabClass, !(navShaftTouchTail.noMove = navShaftTouchTail.min === navShaftTouchTail.max));
   }
 
   function eachIndex (indexes, type, fn) {
@@ -1846,7 +2248,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
           frameData.state = 'error';
 
-          if (size > 1 && !dataFrame.html && !dataFrame.deleted && !dataFrame.video && !fullFLAG) {
+          if (size > 1 && data[index] === dataFrame && !dataFrame.html && !dataFrame.deleted && !dataFrame.video && !fullFLAG) {
             dataFrame.deleted = true;
             that.splice(index, 1);
           }
@@ -1856,17 +2258,15 @@ jQuery.Fotorama = function ($fotorama, opts) {
       function loaded () {
         ////console.log('loaded: ' + src);
 
-        var width = img.width,
-            height = img.height,
-            ratio = width / height;
+        //console.log('$.Fotorama.measures[src]', $.Fotorama.measures[src]);
 
-        imgData.measures = {
-          width: width,
-          height: height,
-          ratio: ratio
+        $.Fotorama.measures[src] = imgData.measures = $.Fotorama.measures[src] || {
+          width: img.width,
+          height: img.height,
+          ratio: img.width / img.height
         };
 
-        setMeasures(width, height, ratio, index);
+        setMeasures(imgData.measures.width, imgData.measures.height, imgData.measures.ratio, index);
 
         $img
             .off('load error')
@@ -1914,7 +2314,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           if ($.Fotorama.cache[src] === 'error') {
             error();
           } else if ($.Fotorama.cache[src] === 'loaded') {
-            ////console.log('take from cache: ' + src);
+            //console.log('take from cache: ' + src);
             setTimeout(waitAndLoad, 0);
           } else {
             setTimeout(justWait, 100);
@@ -1927,36 +2327,23 @@ jQuery.Fotorama = function ($fotorama, opts) {
     });
   }
 
-  var $oooo = $(div('', div(ooooClass))),
-      ooooInterval,
-      ooooStep = function () {
-        $oooo.attr('class', ooooClass + ' ' + ooooClass + '--' + ooooI);
-        ooooI++;
-        if (ooooI > 4) ooooI = 0;
-      },
-      ooooI;
-
-  function ooooStart ($el) {
-    ooooStop(true);
-    $oooo.appendTo($el);
-    ooooI = 0;
-    ooooStep();
-    ooooInterval = setInterval(ooooStep, 200);
+  function spinnerSpin ($el) {
+    $spinner.append(spinner.spin().el).appendTo($el);
   }
 
-  function ooooStop (leave) {
-    leave || $oooo.detach();
-    clearInterval(ooooInterval);
+  function spinnerStop () {
+    $spinner.detach();
+    spinner && spinner.stop();
   }
 
   function updateFotoramaState () {
     var $frame = that.activeFrame[STAGE_FRAME_KEY];
 
     if ($frame && !$frame.data().state) {
-      ooooStart($frame);
+      spinnerSpin($frame);
       $frame.on('f:load f:error', function () {
         $frame.off('f:load f:error');
-        ooooStop();
+        spinnerStop();
       });
     }
   }
@@ -2152,10 +2539,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
   function slideNavShaft (options) {
     var $guessNavFrame = data[options.guessIndex][navFrameKey];
     if ($guessNavFrame) {
-      var overflowFLAG = navShaftData.min !== navShaftData.max,
+      var overflowFLAG = navShaftTouchTail.min !== navShaftTouchTail.max,
           activeNavFrameBounds = overflowFLAG && getNavFrameBounds(that.activeFrame[navFrameKey]),
           l = overflowFLAG && (options.keep && slideNavShaft.l ? slideNavShaft.l : minMaxLimit((options.coo || measures.w / 2) - getNavFrameBounds($guessNavFrame).c, activeNavFrameBounds.min, activeNavFrameBounds.max)),
-          pos = overflowFLAG && minMaxLimit(l, navShaftData.min, navShaftData.max),
+          pos = overflowFLAG && minMaxLimit(l, navShaftTouchTail.min, navShaftTouchTail.max),
           time = options.time * .9;
 
       slide($navShaft, {
@@ -2168,7 +2555,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       //if (time) thumbsDraw(pos);
 
-      setShadow($nav, findShadowEdge(pos, navShaftData.min, navShaftData.max));
+      setShadow($nav, findShadowEdge(pos, navShaftTouchTail.min, navShaftTouchTail.max));
       slideNavShaft.l = l;
     }
   }
@@ -2245,13 +2632,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     });
   }
 
-  function triggerEvent (event, extra, fn) {
+  function triggerEvent (event, extra) {
     $fotorama.trigger(_fotoramaClass + ':' + event, [that, extra]);
-    if (!that.prevent[event]) {
-      (fn || noop)();
-    } else {
-     delete that.prevent[event];
-    }
   }
 
   function onTouchStart () {
@@ -2373,7 +2755,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     updateTouchTails('go', true);
     ////console.timeEnd('updateTouchTails');
     ////console.time('triggerEvent');
-    triggerEvent('show', {
+    options.reset || triggerEvent('show', {
       user: options.user,
       time: time
     });
@@ -2389,7 +2771,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       skipReposition || stageShaftReposition(true);
 
-      triggerEvent('showend', {
+      options.reset || triggerEvent('showend', {
         user: options.user
       });
 
@@ -2549,13 +2931,15 @@ jQuery.Fotorama = function ($fotorama, opts) {
         windowHeight = $WINDOW.height() - (o_nav ? $nav.height() : 0);
 
     if (measureIsValid(width)) {
-      $wrap.css({width: width, minWidth: measures.minwidth, maxWidth: measures.maxwidth});
+      $wrap
+          .addClass(wrapOnlyActiveClass)
+          .css({width: width, minWidth: measures.minwidth, maxWidth: measures.maxwidth});
 
       width = measures.W = measures.w = $wrap.width();
 
       if (opts.glimpse) {
         // Glimpse
-        measures.w -= Math.round((numberFromPercent(opts.glimpse) / 100 * width || numberFromMeasure(opts.glimpse)) * 2)
+        measures.w -= Math.round((numberFromPercent(opts.glimpse) / 100 * width || numberFromMeasure(opts.glimpse) || 0) * 2);
       }
 
       $stageShaft.css({width: measures.w, marginLeft: (measures.W - measures.w) / 2});
@@ -2574,10 +2958,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
         stageShaftReposition();
 
         $stage
-            .addClass(stageOnlyActiveClass)
             .stop()
             .animate({width: width, height: height}, time, function () {
-              $stage.removeClass(stageOnlyActiveClass);
+              $wrap.removeClass(wrapOnlyActiveClass);
             });
 
         if (o_nav) {
@@ -2716,13 +3099,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
     } else if ($videoPlaying) {
       target === videoClose && unloadVideo($videoPlaying, true, true);
     } else {
-      triggerEvent('stagetap', undefined, function () {
-        if (toggleControlsFLAG) {
-          toggleControlsClass();
-        } else if (opts.click) {
-          that.show({index: e.shiftKey || getDirectionSign(getDirection(e._x)), slow: e.altKey, user: true});
-        }
-      });
+      if (toggleControlsFLAG) {
+        toggleControlsClass();
+      } else if (opts.click) {
+        that.show({index: e.shiftKey || getDirectionSign(getDirection(e._x)), slow: e.altKey, user: true});
+      }
     }
     ////console.timeEnd('onStageTap');
   }
@@ -2736,11 +3117,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
     onMove: function (e, result) {
       setShadow($stage, result.edge);
     },
+    onTouchEnd: onTouchEnd,
     onEnd: function (result) {
       ////console.time('stageShaftTouchTail.onEnd');
       setShadow($stage);
-
-      onTouchEnd();
 
       var toggleControlsFLAG = (MS_POINTER && !hoverFLAG || result.touch) && opts.arrows;
 
@@ -2757,9 +3137,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
       ////console.timeEnd('stageShaftTouchTail.onEnd');
     },
-    getPos: function () {
-      return -getPosByIndex(dirtyIndex, measures.w, opts.margin, repositionIndex);
-    },
+//    getPos: function () {
+//      return -getPosByIndex(dirtyIndex, measures.w, opts.margin, repositionIndex);
+//    },
     _001: true,
     timeLow: 1,
     timeHigh: 1,
@@ -2773,9 +3153,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     onMove: function (e, result) {
       setShadow($nav, result.edge);
     },
+    onTouchEnd: onTouchEnd,
     onEnd: function (result) {
-      onTouchEnd();
-
       function onEnd () {
         slideNavShaft.l = result.newPos;
         releaseAutoplay();
@@ -2794,7 +3173,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           onEnd: onEnd
         });
         thumbsDraw(result.newPos);
-        o_shadows && setShadow($nav, findShadowEdge(result.newPos, navShaftData.min, navShaftData.max));
+        o_shadows && setShadow($nav, findShadowEdge(result.newPos, navShaftTouchTail.min, navShaftTouchTail.max));
       } else {
         onEnd();
       }
@@ -2821,9 +3200,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
       onTouchStart();
       onTouchEnd();
       var newPos = stop($navShaft) + direction * .25;
-      $navShaft.css(getTranslate(minMaxLimit(newPos, navShaftData.min, navShaftData.max)));
-      o_shadows && setShadow($nav, findShadowEdge(newPos, navShaftData.min, navShaftData.max));
-      navWheelTail.prevent = {'<': newPos >= navShaftData.max, '>': newPos <= navShaftData.min};
+      $navShaft.css(getTranslate(minMaxLimit(newPos, navShaftTouchTail.min, navShaftTouchTail.max)));
+      o_shadows && setShadow($nav, findShadowEdge(newPos, navShaftTouchTail.min, navShaftTouchTail.max));
+      navWheelTail.prevent = {'<': newPos >= navShaftTouchTail.max, '>': newPos <= navShaftTouchTail.min};
       clearTimeout(navWheelTail.t);
       navWheelTail.t = setTimeout(function () {
         thumbsDraw(newPos, true)
@@ -2853,18 +3232,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   smartClick($arrs, function (e) {
     stopEvent(e);
-    if ($videoPlaying) {
-      unloadVideo($videoPlaying, true, true);
-    } else {
-      onTouchEnd();
-      that.show({index: $arrs.index(this) ? '>' : '<', slow: e.altKey, user: true});
-    }
+    that.show({index: $arrs.index(this) ? '>' : '<', slow: e.altKey, user: true});
   }, {
     onStart: function () {
       onTouchStart();
       stageShaftTouchTail.control = true;
     },
-    tail: stageShaftTouchTail
+    onTouchEnd: onTouchEnd
   });
 
   function reset () {
@@ -2882,9 +3256,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
 
     if (size) {
-      ////console.log('activeIndex', activeIndex);
       if (changeToRtl()) return;
-      ////console.log('No changeToRtl, activeIndex is', activeIndex);
 
       if ($videoPlaying) {
         unloadVideo($videoPlaying, true);
@@ -2893,11 +3265,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
       activeIndexes = [];
       detachFrames(STAGE_FRAME_KEY);
 
-      that.show({index: activeIndex, time: 0});
+      that.show({index: activeIndex, time: 0, reset: reset.ok});
       that.resize();
     } else {
       that.destroy();
     }
+
+    reset.ok = true;
   }
 
   function changeToRtl () {
@@ -3005,7 +3379,8 @@ $.fn.fotorama = function (opts) {
 
                   direction: 'ltr', // 'rtl'
 
-                  shadows: true
+                  shadows: true,
+                  spinner: null
                 },
                 window.fotoramaDefaults,
                 opts,
@@ -3036,6 +3411,7 @@ function hideInstance (instance) {
   calculateIndexes();
 }
 $.Fotorama.cache = {};
+$.Fotorama.measures = {};
 $ = $ || {};
 $.Fotorama = $.Fotorama || {};
 $.Fotorama.jst = $.Fotorama.jst || {};
@@ -3064,7 +3440,7 @@ $.Fotorama.jst.video = function(v) {
 var __t, __p = '', __e = _.escape, __j = Array.prototype.join;
 function print() { __p += __j.call(arguments, '') }
 __p += '<div class="fotorama__video"><iframe src="';
- print((v.type == 'youtube' ? 'http://youtube.com/embed/' + v.id +'?autoplay=1' : v.type == 'vimeo' ? 'http://player.vimeo.com/video/' + v.id + '?autoplay=1&badge=0' : v.id)  + (v.s ? '&' + v.s : '')) ;
+ print((v.type == 'youtube' ? 'http://youtube.com/embed/' + v.id +'?autoplay=1' : v.type == 'vimeo' ? 'http://player.vimeo.com/video/' + v.id + '?autoplay=1&badge=0' : v.id)  + (v.s && v.type != 'custom' ? '&' + v.s : '')) ;
 __p += '" frameborder="0" allowfullscreen></iframe></div>';
 return __p
 };
