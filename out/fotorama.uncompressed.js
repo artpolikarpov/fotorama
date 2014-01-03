@@ -1597,7 +1597,7 @@ function moveOnTouch ($el, options) {
       moved,
       tracked;
 
-  function startTracking (e) {
+  function startTracking (e, noStop) {
     tracked = true;
     startCoo = coo = e._x;
     startTime = e._now;
@@ -1606,7 +1606,7 @@ function moveOnTouch ($el, options) {
       [startTime, startCoo]
     ];
 
-    startElPos = moveElPos = tail.noMove ? 0 : stop($el, (options.getPos || noop)(), options._001);
+    startElPos = moveElPos = tail.noMove || noStop ? 0 : stop($el, (options.getPos || noop)(), options._001);
 
     (options.onStart || noop).call(el, e);
   }
@@ -1665,7 +1665,7 @@ function moveOnTouch ($el, options) {
     if (controlFLAG || (tail.noSwipe && result.moved)) return;
 
     if (!tracked) {
-      startTracking(result.startEvent);
+      startTracking(result.startEvent, true);
     }
 
     result.touch || MS_POINTER || $el.removeClass(grabbingClass);
