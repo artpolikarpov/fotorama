@@ -1,0 +1,1 @@
+$.Fotorama.measures = {};

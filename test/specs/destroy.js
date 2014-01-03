@@ -11,18 +11,26 @@ document.write(
 );
 
 describe('Destroy', function () {
-  var $fotorama, fotorama, data, $html, html, htmlWithFotorama;
+  var loaded, $fotorama, fotorama, data, $html, html, htmlWithFotorama;
 
   it('$(el).fotorama() changes the DOM', function () {
     $html = $('#html');
     html = $html.html();
 
-    $fotorama = $('#fotorama').fotorama();
+    $fotorama = $('#fotorama').on('fotorama:load', function (e, fotorama, extra) {
+      if (!extra.index) loaded = true;
+    }).fotorama();
     fotorama = $fotorama.data('fotorama');
     data = fotorama.data;
 
-    htmlWithFotorama = $html.html();
-    expect(html).not.toBe(htmlWithFotorama);
+    waitsFor(function () {
+      return loaded;
+    }, 'Waiting for the first image', 100);
+
+    runs(function () {
+      htmlWithFotorama = $html.html();
+      expect(html).not.toBe(htmlWithFotorama);
+    });
   });
 
   it('fotorama.destroy() leaves nothing extra', function () {
@@ -34,16 +42,23 @@ describe('Destroy', function () {
   it('even if fullscreen', function () {
     $fotorama.fotorama({allowFullScreen: true});
 
-    htmlWithFotorama = $html.html();
+    loaded = false;
+    waitsFor(function () {
+      return loaded;
+    }, 'Waiting for the first image', 100);
 
-    fotorama.requestFullScreen();
+    runs(function () {
+      htmlWithFotorama = $html.html();
 
-    expect(fotorama.fullScreen).toBe(true);
+      fotorama.requestFullScreen();
 
-    fotorama.destroy();
+      expect(fotorama.fullScreen).toBe(true);
 
-    expect(fotorama.fullScreen).toBe(false);
-    expect(html).toBe($html.html());
+      fotorama.destroy();
+
+      expect(fotorama.fullScreen).toBe(false);
+      expect(html).toBe($html.html());
+    });
   });
 
   it('fotorama.load([{}, {}, {}]) can revive the fotorama', function () {
@@ -53,9 +68,16 @@ describe('Destroy', function () {
       photos.push({img: 'test/i/okonechnikov/' + _i + '-lo.jpg'});
     }
 
+    loaded = false;
     fotorama.load(photos);
+    waitsFor(function () {
+      return loaded;
+    }, 'Waiting for the first image', 100);
 
-    expect(htmlWithFotorama).toBe($html.html());
+    runs(function () {
+      expect(htmlWithFotorama).toBe($html.html());
+    });
+
   });
 
   it('It seems that all is well', function () {

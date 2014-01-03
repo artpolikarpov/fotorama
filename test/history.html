@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>History</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.9.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../out/fotorama.css" rel="stylesheet">
+	<script src="../out/fotorama.js"></script>
+
+  <script type="text/javascript">
+    $(function () {
+      f = $('.fotorama').data('fotorama');
+    })
+  </script>
+</head>
+
+<body>
+
+<script>
+  $(function () {
+    window.onpopstate = function (e) {
+      var hash = location.hash.replace(/^#/, '');
+      if (fotorama && hash) {
+        fotorama.show(hash);
+      }
+    };
+
+    var fotorama = $('.fotorama')
+        .on('fotorama:show', function (e, fotorama) {
+          var hash = fotorama.activeFrame.id || fotorama.activeIndex;
+          console.log('fotorama:show', hash);
+          if (window.history && location.hash.replace(/^#/, '') != hash) {
+            history.pushState(null, null, '#' + hash);
+          }
+        })
+        .fotorama({
+          startindex: location.hash.replace(/^#/, '')
+        })
+        .data('fotorama');
+  });
+</script>
+
+<!-- Fotorama -->
+<div class="fotorama"
+     data-auto="false"
+     data-width="500"
+     data-ratio="3/2"
+     data-max-width="100%">
+  <a href="i/nyc/guy-in-car.jpg" id="guy-in-car"></a>
+  <a href="i/nyc/acapella.jpg"></a>
+  <a href="i/nyc/crazyjohn.jpg" id="three"></a>
+  <a href="i/nyc/dudeintheground.jpg" id="dudeintheground"></a>
+  <a href="i/nyc/dudes.jpg" id="dudes"></a>
+  <a href="i/nyc/explanation.jpg"></a>
+  <a href="i/nyc/eyes.jpg" id="eyes"></a>
+  <a href="i/nyc/facing-wind.jpg" id="facing-wind"></a>
+  <a href="i/nyc/father-son-looking.jpg" id="father-son-looking"></a>
+  <a href="i/nyc/flipoff.jpg" id="flipoff"></a>
+  <a href="i/nyc/freakout.jpg" id="freakout"></a>
+  <a href="i/nyc/guy-in-park.jpg" id="guy-in-park"></a>
+  <a href="i/nyc/homeless-sleeping.jpg" id="homeless-sleeping"></a>
+  <a href="i/nyc/italianguy.jpg"></a>
+  <a href="i/nyc/KIOSK.jpg" id="KIOSK"></a>
+  <a href="i/nyc/ladies-riding.jpg" id="ladies-riding"></a>
+  <a href="i/nyc/lift-dude.jpg" id="lift-dude"></a>
+  <a href="i/nyc/severedhead-lo.jpg" id="severedhead-lo"></a>
+  <a href="i/nyc/smoking.jpg"></a>
+  <a href="i/nyc/streetlook.jpg" id="streetlook"></a>
+  <a href="i/nyc/two-umbrellas.jpg"></a>
+  <a href="i/nyc/woman-reading.jpg"></a>
+</div>
+
+<!-- © -->
+<p>Photos <a href="http://alexeilebedev.com/">by Alexei Lebedev</a></p>
+</body>
+</html>

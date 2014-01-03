@@ -78,6 +78,7 @@ $arrSize: 32px;
 .fotorama__nav {
   overflow: hidden;
   position: relative;
+  max-width: 100%;
 }
 
 .fotorama__wrap--pan-y {
@@ -124,9 +125,6 @@ $arrSize: 32px;
   .fotorama__stage__frame {
     display: none;
   }
-  .fotorama__stage__frame.fotorama__active {
-    @include opacity(1);
-  }
   .fotorama__stage__frame.fotorama__active,
   .fotorama__fade-front,
   .fotorama__fade-rear {
@@ -145,19 +143,6 @@ $arrSize: 32px;
   }
   .fotorama__stage .fotorama__shadow {
     display: none;
-  }
-}
-
-.fotorama__wrap--video {
-  .fotorama__stage__shaft {
-    @extend %no-transform;
-  }
-  .fotorama__stage__frame--video {
-    @extend %no-transform;
-    .fotorama__img,
-    .fotorama__html {
-      @include opacity(0);
-    }
   }
 }
 
@@ -191,7 +176,11 @@ $arrSize: 32px;
 
 }
 
-.fotorama__stage--only-active {
+.fotorama__wrap--only-active {
+  .fotorama__stage,
+  .fotorama__nav {
+    max-width: 99999px !important;
+  }
   .fotorama__stage__frame {
     visibility: hidden;
   }
@@ -200,7 +189,6 @@ $arrSize: 32px;
   }
 }
 
-// Навигация, точечки
 .fotorama__nav {
   font-size: 0;
   line-height: 0;
@@ -328,10 +316,6 @@ $arrSize: 32px;
     }
   }
 
-  .fotorama__wrap--video & {
-    display: none;
-  }
-
   .fotorama__wrap--rtl & {
     left: auto;
     right: 0;
@@ -350,44 +334,19 @@ $arrSize: 32px;
   @extend %hidden;
 }
 
-// oooo
-.fotorama__oooo {
-  $size: 6px;
-  $margin: 4px;
+@keyframes spinner {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg)
+  }
+}
+
+.fotorama__spinner {
   @extend %center;
-  width: $size;
-  height: $size;
-  margin-left: -($size + $margin/2);
-  margin-top: -$size/2;
-  @extend %gpu;
-  &:before, &:after {
-    @extend %gpu;
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: $size;
-    height: $size;
-    border-radius: $size;
-    background-color: mix(black, white);
-    background-color: rgba(mix(black, white), .5);
-  }
-  &:before {
-    left: -($size + $margin);
-  }
-  .fotorama__oooo {
-    margin-left: $size * 1.5 + $margin * 2;
-  }
 }
 
-.fotorama__oooo--1:before,
-.fotorama__oooo--2:after,
-.fotorama__oooo--3 .fotorama__oooo:before,
-.fotorama__oooo--4 .fotorama__oooo:after {
-  background-color: mix(black, white);
-}
-
-// Если разрешены ЦСС-анимации
 .fotorama__wrap--css3 {
   .fotorama__stage__shaft,
   .fotorama__nav__shaft,
@@ -399,22 +358,39 @@ $arrSize: 32px;
   .fotorama__thumb-border {
     @extend %initial-translate;
   }
+  .fotorama__spinner {
+    animation: spinner 24s infinite linear;
+    @extend %gpu;
+  }
   .fotorama__stage,
   .fotorama__nav,
-  .fotorama__stage__frame,
-  .fotorama__stage__frame .fotorama__img,
-  //.fotorama__nav__frame,
-  .fotorama__html,
-  .fotorama__caption
+  .fotorama__stage__frame
   {
     @extend %gpu;
   }
   .fotorama__stage .fotorama__img,
   .fotorama__html,
   .fotorama__caption {
+    @extend %gpu;
     transition-property: opacity;
     transition-timing-function: linear;
     transition-duration: $time;
+  }
+}
+
+.fotorama__wrap--video {
+  .fotorama__stage__shaft,
+  .fotorama__stage,
+  .fotorama__stage__frame--video {
+    @extend %no-transform;
+  }
+  .fotorama__stage__frame--video {
+    .fotorama__img,
+    .fotorama__html,
+    .fotorama__caption {
+      @extend %no-transform;
+      @include opacity(0);
+    }
   }
 }
 

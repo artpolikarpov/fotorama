@@ -249,9 +249,9 @@ describe('Events', function () {
     expect(fotorama.startAutoplay()).toEqual(fotorama.stopAutoplay());
     expect(fotorama.requestFullScreen()).toEqual(fotorama.cancelFullScreen());
     expect(fotorama.playVideo()).toEqual(fotorama.stopVideo());
-    expect(fotorama.load()).toEqual(fotorama.push({}));
-    expect(fotorama.pop()).toEqual(fotorama.shift());
-    expect(fotorama.unshift({})).toEqual(fotorama.reverse());
+    expect(fotorama.load()).toEqual(fotorama.push({img: 'test/i/okonechnikov/19-lo.jpg'}));
+    //expect(fotorama.pop()).toEqual(fotorama.shift());
+    expect(fotorama.unshift({img: 'test/i/okonechnikov/11-lo.jpg'})).toEqual(fotorama.reverse());
     expect(fotorama.sort()).toEqual(fotorama.splice());
   });
 

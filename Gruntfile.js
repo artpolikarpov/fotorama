@@ -12,6 +12,7 @@ meta: {
     'src/js/_.js',
     'src/js/modernizr.js',
     'src/js/fullscreen.js',
+    'src/js/spin.js',
     'src/js/bez.js',
     'src/js/basevars.js',
     'src/js/utils.js',
@@ -23,6 +24,7 @@ meta: {
     'src/js/fn-fotorama.js',
     'src/js/instances.js',
     'src/js/cache.js',
+    'src/js/measures.js',
     'src/templates/compiled.js',
     'src/js/auto-initialization.js',
     'src/js/outro.js'
@@ -45,6 +47,9 @@ jst: {
   }
 },
 watch: {
+  options: {
+    atBegin: true
+  },
   jst: {
     files: 'src/templates/*.jst',
     tasks: ['jst', 'replace:jst']
@@ -153,7 +158,8 @@ cssmin: {
       'out/fotorama.css': 'out/fotorama.css'
     },
     options: {
-      banner: '<%= meta.banner.replace(/\\n$/, "") %>'
+      banner: '<%= meta.banner.replace(/\\n$/, "") %>',
+      report: 'gzip'
     }
   }
 },
@@ -232,7 +238,8 @@ replace: {
 uglify: {
   min: {
     options: {
-      banner: '<%= meta.banner %>'
+      banner: '<%= meta.banner %>',
+      report: 'gzip'
     },
     files: {
       'out/fotorama.js': 'out/fotorama.uncompressed.js'

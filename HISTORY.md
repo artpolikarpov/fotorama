@@ -2,6 +2,60 @@
 
 > https://github.com/artpolikarpov/fotorama/releases
 
+## 4.4.9, Dec 30 2013
+
+<!--4.4.9:name-->
+
+Making it even better
+
+<!--/4.4.9:name-->
+
+<!--4.4.9:notes-->
+
+Fixed issues:
+
+* #115 Partially hidden fullscreen-icon
+* #159 Some animation bugs.
+* #160 Move-click-swipe tolerances.
+* #161, #162 Recursion (when connecting some of the events and methods).
+
+<!--/4.4.9:notes-->
+
+## 4.4.8, Nov 13 2013
+
+<!--4.4.8:name-->
+
+Five hot fixes
+
+<!--/4.4.8:name-->
+
+<!--4.4.8:notes-->
+
+* Counterclockwise spinner if `direction:rtl`.
+* Fix onTouchEnd call. Fix infinite spinner which sometimes happened
+* Fix doubled spinner.
+* Remove stagetap event.
+* More accurate deleting broken frames, good frames will not be flushed any more.
+
+<!--/4.4.8:notes-->
+
+## 4.4.7, Nov 5 2013
+
+<!--4.4.7:name-->
+
+Spin the spinner
+
+<!--/4.4.7:name-->
+
+<!--4.4.7:notes-->
+
+* New preloader ([spin.js](http://fgnass.github.io/spin.js)).
+* Fix some issues with fade transitions in IE 7 and IE 8.
+* Disable GPU compositing of frame when video plays.
+* Cache image dimensions. Improved loading mechanics.
+
+<!--/4.4.7:notes-->
+
 ## 4.4.6, Oct 20 2013
 
 <!--4.4.6:name-->

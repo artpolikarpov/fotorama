@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Basic fotorama</title>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.10.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../out/fotorama.css" rel="stylesheet">
+	<script src="../out/fotorama.js"></script>
+
+  <script type="text/javascript">
+    $(function () {
+      f = $('.fotorama').fotorama().data('fotorama');
+
+      f.load([
+        {img: 'i/okonechnikov/1-lo.jpg'},
+        {img: 'i/okonechnikov/2-lo.jpg'},
+        {img: 'i/okonechnikov/3-lo.jpg'}
+      ])
+    })
+  </script>
+</head>
+
+<body>
+
+<!--<p>Basic fotorama:<p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div <mark>class="fotorama"</mark>></code></pre>-->
+
+<!-- Fotorama -->
+<div class="fotorama">
+  <img src="ERROR" alt=""/>
+  <img src="i/okonechnikov/1-lo.jpg" alt=""/>
+</div>
+
+<!-- © -->
+<p>Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
+</body>
+</html>

@@ -7,6 +7,7 @@ function extendEvent (e) {
   var touch = (e.touches || [])[0] || e;
   e._x = touch.pageX;
   e._y = touch.clientY;
+  e._now = $.now();
 }
 
 function touch ($el, options) {
@@ -18,11 +19,13 @@ function touch ($el, options) {
       controlTouch,
       touchFLAG,
       targetIsSelectFLAG,
-      targetIsLinkFlag;
+      targetIsLinkFlag,
+      tolerance,
+      moved;
 
   function onStart (e) {
     $target = $(e.target);
-    tail.checked = targetIsSelectFLAG = targetIsLinkFlag = false;
+    tail.checked = targetIsSelectFLAG = targetIsLinkFlag = moved = false;
 
     if (touchEnabledFLAG
         || tail.flow
@@ -33,6 +36,8 @@ function touch ($el, options) {
 
     touchFLAG = e.type === 'touchstart';
     targetIsLinkFlag = $target.is('a, a *', el);
+
+    tolerance = (tail.noMove || tail.noSwipe) ? 16 : !tail.snap ? 4 : 0;
 
     extendEvent(e);
 
@@ -53,6 +58,7 @@ function touch ($el, options) {
         || moveEventType !== e.type
         || !touchEnabledFLAG) {
       touchEnabledFLAG && onEnd();
+      (options.onTouchEnd || noop)();
       return;
     }
 
@@ -74,11 +80,18 @@ function touch ($el, options) {
       (options.onMove || noop).call(el, e, {touch: touchFLAG});
     }
 
+    if (!moved && Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2)) > tolerance) {
+      moved = true;
+    }
+
     tail.checked = tail.checked || xWin || yWin;
   }
 
   function onEnd (e) {
     //console.time('touch.js onEnd');
+
+    (options.onTouchEnd || noop)();
+
     var _touchEnabledFLAG = touchEnabledFLAG;
     tail.control = touchEnabledFLAG = false;
 
@@ -95,7 +108,8 @@ function touch ($el, options) {
     preventEventTimeout = setTimeout(function () {
       preventEvent = false;
     }, 1000);
-    (options.onEnd || noop).call(el, {moved: tail.checked, $target: $target, control: controlTouch, touch: touchFLAG, startEvent: startEvent, aborted: !e || e.type === 'MSPointerCancel'});
+
+    (options.onEnd || noop).call(el, {moved: moved, $target: $target, control: controlTouch, touch: touchFLAG, startEvent: startEvent, aborted: !e || e.type === 'MSPointerCancel'});
     //console.timeEnd('touch.js onEnd');
   }
 

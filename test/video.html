@@ -8,6 +8,14 @@
 	<!-- jQuery, -->
 	<script src="jquery/jquery-1.10.2.min.js"></script>
 
+  <script type="text/javascript">
+    $(function () {
+      $('.fotorama').eq(0).on('fotorama:show', function (e) {
+        console.log(e.type);
+      });
+    })
+  </script>
+
 	<!-- Fotorama -->
 	<link  href="../out/fotorama.css" rel="stylesheet">
 	<script src="../out/fotorama.js"></script>
@@ -24,23 +32,26 @@
 <!-- Fotorama -->
 <div class="fotorama" data-width="700" data-ratio="700/426" data-max-width="100%">
 	<a data-caption="Desert Rose" href="http://youtube.com/watch?v=C3lWwBslWqg">Desert Rose</a>
-	<a data-video="http://youtu.be/d27gTrPPAyk">Englishman In New York</a>
+	<a data-video="http://www.youtu.be/HmiVRWAVS3I">Englishman In New York</a>
 	<a href="http://www.youtube.com/embed/KLVq0IAzh1A">Fields Of Gold</a>
 </div>
 
 <p>Vimeo Staff Pick:</p>
 <!-- Fotorama -->
 <div class="fotorama" data-width="700" data-ratio="700/426" data-max-width="100%">
-	<a href="http://vimeo.com/61527416" data-fit="cover">Celestial Dynamics</a>
+	<a href="http://vimeo.com/61527416" data-img="i/okonechnikov/1.jpg" data-fit="cover">Celestial Dynamics</a>
 	<a href="http://vimeo.com/67556702">Sebastian Ingrosso, Tommy Trash, John Martin — Reload</a>
-	<a href="http://vimeo.com/67156498">The Faustino you know</a>
+	<a href="http://vimeo.com/67156498" data-img="i/okonechnikov/3.jpg">The Faustino you know</a>
 </div>
 
 
 <script type="text/javascript">
   $(function () {
+    console.time('load');
     f1 = $('.fotorama').eq(0).data('fotorama');
-    f2 = $('.fotorama').eq(1).data('fotorama');
+    f2 = $('.fotorama').eq(1).on('fotorama:load', function () {
+      console.timeEnd('load');
+    }).data('fotorama');
   });
 </script>
 
