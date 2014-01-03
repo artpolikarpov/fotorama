@@ -95,10 +95,8 @@ describe('Events', function () {
     expect(fotorama.activeIndex).toBe(4);
 
     runs(function () {
-      // e.show.i = 7; e.showend.i = 4 (because of error)
-
-      expect(e.show.i).toBe(7);
-      expect(e.showend.i).toBe(4);
+      expect(e.show.i).toBe(6);
+      expect(e.showend.i).toBe(3);
 
       // extra data on fotorama:error
       expect(e.error.extra.index).toBe(3);
@@ -117,14 +115,14 @@ describe('Events', function () {
     expect(e.startautoplay.i).toBe(1);
 
     // other api calls don’s disturb autoplay
-    fotorama.setOptions({navPosition: 'top'}); // e.show.i++
+    fotorama.setOptions({navPosition: 'top'});
 
     waitsFor(function () {
       return fotorama.activeIndex === 1;
     }, 'Autoplay rewinds to the start and continue', 500 * 2 + 333 + 100);
 
     runs(function () {
-      expect(e.show.i).toBe(10);
+      expect(e.show.i).toBe(8);
     });
   });
 
