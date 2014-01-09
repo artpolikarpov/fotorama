@@ -42,7 +42,7 @@ js: "/j/script.js"
 </head>
 <body id="root">
 <div class="body-wrap">
-<% frontpage = @document.url == '/index.html' && 'frontpage' %>
+<% frontpage = @document.url == '/index.html' && 'frontpage'; %>
 
 <div class="header">
   <%- @partial('logo.html.eco', {link: !frontpage}) %>
@@ -59,6 +59,7 @@ js: "/j/script.js"
 <%- @content %>
 </div>
 
+<%- @partial('disqus.html.eco', @document) %>
 
 <%- @partial('footer.html') %>
 

@@ -28,6 +28,3 @@ Include Fotorama to your scripts:
 ```css
 @import "fotorama"
 ```
-
-<center>...</center>
-If&nbsp;you have something to&nbsp;add, email&nbsp;me at&nbsp;<a href="mailto:fotoramajs@gmail.com">fotoramajs@gmail.com</a>.

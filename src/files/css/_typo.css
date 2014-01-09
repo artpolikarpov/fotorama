@@ -6,6 +6,7 @@ body {
 
 a, .header a:visited, h2 a:visited,
 a u, .header a:visited u, h2 a:visited u,
+.disqus a:visited, .disqus a:visited u,
 .social a:visited, .social a:visited u {
   text-decoration: none;
   border-bottom: 1px solid;

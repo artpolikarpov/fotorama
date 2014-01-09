@@ -1,6 +1,7 @@
 ---
 title: "Fotorama"
 layout: "default"
+noDisqus: true
 ---
 
 <div class="fotorama-wrap-frontpage noise">
@@ -44,13 +45,6 @@ layout: "default"
   <h1>Fotorama</h1>
 
   <p class="lead">A simple, stunning, powerful jQuery gallery. Licensed <a href="/license/">under the <abbr>MIT</abbr></a>.</p>
-
-  <!--<div class="promo">
-    <h2>Simple</h2>
-    <div class="part" id="simple">
-      <%- @partial('documents/promo/simple.html.md') %>
-    </div>
-  </div>-->
 
   <% renderMenu = (items) => %>
     <% for item in items: %>
