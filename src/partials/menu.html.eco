@@ -1,6 +1,10 @@
-<% renderMenu = (items) => %>
+<% renderMenu = (items, top) => %>
 <ul class="menu">
-  <% for item in items: %><li class="<% if item.state: %>selected<% end %> <% if !(item.order % 100): %>divider<% end %>">
+  <% if @header && top: %><li class="li">
+    <% if !@frontpage: %>
+      <a href="/" class="black no-u"><u><strong>Fotorama</strong></u></a>
+    <% else: %><span><strong>Fotorama</strong></span><% end %>
+  </li><% end %><% for item in items: %><li class="li <% if item.state: %>selected<% end %> <% if !(item.order % 100): %>divider<% end %>">
   <% if item.state != 'current': %>
   <a href="<%= item.url %>" class="no-u"><u><%- item.title %></u></a><% else: %>
   <span><%- item.title %></span><% end %><% if item.children: %><i class="icon-caret-down <% if item.state != 'current': %>js-menu-down<% else: %>icon-disabled<% end %>"></i>
@@ -9,4 +13,4 @@
   </li><% end %>
 </ul>
 <% end %>
-<%= renderMenu @menuItems %>
+<%= renderMenu(@menuItems, 'true') %>

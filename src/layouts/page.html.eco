@@ -2,7 +2,7 @@
 layout: "default"
 ---
 
-<div class="content">
+<div class="content content-page">
   <%- @partial('documents' + @document.url) %>
 </div>
 

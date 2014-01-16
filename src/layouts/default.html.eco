@@ -40,15 +40,22 @@ js: "/j/script.js"
 		<link  href="/lib/fotorama/fotorama.css" rel="stylesheet">
 	<% end %>
 </head>
-<body id="root">
-<div class="body-wrap">
+
 <% frontpage = @document.url == '/index.html' && 'frontpage'; %>
 
-<div class="header">
-  <%- @partial('logo.html.eco', {link: !frontpage}) %>
+<body id="root" class="<%= frontpage %>">
 
-	<%- @partial('menu.html.eco', {menuItems: @generateMenu(@document.url)}) %>
+<div class="header">
+  <%- @partial('menu.html.eco', {menuItems: @generateMenu(@document.url), header: true, frontpage: frontpage}) %>
+
+  <% if frontpage : %>
+  <p class="lead">
+    A simple, stunning, powerful jQuery gallery. Licensed under the <abbr>MIT</abbr>.
+  </p>
+  <% end %>
 </div>
+
+<div class="body-wrap">
 
 <div class="content">
 	<% if !frontpage : %>

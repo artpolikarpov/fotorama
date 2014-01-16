@@ -3,21 +3,23 @@
   margin: 0 auto;
   padding: 16px;
   text-shadow: 0 1px 0 #fff;
+  font-size: 150%;
+  text-align: center;
 }
 
 .footer > p {
 	opacity: .6;
-  font-size: 88%;
+  font-size: 59%;
 }
 
 .footer .social {
   padding: 0;
-	margin: 0 0 10px;
+	margin: 0 0 .5em;
 }
 
 .footer .social li {
   display: inline;
-  margin-right: 10px;
+  margin: 0 10px;
 }
 
 .footer .social li .small {

@@ -4,6 +4,6 @@
   margin-right: auto;
 }
 
-.content *:last-child {
+.content-page > *:last-child {
   margin-bottom: 0 !important;
 }

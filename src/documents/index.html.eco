@@ -42,10 +42,6 @@ noDisqus: true
 <p class="photos-by" style="display: none;">Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
 
 <div class="content">
-  <h1>Fotorama</h1>
-
-  <p class="lead">A simple, stunning, powerful jQuery gallery. Licensed <a href="/license/">under the <abbr>MIT</abbr></a>.</p>
-
   <% renderMenu = (items) => %>
     <% for item in items: %>
       <% if item.order: %>

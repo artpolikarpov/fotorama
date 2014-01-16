@@ -105,5 +105,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-csso');
 	grunt.loadNpmTasks('grunt-s3');
 
-  grunt.registerTask('default', process.env.NODE_ENV ? ['frontend', 'autoprefixer', 'csso', 's3'] : ['frontend', 'autoprefixer', 'csso']);
+  grunt.registerTask('default', process.env.NODE_ENV ? ['frontend', 'autoprefixer', 'csso', 's3'] : ['frontend', 'autoprefixer']);
 };

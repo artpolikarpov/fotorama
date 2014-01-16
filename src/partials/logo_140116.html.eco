@@ -1,0 +1,5 @@
+<div class="logo">
+  <% if @link: %><a href="/"><% end %>
+  <span class="fo">Fo</span><span class="to">to</span><span class="ra">ra<i><i></i><i></i><i class="a"></i><i></i></i></span><span class="ma">ma</span>
+  <% if @link: %></a><% end %>
+</div>

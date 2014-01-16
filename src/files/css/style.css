@@ -21,21 +21,31 @@
 @import url(_mq.css);
 
 html {
-  height: 100%;
   background-color: #fcfcfb;
 }
 
-body {
-  height: 100%;
-}
-
 .body-wrap {
-  padding: 10px 16px 40px;
+  padding: 10px 16px 50px;
   position: relative;
   background-color: #fff;
   z-index: 9;
   height: auto;
   min-height: calc(100% - 200px);
+}
+
+body:not(.frontpage) .body-wrap:before,
+body.frontpage .header p.lead:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 2px;
+  background-image: linear-gradient(to right, transparent, rgba(0, 0, 0, .1), transparent), linear-gradient(to right, transparent, #fff, transparent);
+  background-size: 100% 1px;
+  background-position: 0 0, 0 100%;
+  background-repeat: no-repeat;
 }
 
 .body-wrap:after {
