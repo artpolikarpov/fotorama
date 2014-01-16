@@ -33,7 +33,7 @@ html {
   min-height: calc(100% - 200px);
 }
 
-body:not(.frontpage) .body-wrap:before,
+.body-wrap:before,
 body.frontpage .header p.lead:before {
   content: '';
   position: absolute;

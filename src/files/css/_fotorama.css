@@ -29,6 +29,7 @@
   padding: 0;
   margin: -10px -16px 5px;
   overflow: hidden;
+  position: relative;
 }
 
 .fotorama-wrap-frontpage .fotorama {
