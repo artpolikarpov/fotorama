@@ -43,6 +43,16 @@ a.green, a.green u, a.green:visited, a.green:visited u {
   border-color: rgba(170, 0, 0, .3);
 }
 
+a, a u, .menu .li i {
+  transition-property: color, border-color, background-color;
+  transition-timing-function: ease-out;
+  transition-duration: .33s;
+}
+
+a:hover, a:hover u, .menu .li i:hover {
+  transition-duration: .1s;
+}
+
 #root .selected > a,
 #root .selected > a u {
 	color: rgb(170, 0, 0);
