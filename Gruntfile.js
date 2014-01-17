@@ -59,7 +59,7 @@ module.exports = function(grunt) {
         ]
       }
     },
-    csso: {
+    cssmin: {
       main: {
         files: [
           {
@@ -102,8 +102,8 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-frontend');
   grunt.loadNpmTasks('grunt-autoprefixer');
-  grunt.loadNpmTasks('grunt-csso');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-s3');
 
-  grunt.registerTask('default', process.env.NODE_ENV ? ['frontend', 'autoprefixer', 'csso', 's3'] : ['frontend', 'autoprefixer']);
+  grunt.registerTask('default', process.env.NODE_ENV ? ['frontend', 'autoprefixer', 'cssmin', 's3'] : ['frontend', 'autoprefixer']);
 };
