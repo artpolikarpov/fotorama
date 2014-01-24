@@ -11,7 +11,7 @@
 .switch.active, .key {
 	color: #fff;
 	background-color: #555;
-	text-shadow: 0 -1px 0 #000;
+	/*text-shadow: 0 -1px 0 #000;*/
 	border-bottom: none;
 	border-radius: 3px;
 	padding: 2px 4px;

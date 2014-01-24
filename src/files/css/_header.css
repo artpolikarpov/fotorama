@@ -4,7 +4,7 @@
   padding: 12px 0 10px;
   max-width: 760px;
   margin: 0 auto;
-  text-shadow: 0 1px 0 #fff;
+  /*text-shadow: 0 1px 0 #fff;*/
   text-align: center;
 }
 
@@ -12,4 +12,5 @@
   position: relative;
   margin: 10px 0 -10px;
   padding: 12px 0 13px;
+  border-top: 1px solid #dadada;
 }

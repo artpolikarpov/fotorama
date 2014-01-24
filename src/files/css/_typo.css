@@ -22,8 +22,8 @@ a:visited,
 a:visited u,
 .header .menu .menu a:visited,
 .header .menu .menu a:visited u {
-	color: rgb(85, 26, 139);
-	border-color: rgba(85, 26, 139, .3);
+	color: rgb(85, 85, 85);
+	border-color: rgba(85, 85, 85, .3);
 }
 
 a.black, a.black u, a.black:visited, a.black:visited u {
@@ -75,10 +75,7 @@ h1 {
   margin-top: .5em;
 }
 
-h1 small,
-h2 small,
-h3 small,
-h4 small {
+small {
   font-weight: normal;
   color: rgb(133, 133, 130);
 }

@@ -5,15 +5,12 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
 */
 
 tt, code {
-	font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
-	font-size: 87%;
-	color: #454b43;
-	background-color: #fcfcfb;
-  /*text-shadow: 0 1px 0 #fff;*/
+	font-family: Consolas, 'Courier New', monospace;
+	/*color: #454b43;*/
 	white-space: nowrap;
-	border-radius: 3px;
-	padding: 1px 3px 2px;
-  border: 1px solid #ddddda;
+  /*font-weight: bold;*/
+  padding: 1px 3px 2px;
+  background-color: #f6f6f6;
 }
 
 pre {
@@ -23,24 +20,13 @@ pre {
 
 pre code {
 	display: block;
-	color: #657b83;
+  color: #454b43;
 	line-height: 1.4;
-	padding: 5px 10px 10px;
-	overflow: auto;
-  -webkit-overflow-scrolling: touch;
 	white-space: pre;
-
-	background:
-		linear-gradient(to right, #fcfcfb, #fcfcfb 5px, rgba(252,252,251,0)),
-		linear-gradient(to right, rgba(252,252,251,0), #fcfcfb 45px, #fcfcfb) 100% 0,
-		radial-gradient(farthest-side at 0 50%, rgba(0,0,0,.4), rgba(0,0,0,0)),
-		radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,.4), rgba(0,0,0,0)) 100% 0;
-	background-repeat: no-repeat;
-	background-color: #fcfcfb;
-	background-size: 50px 100%, 50px 100%, 5px 100%, 5px 100%;
-
-	/* Opera doesn't support this in the shorthand */
-	background-attachment: local, local, scroll, scroll;
+  font-weight: normal;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 5px 10px 10px;
 }
 
 pre .comment,
@@ -54,7 +40,7 @@ pre .javadoc {
 }
 
 pre .comment {
-	color: #333;
+	color: #21211e;
 }
 
 pre .keyword,

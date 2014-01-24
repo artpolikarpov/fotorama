@@ -55,13 +55,15 @@ docpadConfig = {
 
           # strip tags
           # console.log header
-          anchor = header.replace /<\/\w+(?:\s.+?)*>.*/g, '';
-          anchor = anchor
+          anchor = header
+            .replace(/^|<\/?\w+(?:\s.+?)*>.*/g, '')
             .replace(/<\w+(?:\s.+?)*>/g, '')
             .trim()
-            .replace(/\s+/g, '-')
-            .replace(/[^\w\-]/g, '')
-            .toLowerCase()
+            .replace(/[\s]+/g, '-')
+            # .replace(/[^\w\-]/g, '')
+            # .toLowerCase()
+
+          anchor = anchor.charAt(0).toLowerCase() + anchor.slice(1);
 
           "<#{name}><a name=\"#{anchor}\" href=\"\##{anchor}\" class=\"icon-link\"></a>#{header}</#{name}>"
   maxAge: 3600

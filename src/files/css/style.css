@@ -13,7 +13,7 @@
 @import url(_switch-n-key.css);
 @import url(_form.css);
 @import url(_contact.css);
-@import url(_noise.css);
+/*@import url(_noise.css);*/
 @import url(_shake.css);
 @import url(_promo.css);
 @import url(_disqus.css);
@@ -21,7 +21,7 @@
 @import url(_mq.css);
 
 html {
-  background-color: #fcfcfb;
+  background-color: #f6f6f6;
 }
 
 .body-wrap {
@@ -33,7 +33,7 @@ html {
   min-height: calc(100% - 200px);
 }
 
-.body-wrap:before,
+/*.body-wrap:before,
 body.frontpage .header p.lead:before {
   content: '';
   position: absolute;
@@ -59,7 +59,7 @@ body.frontpage .header p.lead:before {
   background: radial-gradient(farthest-side at 50% 0, rgba(0,0,0,.4), rgba(0,0,0,0)), linear-gradient(#ddddda, #ddddda);
   background-size: 100% 5px, 100% 1px;
   background-repeat: no-repeat;
-}
+}*/
 
 .clear {
   clear: both;

@@ -66,7 +66,9 @@ js: "/j/script.js"
 <%- @content %>
 </div>
 
+<% if process.env.NODE_ENV: %>
 <%- @partial('disqus.html.eco', @document) %>
+<% end %>
 
 <%- @partial('footer.html') %>
 
