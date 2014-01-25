@@ -48,12 +48,12 @@
         pointermovecounter++;
         $pointermovecounter.text(e.type + ' ' + pointermovecounter);
       }, false);
-    }
 
-    $mouseMove.on('mousemove', function (e) {
-      mousemovecounter++;
-      $mousemovecounter.text(e.type + ' ' + mousemovecounter);
-    });
+      $mouseMove.on('MSPointerMove', function (e) {
+        mousemovecounter++;
+        $mousemovecounter.text(e.type + ' ' + mousemovecounter);
+      });
+    }
   </script>
 
 </body>

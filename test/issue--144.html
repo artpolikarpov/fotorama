@@ -6,47 +6,55 @@
   <meta name="viewport" content="width=device-width">
 
 	<!-- jQuery, -->
-	<script src="jquery/jquery-1.10.1.min.js"></script>
+	<script src="jquery/jquery-1.10.2.min.js"></script>
 
 	<!-- Fotorama -->
 	<link  href="../out/fotorama.css" rel="stylesheet">
 	<script src="../out/fotorama.js"></script>
 
-  <script type="text/javascript">
-    console = window.console || {};
-    console.time = console.time || $.noop;
-    console.timeEnd = console.timeEnd || $.noop;
-
-    $(function () {
-      f = $('.fotorama').data('fotorama');
-
-      var mouseMoveCount = 1;
-
-      $(document).on('mousemove', function (e) {
-        console.log(e.type + ' ' + (mouseMoveCount++));
-      });
-    })
-  </script>
+  <!--<link  href="http://fotorama.s3.amazonaws.com/4.2.3/fotorama.css" rel="stylesheet">
+  <script src="http://fotorama.s3.amazonaws.com/4.2.3/fotorama.js"></script>-->
 </head>
 
 <body>
 
-<!--<p>Basic fotorama:<p>
-<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div <mark>class="fotorama"</mark>></code></pre>-->
+  <div id="mousemove" style="position: absolute; border: 1px solid; top: 50%; left: 50%; width: 400px; height: 400px; margin-top: -200px; margin-left: -200px;">
+    <div id="mousemovecounter">mousemove 0</div>
+    <div id="pointermove" style="position: absolute; background-color: red; top: 50%; left: 50%; width: 200px; height: 200px; margin-top: -100px; margin-left: -100px;">
+      <div id="pointerdowncounter">MSPointerDown 0</div>
+      <div id="pointermovecounter">MSPointerMove 0</div>
+    </div>
+  </div>
 
-<!-- Fotorama -->
-<div class="fotorama"
-     data-width="700"
-     data-ratio="3/2"
-     data-max-width="100%">
-	<a href="i/okonechnikov/1-lo.jpg"></a>
-	<a href="i/okonechnikov/2-lo.jpg"></a>
-	<a href="i/okonechnikov/9-lo.jpg"></a>
-	<a href="i/okonechnikov/6-lo.jpg"></a>
-	<a href="i/okonechnikov/5-lo.jpg"></a>
-</div>
+  <script type="text/javascript">
+    var $mouseMove = $('#mousemove'),
+        mousemovecounter = 0,
+        $mousemovecounter = $('#mousemovecounter'),
+        $pointerMove = $('#pointermove'),
+        pointerMove = $pointerMove[0],
+        $pointerdowncounter = $('#pointerdowncounter'),
+        pointerdowncounter = 0,
+        $pointermovecounter = $('#pointermovecounter'),
+        pointermovecounter = 0;
 
-<!-- © -->
-<p>Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
+    if (navigator.msPointerEnabled) {
+      pointerMove.addEventListener('MSPointerDown', function (e) {
+        e.preventDefault();
+        pointerdowncounter++;
+        $pointerdowncounter.text(e.type + ' ' + pointerdowncounter);
+      }, false);
+      pointerMove.addEventListener('MSPointerMove', function (e) {
+        e.preventDefault();
+        pointermovecounter++;
+        $pointermovecounter.text(e.type + ' ' + pointermovecounter);
+      }, false);
+    }
+
+    $mouseMove.on('MSPointerMove', function (e) {
+      mousemovecounter++;
+      $mousemovecounter.text(e.type + ' ' + mousemovecounter);
+    });
+  </script>
+
 </body>
 </html>
