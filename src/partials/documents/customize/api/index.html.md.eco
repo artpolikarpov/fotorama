@@ -67,7 +67,7 @@ fotorama.show(0);
 fotorama.show(3);
 ```
 
-...or keyword:
+...or keystring:
 
 ```javascript
 // Next:
