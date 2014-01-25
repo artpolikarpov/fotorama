@@ -50,7 +50,7 @@ js: "/j/script.js"
 
   <% if frontpage : %>
   <p class="lead">
-    A simple, stunning, powerful jQuery gallery. Licensed under the <abbr>MIT</abbr>.
+    A simple, stunning, powerful jQuery gallery.
   </p>
   <% end %>
 </div>
