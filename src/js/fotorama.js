@@ -621,12 +621,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function thumbsDraw (pos, loadFLAG) {
-
-
     if (o_nav !== 'thumbs' || isNaN(pos)) return;
 
     var leftLimit = -pos,
-        rightLimit = -pos + measures.w;
+        rightLimit = -pos + measures.W;
 
     $navThumbFrame.each(function () {
       var $this = $(this),
