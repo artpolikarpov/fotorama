@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Basic fotorama</title>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.10.2.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../out/fotorama.css" rel="stylesheet">
+	<script src="../out/fotorama.js"></script>
+
+  <!--<link  href="http://fotorama.s3.amazonaws.com/4.2.3/fotorama.css" rel="stylesheet">
+  <script src="http://fotorama.s3.amazonaws.com/4.2.3/fotorama.js"></script>-->
+</head>
+
+<body>
+
+  <div id="mousemove" style="position: absolute; border: 1px solid; top: 50%; left: 50%; width: 400px; height: 400px; margin-top: -200px; margin-left: -200px;">
+    <div id="mousemovecounter">mousemove 0</div>
+    <div id="pointermove" style="position: absolute; background-color: red; top: 50%; left: 50%; width: 200px; height: 200px; margin-top: -100px; margin-left: -100px;">
+      <div id="pointerdowncounter">MSPointerDown 0</div>
+      <div id="pointermovecounter">MSPointerMove 0</div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var $mouseMove = $('#mousemove'),
+        mousemovecounter = 0,
+        $mousemovecounter = $('#mousemovecounter'),
+        $pointerMove = $('#pointermove'),
+        pointerMove = $pointerMove[0],
+        $pointerdowncounter = $('#pointerdowncounter'),
+        pointerdowncounter = 0,
+        $pointermovecounter = $('#pointermovecounter'),
+        pointermovecounter = 0;
+
+    if (navigator.msPointerEnabled) {
+      pointerMove.addEventListener('MSPointerDown', function (e) {
+        e.preventDefault();
+        pointerdowncounter++;
+        $pointerdowncounter.text(e.type + ' ' + pointerdowncounter);
+      }, false);
+      pointerMove.addEventListener('MSPointerMove', function (e) {
+        e.preventDefault();
+        pointermovecounter++;
+        $pointermovecounter.text(e.type + ' ' + pointermovecounter);
+      }, false);
+    }
+
+    $mouseMove.on('mousemove', function (e) {
+      mousemovecounter++;
+      $mousemovecounter.text(e.type + ' ' + mousemovecounter);
+    });
+  </script>
+
+</body>
+</html>

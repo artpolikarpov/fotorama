@@ -19,6 +19,12 @@
 
     $(function () {
       f = $('.fotorama').data('fotorama');
+
+      var mouseMoveCount = 1;
+
+      $(document).on('mousemove', function (e) {
+        console.log(e.type + ' ' + (mouseMoveCount++));
+      });
     })
   </script>
 </head>
