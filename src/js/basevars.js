@@ -14,7 +14,7 @@ var $WINDOW = $(window),
 
     ADD_EVENT_LISTENER = 'addEventListener',
 
-    MS_POINTER = window.navigator.msPointerEnabled,
+    MS_POINTER = navigator.msPointerEnabled,
 
     WHEEL = "onwheel" in document.createElement("div") ? "wheel" : document.onmousewheel !== undefined ? "mousewheel" : "DOMMouseScroll",
 
