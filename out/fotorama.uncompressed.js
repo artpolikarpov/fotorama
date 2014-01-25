@@ -848,7 +848,7 @@ var $WINDOW = $(window),
 
     ADD_EVENT_LISTENER = 'addEventListener',
 
-    MS_POINTER = window.navigator.msPointerEnabled,
+    MS_POINTER = navigator.msPointerEnabled,
 
     WHEEL = "onwheel" in document.createElement("div") ? "wheel" : document.onmousewheel !== undefined ? "mousewheel" : "DOMMouseScroll",
 
@@ -2414,12 +2414,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function thumbsDraw (pos, loadFLAG) {
-
-
     if (o_nav !== 'thumbs' || isNaN(pos)) return;
 
     var leftLimit = -pos,
-        rightLimit = -pos + measures.w;
+        rightLimit = -pos + measures.W;
 
     $navThumbFrame.each(function () {
       var $this = $(this),
