@@ -362,7 +362,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function setNavShaftMinmax () {
-    navShaftTouchTail.min = Math.min(0, measures.W - $navShaft.width());
+    navShaftTouchTail.min = Math.min(0, measures.nw - $navShaft.width());
     navShaftTouchTail.max = 0;
     $navShaft.toggleClass(grabClass, !(navShaftTouchTail.noMove = navShaftTouchTail.min === navShaftTouchTail.max));
   }
@@ -747,7 +747,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if ($guessNavFrame) {
       var overflowFLAG = navShaftTouchTail.min !== navShaftTouchTail.max,
           activeNavFrameBounds = overflowFLAG && getNavFrameBounds(that.activeFrame[navFrameKey]),
-          l = overflowFLAG && (options.keep && slideNavShaft.l ? slideNavShaft.l : minMaxLimit((options.coo || measures.w / 2) - getNavFrameBounds($guessNavFrame).c, activeNavFrameBounds.min, activeNavFrameBounds.max)),
+          l = overflowFLAG && (options.keep && slideNavShaft.l ? slideNavShaft.l : minMaxLimit((options.coo || measures.nw / 2) - getNavFrameBounds($guessNavFrame).c, activeNavFrameBounds.min, activeNavFrameBounds.max)),
           pos = overflowFLAG && minMaxLimit(l, navShaftTouchTail.min, navShaftTouchTail.max),
           time = options.time * .9;
 
