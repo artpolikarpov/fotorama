@@ -16,7 +16,7 @@
     "grunt-shell": "~0.2.2",
     "grunt-contrib-jasmine": "~0.4.2",
     "grunt-contrib-sass": "~0.4.1",
-    "grunt-autoprefixer": "~0.3.0",
+    "grunt-autoprefixer": "~0.6.5",
     "grunt-tweet": "~0.0.4",
     "grunt-gh-release": "~0.0.1",
     "grunt-replace": "~0.5.1"
