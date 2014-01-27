@@ -624,7 +624,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (o_nav !== 'thumbs' || isNaN(pos)) return;
 
     var leftLimit = -pos,
-        rightLimit = -pos + measures.W;
+        rightLimit = -pos + measures.nw;
 
     $navThumbFrame.each(function () {
       var $this = $(this),
@@ -1145,7 +1145,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       if (opts.glimpse) {
         // Glimpse
-        measures.w -= Math.round((numberFromPercent(opts.glimpse) / 100 * width || numberFromMeasure(opts.glimpse) || 0) * 2);
+        measures.w -= Math.round((numberFromWhatever(opts.glimpse, width) || 0) * 2);
       }
 
       $stageShaft.css({width: measures.w, marginLeft: (measures.W - measures.w) / 2});
@@ -1153,13 +1153,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
       //console.log('measures.W', measures.W);
       //console.log('measures.w', measures.w);
 
-      height = numberFromPercent(height) / 100 * windowHeight || numberFromMeasure(height);
+      height = numberFromWhatever(height, windowHeight);
 
       height = height || (ratio && width / ratio);
 
       if (height) {
         width = Math.round(width);
-        height = measures.h = Math.round(minMaxLimit(height, numberFromPercent(measures.minheight) / 100 * windowHeight || numberFromMeasure(measures.minheight), numberFromPercent(measures.maxheight) / 100 * windowHeight || numberFromMeasure(measures.maxheight)));
+        height = measures.h = Math.round(minMaxLimit(height, numberFromWhatever(measures.minheight, windowHeight), numberFromWhatever(measures.maxheight, windowHeight)));
 
         stageShaftReposition();
 
@@ -1170,9 +1170,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
             });
 
         if (o_nav) {
+          measures.nw = numberFromWhatever(opts.navwidth, width) || width;
           $nav
               .stop()
-              .animate({width: width}, time);
+              .animate({width: measures.nw}, time);
 
           slideNavShaft({guessIndex: activeIndex, time: time, keep: true});
           if (o_navThumbs && frameAppend.nav) slideThumbBorder(time);

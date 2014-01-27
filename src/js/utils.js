@@ -38,6 +38,10 @@ function numberFromPercent (value) {
   return /%$/.test(value) && numberFromMeasure(value, '%');
 }
 
+function numberFromWhatever (value, whole) {
+  return numberFromPercent(value) / 100 * whole || numberFromMeasure(value);
+}
+
 function measureIsValid (value) {
   return (!!numberFromMeasure(value) || !!numberFromMeasure(value, '%')) && value;
 }

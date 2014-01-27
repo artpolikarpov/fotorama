@@ -34,6 +34,7 @@ $.fn.fotorama = function (opts) {
                   // navigation, thumbs
                   nav: 'dots', // 'thumbs' || false
                   navposition: 'bottom', // 'top'
+                  navwidth: null,
                   thumbwidth: THUMB_SIZE,
                   thumbheight: THUMB_SIZE,
                   thumbmargin: MARGIN,
