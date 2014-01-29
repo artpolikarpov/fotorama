@@ -7,7 +7,7 @@
   </li><% end %><% for item in items: %><li class="li <% if item.state: %>selected<% end %> <% if !(item.order % 100): %>divider<% end %>">
   <% if item.state != 'current': %>
   <a href="<%= item.url %>" class="no-u"><u><%- item.title %></u></a><% else: %>
-  <span><%- item.title %></span><% end %><% if item.children: %><i class="icon-caret-down <% if item.state != 'current': %>js-menu-down<% else: %>icon-disabled<% end %>"></i>
+  <span><%- item.title %></span><% end %><% if item.children && item.children.length: %><i class="icon-caret-down <% if item.state != 'current': %>js-menu-down<% else: %>icon-disabled<% end %>"></i>
   <%- renderMenu(item.children) %>
   <% end %>
   </li><% end %>

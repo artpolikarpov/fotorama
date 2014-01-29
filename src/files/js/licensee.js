@@ -22,7 +22,7 @@ $(function () {
 				host = licensee.replace(_protocol, '').replace(/\/.*/, ''),
         href = (protocol && protocol[0] || 'http://') + host;
 
-		$('.js-licensee')
+		$('#licensee')
 				.attr({href: href})
 				.text(host);
 	}

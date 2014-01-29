@@ -1,0 +1,38 @@
+ul.tags {
+  margin: 0;
+  padding: 0;
+}
+
+ul.tags li {
+  display: inline;
+  white-space: nowrap;
+  margin-right: .75em;
+}
+
+ul.tags li a {
+  text-transform: capitalize;
+  margin: 1px 3px 2px;
+}
+
+ul.tags li a:target {
+  border-bottom: none;
+  color: #fff !important;
+  background-color: #666;
+  cursor: default;
+  margin: 0;
+  padding: 1px 3px 2px;
+  border-radius: 3px;
+}
+
+ul.tags li:last-child a {
+  color: rgb(33, 33, 30);
+  border-color: rgba(33, 33, 30, .2);
+}
+
+ul.tags li:last-child a:before {
+  content: '← All'
+}
+
+ul.tags-all li:last-child {
+  display: none;
+}

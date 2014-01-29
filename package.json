@@ -23,6 +23,7 @@
   "devDependencies": {
     "grunt-s3": "~0.2.0-alpha.2",
     "grunt-autoprefixer": "~0.3.0",
-    "grunt-contrib-cssmin": "~0.7.0"
+    "grunt-contrib-cssmin": "~0.7.0",
+    "docpad-plugin-cleanurls": "~2.6.2"
   }
 }

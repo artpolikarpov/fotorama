@@ -57,13 +57,18 @@ js: "/j/script.js"
 
 <div class="body-wrap">
 
-<div class="content">
-	<% if !frontpage : %>
-		<h1><%- @document.title %></h1>
-	<% end %>
-</div>
+<% if !frontpage : %>
+  <div class="content">
 
-<%- @content %>
+		<h1><%- @document.title %></h1>
+    <%- @content %>
+
+
+
+  </div>
+<% else: %>
+  <%- @content %>
+<% end %>
 </div>
 
 <% if process.env.NODE_ENV: %>

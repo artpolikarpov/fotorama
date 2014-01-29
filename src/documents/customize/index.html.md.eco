@@ -4,12 +4,13 @@ layout: "page"
 menuOrder: 2
 ---
 
-<div class="content">
-  <p>Fotorama’s default settings are good, so there’s no need to mess with them. Still, you can fine-tune:</p>
-  <%- @partial('menu.html.eco', {menuItems: @generateMenu(@document.url)}) %>
+<p>Fotorama’s default settings are good, so there’s no need to mess with them. Still, you can fine-tune:</p>
 
-  <h2>Dive deeper</h2>
-  <p>Download the uncompressed, [development Fotorama <%= process.env.FOTORAMA_VERSION %>](http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama-<%= process.env.FOTORAMA_VERSION %>.uncompressed.zip).</p>
+<%- @partial('menu.html.eco', {menuItems: @generateMenu(@document.url)}) %>
 
-  <p>Have a look [at the source code](https://github.com/artpolikarpov/fotorama).</p>
-</div>
+<h2>Dive deeper</h2>
+<ul>
+  <li>Download the uncompressed, [development Fotorama <%= process.env.FOTORAMA_VERSION %>](http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama-<%= process.env.FOTORAMA_VERSION %>.uncompressed.zip).</li>
+  <li>Have a look [at the source code](https://github.com/artpolikarpov/fotorama).</li>
+  <li>Read <a href="https://github.com/artpolikarpov/fotorama/releases">the changelog</a>.</li>
+</ul>

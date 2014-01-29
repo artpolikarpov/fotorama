@@ -1,0 +1,15 @@
+---
+title: "Look at"
+layout: "default"
+menuOrder: 4
+menuHidden: true
+---
+
+<ul class="tags js-tags no-visited" data-selector=".b-post"></ul>
+
+<% for document in @getCollection('look').toJSON(): %>
+  <div class="b-post" data-tags="<%= document.tags %>">
+    <h2><a name="" class="" href="<%= document.url %>"><%= document.title %></a></h2>
+    <%- document.contentRenderedWithoutLayouts %>
+  </div>
+<% end %>

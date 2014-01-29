@@ -5,7 +5,7 @@ noDisqus: true
 ---
 
 <div class="fotorama-wrap-frontpage noise">
-  <div class="fotorama-frontpage" data-auto="false" data-width="100%" data-ratio="16/9" data-hash="true" data-maxheight="100%" data-minheight="200" data-nav="thumbs" data-keyboard="true" data-allowfullscreen="native" data-shadows="false" data-thumbheight="48">
+  <div id="fotorama" data-auto="false" data-width="100%" data-ratio="16/9" data-hash="true" data-maxheight="100%" data-minheight="200" data-nav="thumbs" data-keyboard="true" data-allowfullscreen="native" data-shadows="false" data-thumbheight="48">
     <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/1-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/1-thumb.jpg" data-thumbwidth="144" data-thumbheight="96"></a>
     <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/2-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/2-thumb.jpg" data-thumbwidth="144" data-thumbheight="96"></a>
     <a href="http://fotorama.s3.amazonaws.com/i/okonechnikov/3-lo.jpg" data-thumb="http://fotorama.s3.amazonaws.com/i/okonechnikov/3-thumb.jpg" data-thumbwidth="144" data-thumbheight="96"></a>
@@ -41,13 +41,15 @@ noDisqus: true
 
 <p class="photos-by" style="display: none;">Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
 
-<div class="content">
+<div class="content no-visited">
   <% renderMenu = (items) => %>
     <% for item in items: %>
       <% if item.order: %>
         <% if item.url.match(/set-up/): %>
           <h2><%= item.title %></h2>
-        <%- @partial('documents' + item.url + 'index.html.md') %>
+          <% for document in @getCollection('html').findAllLive({title: 'Set up'}).toJSON(): %>
+            <%- document.contentRenderedWithoutLayouts %>
+          <% end %>
         <% else: %>
           <h2 class="front-menu"><a href="<%= item.url %>"><%= item.title %></a></h2>
         <% end %>

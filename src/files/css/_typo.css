@@ -4,14 +4,14 @@ body {
 	/*text-shadow: 0 1px 0 rgba(255,255,255,.5);*/
 }
 
-a, .header a:visited, h2 a:visited,
-a u, .header a:visited u, h2 a:visited u,
+a, .header a:visited, .no-visited a:visited,
+a u, .header a:visited u, .no-visited a:visited u,
 .disqus a:visited, .disqus a:visited u,
 .social a:visited, .social a:visited u {
   text-decoration: none;
-  border-bottom: 1px solid;
+  border-bottom: .1em solid;
   color: rgb(3, 112, 154);
-  border-color: rgba(3, 112, 154, .3);
+  border-color: rgba(3, 112, 154, .2);
 }
 
 a.no-u {
@@ -23,24 +23,24 @@ a:visited u,
 .header .menu .menu a:visited,
 .header .menu .menu a:visited u {
 	color: rgb(85, 85, 85);
-	border-color: rgba(85, 85, 85, .3);
+	border-color: rgba(85, 85, 85, .2);
 }
 
 a.black, a.black u, a.black:visited, a.black:visited u {
   color: rgb(33, 33, 30);
-  border-color: rgba(33, 33, 30, .3);
+  border-color: rgba(33, 33, 30, .2);
 }
 
 a.green, a.green u, a.green:visited, a.green:visited u {
   color: rgb(102,162,57);
-  border-color: rgba(102,162,57, .3);
+  border-color: rgba(102,162,57, .2);
 }
 
 #root a:hover,
 #root a:hover u,
 .switch:hover {
   color: rgb(170, 0, 0);
-  border-color: rgba(170, 0, 0, .3);
+  border-color: rgba(170, 0, 0, .2);
 }
 
 a, a u, .menu .li i {
@@ -73,6 +73,10 @@ h1, h2, h3, h4 {
 
 h1 {
   margin-top: .5em;
+}
+
+h2 {
+  margin-top: 1.5em;
 }
 
 small {
@@ -117,6 +121,7 @@ h2.front-menu {
 }
 
 h1 + h2,
+h1 + * > h2,
 h2 + h3,
 p,
 form,
@@ -144,9 +149,12 @@ ol {
 
 .indent, p + ul, p + ol, p + pre, .after-pre, .after-indent, form + .fotorama-wrap, p + .fotorama-wrap, p + .image {
 	margin-top: -.5em !important;
-	margin-left: 40px;
 	margin-bottom: 1.5em !important;
 	padding-left: 0 !important;
+}
+
+p + ul, p + ol {
+  margin-left: 40px;
 }
 
 .indent + .after-indent, pre + .after-pre {

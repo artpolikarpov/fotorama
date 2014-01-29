@@ -7,7 +7,13 @@ docpadConfig = {
     site:
       author: 'Artem Polikarpov'
       name: 'Fotorama'
+  collections:
+    look: (database) ->
+      database.findAllLive({relativeOutDirPath: 'look-at', layout: 'post'}, [date:-1])
   plugins:
+    cleanurls:
+      collectionName: 'look'
+      trailingSlashes: true
     marked:
       markedOptions:
         sanitize: false
