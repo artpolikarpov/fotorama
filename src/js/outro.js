@@ -1,1 +1,1 @@
-})(window, document, location, window.jQuery);
+})(window, document, location, typeof jQuery !== 'undefined' && jQuery);
