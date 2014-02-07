@@ -855,6 +855,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function onTouchEnd () {
     //console.time('onTouchEnd');
+    if (!opts.stopautoplayontouch) {
+      releaseAutoplay();
+      changeAutoplay();
+    }
+
     onTouchEnd.t = setTimeout(function () {
       touchedFLAG = 0;
     }, TRANSITION_DURATION + TOUCH_TIMEOUT);
@@ -969,6 +974,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
     //}, 0);
 
     //console.time('bind onEnd');
+
+    pausedAutoplayFLAG = true;
+
     var onEnd = that.show.onEnd = function (skipReposition) {
       if (onEnd.ok) return;
       onEnd.ok = true;
@@ -1364,6 +1372,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     },
     onTouchEnd: onTouchEnd,
     onEnd: function (result) {
+
       function onEnd () {
         slideNavShaft.l = result.newPos;
         releaseAutoplay();
@@ -1375,6 +1384,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         var target = result.$target.closest('.' + navFrameClass, $navShaft)[0];
         target && onNavFrameClick.call(target, result.startEvent);
       } else if (result.pos !== result.newPos) {
+        pausedAutoplayFLAG = true;
         slide($navShaft, {
           time: result.time,
           pos: result.newPos,
