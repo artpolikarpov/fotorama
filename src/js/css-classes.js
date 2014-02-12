@@ -63,6 +63,8 @@ var _fotoramaClass = 'fotorama',
 
     imgClass = _fotoramaClass + '__img',
     imgFullClass = imgClass + '--full',
+    imgBlockClass = _fotoramaClass + '__img-block',
+    imgBlockFullClass = imgBlockClass + '--full',
 
     dotClass = _fotoramaClass + '__dot',
     thumbClass = _fotoramaClass + '__thumb',

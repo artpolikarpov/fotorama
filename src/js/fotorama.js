@@ -407,15 +407,21 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       if (frameData.$img && !again && !fullFLAG) return;
 
-      var img = new Image(),
-          $img = $(img),
-          imgData = $img.data();
-
-      frameData[fullFLAG ? '$full' : '$img'] = $img;
-
       var srcKey = type === 'stage' ? (fullFLAG ? 'full' : 'img') : 'thumb',
-          src = dataFrame[srcKey],
+          srcVal = dataFrame[srcKey],
+          multiFLAG = $.isArray(srcVal),
           dummy = fullFLAG ? null : dataFrame[type === 'stage' ? 'thumb' : 'img'];
+
+      var images = $.map([].concat(srcVal), function(src) {
+          var img = new Image(), $img = $(img), imgData = $img.data();
+          return { src: src, img: img, $img: $img, imgData: imgData };
+      });
+
+      var loadedImages = 0, errorImages = 0;
+
+      var $frameChild = frameData[fullFLAG ? '$full' : '$img'] =
+          multiFLAG ? $(div('')) : images[0].$img;
+      var frameChildData = $frameChild.data();
 
       if (type === 'navThumb') $frame = frameData.$wrap;
 
@@ -423,21 +429,27 @@ jQuery.Fotorama = function ($fotorama, opts) {
         var _index = normalizeIndex(index);
         triggerEvent(event, {
           index: _index,
-          src: src,
+          src: srcVal,
           frame: data[_index]
         });
       }
 
-      function error () {
-        $img.remove();
+      function error (image) {
+        ++errorImages;
+        if (errorImages > 1)
+          return;
 
-        $.Fotorama.cache[src] = 'error';
+        $.each(images, function(i, _image) {
+          _image.$img.remove();
+        });
 
-        if ((!dataFrame.html || type !== 'stage') && dummy && dummy !== src) {
-          dataFrame[srcKey] = src = dummy;
+        $.Fotorama.cache[image.src] = 'error';
+
+        if ((!dataFrame.html || type !== 'stage') && dummy && dummy !== srcVal) {
+          dataFrame[srcKey] = srcVal = dummy;
           loadImg([index], type, specialMeasures, specialFit, true);
         } else {
-          if (src && !dataFrame.html && !fullFLAG) {
+          if (srcVal && !dataFrame.html && !fullFLAG) {
             $frame
                 .trigger('f:error')
                 .removeClass(loadingClass)
@@ -463,9 +475,54 @@ jQuery.Fotorama = function ($fotorama, opts) {
         }
       }
 
-      function loaded () {
-        //console.log('loaded: ' + src);
+      function loadedAll() {
+        console.log("loaded all");
 
+        if (multiFLAG) {
+          var blockWidth = 0, blockHeight = 0;
+          $.each(images, function(i, image) {
+            blockWidth += image.img.width;
+            blockHeight = Math.max(blockHeight, image.img.height);
+            image.$img.appendTo($frameChild);
+          });
+
+          $.Fotorama.measures[srcVal] = frameChildData.measures = $.Fotorama.measures[srcVal] || {
+            width: blockWidth,
+            height: blockHeight,
+            ratio: blockWidth / blockHeight
+          };
+
+          $frameChild
+              .addClass(imgBlockClass + (fullFLAG ? ' ' + imgBlockFullClass : ''))
+              .prependTo($frame);
+        } else {
+          images[0].$img.prependTo($frame);
+        }
+
+        setMeasures(frameChildData.measures.width, frameChildData.measures.height, frameChildData.measures.ratio, index);
+        fit($frameChild, specialMeasures || measures, specialFit || dataFrame.fit || opts.fit);
+
+        frameData.state = 'loaded';
+
+        setTimeout(function () {
+            $frame
+                .trigger('f:load')
+                .removeClass(loadingClass + ' ' + errorClass)
+                .addClass(loadedClass + ' ' + (fullFLAG ? loadedFullClass : loadedImgClass));
+
+            if (type === 'stage') {
+                triggerTriggerEvent('load');
+            }
+        }, 5);
+      }
+
+      function loaded (image) {
+        var src = image.src,
+            img = image.img,
+            $img = image.$img,
+            imgData = image.imgData;
+
+        console.log('loaded: ' + src);
         console.log('$.Fotorama.measures[src]', $.Fotorama.measures[src]);
 
         $.Fotorama.measures[src] = imgData.measures = $.Fotorama.measures[src] || {
@@ -474,64 +531,58 @@ jQuery.Fotorama = function ($fotorama, opts) {
           ratio: img.width / img.height
         };
 
-        setMeasures(imgData.measures.width, imgData.measures.height, imgData.measures.ratio, index);
-
         $img
             .off('load error')
-            .addClass(imgClass + (fullFLAG ? ' ' + imgFullClass : ''))
-            .prependTo($frame);
+            .addClass(imgClass + (fullFLAG ? ' ' + imgFullClass : ''));
 
-        fit($img, specialMeasures || measures, specialFit || dataFrame.fit || opts.fit);
+        $.Fotorama.cache[src] = 'loaded';
 
-        $.Fotorama.cache[src] = frameData.state = 'loaded';
-
-        setTimeout(function () {
-          $frame
-              .trigger('f:load')
-              .removeClass(loadingClass + ' ' + errorClass)
-              .addClass(loadedClass + ' ' + (fullFLAG ? loadedFullClass : loadedImgClass));
-
-          if (type === 'stage') {
-            triggerTriggerEvent('load');
-          }
-        }, 5);
+        ++loadedImages;
+        if (loadedImages == images.length)
+          loadedAll();
       }
 
-      if (!src) {
-        error();
-        return;
-      }
+      $.each(images, function(i, image) {
+        var src = image.src,
+            img = image.img,
+            $img = image.$img;
 
-      function waitAndLoad () {
-        var _i = 10;
-        waitFor(function () {
-          return !touchedFLAG || !_i-- && !SLOW;
-        }, function () {
-          loaded();
-        });
-      }
+        if (!src) {
+          error(image);
+          return;
+        }
 
-      if (!$.Fotorama.cache[src]) {
-        $.Fotorama.cache[src] = '*';
+        function waitAndLoad () {
+          var _i = 10;
+          waitFor(function () {
+            return !touchedFLAG || !_i-- && !SLOW;
+          }, function () {
+            loaded(image);
+          });
+        }
 
-        $img
-            .on('load', waitAndLoad)
-            .on('error', error);
-      } else {
-        (function justWait () {
-          if ($.Fotorama.cache[src] === 'error') {
-            error();
-          } else if ($.Fotorama.cache[src] === 'loaded') {
-            console.log('take from cache: ' + src);
-            setTimeout(waitAndLoad, 0);
-          } else {
-            setTimeout(justWait, 100);
-          }
-        })();
-      }
+        if (!$.Fotorama.cache[src]) {
+          $.Fotorama.cache[src] = '*';
 
-      frameData.state = '';
-      img.src = src;
+          $img
+              .on('load', waitAndLoad)
+              .on('error', function() { error(image); });
+        } else {
+          (function justWait () {
+            if ($.Fotorama.cache[src] === 'error') {
+              error(image);
+            } else if ($.Fotorama.cache[src] === 'loaded') {
+              console.log('take from cache: ' + src);
+              setTimeout(waitAndLoad, 0);
+            } else {
+              setTimeout(justWait, 100);
+            }
+          })();
+        }
+
+        frameData.state = '';
+        img.src = src;
+      });
     });
   }
 
