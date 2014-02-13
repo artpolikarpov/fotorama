@@ -361,7 +361,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     stageShaftTouchTail.snap = measures.w + opts.margin;
   }
 
-  function setNavShaftMinmax () {
+  function setNavShaftMinMax () {
+    console.log('setNavShaftMinMax', measures.nw);
     navShaftTouchTail.min = Math.min(0, measures.nw - $navShaft.width());
     navShaftTouchTail.max = 0;
     $navShaft.toggleClass(grabClass, !(navShaftTouchTail.noMove = navShaftTouchTail.min === navShaftTouchTail.max));
@@ -794,6 +795,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function slideNavShaft (options) {
+    console.log('slideNavShaft');
     var $guessNavFrame = data[options.guessIndex][navFrameKey];
     if ($guessNavFrame) {
       var overflowFLAG = navShaftTouchTail.min !== navShaftTouchTail.max,
@@ -864,7 +866,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       detachFrames(STAGE_FRAME_KEY);
       stageFramePosition(activeIndexes);
       setStageShaftMinmaxAndSnap();
-      setNavShaftMinmax();
+      setNavShaftMinMax();
     }
   }
 
@@ -1201,6 +1203,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           .css({width: width, minWidth: measures.minwidth, maxWidth: measures.maxwidth});
 
       width = measures.W = measures.w = $wrap.width();
+      measures.nw = o_nav && numberFromWhatever(opts.navwidth, width) || width;
 
       if (opts.glimpse) {
         // Glimpse
@@ -1220,16 +1223,15 @@ jQuery.Fotorama = function ($fotorama, opts) {
         width = Math.round(width);
         height = measures.h = Math.round(minMaxLimit(height, numberFromWhatever(measures.minheight, windowHeight), numberFromWhatever(measures.maxheight, windowHeight)));
 
-        stageShaftReposition();
-
         $stage
             .stop()
             .animate({width: width, height: height}, time, function () {
               $wrap.removeClass(wrapOnlyActiveClass);
             });
 
+        stageShaftReposition();
+
         if (o_nav) {
-          measures.nw = numberFromWhatever(opts.navwidth, width) || width;
           $nav
               .stop()
               .animate({width: measures.nw}, time);
@@ -1237,7 +1239,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
           slideNavShaft({guessIndex: activeIndex, time: time, keep: true});
           if (o_navThumbs && frameAppend.nav) slideThumbBorder(time);
         }
+
         measuresSetFLAG = setFLAG || true;
+
         ready();
       }
     }
