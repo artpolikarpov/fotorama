@@ -259,7 +259,7 @@ function getDataFromHtml ($el) {
 
   $el.children().each(function () {
     var $this = $(this),
-        dataFrame = optionsToLowerCase($.extend($this.data(), {id: $this.attr('id')}));
+        dataFrame = optionsToArrays(optionsToLowerCase($.extend($this.data(), {id: $this.attr('id')})));
     if ($this.is('a, img')) {
       getDataFromImg($this, dataFrame, true);
     } else if (!$this.is(':empty')) {
@@ -465,6 +465,22 @@ function optionsToLowerCase (options) {
     });
 
     return opts;
+  }
+}
+
+function optionsToArrays (options) {
+  if (options) {
+      var opts = {};
+      $.each(options, function (key, value) {
+          var v = $.trim(value);
+          if (v.charAt(0) == '[' && v.charAt(v.length - 1) == ']') {
+            opts[key] = $.parseJSON(v);
+          } else {
+            opts[key] = value;
+          }
+      });
+
+      return opts;
   }
 }
 
