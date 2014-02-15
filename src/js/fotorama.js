@@ -479,10 +479,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
         console.log("loaded all");
 
         if (multiFLAG) {
-          var blockWidth = 0, blockHeight = 0;
+          var blockWidth = 0;
+          var blockHeight = Math.min.apply(null, $.map(images, function(image) { return image.img.height; }));
+
           $.each(images, function(i, image) {
-            blockWidth += image.img.width;
-            blockHeight = Math.max(blockHeight, image.img.height);
+            blockWidth += Math.ceil(image.img.width * blockHeight / image.img.height);
             image.$img.appendTo($frameChild);
           });
 

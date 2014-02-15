@@ -351,9 +351,10 @@ function fit ($el, measuresToFit, method) {
       var scale = width / measures.width;
       $el.children().each(function(i, img) {
         var $img = $(img), imgData = $img.data(), imgMeasures = imgData.measures;
+        var imgScale = measures.height / imgMeasures.height;
         $img.css({
-          width: Math.floor(imgMeasures.width * scale),
-          height: Math.floor(imgMeasures.height * scale)
+          width: Math.floor(Math.ceil(imgMeasures.width * imgScale) * scale),
+          height: Math.floor(Math.ceil(imgMeasures.height * imgScale) * scale)
         });
       });
     }
