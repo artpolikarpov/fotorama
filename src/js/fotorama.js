@@ -409,7 +409,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       var srcKey = type === 'stage' ? (fullFLAG ? 'full' : 'img') : 'thumb',
           srcVal = dataFrame[srcKey],
-          multiFLAG = $.isArray(srcVal),
+          multiFLAG = $.isArray(srcVal) && srcVal.length > 1,
           dummy = fullFLAG ? null : dataFrame[type === 'stage' ? 'thumb' : 'img'];
 
       var images = $.map([].concat(srcVal), function(src) {
