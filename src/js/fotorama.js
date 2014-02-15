@@ -630,7 +630,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
         }
 
         if (opts.captions && dataFrame.caption) {
-          $(div(captionClass, div(captionWrapClass, dataFrame.caption))).appendTo($frame);
+          $(div(captionClass,
+            $.map([].concat(dataFrame.caption), function(caption) {
+                  return div(captionWrapClass, caption); })
+              .join('')
+          )).appendTo($frame);
         }
 
         dataFrame.video && $frame
