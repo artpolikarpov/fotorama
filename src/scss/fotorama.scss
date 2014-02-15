@@ -159,11 +159,14 @@ $arrSize: 32px;
 }
 
 .fotorama__stage__frame>.fotorama__img,
-.fotorama__stage__frame>.fotorama__img-block {
+.fotorama__stage__frame>.fotorama__img-block,
+.fotorama__thumb>.fotorama__img,
+.fotorama__thumb>.fotorama__img-block {
   @extend %stretch-for-fit;
 }
 
-.fotorama__stage__frame>.fotorama__img-block {
+.fotorama__stage__frame>.fotorama__img-block,
+.fotorama__thumb>.fotorama__img-block {
   .fotorama__img {
     height: 100%;
   }
@@ -180,7 +183,7 @@ $arrSize: 32px;
   }
   .fotorama__img--full,
   .fotorama__img-block--full {
-    display: block;
+    display: inline;
   }
 }
 
