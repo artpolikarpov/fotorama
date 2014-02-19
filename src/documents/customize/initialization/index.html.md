@@ -45,6 +45,7 @@ The complete frame object may look like so:
   img: '1.jpg',
   thumb: '1-thumb.jpg',
   full: '1-full.jpg', // Separate image for the fullscreen mode.
+  video: 'http://youtu.be/C3lWwBslWqg', // Youtube, Vimeo or custom iframe URL
   id: 'one', // Custom anchor is used with the hash:true option.
   caption: 'The first caption',
   html: $('selector'), // ...or '<div>123</div>'. Custom HTML inside the frame.
