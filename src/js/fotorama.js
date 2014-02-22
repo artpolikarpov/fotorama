@@ -409,7 +409,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       var srcKey = type === 'stage' ? (fullFLAG ? 'full' : 'img') : 'thumb',
           srcVal = dataFrame[srcKey],
-          multiFLAG = $.isArray(srcVal) && srcVal.length > 1,
+          multiFLAG = $.isArray(srcVal) && srcVal.length != 1,
           dummy = fullFLAG ? null : dataFrame[type === 'stage' ? 'thumb' : 'img'];
 
       var images = $.map([].concat(srcVal), function(src) {
@@ -541,6 +541,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
         ++loadedImages;
         if (loadedImages == images.length)
           loadedAll();
+      }
+
+      if (images.length == 0) {
+        error({src: ''});
       }
 
       $.each(images, function(i, image) {
