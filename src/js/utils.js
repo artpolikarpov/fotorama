@@ -129,7 +129,7 @@ function edgeResistance (pos, edge) {
 }
 
 function getProtocol () {
-  getProtocol.p = getProtocol.p || (location.protocol === 'https://' ? 'https://' : 'http://');
+  getProtocol.p = getProtocol.p || (location.protocol === 'https:' ? 'https://' : 'http://');
   return getProtocol.p;
 }
 
