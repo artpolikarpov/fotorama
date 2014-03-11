@@ -8,13 +8,20 @@
 }
 
 .footer > p {
-	opacity: .6;
   font-size: 59%;
+}
+
+.footer > p.sponsored {
+	margin-bottom: 1.5em;
+}
+
+.footer > p.copyright {
+	opacity: .6;
 }
 
 .footer .social {
   padding: 0;
-	margin: 0 0 .5em;
+	margin: 0;
 }
 
 .footer .social li {
