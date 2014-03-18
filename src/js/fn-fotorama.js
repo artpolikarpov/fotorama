@@ -45,6 +45,7 @@ $.fn.fotorama = function (opts) {
                   fit: 'contain', // 'cover' || 'scaledown' || 'none'
 
                   transition: 'slide', // 'crossfade' || 'dissolve'
+                  clicktransition: null,
                   transitionduration: TRANSITION_DURATION,
 
                   captions: true,

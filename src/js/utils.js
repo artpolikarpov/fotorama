@@ -345,18 +345,7 @@ function fit ($el, measuresToFit, method) {
       w: measuresToFit.w,
       h: measuresToFit.h,
       m: method
-    }
-
-    if ($el.hasClass(imgBlockClass)) {
-      var scale = width / measures.width;
-      $el.children().each(function(i, img) {
-        var $img = $(img), imgData = $img.data(), imgMeasures = imgData.measures;
-        $img.css({
-          width: Math.floor(imgMeasures.width * scale),
-          height: Math.floor(imgMeasures.height * scale)
-        });
-      });
-    }
+    };
   }
 
   return true;

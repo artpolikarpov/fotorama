@@ -66,6 +66,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       o_thumbSide,
       o_thumbSide2,
       o_transitionDuration,
+      o_transition,
       o_shadows,
       o_rtl,
       lastOptions = {},
@@ -216,7 +217,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     stageShaftTouchTail.noMove = _noMove || o_fade;
     stageShaftTouchTail.noSwipe = _noMove || !opts.swipe;
 
-    $stageShaft.toggleClass(grabClass, !stageShaftTouchTail.noMove && !stageShaftTouchTail.noSwipe);
+    !o_transition && $stageShaft.toggleClass(grabClass, !stageShaftTouchTail.noMove && !stageShaftTouchTail.noSwipe);
     MS_POINTER && $wrap.toggleClass(wrapPanYClass, !stageShaftTouchTail.noSwipe);
   }
 
@@ -362,7 +363,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function setNavShaftMinMax () {
-    console.log('setNavShaftMinMax', measures.nw);
+    //console.log('setNavShaftMinMax', measures.nw);
     navShaftTouchTail.min = Math.min(0, measures.nw - $navShaft.width());
     navShaftTouchTail.max = 0;
     $navShaft.toggleClass(grabClass, !(navShaftTouchTail.noMove = navShaftTouchTail.min === navShaftTouchTail.max));
@@ -477,7 +478,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
 
       function loadedAll() {
-        console.log("loaded all");
+        //console.log('loaded all');
 
         if (multiFLAG) {
           var blockWidth = 0, blockHeight = 0;
@@ -1033,14 +1034,28 @@ jQuery.Fotorama = function ($fotorama, opts) {
     var onEnd = that.show.onEnd = function (skipReposition) {
       if (onEnd.ok) return;
       onEnd.ok = true;
-      updateFotoramaState();
-      loadImg(activeIndexes, 'stage');
 
       skipReposition || stageShaftReposition(true);
 
-      options.reset || triggerEvent('showend', {
-        user: options.user
-      });
+      console.log('options.reset', options.reset);
+
+      if (!options.reset) {
+        triggerEvent('showend', {
+          user: options.user
+        });
+
+        console.log('o_transition', o_transition);
+
+        if (!skipReposition && o_transition && o_transition !== opts.transition) {
+          console.log('set transition back to: ' + o_transition);
+          that.setOptions({transition: o_transition});
+          o_transition = false;
+          return;
+        }
+      }
+
+      updateFotoramaState();
+      loadImg(activeIndexes, 'stage');
 
       updateTouchTails('go', false);
       stageWheelUpdate();
@@ -1357,6 +1372,17 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   $stage.on('mousemove', stageCursor);
 
+  function clickToShow (showOptions) {
+    if (opts.clicktransition && opts.clicktransition !== opts.transition) {
+      console.log('change transition to: ' + opts.clicktransition);
+      // save original transition for later
+      o_transition = opts.transition;
+      that.setOptions({transition: opts.clicktransition});
+    }
+
+    that.show(showOptions);
+  }
+
   function onStageTap (e, toggleControlsFLAG) {
     //console.time('onStageTap');
     var target = e.target,
@@ -1372,7 +1398,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
       if (toggleControlsFLAG) {
         toggleControlsClass();
       } else if (opts.click) {
-        that.show({index: e.shiftKey || getDirectionSign(getDirection(e._x)), slow: e.altKey, user: true});
+
+        clickToShow({index: e.shiftKey || getDirectionSign(getDirection(e._x)), slow: e.altKey, user: true});
       }
     }
     //console.timeEnd('onStageTap');
@@ -1392,7 +1419,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       //console.time('stageShaftTouchTail.onEnd');
       setShadow($stage);
 
-      console.log('result', result);
+      //console.log('result', result);
 
       var toggleControlsFLAG = (MS_POINTER && !hoverFLAG || result.touch) && opts.arrows;
 
@@ -1501,12 +1528,12 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function onNavFrameClick (e, time) {
     var index = $(this).data().eq;
-    that.show({index: index, slow: e.altKey, user: true, coo: e._x - $nav.offset().left, time: time});
+    clickToShow({index: index, slow: e.altKey, user: true, coo: e._x - $nav.offset().left, time: time});
   }
 
   smartClick($arrs, function (e) {
     stopEvent(e);
-    that.show({index: $arrs.index(this) ? '>' : '<', slow: e.altKey, user: true});
+    clickToShow({index: $arrs.index(this) ? '>' : '<', slow: e.altKey, user: true});
   }, {
     onStart: function () {
       onTouchStart();
