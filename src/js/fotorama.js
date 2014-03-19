@@ -410,7 +410,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       var srcKey = type === 'stage' ? (fullFLAG ? 'full' : 'img') : 'thumb',
           srcVal = dataFrame[srcKey],
-          multiFLAG = $.isArray(srcVal),
+          multiFLAG = $.isArray(srcVal) && srcVal.length != 1,
           dummy = fullFLAG ? null : dataFrame[type === 'stage' ? 'thumb' : 'img'];
 
       var images = $.map([].concat(srcVal), function(src) {
@@ -480,10 +480,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
         console.log("loaded all");
 
         if (multiFLAG) {
-          var blockWidth = 0, blockHeight = 0;
+          var blockWidth = 0;
+          var blockHeight = Math.min.apply(null, $.map(images, function(image) { return image.img.height; }));
+
           $.each(images, function(i, image) {
-            blockWidth += image.img.width;
-            blockHeight = Math.max(blockHeight, image.img.height);
+            blockWidth += Math.ceil(image.img.width * blockHeight / image.img.height);
             image.$img.appendTo($frameChild);
           });
 
@@ -541,6 +542,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
         ++loadedImages;
         if (loadedImages == images.length)
           loadedAll();
+      }
+
+      if (images.length == 0) {
+        error({src: ''});
       }
 
       $.each(images, function(i, image) {
@@ -630,7 +635,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
         }
 
         if (opts.captions && dataFrame.caption) {
-          $(div(captionClass, div(captionWrapClass, dataFrame.caption))).appendTo($frame);
+          $(div(captionClass,
+            $.map([].concat(dataFrame.caption), function(caption) {
+                  return div(captionWrapClass, caption); })
+              .join('')
+          )).appendTo($frame);
         }
 
         dataFrame.video && $frame
