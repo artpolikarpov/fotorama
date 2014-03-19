@@ -215,7 +215,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     var _noMove = size < 2 || $videoPlaying;
     stageShaftTouchTail.noMove = _noMove || o_fade;
     stageShaftTouchTail.noSwipe = _noMove || !opts.swipe;
-
+    
+    $stageShaft.toggleClass(selectClass, stageShaftTouchTail.noSwipe);
     $stageShaft.toggleClass(grabClass, !stageShaftTouchTail.noMove && !stageShaftTouchTail.noSwipe);
     MS_POINTER && $wrap.toggleClass(wrapPanYClass, !stageShaftTouchTail.noSwipe);
   }
