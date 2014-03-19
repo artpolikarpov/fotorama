@@ -9,13 +9,9 @@ $arrSize: 32px;
   min-width: 1px;
   overflow: hidden;
 
-  > .fotorama__wrap {
-    visibility: visible;
+  &:not(.fotorama--unobtrusive) > *:not(:first-child) {
+    display: none;
   }
-}
-
-.fotorama--hidden-before-ready > * {
-  visibility: hidden;
 }
 
 .fullscreen {
