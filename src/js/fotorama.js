@@ -1047,7 +1047,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       //console.time('slideNavShaft');
       var guessIndex = limitIndex(activeIndex + minMaxLimit(dirtyIndex - lastActiveIndex, -1, 1));
-      slideNavShaft({time: time, coo: guessIndex !== activeIndex && options.coo, guessIndex: typeof options.coo !== 'undefined' ? guessIndex : activeIndex});
+      slideNavShaft({time: time, coo: guessIndex !== activeIndex && options.coo, guessIndex: typeof options.coo !== 'undefined' ? guessIndex : activeIndex, keep: options.reset});
       //console.timeEnd('slideNavShaft');
 
       //console.time('slideThumbBorder');

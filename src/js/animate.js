@@ -57,18 +57,18 @@ function fade ($el1, $el2, $frames, options, fadeStack, chain) {
       },
       time = options.time / (chain || 1);
 
-  $frames
-      .not($el1.addClass(fadeRearClass).removeClass(fadeFrontClass))
-      .not($el2.addClass(fadeFrontClass).removeClass(fadeRearClass))
-      .removeClass(fadeRearClass + ' ' + fadeFrontClass);
+  $frames.removeClass(fadeRearClass + ' ' + fadeFrontClass);
 
-
-  $el1.stop();
-  $el2.stop();
+  $el1
+      .stop()
+      .addClass(fadeRearClass);
+  $el2
+      .stop()
+      .addClass(fadeFrontClass);
 
   crossfadeFLAG && _$el2 && $el1.fadeTo(0, 0);
 
-  $el1.fadeTo(crossfadeFLAG ? time : 1, 1, crossfadeFLAG && onEndFn);
+  $el1.fadeTo(crossfadeFLAG ? time : 0, 1, crossfadeFLAG && onEndFn);
   $el2.fadeTo(time, 0, onEndFn);
 
   (_$el1 && crossfadeFLAG) || _$el2 || onEndFn();
