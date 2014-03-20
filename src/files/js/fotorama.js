@@ -1,14 +1,30 @@
 $(function () {
-  var $window = $(window),
-      $fotorama = $('#fotorama');
+  var $fotorama = $('#fotorama');
 
-  if ($fotorama[0]) {
-    if (window.innerWidth * (window.devicePixelRatio || 1) > 768) {
-      $('a', $fotorama).each(function () {
-        var $a = $(this);
-        $a.attr('href', $a.attr('href').replace('-lo.jpg', '.jpg'));
-      });
-    }
+  if ($fotorama[0] && window.Photos) {
+    var $window = $(window),
+        pixelRatio = window.devicePixelRatio || 1,
+        width = Math.min(window.innerWidth * pixelRatio, 1280),
+        ratio = 1.5,
+        maxRatio = 2.5,
+        _thumbSize = 64,
+        _thumbMargin = 2,
+        maxThumbSize = _thumbSize * pixelRatio,
+        hash = location.hash.replace(/^#/, ''),
+        hashIndex = +(hash.split('__'))[0],
+        albumIndex = hashIndex > 0 ? hashIndex - 1 : Math.round(Math.random() * (Photos.length - 1)),
+        album = Photos[albumIndex];
+
+
+    var data = $.map(album.uuids, function (uuid) {
+      var full = 'http://www.ucarecdn.com/' + uuid + '/';
+      return {
+        full: full,
+        img: full + '-/stretch/off/-/resize/' + width + 'x/',
+        thumb: full + '-/scale_crop/' + maxThumbSize + 'x' + maxThumbSize + '/center/',
+        id: (albumIndex + 1) + '__' + uuid
+      }
+    });
 
     console.log('# Fotorama events');
 
@@ -40,35 +56,61 @@ $(function () {
             }
         )
         .fotorama({
+          data: data,
+          width: '100%',
+          ratio: ratio,
+          hash: true,
+          maxheight: '100%',
+          nav: 'thumbs',
+          margin: 0,
+          shuffle: true,
+          thumbmargin: _thumbMargin,
+          /*allowfullscreen: 'native',*/
+          keyboard: true,
+          shadows: false,
+          fit: 'cover',
           spinner: {
             color: 'rgba(255, 255, 255, .75)'
           }
-        })
-        .parent()
-        .next('.photos-by')
-        .show();
+        });
+
+    $('#photos-by').html('Photos by <a href="' + album.by.href +'" class="js-analytics-click" data-action="outbound">by ' + album.by.title + '</a>');
 
     var fotorama = $fotorama.data('fotorama');
-    var lastThumbHeight;
+    var lastThumbSize, lastMinHeight;
 
     $window.on('resize', function () {
       var innerWidth = window.innerWidth,
-          thumbHeight;
+          thumbSize = _thumbSize,
+          options = {};
 
       if (innerWidth < 520) {
-        thumbHeight = 32;
+        thumbSize = _thumbSize - 8 * 2;
       } else if (innerWidth < 640) {
-        thumbHeight = 40;
-      } else {
-        thumbHeight = 48;
+        thumbSize = _thumbSize - 8;
       }
 
-      if (thumbHeight !== lastThumbHeight) {
-        console.log('Change thumbs height to ' + thumbHeight + 'px');
+      var minHeight = Math.round(innerWidth / maxRatio);
+
+      if (thumbSize !== lastThumbSize) {
+        console.log('Resize thumbs to ' + thumbSize + '×' + thumbSize + 'px');
         console.log('');
 
-        fotorama.setOptions({thumbheight: (lastThumbHeight = thumbHeight)});
+        $.extend(options, {thumbwidth: thumbSize, thumbheight: thumbSize});
+
+        lastThumbSize = thumbSize;
       }
+
+      if (minHeight !== lastMinHeight) {
+        console.log('Set min height to ' + minHeight + 'px');
+        console.log('');
+
+        $.extend(options, {minheight: minHeight});
+
+        lastMinHeight = minHeight;
+      }
+
+      fotorama.setOptions(options);
     }).resize();
   }
 });

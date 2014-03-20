@@ -5,6 +5,7 @@
 .photos-by {
 	font-size: 88%;
 	text-align: right;
+  margin-bottom: 1.5em;
 }
 
 .fotorama-with-numbers .fotorama__html div {
@@ -21,15 +22,19 @@
 }
 
 .fotorama-wrap-frontpage {
-  background: #090907;
+  /*background: #090907;*/
   padding: 0;
   margin: -10px -16px 5px;
   overflow: hidden;
   position: relative;
 }
 
+.fotorama-wrap-frontpage .fotorama__stage {
+  background-color: #f6f6f6;
+}
+
 .fotorama-wrap-frontpage .fotorama {
-  margin-top: 2px;
+  /*margin-top: 0;*/
   margin-bottom: 0;
 }
 
