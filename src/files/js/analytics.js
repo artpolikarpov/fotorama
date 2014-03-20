@@ -1,7 +1,7 @@
 $(function () {
   function sendEvent (optional) {
     if (window.ga) {
-      console.log('Send analytics event', optional);
+      console.log('Analytics event', optional);
       ga('send', 'event', optional);
     }
   }
@@ -28,6 +28,7 @@ $(function () {
           eventValue: value,
           hitCallback: function () {
             if (e.isDefaultPrevented()) {
+              console.log('Analytics hit callback');
               location = href;
             }
           }
@@ -38,7 +39,10 @@ $(function () {
           eventCategory: 'code',
           eventAction: 'copy',
           eventLabel: location.pathname,
-          eventValue: window.getSelection && window.getSelection().toString()
+          eventValue: window.getSelection && window.getSelection().toString(),
+          hitCallback: function () {
+            console.log('Analytics hit callback');
+          }
         });
       });
 });
