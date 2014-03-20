@@ -42,7 +42,7 @@ noDisqus: true
 <p class="photos-by" style="display: none;">Photos <a href="http://okonet.ru/" class="js-analytics-click" data-action="outbound">by Andrey Okonetchnikov</a></p>
 
 <div class="content intro">
-  <p>Licensed <a href="/license/">under the MIT</a>. You are free to use Fotorama in commercial projects.</p>
+  <p>Licensed <a href="/license/">under the <abbr>MIT</abbr></a>. You are free to use Fotorama in commercial projects.</p>
 </div>
 
 <div class="content no-visited">
