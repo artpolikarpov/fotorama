@@ -17,14 +17,14 @@ $(function () {
   function hideMenu () {
     if (!documentData.$menu) return;
 
+    $('.js-menu-down')
+      .data({used: false})
+      .removeClass('active');
+
     documentData.$menu
         .stop()
         .animate({marginTop: 20, opacity: 0}, 200, function () {
-          documentData.$menu.hide();
-          documentData.$menu = null;
-          $('.js-menu-down')
-              .data({used: false})
-              .removeClass('active');
+          $(this).hide();
         });
   }
 
@@ -44,11 +44,12 @@ $(function () {
     e.stopPropagation();
 
     var $caret = $(this),
-        caretData = $caret.data();
+        caretData = $caret.data(),
+        used = caretData.used;
 
-    if (caretData.used) {
-      hideMenu();
-    } else {
+    hideMenu();
+
+    if (!used) {
       caretData.used = true;
       $caret.addClass('active');
       documentData.$menu = $caret.next('.menu');

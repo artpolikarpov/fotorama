@@ -14,9 +14,9 @@ js: "/j/script.js"
 
   <% if process.env.NODE_ENV: %>
     <!-- //fontawesome.io/icons-->
-    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
 	<% else: %>
-    <link href="/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/lib/font-awesome-4.0.3/css/font-awesome.min.css" rel="stylesheet">
 	<% end %>
 
 	<% s3 = (url) -> return if process.env.NODE_ENV then ('//fotorama.s3.amazonaws.com' + (url.replace /\/(\d+)\/(.*)$/, '/$2?$1')) else url %>

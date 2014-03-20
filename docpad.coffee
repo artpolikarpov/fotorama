@@ -71,7 +71,7 @@ docpadConfig = {
 
           anchor = anchor.charAt(0).toLowerCase() + anchor.slice(1);
 
-          "<#{name}><a name=\"#{anchor}\" href=\"\##{anchor}\" class=\"icon-link\"></a>#{header}</#{name}>"
+          "<#{name}><a name=\"#{anchor}\" href=\"\##{anchor}\" class=\"fa fa-anchor\"></a>#{header}</#{name}>"
   maxAge: 3600
 }
 

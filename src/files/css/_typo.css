@@ -20,8 +20,8 @@ a.no-u {
 
 a:visited,
 a:visited u,
-.header .menu .menu a:visited,
-.header .menu .menu a:visited u {
+.visited .menu a:visited,
+.visited .menu a:visited u {
 	color: rgb(85, 85, 85);
 	border-color: rgba(85, 85, 85, .2);
 }
@@ -59,7 +59,7 @@ a:hover, a:hover u, .menu .li i:hover {
 	border-color: rgb(170, 0, 0);
 }
 
-a.icon-link {
+a.fa-anchor {
   visibility: hidden;
   position: absolute;
 }
@@ -90,8 +90,8 @@ small {
     /*-webkit-backface-visibility: hidden;*/
   }
 
-  a.icon-link,
-  a.icon-link:visited {
+  a.fa-anchor,
+  a.fa-anchor:visited {
     border-bottom: none;
     color: #000;
     left: 0;
@@ -100,14 +100,16 @@ small {
     outline: none;
   }
 
-  h2:hover a.icon-link,
-  h3:hover a.icon-link,
-  h4:hover a.icon-link/*,
-  a.icon-link:target*/ {
+  h2:hover a.fa-anchor,
+  h3:hover a.fa-anchor,
+  h4:hover a.fa-anchor,
+  h2 a.fa-anchor:target,
+  h3 a.fa-anchor:target,
+  h4 a.fa-anchor:target {
     visibility: visible;
   }
 
-  h1 a.icon-link {
+  h1 a.fa-anchor {
     visibility: hidden;
   }
 }

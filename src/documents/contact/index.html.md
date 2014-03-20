@@ -25,7 +25,7 @@ If&nbsp;you’ve found a&nbsp;bug in&nbsp;Fotorama or&nbsp;have an&nbsp;enhancem
 To&nbsp;showcase your Fotorama site or&nbsp;anything else, you can reach me&nbsp;by&nbsp;email at&nbsp;<a href="mailto:fotoramajs@gmail.com">fotoramajs@gmail.com</a>.
 -->
 
-## Send thanks <i class="icon-thumbs-up-alt"></i>
+## Send thanks <i class="fa fa-thumbs-o-up"></i>
 * PayPal for satisfied users: <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7M9KK5AQPG6CC" class="js-analytics-click" data-action="outbound">fotoramajs@gmail.com</a>
 * Yandex.Money: <a href="https://money.yandex.ru/direct-payment.xml?receiver=4100139676157" class="js-analytics-click" data-action="outbound">4100139676157</a>
 * Bitcoin: <a href="bitcoin:1AbXUmE6xzinqKaHuTVFRXtnxffFqvKkka" class="js-analytics-click" data-action="outbound">1AbXUmE6xzinqKaHu<wbr/>TVFRXtnxffFqvKkka</a>

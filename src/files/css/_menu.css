@@ -4,8 +4,11 @@
   font-size: 11px;
   line-height: 28px;
   list-style: none;
-  margin: 0;
+  margin: 0 0 0 -10px;
   padding: 0;
+  display: inline-block;
+  *display: inline;
+	*zoom: 1;
 }
 
 .menu .li {
@@ -17,55 +20,43 @@
   white-space: nowrap;
 }
 
-.frontpage .menu .li-logo {
-  display: block;
-  margin: 0;
-}
-
 .menu .li a, .menu .li span, .menu .li i {
-  padding: 8px 12px;
+  padding: 8px 10px;
 }
 
 .menu .li i {
-  margin-left: -12px;
+  margin-left: -10px;
   position: relative;
 }
 
-@media (max-width:760px) {
-  .menu .li a, .menu .li span, .menu .li i {
-    padding: 8px 10px;
-  }
-
-  .menu .li i {
-    margin-left: -10px;
-  }
-}
-
-@media (max-width:640px) {
-  .menu .li a, .menu .li span, .menu .li i {
-    padding: 6px 8px;
-  }
-  .menu .li i {
-    margin-left: -8px;
-  }
+.menu .logo .fa-bars {
+  display: none;
 }
 
 @media (max-width:520px) {
-  .menu .li a, .menu .li span, .menu .li i {
-    padding: 4px 6px;
+  /*.header {
+    text-align: left;
   }
-  .menu .li i {
-    margin-left: -6px;
+
+  .header .menu {
+    margin-left: -10px;
+  }
+
+  .header .menu .li .menu {
+    margin-left: 0;
+  }*/
+
+  .header .menu .logo .fa-bars {
+    display: inline-block;
+  }
+  .header .menu .li:not(.logo) {
+    display: none;
   }
 }
 
-@media (max-width:320px) {
-  .menu .li a, .menu .li span, .menu .li i {
-    padding: 4px 4px;
-    letter-spacing: 0;
-  }
-  .menu .li i {
-    margin-left: -4px;
+@media (min-width:521px) {
+  .menu .logo .menu {
+    display: none !important;
   }
 }
 
@@ -76,11 +67,12 @@
   color: rgb(170, 0, 0);
 }
 
-.menu .li i.icon-caret-down {
+.menu .li i.fa-caret-down,
+.menu .li i.fa-bars {
   cursor: pointer;
 }
 
-.menu .li i.icon-disabled {
+.menu .li i.fa-disabled {
   cursor: default;
   color: #ccc;
 }
@@ -96,12 +88,21 @@
   top: 30px;
   left: 0;
   z-index: 100;
+  min-width: 7em;
   background: #fff;
   padding: 5px 15px 10px 10px;
   border-radius: 3px;
   box-shadow: 0 1px 10px rgba(0, 0, 0, .3);
   border: 1px solid #ccc;
   letter-spacing: 0;
+  margin-left: 0;
+}
+
+.menu .logo .menu {
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  line-height: 28px;
 }
 
 .menu .li .menu .li {

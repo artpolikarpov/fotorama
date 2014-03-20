@@ -1,13 +1,21 @@
 <% renderMenu = (items, top) => %>
+
 <ul class="menu">
-  <% if @header && top: %><li class="li">
-    <% if !@frontpage: %>
-      <a href="/" class="black no-u"><u><strong>Fotorama</strong></u></a>
-    <% else: %><span><strong>Fotorama</strong></span><% end %>
-  </li><% end %><% for item in items: %><li class="li <% if item.state: %>selected<% end %> <% if !(item.order % 100): %>divider<% end %>">
+  <% if @header && top: %><li class="li logo">
+    <% if !@frontpage: %><a href="/" class="black no-u"><strong>Fotorama</strong></a><% else: %>
+      <span><strong>Fotorama</strong></span><% end %><i class="fa fa-bars js-menu-down"></i>
+    <ul class="menu">
+      <% for item in items: %><li class="li <% if item.state: %>selected<% end %> <% if !(item.order % 100): %>divider<% end %>">
+      <% if item.state != 'current': %>
+      <a href="<%= item.url %>" class="no-u"><u><%- item.title %></u></a><% else: %>
+      <span><%- item.title %></span><% end %>
+      <% end %>
+    </ul>
+  </li><% end %>
+  <% for item in items: %><li class="li visited <% if item.state: %>selected<% end %> <% if !(item.order % 100): %>divider<% end %>">
   <% if item.state != 'current': %>
   <a href="<%= item.url %>" class="no-u"><u><%- item.title %></u></a><% else: %>
-  <span><%- item.title %></span><% end %><% if item.children && item.children.length: %><i class="icon-caret-down <% if item.state != 'current': %>js-menu-down<% else: %>icon-disabled<% end %>"></i>
+  <span><%- item.title %></span><% end %><% if item.children && item.children.length: %><i class="fa fa-bars <% if item.state != 'current': %>js-menu-down<% else: %>fa-disabled<% end %>"></i>
   <%- renderMenu(item.children) %>
   <% end %>
   </li><% end %>
