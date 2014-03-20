@@ -26,7 +26,7 @@ To&nbsp;showcase your Fotorama site or&nbsp;anything else, you can reach me&nbsp
 -->
 
 ## Send thanks <i class="icon-thumbs-up-alt"></i>
-* PayPal for satisfied users: [fotoramajs@gmail.com](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7M9KK5AQPG6CC)
-* Yandex.Money: [4100139676157](https://money.yandex.ru/direct-payment.xml?receiver=4100139676157)
-* Bitcoin: [1AbXUmE6xzinqKaHu<wbr/>TVFRXtnxffFqvKkka](bitcoin:1AbXUmE6xzinqKaHuTVFRXtnxffFqvKkka)
-* Flattr: [Fotorama](https://flattr.com/thing/1845948/)
+* PayPal for satisfied users: <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7M9KK5AQPG6CC" class="js-analytics-click" data-action="outbound">fotoramajs@gmail.com</a>
+* Yandex.Money: <a href="https://money.yandex.ru/direct-payment.xml?receiver=4100139676157" class="js-analytics-click" data-action="outbound">4100139676157</a>
+* Bitcoin: <a href="bitcoin:1AbXUmE6xzinqKaHuTVFRXtnxffFqvKkka" class="js-analytics-click" data-action="outbound">1AbXUmE6xzinqKaHu<wbr/>TVFRXtnxffFqvKkka</a>
+* Flattr: <a href="https://flattr.com/thing/1845948/" class="js-analytics-click" data-action="outbound">Fotorama</a>
