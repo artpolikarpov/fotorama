@@ -39,7 +39,7 @@ noDisqus: true
   </div>
 </div>
 
-<p class="photos-by" style="display: none;">Photos <a href="http://okonet.ru/" class="js-analytics-click" data-label="outbound">by Andrey Okonetchnikov</a></p>
+<p class="photos-by" style="display: none;">Photos <a href="http://okonet.ru/" class="js-analytics-click" data-action="outbound">by Andrey Okonetchnikov</a></p>
 
 <div class="content intro">
   <p>Licensed <a href="/license/">under the MIT</a>. You are free to use Fotorama in commercial projects.</p>

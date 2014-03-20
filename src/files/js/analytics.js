@@ -18,14 +18,12 @@ $(function () {
 
         var $this = $(this),
             data = $this.data(),
-            href = $this.attr('href'),
-            value = $this.text() + ' (' + href + ')';
+            href = $this.attr('href');
 
         sendEvent({
-          eventCategory: 'link',
-          eventAction: 'click',
-          eventLabel: data.label,
-          eventValue: value,
+          eventCategory: 'Link',
+          eventAction: data.action,
+          eventLabel: $this.text() + ' (' + href + ')',
           hitCallback: function () {
             if (e.isDefaultPrevented()) {
               console.log('Analytics hit callback');
@@ -36,10 +34,9 @@ $(function () {
       })
       .on('copy', 'code', function (e) {
         sendEvent({
-          eventCategory: 'code',
+          eventCategory: 'Code',
           eventAction: 'copy',
-          eventLabel: location.pathname,
-          eventValue: window.getSelection && window.getSelection().toString(),
+          eventLabel: window.getSelection && window.getSelection().toString().slice(0, 499),
           hitCallback: function () {
             console.log('Analytics hit callback');
           }

@@ -7,7 +7,7 @@ menuOrder: 3
 Integrate Fotorama with your favorite framework, service, or <abbr>CMS</abbr>.
 
 ## Wordpress
-1. Install Fotorama via the <a href="http://wordpress.org/plugins/fotorama/" class="js-analytics-click" data-label="outbound">WordPress.org plugin directory</a>.
+1. Install Fotorama via the <a href="http://wordpress.org/plugins/fotorama/" class="js-analytics-click" data-action="outbound">WordPress.org plugin directory</a>.
 2. After activating Fotorama your galleries turn into fotoramas.
 3. Say Hi to Fotorama!
 
@@ -16,7 +16,7 @@ Integrate Fotorama with your favorite framework, service, or <abbr>CMS</abbr>.
 </div>
 
 ## Ruby on Rails
-To&nbsp;use Fotorama with Assets Pipeline in&nbsp;Ruby on&nbsp;Rails, add <a href="https://github.com/ai/fotoramajs" class="js-analytics-click" data-label="outbound">fotoramajs gem</a> to&nbsp;`Gemfile`:
+To&nbsp;use Fotorama with Assets Pipeline in&nbsp;Ruby on&nbsp;Rails, add <a href="https://github.com/ai/fotoramajs" class="js-analytics-click" data-action="outbound">fotoramajs gem</a> to&nbsp;`Gemfile`:
 
 ```ruby
 gem "fotoramajs"

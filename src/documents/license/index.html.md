@@ -6,7 +6,7 @@ menuHidden: true
 noDisqus: true
 ---
 
-The <a href="http://en.wikipedia.org/wiki/MIT_License" class="js-analytics-click" data-label="outbound"><abbr>MIT</abbr> License</a> places almost no&nbsp;restrictions on&nbsp;what you can do&nbsp;with a&nbsp;Fotorama:
+The <a href="http://en.wikipedia.org/wiki/MIT_License" class="js-analytics-click" data-action="outbound"><abbr>MIT</abbr> License</a> places almost no&nbsp;restrictions on&nbsp;what you can do&nbsp;with a&nbsp;Fotorama:
 
 <pre><code><span class="comment">© 2011—<span class="js-now-year">2014</span> Artem Polikarpov
 http://fotorama.io/</span>
