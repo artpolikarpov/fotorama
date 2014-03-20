@@ -8,7 +8,7 @@ js: "/j/script.js"
   <title><%= @document.headTitle || @document.title %></title>
   <meta charset="utf-8">
   <meta name="description" content="A simple, stunning, powerful jQuery gallery. All browsers, touch gestures, native fullscreen, seamless responsive, fast CSS3 transitions, lazy loading, neat and transparent.">
-  <meta name="viewport" content="minimal-ui, width=device-width">
+  <meta name="viewport" content="width=device-width,minimal-ui">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="msapplication-tap-highlight" content="no" />
 

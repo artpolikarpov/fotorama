@@ -64,7 +64,9 @@ $(function () {
       }
 
       if (thumbHeight !== lastThumbHeight) {
-        console.log('Change thumb height');
+        console.log('Change thumbs height to ' + thumbHeight + 'px');
+        console.log('');
+
         fotorama.setOptions({thumbheight: (lastThumbHeight = thumbHeight)});
       }
     }).resize();

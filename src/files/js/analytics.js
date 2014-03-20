@@ -7,6 +7,7 @@ $(function () {
   }
 
   $(document)
+      // клик по внешним ссылкам
       .on('click', '.js-analytics-click', function (e) {
         if (!window.ga) {
           return;
@@ -32,10 +33,12 @@ $(function () {
           }
         });
       })
+      // копирование примеров кода
       .on('copy', 'code', function (e) {
         sendEvent({
           eventCategory: 'Code',
           eventAction: 'copy',
+          // что конкретно скопировали
           eventLabel: window.getSelection && window.getSelection().toString().slice(0, 499),
           hitCallback: function () {
             console.log('Analytics hit callback');
