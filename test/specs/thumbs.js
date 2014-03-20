@@ -23,6 +23,16 @@ document.write(
     '</div>'
 );
 
+function waitsFor (test, fn) {
+  if (test()) {
+    fn();
+  } else {
+    setTimeout(function () {
+      waitsFor(test, fn);
+    }, 10);
+  }
+}
+
 function random (min, max) {
   if (max == null) {
     max = min;
@@ -90,14 +100,14 @@ describe('Thumbs', function () {
     });
   });
 
-  it('hidden thumbs are not loaded', function () {
+  it('hidden thumbs are not loaded', function (done) {
     $thumb.each(function () {
       var $this = $(this);
 
       if ($this.position().left < $('.fotorama__wrap', $fotorama).width()) {
         waitsFor(function () {
           return $('.fotorama__img', $this)[0];
-        }, 'Here must be an image...', 100);
+        }, done);
       } else {
         expect($('.fotorama__img', $this)[0]).toBeFalsy();
       }

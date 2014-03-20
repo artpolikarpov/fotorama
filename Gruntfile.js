@@ -290,9 +290,21 @@ s3: {
     upload: [
         // Separate version to separate folder
       {
-        src: 'out/*',
+        src: 'out/fotorama.*',
         dest: '<%= pkg.version %>/'
+      },
+      {
+        src: 'out/fotorama@2x.png',
+        dest: '<%= pkg.version %>/fotorama@2x.png'
+      },
+      {
+        src: 'out/*.zip',
+        dest: '<%= pkg.version %>/',
+        options: {
+          gzip: false
+        }
       }
+
     ]
   },
   edge: {

@@ -8,6 +8,16 @@ document.write(
     '</div>'
 );
 
+function waitsFor (test, fn) {
+  if (test()) {
+    fn();
+  } else {
+    setTimeout(function () {
+      waitsFor(test, fn);
+    }, 10);
+  }
+}
+
 describe('Video', function () {
   var $fotorama, fotorama, data, $thumb;
 
@@ -19,12 +29,12 @@ describe('Video', function () {
   });
 
 
-  it('previews are fetched (works only if script able to connect to the Internet)', function () {
+  it('previews are fetched (works only if script able to connect to the Internet)', function (done) {
     $thumb.each(function () {
       var $this = $(this);
       waitsFor(function () {
         return $('.fotorama__img', $this)[0];
-      }, 'Here must be an image...', 1000);
+      }, done);
     });
   });
 

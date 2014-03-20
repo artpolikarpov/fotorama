@@ -2,7 +2,26 @@
 
 > https://github.com/artpolikarpov/fotorama/releases
 
-## 4.4.9, Dec 30 2013
+## 4.5.0, 20 March 2014
+
+<!--4.4.9:name-->
+
+Yana
+
+<!--/4.4.9:name-->
+
+<!--4.4.9:notes-->
+
+Fixed issues:
+
+* #115 Partially hidden fullscreen-icon
+* #159 Some animation bugs.
+* #160 Move-click-swipe tolerances.
+* #161, #162 Recursion (when connecting some of the events and methods).
+
+<!--/4.4.9:notes-->
+
+## 4.4.9, 30 December 2013
 
 <!--4.4.9:name-->
 
@@ -21,7 +40,7 @@ Fixed issues:
 
 <!--/4.4.9:notes-->
 
-## 4.4.8, Nov 13 2013
+## 4.4.8, 13 November 2013
 
 <!--4.4.8:name-->
 
@@ -39,7 +58,7 @@ Five hot fixes
 
 <!--/4.4.8:notes-->
 
-## 4.4.7, Nov 5 2013
+## 4.4.7, 5 November 2013
 
 <!--4.4.7:name-->
 
@@ -56,7 +75,7 @@ Spin the spinner
 
 <!--/4.4.7:notes-->
 
-## 4.4.6, Oct 20 2013
+## 4.4.6, 20 October 2013
 
 <!--4.4.6:name-->
 
@@ -70,7 +89,7 @@ Optimizations
 
 <!--/4.4.6:notes-->
 
-## 4.4.5, Oct 17 2013
+## 4.4.5, 17 October 2013
 
 <!--4.4.5:name-->
 

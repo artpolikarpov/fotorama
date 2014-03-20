@@ -10,10 +10,20 @@ document.write(
     '</div>'
 );
 
+function waitsFor (test, fn) {
+  if (test()) {
+    fn();
+  } else {
+    setTimeout(function () {
+      waitsFor(test, fn);
+    }, 10);
+  }
+}
+
 describe('Destroy', function () {
   var loaded, $fotorama, fotorama, data, $html, html, htmlWithFotorama;
 
-  it('$(el).fotorama() changes the DOM', function () {
+  it('$(el).fotorama() changes the DOM', function (done) {
     $html = $('#html');
     html = $html.html();
 
@@ -25,11 +35,11 @@ describe('Destroy', function () {
 
     waitsFor(function () {
       return loaded;
-    }, 'Waiting for the first image', 100);
-
-    runs(function () {
+    }, function () {
       htmlWithFotorama = $html.html();
       expect(html).not.toBe(htmlWithFotorama);
+
+      done();
     });
   });
 
@@ -39,15 +49,13 @@ describe('Destroy', function () {
     expect(html).toBe($html.html());
   });
 
-  it('even if fullscreen', function () {
+  it('even if fullscreen', function (done) {
     $fotorama.fotorama({allowFullScreen: true});
 
     loaded = false;
     waitsFor(function () {
       return loaded;
-    }, 'Waiting for the first image', 100);
-
-    runs(function () {
+    }, function () {
       htmlWithFotorama = $html.html();
 
       fotorama.requestFullScreen();
@@ -58,10 +66,12 @@ describe('Destroy', function () {
 
       expect(fotorama.fullScreen).toBe(false);
       expect(html).toBe($html.html());
+
+      done();
     });
   });
 
-  it('fotorama.load([{}, {}, {}]) can revive the fotorama', function () {
+  it('fotorama.load([{}, {}, {}]) can revive the fotorama', function (done) {
     var photos = [];
 
     for (var _i = 1; _i <= 5; _i++) {
@@ -72,15 +82,15 @@ describe('Destroy', function () {
     fotorama.load(photos);
     waitsFor(function () {
       return loaded;
-    }, 'Waiting for the first image', 100);
-
-    runs(function () {
+    }, function () {
       expect(htmlWithFotorama).toBe($html.html());
+
+      done();
     });
 
   });
 
-  it('It seems that all is well', function () {
+  it('It seems that all is well', function (done) {
     // test some functions after all
 
     fotorama.setOptions({nav: 'thumbs', thumbWidth: '39px'});
@@ -90,11 +100,11 @@ describe('Destroy', function () {
 
     waitsFor(function () {
       return $('.fotorama__stage__frame.fotorama__active .fotorama__img').size();
-    }, 'Wait for the img...', 100);
-
-    runs(function () {
+    }, function () {
       expect(fotorama.activeIndex).toBe(1);
       expect($('.fotorama__stage__frame.fotorama__active .fotorama__img').attr('src')).toBe('test/i/okonechnikov/2-lo.jpg');
+
+      done();
     });
   });
 });
