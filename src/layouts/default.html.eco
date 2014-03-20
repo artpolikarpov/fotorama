@@ -12,27 +12,33 @@ js: "/j/script.js"
   <meta name="msapplication-tap-highlight" content="no" />
 
   <% if process.env.NODE_ENV: %>
-    <!-- http://fontawesome.io/icons-->
-    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <!-- //fontawesome.io/icons-->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
 	<% else: %>
     <link href="/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 	<% end %>
 
-	<% s3 = (url) -> return if process.env.NODE_ENV then ('http://fotorama.s3.amazonaws.com' + (url.replace /\/(\d+)\/(.*)$/, '/$2?$1')) else url %>
+	<% s3 = (url) -> return if process.env.NODE_ENV then ('//fotorama.s3.amazonaws.com' + (url.replace /\/(\d+)\/(.*)$/, '/$2?$1')) else url %>
 
 	<% for url in @assets('css'): %><link rel="stylesheet" href="<%= s3 url %>" /><% end %>
 
   <% if process.env.NODE_ENV: %>
 		<!-- Fotorama -->
-		<link  href="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.css" rel="stylesheet">
+		<link  href="//fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.css" rel="stylesheet">
 	<% else: %>
 		<!-- Fotorama -->
 		<link  href="/lib/fotorama/fotorama.css" rel="stylesheet">
 	<% end %>
 
   <% if process.env.NODE_ENV: %>
+    <!-- qbaka -->
+    <script type="text/javascript">
+      window.qbaka||function(e,t){var n=[];var r=e.qbaka=function(){n.push(arguments)};e.__qbaka_eh=e.onerror;e.onerror=function(){r("onerror",arguments);if(e.__qbaka_eh)try{e.__qbaka_eh.apply(e,arguments)}catch(t){}};e.onerror.qbaka=1;r.sv=2;r._=n;r.log=function(){r("log",arguments)};r.report=function(){r("report",arguments,new Error)};var i=t.createElement("script"),s=t.getElementsByTagName("script")[0],o=function(){s.parentNode.insertBefore(i,s)};i.type="text/javascript";i.async=!0;i.src=("https:"==t.location.protocol?"https:":"http:")+"//cdn.qbaka.net/reporting.js";typeof i.async=="undefined"&&t.addEventListener?t.addEventListener("DOMContentLoaded",o):o();r.key="f8f03654f7bb720abe39737e2c9edeff"}(window,document);qbaka.options={autoStacktrace:1,trackEvents:1};
+    </script>
+
+
     <!-- jQuery, -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   <% else: %>
     <!-- jQuery, -->
     <script src="/lib/jquery-1.11.0.min.js"></script>
@@ -42,8 +48,9 @@ js: "/j/script.js"
 
   <% if process.env.NODE_ENV: %>
     <!-- Fotorama -->
-    <script src="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.js"></script>
+    <script src="//fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.js"></script>
 
+    <!-- GA -->
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
