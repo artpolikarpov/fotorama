@@ -6,13 +6,15 @@ menuOrder: 1
 
 <p></p>
 
+
+
 ```xml
 <!-- 1. Link to jQuery (1.8 or later), -->
-<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script> <!-- 33 KB -->
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script> <!-- 32 KB -->
 
 <!-- fotorama.css & fotorama.js. -->
-<link  href="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.css" rel="stylesheet"> <!-- 3 KB -->
-<script src="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.js"></script> <!-- 15 KB -->
+<link  href="//fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.css" rel="stylesheet"> <!-- 2 KB -->
+<script src="//fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama.js"></script> <!-- 9 KB -->
 
 <!-- 2. Add images to <div class="fotorama"></div>. -->
 <div class="fotorama">
@@ -23,10 +25,12 @@ menuOrder: 1
 <!-- 3. Enjoy! -->
 ```
 
+
 <p class="after-pre">*Example: <a href="/examples/basic.html" target="_blank">Basic</a>*</p>
 
 Fotorama’s <abbr>CDN</abbr> is&nbsp;provided by&nbsp;Amazon&nbsp;S3, feel free to&nbsp;use&nbsp;it.
 
 Or&nbsp;download zipped, unpack and host it&nbsp;on&nbsp;your server if&nbsp;you want:
 
-<p class="indent"><a href="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama-<%= process.env.FOTORAMA_VERSION %>.zip" class="download noise"><strong><i class="icon-cloud-download"></i> fotorama-<%= process.env.FOTORAMA_VERSION %>.zip</strong></a></p>
+<p class="indent">
+  <a href="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama-<%= process.env.FOTORAMA_VERSION %>.zip" class="download noise js-analytics-click" data-label="download"><strong><i class="icon-cloud-download"></i> fotorama-<%= process.env.FOTORAMA_VERSION %>.zip</strong></a></p>

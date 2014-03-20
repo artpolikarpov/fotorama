@@ -40,7 +40,7 @@ a.green, a.green u, a.green:visited, a.green:visited u {
 #root a:hover u,
 .switch:hover {
   color: rgb(170, 0, 0);
-  border-color: rgba(170, 0, 0, .2);
+  border-color: rgb(170, 0, 0);
 }
 
 a, a u, .menu .li i {

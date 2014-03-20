@@ -10,7 +10,7 @@ menuOrder: 2
 
 <h2>Dive deeper</h2>
 <ul>
-  <li>Download the uncompressed, [development Fotorama <%= process.env.FOTORAMA_VERSION %>](http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama-<%= process.env.FOTORAMA_VERSION %>.uncompressed.zip).</li>
-  <li>Have a look [at the source code](https://github.com/artpolikarpov/fotorama).</li>
-  <li>Read <a href="https://github.com/artpolikarpov/fotorama/releases">the changelog</a>.</li>
+  <li>Download the uncompressed, <a href="http://fotorama.s3.amazonaws.com/<%= process.env.FOTORAMA_VERSION %>/fotorama-<%= process.env.FOTORAMA_VERSION %>.uncompressed.zip" class="js-analytics-click" data-label="download">development Fotorama <%= process.env.FOTORAMA_VERSION %></a>.</li>
+  <li>Have a look <a href="https://github.com/artpolikarpov/fotorama" class="js-analytics-click" data-label="outbound">at the source code</a>.</li>
+  <li>Read <a href="https://github.com/artpolikarpov/fotorama/releases" class="js-analytics-click" data-label="outbound">the changelog</a>.</li>
 </ul>

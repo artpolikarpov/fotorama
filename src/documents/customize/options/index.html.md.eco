@@ -185,7 +185,7 @@ $('.fotorama').fotorama({
 });
 ```
 
-<p class="after-pre">*[Spin.js docs](http://fgnass.github.io/spin.js/)*</p>
+<p class="after-pre"><em><a href="http://fgnass.github.io/spin.js/" class="js-analytics-click" data-label="outbound">Spin.js docs</a></em></p>
 
 ### `shadows` <small>Boolean</small>
 Enables shadows.
