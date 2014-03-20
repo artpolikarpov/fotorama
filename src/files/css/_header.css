@@ -1,6 +1,9 @@
-.header {
+.header-wrap {
   position: relative;
   z-index: 100;
+}
+
+.header {
   padding: 12px 0 10px;
   max-width: 760px;
   margin: 0 auto;
@@ -14,3 +17,16 @@
   padding: 12px 0 13px;
   border-top: 1px solid #dadada;
 }
+
+/*
+@media (min-width:760px) {
+  .header-wrap {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-image: linear-gradient(rgba(0, 0, 0, .7), transparent);
+    color: #fff;
+  }
+}
+*/

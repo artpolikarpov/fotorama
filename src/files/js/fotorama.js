@@ -1,8 +1,9 @@
 $(function () {
-  var $fotorama = $('#fotorama');
+  var $window = $(window),
+      $fotorama = $('#fotorama');
 
   if ($fotorama[0]) {
-    if ($(window).width() > 768) {
+    if (window.innerWidth * (window.devicePixelRatio || 1) > 768) {
       $('a', $fotorama).each(function () {
         var $a = $(this);
         $a.attr('href', $a.attr('href').replace('-lo.jpg', '.jpg'));
@@ -46,5 +47,26 @@ $(function () {
         .parent()
         .next('.photos-by')
         .show();
+
+    var fotorama = $fotorama.data('fotorama');
+    var lastThumbHeight;
+
+    $window.on('resize', function () {
+      var innerWidth = window.innerWidth,
+          thumbHeight;
+
+      if (innerWidth < 520) {
+        thumbHeight = 32;
+      } else if (innerWidth < 640) {
+        thumbHeight = 40;
+      } else {
+        thumbHeight = 48;
+      }
+
+      if (thumbHeight !== lastThumbHeight) {
+        console.log('Change thumb height');
+        fotorama.setOptions({thumbheight: (lastThumbHeight = thumbHeight)});
+      }
+    }).resize();
   }
 });

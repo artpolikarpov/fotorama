@@ -23,13 +23,53 @@
 }
 
 .menu .li a, .menu .li span, .menu .li i {
-  padding: 8px 10px;
+  padding: 8px 12px;
 }
 
 .menu .li i {
-  margin-left: -10px;
+  margin-left: -12px;
   position: relative;
 }
+
+@media (max-width:760px) {
+  .menu .li a, .menu .li span, .menu .li i {
+    padding: 8px 10px;
+  }
+
+  .menu .li i {
+    margin-left: -10px;
+  }
+}
+
+@media (max-width:640px) {
+  .menu .li a, .menu .li span, .menu .li i {
+    padding: 6px 8px;
+  }
+  .menu .li i {
+    margin-left: -8px;
+  }
+}
+
+@media (max-width:520px) {
+  .menu .li a, .menu .li span, .menu .li i {
+    padding: 4px 6px;
+  }
+  .menu .li i {
+    margin-left: -6px;
+  }
+}
+
+@media (max-width:320px) {
+  .menu .li a, .menu .li span, .menu .li i {
+    padding: 4px 4px;
+    letter-spacing: 0;
+  }
+  .menu .li i {
+    margin-left: -4px;
+  }
+}
+
+
 
 .menu .li i:hover,
 .menu .li i.active {
