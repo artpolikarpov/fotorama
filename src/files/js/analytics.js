@@ -1,6 +1,9 @@
 $(function () {
   function sendEvent (optional) {
-    window.ga && ga('send', 'event', optional);
+    if (window.ga) {
+      console.log('Send analytics event', optional);
+      ga('send', 'event', optional);
+    }
   }
 
   $(document)

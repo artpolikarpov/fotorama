@@ -1,0 +1,1 @@
+window.console = window.console || {log: $.noop};

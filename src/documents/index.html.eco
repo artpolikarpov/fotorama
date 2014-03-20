@@ -41,6 +41,10 @@ noDisqus: true
 
 <p class="photos-by" style="display: none;">Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
 
+<div class="content intro">
+  <p>Licensed under the MIT. You are free to use Fotorama in commercial projects.</p>
+</div>
+
 <div class="content no-visited">
   <% renderMenu = (items) => %>
     <% for item in items: %>

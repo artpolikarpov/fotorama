@@ -6,10 +6,10 @@ menuHidden: true
 noDisqus: true
 ---
 
-The [<abbr>MIT</abbr> License](http://en.wikipedia.org/wiki/MIT_License) places almost no&nbsp;restrictions on&nbsp;what you can do&nbsp;with a&nbsp;Fotorama:
+The <a href="http://en.wikipedia.org/wiki/MIT_License" class="js-analytics-click" data-label="outbound"><abbr>MIT</abbr> License</a> places almost no&nbsp;restrictions on&nbsp;what you can do&nbsp;with a&nbsp;Fotorama:
 
-<pre><code>© 2011—2013 Artem Polikarpov
-http://fotorama.io/
+<pre><code><span class="comment">© 2011—<span class="js-now-year">2014</span> Artem Polikarpov
+http://fotorama.io/</span>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the “Software”), to deal

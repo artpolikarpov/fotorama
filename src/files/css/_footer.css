@@ -27,6 +27,7 @@
 .footer .social li {
   display: inline;
   margin: 0 10px;
+  white-space: nowrap;
 }
 
 .footer .social li .small {

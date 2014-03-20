@@ -1,5 +1,3 @@
-window.console = window.console || {log: $.noop};
-
 $(function () {
   var $fotorama = $('#fotorama');
 
