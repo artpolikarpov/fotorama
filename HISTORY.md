@@ -4,22 +4,34 @@
 
 ## 4.5.0, 20 March 2014
 
-<!--4.4.9:name-->
+<!--4.5.0:name-->
 
 Yana
 
-<!--/4.4.9:name-->
+<!--/4.5.0:name-->
 
-<!--4.4.9:notes-->
+<!--4.5.0:notes-->
 
-Fixed issues:
+New options:
+* `navwidth` — sets the special width of the nav;
+* `clicktransition` — alternative transition after click, now it is possible to slide after swipe and fade after click.
 
-* #115 Partially hidden fullscreen-icon
-* #159 Some animation bugs.
-* #160 Move-click-swipe tolerances.
-* #161, #162 Recursion (when connecting some of the events and methods).
+Now fotorama shows only first raw slide while initialization.
+Class `.fotorama--unobtrusive` makes fotorama unobtrusive and shows all raw slides,
+use it when you care about users without JavaScript.
 
-<!--/4.4.9:notes-->
+Closed issues:
+
+* #159 Found the balance between swipe, click, and arrows.
+* #160 Fixed tiny drag on the arrows.
+* #174 Crush sprite files (via @zslabs).
+* #187 Fix compatibility with `$.noConflict(true)` (via @Lendar).
+* #192 Fixed `stopautoplayontouch`.
+* #205 Fixed a typo that forced using the http protocol (via @dhayab).
+
+Fixed `glimpse`, nav overflow bug, and other minors.
+
+<!--/4.5.0:notes-->
 
 ## 4.4.9, 30 December 2013
 
