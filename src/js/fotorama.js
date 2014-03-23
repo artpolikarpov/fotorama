@@ -84,6 +84,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       showedFLAG,
       pausedAutoplayFLAG,
       stoppedAutoplayFLAG,
+      resumeAutoplayFLAG,
 
       toDeactivate = {},
       toDetach = {},
@@ -97,7 +98,12 @@ jQuery.Fotorama = function ($fotorama, opts) {
       navFrameKey,
       stageLeft = 0,
 
-      fadeStack = [];
+      fadeStack = [],
+
+      initialInterval,
+      remainInterval,
+      newFrameTime,
+      pausedTime;
 
   $wrap[STAGE_FRAME_KEY] = $(div(stageFrameClass));
   $wrap[NAV_THUMB_FRAME_KEY] = $(div(navFrameClass + ' ' + navFrameThumbClass, div(thumbClass)));
@@ -869,7 +875,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function changeAutoplay () {
     clearTimeout(changeAutoplay.t);
-    if (!opts.autoplay || pausedAutoplayFLAG) {
+
+    if (!opts.autoplay || stoppedAutoplayFLAG) {
       if (that.autoplay) {
         that.autoplay = false;
         triggerEvent('stopautoplay');
@@ -878,9 +885,24 @@ jQuery.Fotorama = function ($fotorama, opts) {
       return;
     }
 
-    if (!that.autoplay) {
+    if(pausedAutoplayFLAG) {
+      if (that.autoplay) {
+        that.autoplay = false;
+        triggerEvent('pauseautoplay', {remainInterval: remainInterval});
+      }
+
+      return;
+    }
+
+    if(!that.autoplay) {
       that.autoplay = true;
-      triggerEvent('startautoplay');
+
+      if(resumeAutoplayFLAG) {
+        resumeAutoplayFLAG = false;
+        triggerEvent('resumeautoplay');
+      } else {
+        triggerEvent('startautoplay');
+      }
     }
 
     var _activeIndex = activeIndex;
@@ -891,8 +913,19 @@ jQuery.Fotorama = function ($fotorama, opts) {
       return frameData.state || _activeIndex !== activeIndex;
     }, function () {
       changeAutoplay.t = setTimeout(function () {
-        if (pausedAutoplayFLAG || _activeIndex !== activeIndex) return;
+        if (pausedAutoplayFLAG || stoppedAutoplayFLAG || _activeIndex !== activeIndex) return;
         that.show(o_loop ? getDirectionSign(!o_rtl) : normalizeIndex(activeIndex + (o_rtl ? -1 : 1)));
+
+        //set default interval on frame change
+        if(initialInterval && remainInterval < initialInterval) {
+            setAutoplayInterval(initialInterval);
+            initialInterval = null;
+            changeAutoplay();
+        }
+
+        newFrameTime = new Date().getTime();
+        pausedTime = 0;
+
       }, opts.autoplay);
     });
 
@@ -900,7 +933,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   that.startAutoplay = function (interval) {
     if (that.autoplay) return this;
-    pausedAutoplayFLAG = stoppedAutoplayFLAG = false;
+    resumeAutoplayFLAG = pausedAutoplayFLAG = stoppedAutoplayFLAG = false;
     setAutoplayInterval(interval || opts.autoplay);
     changeAutoplay();
 
@@ -909,9 +942,42 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   that.stopAutoplay = function () {
     if (that.autoplay) {
-      pausedAutoplayFLAG = stoppedAutoplayFLAG = true;
+      resumeAutoplayFLAG = false;
+      stoppedAutoplayFLAG = true;
       changeAutoplay();
     }
+    return this;
+  };
+
+  that.pauseAutoplay = function () {
+    if(!that.autoplay) {
+      return this;
+    }
+
+    if(!initialInterval) {
+        initialInterval = +opts.autoplay;
+    }
+
+    var now = pausedTime = new Date().getTime();
+    remainInterval = initialInterval - (now - newFrameTime);
+
+    resumeAutoplayFLAG = false;
+    pausedAutoplayFLAG = true;
+    changeAutoplay();
+
+    return this;
+  };
+
+  that.resumeAutoplay = function () {
+    if (that.autoplay) { return this; }
+
+    pausedAutoplayFLAG = false;
+    resumeAutoplayFLAG = true;
+    setAutoplayInterval(remainInterval);
+
+    newFrameTime += new Date().getTime() - pausedTime;
+    changeAutoplay();
+
     return this;
   };
 
