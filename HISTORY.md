@@ -2,6 +2,38 @@
 
 > https://github.com/artpolikarpov/fotorama/releases
 
+## 4.5.1, 29 March 2014
+
+<!--4.5.1:name-->
+
+Keep it ace
+
+<!--/4.5.1:name-->
+
+<!--4.5.1:notes-->
+
+* Fix animations and visibility of arrows and captions.
+* #181 Always visible arrows via `arrows:'always'`.
+* #214 Fullscreen mode now using complete width and surpass the `maxwidth` limit.
+* #218 Allow to hide captions via setOptions.
+* Make `loop:true` and `clicktransition:'crossfade'` play well together.
+* #219 Extended keyboard support.
+* Fix some measures collisions.
+* Optimize, test.
+
+### Extended keyboard support
+The old `data-keyboard="true"` enables keyboard navigation with the arrows. Extend it passing the object with keys you want to turn on:
+
+```javascript
+<div class="fotorama"
+     data-keyboard='{"space":true, "home":true, "end":true}'>
+  <img src="1.jpg">
+  <img src="2.jpg">
+</div>
+```
+
+<!--/4.5.1:notes-->
+
 ## 4.5.0, 20 March 2014
 
 <!--4.5.0:name-->
