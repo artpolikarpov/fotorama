@@ -382,10 +382,12 @@ $arrSize: 32px;
   }
   .fotorama__stage__frame--video {
     .fotorama__img,
-    .fotorama__html,
-    .fotorama__caption {
+    .fotorama__html {
       @extend %no-transform;
       @include opacity(0);
+    }
+    .fotorama__caption {
+      display: none;
     }
   }
 }
