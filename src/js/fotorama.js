@@ -69,6 +69,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       o_transition,
       o_shadows,
       o_rtl,
+      o_keyboard,
       lastOptions = {},
 
       measures = {},
@@ -132,6 +133,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
     });
   }
 
+  function allowKey (key) {
+    return o_keyboard[key] || that.fullScreen;
+  }
+
   function bindGlobalEvents (FLAG) {
     var keydownCommon = 'keydown.' + _fotoramaClass,
         keydownLocal = 'keydown.' + _fotoramaClass + stamp,
@@ -140,21 +145,29 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (FLAG) {
       $DOCUMENT
           .on(keydownLocal, function (e) {
+            var catched,
+                index;
+
             if ($videoPlaying && e.keyCode === 27) {
-              stopEvent(e);
+              catched = true;
               unloadVideo($videoPlaying, true, true);
             } else if (that.fullScreen || (opts.keyboard && !that.index)) {
               if (e.keyCode === 27) {
-                stopEvent(e);
+                catched = true;
                 that.cancelFullScreen();
-              } else if (e.keyCode === 39 || (e.keyCode === 40 && that.fullScreen)) {
-                stopEvent(e);
-                that.show({index: '>', slow: e.altKey, user: true});
-              } else if (e.keyCode === 37 || (e.keyCode === 38 && that.fullScreen)) {
-                stopEvent(e);
-                that.show({index: '<', slow: e.altKey, user: true});
+              } else if ((e.shiftKey && e.keyCode === 32 && allowKey('space')) || (e.keyCode === 37 && allowKey('left')) || (e.keyCode === 38 && allowKey('up'))) {
+                index = '<';
+              } else if ((e.keyCode === 32 && allowKey('space')) || (e.keyCode === 39 && allowKey('right')) || (e.keyCode === 40 && allowKey('down'))) {
+                index = '>';
+              } else if (e.keyCode === 36 && allowKey('home')) {
+                index = '<<';
+              } else if (e.keyCode === 35 && allowKey('end')) {
+                index = '>>';
               }
             }
+
+            (catched || index) && stopEvent(e);
+            index && that.show({index: index, slow: e.altKey, user: true});
           });
 
       if (!that.index) {
@@ -244,6 +257,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     o_rtl = opts.direction === 'rtl';
 
+    o_keyboard = $.extend({}, opts.keyboard && KEYBOARD_OPTIONS, opts.keyboard);
+
     var classes = {add: [], remove: []};
 
     if (size > 1) {
@@ -272,7 +287,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     stageNoMove();
 
-    extendMeasures(opts, true);
+    extendMeasures(opts, [measures]);
 
     o_navThumbs = o_nav === 'thumbs';
 
@@ -820,24 +835,21 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }
 
-  function extendMeasures (options, optsLeave) {
-    options && $.extend(measures, {
-      width: options.width || measures.width,
-      height: options.height,
-      minwidth: options.minwidth,
-      maxwidth: options.maxwidth,
-      minheight: options.minheight,
-      maxheight: options.maxheight,
-      ratio: getRatio(options.ratio)
-    })
-        && !optsLeave && $.extend(opts, {
-      width: measures.width,
-      height: measures.height,
-      minwidth: measures.minwidth,
-      maxwidth: measures.maxwidth,
-      minheight: measures.minheight,
-      maxheight: measures.maxheight,
-      ratio: measures.ratio
+  function extendMeasures (options, measuresArray) {
+    if (!options) return;
+
+    $.each(measuresArray, function (i, measures) {
+      if (!measures) return;
+
+      $.extend(measures, {
+        width: options.width || measures.width,
+        height: options.height,
+        minwidth: options.minwidth,
+        maxwidth: options.maxwidth,
+        minheight: options.minheight,
+        maxheight: options.maxheight,
+        ratio: getRatio(options.ratio)
+      })
     });
   }
 
@@ -1152,7 +1164,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   that.resize = function (options) {
     if (!data) return this;
 
-    extendMeasures(!that.fullScreen ? optionsToLowerCase(options) : {width: '100%', maxwidth: '100%', minwidth: 0, height: '100%', maxheight: null, minheight: null}, that.fullScreen);
+    extendMeasures(!that.fullScreen ? optionsToLowerCase(options) : {width: '100%', maxwidth: '100%', minwidth: 0, height: '100%', maxheight: null, minheight: null}, [measures, that.fullScreen && opts]);
 
     var time = arguments[1] || 0,
         setFLAG = arguments[2],
