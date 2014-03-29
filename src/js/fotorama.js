@@ -1152,7 +1152,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   that.resize = function (options) {
     if (!data) return this;
 
-    extendMeasures(!that.fullScreen ? optionsToLowerCase(options) : {width: '100%', maxwidth: null, minwidth: null, height: '100%', maxheight: null, minheight: null}, that.fullScreen);
+    extendMeasures(!that.fullScreen ? optionsToLowerCase(options) : {width: '100%', maxwidth: '100%', minwidth: 0, height: '100%', maxheight: null, minheight: null}, that.fullScreen);
 
     var time = arguments[1] || 0,
         setFLAG = arguments[2],
