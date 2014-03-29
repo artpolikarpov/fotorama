@@ -338,7 +338,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     classes[addOrRemove(o_fade)].push(wrapFadeClass);
     classes[addOrRemove(!o_fade)].push(wrapSlideClass);
-
+    classes[addOrRemove(!opts.captions)].push(wrapNoCaptionsClass);
     classes[addOrRemove(o_rtl)].push(wrapRtlClass);
 
     o_shadows = opts.shadows && !SLOW;
@@ -1164,7 +1164,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   that.resize = function (options) {
     if (!data) return this;
 
-    extendMeasures(!that.fullScreen ? optionsToLowerCase(options) : {width: '100%', maxwidth: '100%', minwidth: 0, height: '100%', maxheight: null, minheight: null}, [measures, that.fullScreen && opts]);
+    extendMeasures(!that.fullScreen ? optionsToLowerCase(options) : {width: '100%', maxwidth: null, minwidth: null, height: '100%', maxheight: null, minheight: null}, [measures, that.fullScreen || opts]);
 
     var time = arguments[1] || 0,
         setFLAG = arguments[2],
@@ -1176,7 +1176,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (measureIsValid(width)) {
       $wrap
           .addClass(wrapOnlyActiveClass)
-          .css({width: width, minWidth: measures.minwidth, maxWidth: measures.maxwidth});
+          .css({width: width, minWidth: measures.minwidth || 0, maxWidth: measures.maxwidth || MAX_WIDTH});
 
       width = measures.W = measures.w = $wrap.width();
       measures.nw = o_nav && numberFromWhatever(opts.navwidth, width) || width;

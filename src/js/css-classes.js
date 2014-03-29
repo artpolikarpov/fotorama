@@ -12,6 +12,7 @@ var _fotoramaClass = 'fotorama',
     wrapPanYClass = wrapClass + '--pan-y',
     wrapRtlClass = wrapClass + '--rtl',
     wrapOnlyActiveClass = wrapClass + '--only-active',
+    wrapNoCaptionsClass = wrapClass + '--no-captions',
 
     stageClass = _fotoramaClass + '__stage',
     stageFrameClass = stageClass + '__frame',

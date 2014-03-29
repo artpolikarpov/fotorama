@@ -36,6 +36,8 @@ var $WINDOW = $(window),
 
     BEZIER = bez([.1, 0, .25, 1]),
 
+    MAX_WIDTH = 99999,
+
     OPTIONS = {
       // dimensions
       width: null, // 500 || '100%'
@@ -91,6 +93,7 @@ var $WINDOW = $(window),
       shadows: true,
       spinner: null
     },
+
     KEYBOARD_OPTIONS = {
       left: true,
       right: true,
