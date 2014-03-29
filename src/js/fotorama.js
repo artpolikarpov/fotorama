@@ -249,9 +249,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
   function setOptions () {
     that.options = opts = optionsToLowerCase(opts);
 
-    o_fade = opts.transition === 'crossfade' || opts.transition === 'dissolve';
+    o_fade = (opts.transition === 'crossfade' || opts.transition === 'dissolve');
 
-    o_loop = opts.loop && (size > 2 || o_fade);
+    o_loop = opts.loop && (size > 2 || o_fade) && (!o_transition || o_transition !== 'slide');
 
     o_transitionDuration = +opts.transitionduration || TRANSITION_DURATION;
 
