@@ -23,16 +23,6 @@ document.write(
     '</div>'
 );
 
-function waitsFor (test, fn) {
-  if (test()) {
-    fn();
-  } else {
-    setTimeout(function () {
-      waitsFor(test, fn);
-    }, 10);
-  }
-}
-
 function random (min, max) {
   if (max == null) {
     max = min;

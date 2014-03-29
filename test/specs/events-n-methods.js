@@ -8,16 +8,6 @@ document.write(
     '</div>'
 );
 
-function waitsFor (test, fn) {
-  if (test()) {
-    fn();
-  } else {
-    setTimeout(function () {
-      waitsFor(test, fn);
-    }, 10);
-  }
-}
-
 describe('Events', function () {
   var $fotorama, fotorama, binded, e = {};
 
@@ -248,6 +238,8 @@ describe('Events', function () {
   });
 
   it('resizable', function () {
+    fotorama.resize({maxwidth: null});
+
     var $stage = $('.fotorama__stage', $fotorama);
 
     expect($stage.width()).toEqual(700);

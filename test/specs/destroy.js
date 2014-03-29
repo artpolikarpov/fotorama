@@ -10,16 +10,6 @@ document.write(
     '</div>'
 );
 
-function waitsFor (test, fn) {
-  if (test()) {
-    fn();
-  } else {
-    setTimeout(function () {
-      waitsFor(test, fn);
-    }, 10);
-  }
-}
-
 describe('Destroy', function () {
   var loaded, $fotorama, fotorama, data, $html, html, htmlWithFotorama;
 

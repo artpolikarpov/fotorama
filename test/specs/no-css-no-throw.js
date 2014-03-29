@@ -8,7 +8,7 @@ document.write(
     '</div>'
 );
 
-describe('Initialization', function () {
+describe('No CSS, but no throw', function () {
   var $fotorama, fotorama;
 
   beforeEach(function () {
@@ -17,5 +17,9 @@ describe('Initialization', function () {
 
   it('initialized after .fotorama()', function () {
     $fotorama.fotorama();
+  });
+
+  it('no css here', function () {
+    expect($('.fotorama__wrap', $fotorama).css('position')).toBe('static');
   });
 });

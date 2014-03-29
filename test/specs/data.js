@@ -4,16 +4,6 @@ document.write(
     '</div>'
 );
 
-function waitsFor (test, fn) {
-  if (test()) {
-    fn();
-  } else {
-    setTimeout(function () {
-      waitsFor(test, fn);
-    }, 10);
-  }
-}
-
 describe('Initialization with data', function () {
   var $fotorama, fotorama;
 

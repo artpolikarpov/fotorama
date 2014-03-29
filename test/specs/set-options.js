@@ -1,14 +1,14 @@
 document.write(
     '<div class="fotorama" id="fotorama">' +
-        '<img src="test/i/okonechnikov/1-lo.jpg">' +
-        '<img src="test/i/okonechnikov/2-lo.jpg">' +
-        '<img src="test/i/okonechnikov/9-lo.jpg">' +
-        '<img src="test/i/okonechnikov/6-lo.jpg">' +
-        '<img src="test/i/okonechnikov/5-lo.jpg">' +
+        '<img src="test/i/okonechnikov/1-lo.jpg" data-caption="One">' +
+        '<img src="test/i/okonechnikov/2-lo.jpg" data-caption="Two">' +
+        '<img src="test/i/okonechnikov/9-lo.jpg" data-caption="Nine">' +
+        '<img src="test/i/okonechnikov/6-lo.jpg" data-caption="Six">' +
+        '<img src="test/i/okonechnikov/5-lo.jpg" data-caption="Five">' +
     '</div>'
 );
 
-describe('setOptions()', function () {
+describe('Manipulates the fotorama options at runtime', function () {
   var $fotorama, fotorama;
 
   beforeEach(function () {
@@ -32,6 +32,19 @@ describe('setOptions()', function () {
 
     fotorama.setOptions({arrows: true});
     _expect(true);
+  });
+
+  it('captions', function () {
+    var $activeCaption = $('.fotorama__caption', fotorama.activeFrame.$stageFrame);
+
+    expect($activeCaption.text()).toBe('One');
+    expect($activeCaption.is(':visible')).toBe(true);
+
+    fotorama.setOptions({captions: false});
+    expect($activeCaption.is(':visible')).toBe(false);
+
+    fotorama.setOptions({captions: true});
+    expect($activeCaption.is(':visible')).toBe(true);
   });
 
   // more coming soon...

@@ -8,16 +8,6 @@ document.write(
     '</div>'
 );
 
-function waitsFor (test, fn) {
-  if (test()) {
-    fn();
-  } else {
-    setTimeout(function () {
-      waitsFor(test, fn);
-    }, 10);
-  }
-}
-
 describe('Video', function () {
   var $fotorama, fotorama, data, $thumb;
 

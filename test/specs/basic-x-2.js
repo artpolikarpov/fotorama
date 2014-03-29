@@ -17,16 +17,6 @@ document.write(
     '</div>'
 );
 
-function waitsFor (test, fn) {
-  if (test()) {
-    fn();
-  } else {
-    setTimeout(function () {
-      waitsFor(test, fn);
-    }, 10);
-  }
-}
-
 var fotorama1, fotorama2;
 
 function eachFotorama (callback) {
@@ -75,7 +65,6 @@ describe('Two fotoramas', function () {
 
       if (!i) {
         waitsFor(function () {
-          console.log('$stage.width()', $stage.width());
           return $stage.width() === 700
         }, function () {
           expect($stage.height()).toEqual(467);
