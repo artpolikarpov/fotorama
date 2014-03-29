@@ -129,7 +129,7 @@
 }
 
 
-.fotorama__wrap--no-controls,
+.fotorama__wrap--no-controls.fotorama__wrap--toggle-arrows,
 .fotorama__wrap--video {
   .fotorama__arr,
   .fotorama__fullscreen-icon {
@@ -148,7 +148,7 @@
 }
 
 .fotorama__wrap--css3 {
-  &.fotorama__wrap--slide.fotorama__wrap--no-controls,
+  &.fotorama__wrap--no-controls.fotorama__wrap--slide.fotorama__wrap--toggle-arrows,
   &.fotorama__wrap--video {
     .fotorama__fullscreen-icon {
       transform: translate3d($arrSize, -$arrSize, 0);

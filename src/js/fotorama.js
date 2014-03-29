@@ -239,10 +239,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     opts.autoplay = Math.max(+interval || AUTOPLAY_INTERVAL, o_transitionDuration * 1.5);
   }
 
-  function addOrRemove (FLAG) {
-    return FLAG ? 'add' : 'remove';
-  }
-
   /**
    * Options on the fly
    * */
@@ -261,12 +257,16 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     var classes = {add: [], remove: []};
 
+    function addOrRemoveClass (FLAG, value) {
+      classes[FLAG ? 'add' : 'remove'].push(value);
+    }
+
     if (size > 1) {
       o_nav = opts.nav;
       o_navTop = opts.navposition === 'top';
       classes.remove.push(selectClass);
 
-      $arrs.toggle(opts.arrows);
+      $arrs.toggle(!!opts.arrows);
     } else {
       o_nav = false;
       $arrs.hide();
@@ -336,13 +336,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
       o_nativeFullScreen = false;
     }
 
-    classes[addOrRemove(o_fade)].push(wrapFadeClass);
-    classes[addOrRemove(!o_fade)].push(wrapSlideClass);
-    classes[addOrRemove(!opts.captions)].push(wrapNoCaptionsClass);
-    classes[addOrRemove(o_rtl)].push(wrapRtlClass);
+    addOrRemoveClass(o_fade, wrapFadeClass);
+    addOrRemoveClass(!o_fade, wrapSlideClass);
+    addOrRemoveClass(!opts.captions, wrapNoCaptionsClass);
+    addOrRemoveClass(o_rtl, wrapRtlClass);
+    addOrRemoveClass(opts.arrows !== 'always', wrapToggleArrowsClass);
 
     o_shadows = opts.shadows && !SLOW;
-    classes[addOrRemove(!o_shadows)].push(wrapNoShadowsClass);
+    addOrRemoveClass(!o_shadows, wrapNoShadowsClass);
 
     $wrap
         .addClass(classes.add.join(' '))
@@ -1388,7 +1389,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       //console.log('result', result);
 
-      var toggleControlsFLAG = (MS_POINTER && !hoverFLAG || result.touch) && opts.arrows;
+      var toggleControlsFLAG = (MS_POINTER && !hoverFLAG || result.touch) && opts.arrows && opts.arrows !== 'always';
 
       if (result.moved || (toggleControlsFLAG && result.pos !== result.newPos && !result.control)) {
         var index = getIndexByPos(result.newPos, measures.w, opts.margin, repositionIndex);
