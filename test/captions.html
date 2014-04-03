@@ -14,7 +14,7 @@
 
   <script type="text/javascript">
     $(function () {
-      f = $('.fotorama').data('fotorama');
+      f = $('.fotorama').fotorama({captions: false}).data('fotorama');
     })
   </script>
 </head>
@@ -32,6 +32,7 @@
 
 <!-- Fotorama -->
 <div class="fotorama"
+     data-auto="false"
      data-width="500"
      data-ratio="3/2"
      data-max-width="100%">
