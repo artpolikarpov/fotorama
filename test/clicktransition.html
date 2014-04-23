@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>No arrows</title>
+	<title>Basic fotorama</title>
 	<meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
 
@@ -13,24 +13,32 @@
 	<script src="../out/fotorama.js"></script>
 
   <script type="text/javascript">
+    console = window.console || {};
+    console.time = console.time || $.noop;
+    console.timeEnd = console.timeEnd || $.noop;
+
     $(function () {
-      f = $('.fotorama').data('fotorama');
+      f = $('.fotorama')
+          .on('fotorama:show', function (event, fotorama, extra) {
+            console.log('***' + event.type.toUpperCase() + '***');
+          })
+          .data('fotorama');
     })
   </script>
 </head>
 
 <body>
 
-<p>Default arrows:<p>
-<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div class="fotorama"
-     <mark>data-arrows="true"</mark>></code></pre>
+<!--<p>Basic fotorama:<p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div <mark>class="fotorama"</mark>></code></pre>-->
 
 <!-- Fotorama -->
 <div class="fotorama"
+     data-clicktransition="slide"
+     data-transition="dissolve"
      data-width="700"
      data-ratio="3/2"
-     data-max-width="100%"
-     data-arrows="true">
+     data-max-width="100%">
 	<a href="i/okonechnikov/1-lo.jpg"></a>
 	<a href="i/okonechnikov/2-lo.jpg"></a>
 	<a href="i/okonechnikov/9-lo.jpg"></a>
@@ -38,31 +46,16 @@
 	<a href="i/okonechnikov/5-lo.jpg"></a>
 </div>
 
-<p>No arrows:<p>
-<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div class="fotorama"
-     <mark>data-arrows="false"</mark>></code></pre>
+<br/><br/>
 
 <div class="fotorama"
+     data-transition="slide"
+     data-clicktransition="dissolve"
+     data-nav="thumbs"
+     data-thumb-width="200"
      data-width="700"
      data-ratio="3/2"
-     data-max-width="100%"
-     data-arrows="false">
-	<a href="i/okonechnikov/1-lo.jpg"></a>
-	<a href="i/okonechnikov/2-lo.jpg"></a>
-	<a href="i/okonechnikov/9-lo.jpg"></a>
-	<a href="i/okonechnikov/6-lo.jpg"></a>
-	<a href="i/okonechnikov/5-lo.jpg"></a>
-</div>
-
-<p>Always visible arrows:<p>
-<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div class="fotorama"
-     <mark>data-arrows="always"</mark>></code></pre>
-
-<div class="fotorama"
-     data-width="700"
-     data-ratio="3/2"
-     data-max-width="100%"
-     data-arrows="always">
+     data-max-width="100%">
 	<a href="i/okonechnikov/1-lo.jpg"></a>
 	<a href="i/okonechnikov/2-lo.jpg"></a>
 	<a href="i/okonechnikov/9-lo.jpg"></a>

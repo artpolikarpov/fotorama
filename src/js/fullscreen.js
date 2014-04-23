@@ -1,5 +1,4 @@
-var
-    fullScreenApi = {
+var fullScreenApi = {
       ok: false,
       is: function () {
         return false;

@@ -38,6 +38,10 @@ function numberFromPercent (value) {
   return /%$/.test(value) && numberFromMeasure(value, '%');
 }
 
+function numberFromWhatever (value, whole) {
+  return numberFromPercent(value) / 100 * whole || numberFromMeasure(value);
+}
+
 function measureIsValid (value) {
   return (!!numberFromMeasure(value) || !!numberFromMeasure(value, '%')) && value;
 }
@@ -129,7 +133,7 @@ function edgeResistance (pos, edge) {
 }
 
 function getProtocol () {
-  getProtocol.p = getProtocol.p || (location.protocol === 'https://' ? 'https://' : 'http://');
+  getProtocol.p = getProtocol.p || (location.protocol === 'https:' ? 'https://' : 'http://');
   return getProtocol.p;
 }
 
@@ -341,7 +345,7 @@ function fit ($el, measuresToFit, method) {
       w: measuresToFit.w,
       h: measuresToFit.h,
       m: method
-    }
+    };
   }
 
   return true;

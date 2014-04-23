@@ -290,9 +290,21 @@ s3: {
     upload: [
         // Separate version to separate folder
       {
-        src: 'out/*',
+        src: 'out/fotorama.*',
         dest: '<%= pkg.version %>/'
+      },
+      {
+        src: 'out/fotorama@2x.png',
+        dest: '<%= pkg.version %>/fotorama@2x.png'
+      },
+      {
+        src: 'out/*.zip',
+        dest: '<%= pkg.version %>/',
+        options: {
+          gzip: false
+        }
       }
+
     ]
   },
   edge: {
@@ -407,13 +419,13 @@ grunt.loadNpmTasks('grunt-shell');
 grunt.loadNpmTasks('grunt-tweet');
 grunt.loadNpmTasks('grunt-gh-release');
 
-var defaultTask = 'copy:i sass autoprefixer jst replace:jst concat:js replace:console concat:css jasmine uglify cssmin jasmine clean copy:example compress';
-var build = 'copy:i sass autoprefixer jst replace:jst concat:js replace:console concat:css uglify cssmin clean copy:example compress'.split(' ');
+var defaultTask = 'copy:i sass autoprefixer jst replace:jst concat:js replace:console concat:css uglify cssmin jasmine clean copy:example compress';
+//var build = 'copy:i sass autoprefixer jst replace:jst concat:js replace:console concat:css uglify cssmin clean copy:example compress'.split(' ');
 
 // Compile
 grunt.registerTask('default', defaultTask.split(' '));
-grunt.registerTask('build', build);
-grunt.registerTask('look', 'copy:i sass autoprefixer jst replace:jst concat:js watch'.split(' '));
+//grunt.registerTask('build', build);
+//grunt.registerTask('look', 'copy:i sass autoprefixer jst replace:jst concat:js watch'.split(' '));
 
 // Publish, will fail without secret details ;-)
 grunt.registerTask('publish', (defaultTask + ' ' + 's3 copy:bower replace:version shell replace:history gh_release tweet').split(' '));

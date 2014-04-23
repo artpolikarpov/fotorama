@@ -58,7 +58,7 @@ describe('Two fotoramas', function () {
       expect($('.fotorama__nav__frame', $fotorama).size()).toEqual(5 - i);
     });
   });
-  it('dimensions are correct', function () {
+  it('dimensions are correct', function (done) {
     eachFotorama(function (i, fotorama) {
       var $fotorama = $('#fotorama' + (i + 1)),
           $stage = $('.fotorama__stage', $fotorama);
@@ -66,10 +66,9 @@ describe('Two fotoramas', function () {
       if (!i) {
         waitsFor(function () {
           return $stage.width() === 700
-        }, 'Waits for autosize...', 100);
-
-        runs(function () {
+        }, function () {
           expect($stage.height()).toEqual(467);
+          done();
         });
       } else {
         expect($stage.width()).toEqual(500);

@@ -20,15 +20,14 @@ describe('Hash', function () {
     expect(location.hash).toBe('');
   });
 
-  it('hash is a number', function () {
+  it('hash is a number', function (done) {
     fotorama.show('>');
 
     waitsFor(function () {
       return location.hash === '#2';
-    }, 'wait for a new hash', 500);
-
-    runs(function () {
+    }, function () {
       expect(location.hash).toBe('#' + (fotorama.activeIndex + 1));
+      done();
     });
   });
 

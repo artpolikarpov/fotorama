@@ -8,7 +8,17 @@ document.write(
     '</div>'
 );
 
-describe('Basic', function () {
+function waitsFor (test, fn) {
+  if (test()) {
+    fn();
+  } else {
+    setTimeout(function () {
+      waitsFor(test, fn);
+    }, 10);
+  }
+}
+
+describe('jQuery 1.8.0', function () {
   var $fotorama, fotorama;
 
   beforeEach(function () {
@@ -16,6 +26,9 @@ describe('Basic', function () {
     fotorama = fotorama || $fotorama.data('fotorama');
   });
 
+  it('jQuery version is actually 1.6.4', function () {
+    expect($fotorama.jquery).toBe('1.8.0');
+  });
   it('$.fn.fotorama is here', function () {
     expect($.fn.fotorama).toBeDefined();
   });
@@ -47,7 +60,5 @@ describe('Basic', function () {
 
       done();
     });
-
-
   });
 });
