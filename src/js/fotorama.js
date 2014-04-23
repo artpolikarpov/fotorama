@@ -110,7 +110,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
   toDeactivate[NAV_DOT_FRAME_KEY] = [];
   toDetach[STAGE_FRAME_KEY] = {};
 
-  $wrap.addClass(CSS3 ? wrapCss3Class : wrapCss2Class);
+  $wrap
+      .addClass(CSS3 ? wrapCss3Class : wrapCss2Class)
+      .toggleClass(wrapNoControlsClass, !opts.controlsonstart);
 
   fotoramaData.fotorama = this;
 
@@ -247,7 +249,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     o_fade = (opts.transition === 'crossfade' || opts.transition === 'dissolve');
 
-    o_loop = opts.loop && (size > 2 || o_fade) && (!o_transition || o_transition !== 'slide');
+    o_loop = opts.loop && (size > 2 || o_fade && !o_transition || o_transition !== 'slide');
 
     o_transitionDuration = +opts.transitionduration || TRANSITION_DURATION;
 
@@ -341,7 +343,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
     addOrRemoveClass(!opts.captions, wrapNoCaptionsClass);
     addOrRemoveClass(o_rtl, wrapRtlClass);
     addOrRemoveClass(opts.arrows !== 'always', wrapToggleArrowsClass);
-    addOrRemoveClass(!opts.controlsonstart, wrapNoControlsClass);
 
     o_shadows = opts.shadows && !SLOW;
     addOrRemoveClass(!o_shadows, wrapNoShadowsClass);
