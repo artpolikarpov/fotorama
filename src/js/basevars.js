@@ -86,6 +86,8 @@ var $WINDOW = $(window),
       swipe: true,
       trackpad: true,
 
+      controlsonstart: true,
+
       shuffle: false,
 
       direction: 'ltr', // 'rtl'

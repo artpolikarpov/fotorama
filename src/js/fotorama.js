@@ -1,6 +1,6 @@
 jQuery.Fotorama = function ($fotorama, opts) {
-  $HTML = $HTML || $('html');
-  $BODY = $BODY || $('body');
+  $HTML = $('html');
+  $BODY = $('body');
 
   var that = this,
       stamp = $.now(),
@@ -341,6 +341,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     addOrRemoveClass(!opts.captions, wrapNoCaptionsClass);
     addOrRemoveClass(o_rtl, wrapRtlClass);
     addOrRemoveClass(opts.arrows !== 'always', wrapToggleArrowsClass);
+    addOrRemoveClass(!opts.controlsonstart, wrapNoControlsClass);
 
     o_shadows = opts.shadows && !SLOW;
     addOrRemoveClass(!o_shadows, wrapNoShadowsClass);
@@ -1519,7 +1520,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       if (_startindex || opts.hash && location.hash) {
         startIndex = getIndexFromHash(_startindex || location.hash.replace(/^#/, ''), data, that.index === 0 || _startindex, _startindex);
       }
-      activeIndex = repositionIndex = dirtyIndex = lastActiveIndex = startIndex = edgeIndex(startIndex) || 0;/*(o_rtl ? size - 1 : 0)*/;
+      activeIndex = repositionIndex = dirtyIndex = lastActiveIndex = startIndex = edgeIndex(startIndex) || 0;/*(o_rtl ? size - 1 : 0)*///;
     }
 
     if (size) {
