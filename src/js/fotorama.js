@@ -232,7 +232,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     stageShaftTouchTail.noMove = _noMove || o_fade;
     stageShaftTouchTail.noSwipe = _noMove || !opts.swipe;
 
-    !o_transition && $stageShaft.toggleClass(grabClass, !stageShaftTouchTail.noMove && !stageShaftTouchTail.noSwipe);
+    !o_transition && $stageShaft.toggleClass(grabClass, !opts.click && !stageShaftTouchTail.noMove && !stageShaftTouchTail.noSwipe);
     MS_POINTER && $wrap.toggleClass(wrapPanYClass, !stageShaftTouchTail.noSwipe);
   }
 
@@ -1325,7 +1325,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
         pointerFLAG = x && !disableDirrection(getDirection(x)) && opts.click;
 
     if (stageCursor.p !== pointerFLAG
-        && (o_fade || !opts.swipe)
         && $stage.toggleClass(pointerClass, pointerFLAG)) {
       stageCursor.p = pointerFLAG;
       stageCursor.x = x;
