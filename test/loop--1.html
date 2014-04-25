@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Loop</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.10.2.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../out/fotorama.css" rel="stylesheet">
+	<script src="../out/fotorama.js"></script>
+
+  <script type="text/javascript">
+    $(function () {
+      f = $('.fotorama').data('fotorama');
+    })
+  </script>
+</head>
+
+<body>
+
+<p>Loop:<p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div class="fotorama"
+     <mark>data-loop="true"</mark>></code></pre>
+
+<!-- Just don’t want to repeat this prefix in every img[src] -->
+<base href="i/okonechnikov/">
+
+<!-- Fotorama -->
+<div class="fotorama"
+     data-width="700"
+     data-ratio="3/2"
+     data-max-width="100%"
+     data-clicktransition="crossfade"
+     data-loop="true">
+	<a href="24-lo.jpg"></a>
+</div>
+
+<!-- © -->
+<p>Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
+</body>
+</html>

@@ -249,7 +249,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     o_fade = (opts.transition === 'crossfade' || opts.transition === 'dissolve');
 
-    o_loop = opts.loop && (size > 2 || o_fade && !o_transition || o_transition !== 'slide');
+    o_loop = opts.loop && (size > 2 || (o_fade && (!o_transition || o_transition !== 'slide')));
 
     o_transitionDuration = +opts.transitionduration || TRANSITION_DURATION;
 
@@ -1513,6 +1513,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     setData();
     setOptions();
 
+    var ok = reset.ok;
+
     if (!reset.i) {
       reset.i = true;
       // Only once
@@ -1533,13 +1535,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
       activeIndexes = [];
       detachFrames(STAGE_FRAME_KEY);
 
-      that.show({index: activeIndex, time: 0, reset: reset.ok});
+      reset.ok = true;
+
+      that.show({index: activeIndex, time: 0, reset: ok});
       that.resize();
     } else {
       that.destroy();
     }
-
-    reset.ok = true;
   }
 
   function changeToRtl () {

@@ -47,6 +47,9 @@ function measureIsValid (value) {
 }
 
 function getPosByIndex (index, side, margin, baseIndex) {
+  console.log('getPosByIndex', index, side, margin, baseIndex);
+  console.log((index - (baseIndex || 0)) * (side + (margin || 0)));
+
   return (index - (baseIndex || 0)) * (side + (margin || 0));
 }
 
