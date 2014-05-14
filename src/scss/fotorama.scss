@@ -49,6 +49,7 @@ $arrSize: 32px;
   position: relative;
   @extend %no-select;
   direction: ltr;
+  z-index: 0;
 
   * {
      // /test/specs/thumbs.js
