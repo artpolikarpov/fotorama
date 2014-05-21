@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Thumbnails</title>
+	<meta charset="utf-8">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.10.2.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../out/fotorama.css" rel="stylesheet">
+	<script src="../out/fotorama.js"></script>
+
+  <style type="text/css">
+    * {
+      box-sizing: border-box;
+    }
+
+    img {
+      border-radius: 10px;
+    }
+  </style>
+
+  <script type="text/javascript">
+    $(function () {
+      f = $('.fotorama').data('fotorama');
+    })
+  </script>
+</head>
+
+<body>
+
+  <style type="text/css">
+    .fotorama--lenta {
+      position: relative;
+      -webkit-transition: height .3s ease-out;
+      -webkit-transform: translateZ(0);
+    }
+    .fotorama--lenta .fotorama__wrap {
+      position: absolute;
+      bottom: 0;/
+    }
+    .fotorama--lenta .fotorama__nav__frame.fotorama__active {
+      cursor: pointer;
+      pointer-events: all;
+    }
+
+    .fotorama--lenta .fotorama__thumb {
+      background: none;
+    }
+
+    .fotorama--lenta .fotorama__thumb-border {
+      display: none;
+    }
+
+    .fotorama--lenta .fotorama__nav .fotorama__img {
+      -webkit-transform: translateZ(0);
+      -webkit-transition: opacity linear .3s;
+    }
+
+    /* Не переносить */
+    .fotorama--lenta .fotorama__fullscreen-icon {
+      background-position: -64px 0;
+    }
+
+    .fotorama-lightbox .fotorama__nav-wrap,
+    .fotorama--dots-overlay .fotorama__nav-wrap {
+      position: absolute;
+      bottom: 0;
+      z-index: 20;
+    }
+    .fotorama-lightbox .fotorama__nav-wrap .fotorama__nav__frame, .fotorama-lightbox .fotorama__nav-wrap .fotorama__dot,
+    .fotorama--dots-overlay .fotorama__nav-wrap .fotorama__nav__frame,
+    .fotorama--dots-overlay .fotorama__nav-wrap .fotorama__dot {
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+    }
+    .fotorama-lightbox .fotorama__dot,
+    .fotorama--dots-overlay .fotorama__dot {
+      border-color: #fff;
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+    }
+    .fotorama-lightbox .fotorama__active .fotorama__dot,
+    .fotorama--dots-overlay .fotorama__active .fotorama__dot {
+      background-color: #fff;
+      box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+    }
+    .fotorama-lightbox .fotorama__wrap--css3 .fotorama__nav-wrap,
+    .fotorama--dots-overlay .fotorama__wrap--css3 .fotorama__nav-wrap {
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+      -webkit-transition-duration: .3s;
+      transition-duration: .3s;
+      -webkit-transition-timing-function: cubic-bezier(0.1, 0, 0.25, 1);
+      transition-timing-function: cubic-bezier(0.1, 0, 0.25, 1);
+      -webkit-transition-property: opacity, -webkit-transform;
+      transition-property: opacity, transform;
+    }
+    .fotorama-lightbox .fotorama__wrap--no-controls .fotorama__nav-wrap,
+    .fotorama--dots-overlay .fotorama__wrap--no-controls .fotorama__nav-wrap {
+      opacity: 0;
+    }
+    .fotorama-lightbox .fotorama__wrap--no-controls.fotorama__wrap--css2 .fotorama__nav-wrap,
+    .fotorama--dots-overlay .fotorama__wrap--no-controls.fotorama__wrap--css2 .fotorama__nav-wrap {
+      bottom: -30px;
+    }
+    .fotorama-lightbox .fotorama__wrap--no-controls.fotorama__wrap--css3 .fotorama__nav-wrap,
+    .fotorama--dots-overlay .fotorama__wrap--no-controls.fotorama__wrap--css3 .fotorama__nav-wrap {
+      -webkit-transform: translate3d(0, 30px, 0);
+      transform: translate3d(0, 30px, 0);
+    }
+  </style>
+
+<script type="text/javascript">
+  (function () {
+    var _preventDeault = function (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    },
+    touchClick = function ($el, fn) {
+      var el = $el[0];
+      if (el && el.addEventListener) {
+        el.addEventListener('touchstart', fn, false);
+        el.addEventListener('MSPointerDown', fn, false);
+      }
+      return $el.on('mousedown', fn);
+    },
+    preventDefault = function ($el) {
+      return touchClick($el, _preventDeault);
+    };
+
+    var now;
+
+    $(document).on('fotorama:show', '.fotorama--lenta', function (e, fotorama, extra) {
+      var $fotorama = $(this);
+
+      if (extra.user && !fotorama._isOpen) {
+        fotorama._isOpen = true;
+        fotorama.setOptions({trackpad: false, nav: 'dots', transitionduration: 333});
+
+        $fotorama.css({height: fotorama.options.height}).addClass('fotorama--dots-overlay');
+
+        if (!fotorama._isTouched) {
+          fotorama._isTouched = true;
+
+          var $close = $('<div class="fotorama__fullscreen-icon"></div>');
+          $('.fotorama__stage', $fotorama).append(
+              preventDefault(touchClick($close, function () {
+                if (fotorama._isOpen) {
+                  fotorama._isOpen = false;
+
+                  fotorama.setOptions({nav: 'thumbs', trackpad: true});
+                  $fotorama.css({height: fotorama.options.thumbheight}).removeClass('fotorama--dots-overlay');
+                }
+              }))
+          );
+
+          preventDefault($fotorama);
+        }
+      }
+    });
+  })();
+</script>
+
+<!-- Fotorama -->
+<div class="fotorama fotorama--lenta"
+     data-width="100%"
+     data-height="400"
+     data-fit="scaledown"
+     data-max-width="100%"
+     data-thumb-width="300"
+     data-thumb-height="200"
+     data-thumbmargin="2"
+     data-transitionduration="1000"
+     data-loop="true"
+     data-autoplay="3000"
+     data-nav="thumbs"
+     style="height: 200px;">
+	<a data-thumb="http://s.fotorama.io/okonechnikov/1-lo.jpg" href="http://s.fotorama.io/okonechnikov/1.jpg"></a>
+  <a data-thumb="http://s.fotorama.io/okonechnikov/2-lo.jpg" href="http://s.fotorama.io/okonechnikov/2.jpg"></a>
+  <a data-thumb="http://s.fotorama.io/okonechnikov/3-lo.jpg" href="http://s.fotorama.io/okonechnikov/3.jpg"></a>
+  <a data-thumb="http://s.fotorama.io/okonechnikov/4-lo.jpg" href="http://s.fotorama.io/okonechnikov/4.jpg"></a>
+  <a data-thumb="http://s.fotorama.io/okonechnikov/5-lo.jpg" href="http://s.fotorama.io/okonechnikov/5.jpg"></a>
+  <a data-thumb="http://s.fotorama.io/okonechnikov/6-lo.jpg" href="http://s.fotorama.io/okonechnikov/6.jpg"></a>
+  <a data-thumb="http://s.fotorama.io/okonechnikov/7-lo.jpg" href="http://s.fotorama.io/okonechnikov/7.jpg"></a>
+  <a data-thumb="http://s.fotorama.io/okonechnikov/8-lo.jpg" href="http://s.fotorama.io/okonechnikov/8.jpg"></a>
+  <a data-thumb="http://s.fotorama.io/okonechnikov/9-lo.jpg" href="http://s.fotorama.io/okonechnikov/9.jpg"></a>
+	<a data-thumb="http://s.fotorama.io/okonechnikov/10-lo.jpg" href="http://s.fotorama.io/okonechnikov/10.jpg"></a>
+	<a data-thumb="http://s.fotorama.io/okonechnikov/11-lo.jpg" href="http://s.fotorama.io/okonechnikov/11.jpg"></a>
+	<a data-thumb="http://s.fotorama.io/okonechnikov/12-lo.jpg" href="http://s.fotorama.io/okonechnikov/12.jpg"></a>
+	<a data-thumb="http://s.fotorama.io/okonechnikov/13-lo.jpg" href="http://s.fotorama.io/okonechnikov/13.jpg"></a>
+</div>
+
+<!-- © -->
+<p>Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
+</body>
+</html>
