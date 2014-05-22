@@ -25,7 +25,7 @@ $.fn.fotorama = function (opts) {
         );
       });
     } else {
-      fotorama.setOptions(opts);
+      fotorama.setOptions(opts, true);
     }
   });
 };

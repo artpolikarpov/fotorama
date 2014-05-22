@@ -148,7 +148,7 @@ $arrSize: 32px;
   @extend %image-reset;
   border: none !important;
   //overflow: hidden;
-  @extend %stretch-for-fit;
+  @extend %stretch;
   .fotorama__loaded &,
   .fotorama__error & {
     @include opacity(1);
@@ -262,8 +262,8 @@ $arrSize: 32px;
 }
 
 .fotorama__nav__frame.fotorama__active {
-  pointer-events: none;
-  cursor: default;
+  //pointer-events: none;
+  //cursor: default;
   .fotorama__dot {
     width: 6px;
     height: 6px;

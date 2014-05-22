@@ -27,7 +27,7 @@ function moveOnTouch ($el, options) {
       [startTime, startCoo]
     ];
 
-    startElPos = moveElPos = tail.noMove || noStop ? 0 : stop($el, (options.getPos || noop)(), options._001);
+    startElPos = moveElPos = tail.noMove || noStop ? 0 : stop($el, (options.getPos || noop)()/*, options._001*/);
 
     (options.onStart || noop).call(el, e);
   }
@@ -68,7 +68,7 @@ function moveOnTouch ($el, options) {
       }
 
       if (!tail.noMove) {
-        $el.css(getTranslate(moveElPos, options._001));
+        $el.css(getTranslate(moveElPos/*, options._001*/));
         if (!moved) {
           moved = true;
           // only for mouse

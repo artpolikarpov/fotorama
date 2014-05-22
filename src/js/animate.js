@@ -14,7 +14,7 @@ function slide ($el, options) {
   }
 
   console.time('var translate = $.extend');
-  var translate = $.extend(getTranslate(elPos, options._001), options.width && {width: options.width});
+  var translate = $.extend(getTranslate(elPos/*, options._001*/), options.width && {width: options.width});
   console.timeEnd('var translate = $.extend');
 
   elData.sliding = true;

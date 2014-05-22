@@ -34,6 +34,8 @@ var $WINDOW = $(window),
     NAV_DOT_FRAME_KEY = '$navDotFrame',
     NAV_THUMB_FRAME_KEY = '$navThumbFrame',
 
+    AUTO = 'auto',
+
     BEZIER = bez([.1, 0, .25, 1]),
 
     MAX_WIDTH = 99999,
@@ -52,6 +54,8 @@ var $WINDOW = $(window),
       margin: MARGIN,
       glimpse: 0,
 
+      fit: 'contain', // 'cover' || 'scaledown' || 'none'
+
       // navigation, thumbs
       nav: 'dots', // 'thumbs' || false
       navposition: 'bottom', // 'top'
@@ -60,10 +64,9 @@ var $WINDOW = $(window),
       thumbheight: THUMB_SIZE,
       thumbmargin: MARGIN,
       thumbborderwidth: MARGIN,
+      thumbfit: 'cover', // 'contain' || 'scaledown' || 'none'
 
       allowfullscreen: false, // true || 'native'
-
-      fit: 'contain', // 'cover' || 'scaledown' || 'none'
 
       transition: 'slide', // 'crossfade' || 'dissolve'
       clicktransition: null,
