@@ -118,7 +118,7 @@
 
 %sprite {
   background: url('fotorama.png') no-repeat;
-  @media (#{-webkit-min-device-pixel-ratio}: 1.5), (min-resolution: 144dpi) {
+  @media (#{-webkit-min-device-pixel-ratio}: 1.5), (min-resolution: 2dppx) {
     background: url('fotorama@2x.png') no-repeat;
     background-size: 96px 160px;
   }
