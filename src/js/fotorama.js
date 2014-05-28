@@ -20,8 +20,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       $stageShaft = $(div(stageShaftClass)).appendTo($stage),
       $stageFrame = $(),
-      $arrPrev = $(div(arrClass + ' ' + arrPrevClass/*, div(arrArrClass)*/)),
-      $arrNext = $(div(arrClass + ' ' + arrNextClass/*, div(arrArrClass)*/)),
+      $arrPrev = $(div(arrClass + ' ' + arrPrevClass + buttonAttributes)),
+      $arrNext = $(div(arrClass + ' ' + arrNextClass + buttonAttributes)),
       $arrs = $arrPrev.add($arrNext).appendTo($stage),
       $navWrap = $(div(navWrapClass)),
       $nav = $(div(navClass)).appendTo($navWrap),
@@ -35,7 +35,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       $thumbBorder = $(div(thumbBorderClass)).appendTo($navShaft),
 
-      $fullscreenIcon = $(div(fullscreenIconClass)),
+      $fullscreenIcon = $(div(fullscreenIconClass + buttonAttributes)),
       fullscreenIcon = $fullscreenIcon[0],
       $videoPlay = $(div(videoPlayClass)),
       $videoClose = $(div(videoCloseClass)).appendTo($stage),
@@ -102,8 +102,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
       fadeStack = [];
 
   $wrap[STAGE_FRAME_KEY] = $(div(stageFrameClass));
-  $wrap[NAV_THUMB_FRAME_KEY] = $(div(navFrameClass + ' ' + navFrameThumbClass, div(thumbClass)));
-  $wrap[NAV_DOT_FRAME_KEY] = $(div(navFrameClass + ' ' + navFrameDotClass, div(dotClass)));
+  $wrap[NAV_THUMB_FRAME_KEY] = $(div(navFrameClass + ' ' + navFrameThumbClass + buttonAttributes, div(thumbClass)));
+  $wrap[NAV_DOT_FRAME_KEY] = $(div(navFrameClass + ' ' + navFrameDotClass + buttonAttributes, div(dotClass)));
 
   toDeactivate[STAGE_FRAME_KEY] = [];
   toDeactivate[NAV_THUMB_FRAME_KEY] = [];
@@ -332,7 +332,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     o_allowFullScreen = opts.allowfullscreen;
 
     if (o_allowFullScreen) {
-      $fullscreenIcon.appendTo($stage);
+      $fullscreenIcon.prependTo($stage);
       o_nativeFullScreen = FULLSCREEN && o_allowFullScreen === 'native';
     } else {
       $fullscreenIcon.detach();
@@ -519,7 +519,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
             dataFrame.thumbratio = imgData.measures.ratio;
             reset();
           }
-        }, 5);
+        }, 0);
       }
 
       if (!src) {
@@ -581,6 +581,17 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }
 
+  function addNavFrameEvents (frame) {
+    addEnterUp(frame, onNavFrameClick);
+    addFocus(frame, function () {
+
+      setTimeout(function () {
+        lockScroll($nav);
+      }, 0);
+      slideNavShaft({time: o_transitionDuration, guessIndex: $(this).data().eq, minMax: navShaftTouchTail});
+    });
+  }
+
   function frameDraw (indexes, type) {
     eachIndex(indexes, type, function (i, index, dataFrame, $frame, key, frameData) {
       if ($frame) return;
@@ -588,6 +599,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       $frame = dataFrame[key] = $wrap[key].clone();
       frameData = $frame.data();
       frameData.data = dataFrame;
+      var frame = $frame[0];
 
       if (type === 'stage') {
 
@@ -608,10 +620,20 @@ jQuery.Fotorama = function ($fotorama, opts) {
           .addClass(stageFrameVideoClass)
           .append($videoPlay.clone());
 
+        // This solves tabbing problems
+        addFocus(frame, function () {
+          setTimeout(function () {
+            lockScroll($stage);
+          }, 0);
+          clickToShow({index: frameData.eq, user: true});
+        });
+
         $stageFrame = $stageFrame.add($frame);
       } else if (type === 'navDot') {
+        addNavFrameEvents(frame);
         $navDotFrame = $navDotFrame.add($frame);
       } else if (type === 'navThumb') {
+        addNavFrameEvents(frame);
         frameData.$wrap = $frame.children(':first');
         $navThumbFrame = $navThumbFrame.add($frame);
         if (dataFrame.video) {
@@ -629,7 +651,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
     eachIndex(indexes, 'stage', function (i, index, dataFrame, $frame, key, frameData) {
       if (!$frame) return;
 
-      toDetach[STAGE_FRAME_KEY][normalizeIndex(index)] = $frame.css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, opts.margin, repositionIndex)}, o_fade && getDuration(0)));
+      var normalizedIndex = normalizeIndex(index);
+      frameData.eq = normalizedIndex;
+
+      toDetach[STAGE_FRAME_KEY][normalizedIndex] = $frame.css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, opts.margin, repositionIndex)}, o_fade && getDuration(0)));
 
       if (isDetached($frame[0])) {
         $frame.appendTo($stageShaft);
@@ -720,14 +745,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function arrsUpdate () {
-    $arrPrev.toggleClass(
-      arrDisabledClass,
-      disableDirrection(0)
-    );
-    $arrNext.toggleClass(
-      arrDisabledClass,
-      disableDirrection(1)
-    );
+    var disablePrev = disableDirrection(0),
+        disableNext = disableDirrection(1);
+    $arrPrev
+        .toggleClass(arrDisabledClass, disablePrev)
+        .attr(disableAttr(disablePrev));
+    $arrNext
+        .toggleClass(arrDisabledClass, disableNext)
+        .attr(disableAttr(disableNext));
   }
 
   function stageWheelUpdate () {
@@ -766,12 +791,12 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function slideNavShaft (options) {
-    console.log('slideNavShaft', options.keep, slideNavShaft.l);
+    console.log('slideNavShaft', options.guessIndex, options.keep, slideNavShaft.l);
     var $guessNavFrame = data[options.guessIndex][navFrameKey];
     if ($guessNavFrame) {
       var overflowFLAG = navShaftTouchTail.min !== navShaftTouchTail.max,
-          activeNavFrameBounds = overflowFLAG && getNavFrameBounds(that.activeFrame[navFrameKey]),
-          l = overflowFLAG && (options.keep && slideNavShaft.l ? slideNavShaft.l : minMaxLimit((options.coo || measures.nw / 2) - getNavFrameBounds($guessNavFrame).c, activeNavFrameBounds.min, activeNavFrameBounds.max)),
+          minMax = options.minMax || overflowFLAG && getNavFrameBounds(that.activeFrame[navFrameKey]),
+          l = overflowFLAG && (options.keep && slideNavShaft.l ? slideNavShaft.l : minMaxLimit((options.coo || measures.nw / 2) - getNavFrameBounds($guessNavFrame).c, minMax.min, minMax.max)),
           pos = overflowFLAG && minMaxLimit(l, navShaftTouchTail.min, navShaftTouchTail.max),
           time = options.time * 1.1;
 
@@ -1089,7 +1114,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       scrollTop = $WINDOW.scrollTop();
       scrollLeft = $WINDOW.scrollLeft();
 
-      lockScroll(0, 0);
+      lockScroll($WINDOW);
 
       updateTouchTails('x', true);
 
@@ -1143,7 +1168,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       that.resize();
       loadImg(activeIndexes, 'stage');
 
-      lockScroll(scrollLeft, scrollTop);
+      lockScroll($WINDOW, scrollLeft, scrollTop);
 
       triggerEvent('fullscreenexit');
     }
@@ -1157,6 +1182,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
 
     return this;
+  };
+
+  that.toggleFullScreen = function () {
+    return that[(that.fullScreen ? 'cancel' : 'request') + 'FullScreen']();
   };
 
   if (document.addEventListener) {
@@ -1290,6 +1319,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
           stageNoMove();
 
+          $arrs.blur();
+          $fullscreenIcon.blur();
+
           triggerEvent('loadvideo');
         }
       });
@@ -1366,7 +1398,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if ($target.hasClass(videoPlayClass)) {
       that.playVideo();
     } else if (target === fullscreenIcon) {
-      that[(that.fullScreen ? 'cancel' : 'request') + 'FullScreen']();
+      that.toggleFullScreen();
     } else if ($videoPlaying) {
       target === videoClose && unloadVideo($videoPlaying, true, true);
     } else {
@@ -1414,7 +1446,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 //    getPos: function () {
 //      return -getPosByIndex(dirtyIndex, measures.w, opts.margin, repositionIndex);
 //    },
-    _001: true,
+    //_001: true,
     timeLow: 1,
     timeHigh: 1,
     friction: 2,
@@ -1492,24 +1524,26 @@ jQuery.Fotorama = function ($fotorama, opts) {
       function () {
         setTimeout(function () {
           if (touchedFLAG) return;
-          hoverFLAG = true;
-          toggleControlsClass(!hoverFLAG);
+          toggleControlsClass(!(hoverFLAG = true));
         }, 0);
       }, function () {
         if (!hoverFLAG) return;
-        hoverFLAG = false;
-        toggleControlsClass(!hoverFLAG);
+        toggleControlsClass(!(hoverFLAG = false));
       }
   );
 
-  function onNavFrameClick (e, time) {
+  function onNavFrameClick (e) {
     var index = $(this).data().eq;
-    clickToShow({index: index, slow: e.altKey, user: true, coo: e._x - $nav.offset().left, time: time});
+    clickToShow({index: index, slow: e.altKey, user: true, coo: e._x - $nav.offset().left});
+  }
+
+  function onArrClick (e) {
+    clickToShow({index: $arrs.index(this) ? '>' : '<', slow: e.altKey, user: true});
   }
 
   smartClick($arrs, function (e) {
     stopEvent(e);
-    clickToShow({index: $arrs.index(this) ? '>' : '<', slow: e.altKey, user: true});
+    onArrClick.call(this, e);
   }, {
     onStart: function () {
       onTouchStart();
@@ -1517,6 +1551,26 @@ jQuery.Fotorama = function ($fotorama, opts) {
     },
     onTouchEnd: onTouchEnd
   });
+
+  function addFocusOnControls (el) {
+    addFocus(el, function () {
+      lockScroll($stage);
+      setTimeout(function () {
+        lockScroll($stage);
+      }, 0);
+      toggleControlsClass(false);
+    });
+  }
+
+  $arrs.each(function () {
+    addEnterUp(this, function (e) {
+      onArrClick.call(this, e);
+    });
+    addFocusOnControls(this);
+  });
+
+  addEnterUp(fullscreenIcon, that.toggleFullScreen);
+  addFocusOnControls(fullscreenIcon);
 
   function reset () {
     setData();

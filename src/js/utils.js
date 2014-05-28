@@ -442,10 +442,10 @@ function clone (array) {
       });
 }
 
-function lockScroll (left, top) {
-  $WINDOW
-    .scrollLeft(left)
-    .scrollTop(top);
+function lockScroll ($el, left, top) {
+  $el
+    .scrollLeft(left || 0)
+    .scrollTop(top || 0);
 }
 
 function optionsToLowerCase (options) {
@@ -468,6 +468,31 @@ function getRatio (_ratio) {
     ratio = _ratio.split('/');
     return +ratio[0] / +ratio[1] || undefined;
   }
+}
+
+function addEvent (el, e, fn, bool) {
+  if (!e) return;
+  el.addEventListener ? el.addEventListener(e, fn, !!bool) : el.attachEvent('on'+e, fn);
+}
+
+function elIsDisabled (el) {
+  return !!el.getAttribute('disabled');
+}
+
+function disableAttr (FLAG) {
+  return {tabindex: FLAG * -1 + '', disabled: FLAG};
+}
+
+function addEnterUp (el, fn) {
+  addEvent(el, 'keyup', function (e) {
+    elIsDisabled(el) || e.keyCode == 13 && fn.call(el, e);
+  });
+}
+
+function addFocus (el, fn) {
+  addEvent(el, 'focus', el.onfocusin = function (e) {
+    fn.call(el, e);
+  }, true);
 }
 
 function stopEvent (e, stopPropagation) {

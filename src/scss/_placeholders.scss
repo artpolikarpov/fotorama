@@ -47,7 +47,20 @@
 }
 
 %gpu {
-  transform: translateZ(0);
+  transform: translate3d(0.001px, 0, 0);
+}
+
+%focus {
+  outline: 0;
+}
+
+%focus-overlay {
+  &:after {
+    content: '';
+    border-radius: inherit;
+    @extend %stretch;
+    background-color: rgba($blue, .3);
+  }
 }
 
 %no-transform {

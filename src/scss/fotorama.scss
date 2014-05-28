@@ -1,5 +1,9 @@
 $time: .3s;
 $arrSize: 32px;
+$white: white;
+$gray: mix(black, white);
+$lightgray: mix($gray, white);
+$blue: mix(#00d1ff, #008ed6);
 
 @import 'mixins';
 @import 'placeholders';
@@ -212,6 +216,7 @@ $arrSize: 32px;
   @extend %no-margin;
   cursor: pointer;
   @extend %no-tap;
+  @extend %focus;
 }
 
 .fotorama__nav--dots {
@@ -259,19 +264,19 @@ $arrSize: 32px;
   left: 6px;
   border-radius: 6px;
   border: 1px solid;
-}
 
-.fotorama__nav__frame.fotorama__active {
-  //pointer-events: none;
-  //cursor: default;
-  .fotorama__dot {
+  .fotorama__nav__frame:focus & {
+    @extend %focus-overlay;
+  }
+
+  .fotorama__nav__frame.fotorama__active & {
     width: 6px;
     height: 6px;
     border: none;
   }
 }
 
-@include dotColor(mix(black, white));
+@include dotColor($gray);
 
 .fotorama__thumb {
   overflow: hidden;
@@ -279,6 +284,18 @@ $arrSize: 32px;
   width: 100%;
   height: 100%;
   @extend %before-load-bg;
+
+  .fotorama__nav__frame:focus & {
+    z-index: 2;
+    @extend %focus-overlay;
+  }
+
+  .fotorama__nav__frame.fotorama__active & {
+    border: none;
+    &:after {
+      display: none;
+    }
+  }
 }
 
 .fotorama__thumb-border {
@@ -287,7 +304,7 @@ $arrSize: 32px;
   top: 0;
   left: 0;
   border-style: solid;
-  border-color: mix(#00d1ff, #008ed6);
+  border-color: $blue;
   background-image: linear-gradient(to bottom right, rgba(255, 255, 255, .25), rgba(64, 64, 64, .1));
 }
 
