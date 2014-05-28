@@ -128,26 +128,24 @@ function touch ($el, options) {
   }
 
   if (MS_POINTER) {
-    el[ADD_EVENT_LISTENER]('MSPointerDown', onStart, false);
-    document[ADD_EVENT_LISTENER]('MSPointerMove', onMove, false);
-    document[ADD_EVENT_LISTENER]('MSPointerCancel', onEnd, false);
-    document[ADD_EVENT_LISTENER]('MSPointerUp', onEnd, false);
+    addEvent(el, 'MSPointerDown', onStart);
+    addEvent(document, 'MSPointerMove', onMove);
+    addEvent(document,'MSPointerCancel', onEnd);
+    addEvent(document, 'MSPointerUp', onEnd);
   } else {
-    if (el[ADD_EVENT_LISTENER]) {
-      el[ADD_EVENT_LISTENER]('touchstart', onStart, false);
-      el[ADD_EVENT_LISTENER]('touchmove', onMove, false);
-      el[ADD_EVENT_LISTENER]('touchend', onEnd, false);
+    addEvent(el, 'touchstart', onStart);
+    addEvent(el, 'touchmove', onMove);
+    addEvent(el, 'touchend', onEnd);
 
-      document[ADD_EVENT_LISTENER]('touchstart', onOtherStart, false);
-      document[ADD_EVENT_LISTENER]('touchend', onOtherEnd, false);
-      document[ADD_EVENT_LISTENER]('touchcancel', onOtherEnd, false);
-      window[ADD_EVENT_LISTENER]('scroll', onOtherEnd, false);
-    }
+    addEvent(document, 'touchstart', onOtherStart);
+    addEvent(document, 'touchend', onOtherEnd);
+    addEvent(document, 'touchcancel', onOtherEnd);
 
-    $el.on('mousedown', onStart);
-    $DOCUMENT
-        .on('mousemove', onMove)
-        .on('mouseup', onEnd);
+    addEvent(window, 'scroll', onOtherEnd);
+
+    addEvent(el, 'mousedown', onStart);
+    addEvent(document, 'mousemove', onMove);
+    addEvent(document, 'mouseup', onEnd);
   }
 
   $el.on('click', 'a', function (e) {

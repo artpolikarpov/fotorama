@@ -87,7 +87,7 @@ var $WINDOW = $(window),
       arrows: true,
       click: true,
       swipe: true,
-      trackpad: true,
+      trackpad: false,
 
       controlsonstart: true,
 
