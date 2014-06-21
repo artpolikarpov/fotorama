@@ -267,12 +267,22 @@ $blue: mix(#00d1ff, #008ed6);
 
   .fotorama__nav__frame:focus & {
     @extend %focus-overlay;
+    &:after {
+      padding: 1px;
+      top: -1px;
+      left: -1px;
+    }
   }
 
   .fotorama__nav__frame.fotorama__active & {
     width: 6px;
     height: 6px;
     border: none;
+    &:after {
+      padding: 0;
+      top: 0;
+      left: 0;
+    }
   }
 }
 
@@ -292,9 +302,6 @@ $blue: mix(#00d1ff, #008ed6);
 
   .fotorama__nav__frame.fotorama__active & {
     border: none;
-    &:after {
-      display: none;
-    }
   }
 }
 
