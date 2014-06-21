@@ -141,8 +141,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function bindGlobalEvents (FLAG) {
     var keydownCommon = 'keydown.' + _fotoramaClass,
-        keydownLocal = 'keydown.' + _fotoramaClass + stamp,
-        resizeLocal = 'resize.' + _fotoramaClass + stamp;
+        localStamp = _fotoramaClass + stamp,
+        keydownLocal = 'keydown.' + localStamp,
+        resizeLocal = 'resize.' + localStamp + ' ' + 'orientationchange.' + localStamp;
 
     if (FLAG) {
       $DOCUMENT
@@ -284,7 +285,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     o_thumbSide = numberFromMeasure(opts.thumbwidth) || THUMB_SIZE;
     o_thumbSide2 = numberFromMeasure(opts.thumbheight) || THUMB_SIZE;
-
 
     stageWheelTail.ok = navWheelTail.ok = opts.trackpad && !SLOW;
 
