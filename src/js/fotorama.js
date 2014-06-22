@@ -570,7 +570,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function updateFotoramaState () {
-    var $frame = that.activeFrame[STAGE_FRAME_KEY];
+    var $frame = activeFrame[STAGE_FRAME_KEY];
 
     if ($frame && !$frame.data().state) {
       spinnerSpin($frame);
@@ -782,7 +782,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function slideThumbBorder (time) {
-    var navFrameData = that.activeFrame[navFrameKey].data();
+    var navFrameData = activeFrame[navFrameKey].data();
     slide($thumbBorder, {
       time: time * 1.2,
       pos: navFrameData.l,
@@ -795,7 +795,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     var $guessNavFrame = data[options.guessIndex][navFrameKey];
     if ($guessNavFrame) {
       var overflowFLAG = navShaftTouchTail.min !== navShaftTouchTail.max,
-          minMax = options.minMax || overflowFLAG && getNavFrameBounds(that.activeFrame[navFrameKey]),
+          minMax = options.minMax || overflowFLAG && getNavFrameBounds(activeFrame[navFrameKey]),
           l = overflowFLAG && (options.keep && slideNavShaft.l ? slideNavShaft.l : minMaxLimit((options.coo || measures.nw / 2) - getNavFrameBounds($guessNavFrame).c, minMax.min, minMax.max)),
           pos = overflowFLAG && minMaxLimit(l, navShaftTouchTail.min, navShaftTouchTail.max),
           time = options.time * 1.1;
@@ -817,7 +817,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function navUpdate () {
     deactivateFrames(navFrameKey);
-    toDeactivate[navFrameKey].push(that.activeFrame[navFrameKey].addClass(activeClass));
+    toDeactivate[navFrameKey].push(activeFrame[navFrameKey].addClass(activeClass));
   }
 
   function deactivateFrames (key) {
@@ -849,8 +849,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     repositionIndex = dirtyIndex = activeIndex;
 
-    var dataFrame = that.activeFrame,
-        $frame = dataFrame[STAGE_FRAME_KEY];
+    var $frame = activeFrame[STAGE_FRAME_KEY];
 
     if ($frame) {
       deactivateFrames(STAGE_FRAME_KEY);
@@ -935,7 +934,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     var _activeIndex = activeIndex;
 
 
-    var frameData = that.activeFrame[STAGE_FRAME_KEY].data();
+    var frameData = activeFrame[STAGE_FRAME_KEY].data();
     waitFor(function () {
       return frameData.state || _activeIndex !== activeIndex;
     }, function () {
@@ -995,8 +994,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     if (options.slow) time *= 10;
 
+    var _activeFrame = activeFrame;
     that.activeFrame = activeFrame = data[activeIndex];
     //console.timeEnd('that.show prepare');
+
+    var silent = _activeFrame === activeFrame;
 
     //setTimeout(function () {
     //console.time('unloadVideo');
@@ -1012,7 +1014,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     updateTouchTails('go', true);
     //console.timeEnd('updateTouchTails');
     //console.time('triggerEvent');
-    options.reset || triggerEvent('show', {
+
+    silent || triggerEvent('show', {
       user: options.user,
       time: time
     });
@@ -1029,9 +1032,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       skipReposition || stageShaftReposition(true);
 
-      console.log('options.reset', options.reset);
-
-      if (!options.reset) {
+      if (!silent) {
         triggerEvent('showend', {
           user: options.user
         });
@@ -1090,7 +1091,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       //console.time('slideNavShaft');
       var guessIndex = limitIndex(activeIndex + minMaxLimit(dirtyIndex - lastActiveIndex, -1, 1));
-      slideNavShaft({time: time, coo: guessIndex !== activeIndex && options.coo, guessIndex: typeof options.coo !== 'undefined' ? guessIndex : activeIndex, keep: options.reset});
+      slideNavShaft({time: time, coo: guessIndex !== activeIndex && options.coo, guessIndex: typeof options.coo !== 'undefined' ? guessIndex : activeIndex, keep: silent});
       //console.timeEnd('slideNavShaft');
 
       //console.time('slideThumbBorder');
@@ -1262,9 +1263,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     return this;
   };
 
-  that.setOptions = function (options, hard) {
+  that.setOptions = function (options) {
     $.extend(opts, options);
-    reset.ok = !hard;
     reset();
     return this;
   };
@@ -1300,7 +1300,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   };
 
   that.playVideo = function () {
-    var dataFrame = that.activeFrame,
+    var dataFrame = activeFrame,
         video = dataFrame.video,
         _activeIndex = activeIndex;
 
@@ -1573,10 +1573,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
   addFocusOnControls(fullscreenIcon);
 
   function reset () {
+    var ok = reset.ok;
+
     setData();
     setOptions();
-
-    var ok = reset.ok;
 
     if (!reset.i) {
       reset.i = true;
@@ -1600,7 +1600,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       reset.ok = true;
 
-      that.show({index: activeIndex, time: 0, reset: ok});
+      that.show({index: activeIndex, time: 0});
       that.resize();
     } else {
       that.destroy();
