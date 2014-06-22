@@ -70,9 +70,9 @@ function bindTransitionEnd ($el) {
         msTransition: 'MSTransitionEnd',
         transition: 'transitionend'
       };
-  el.addEventListener(transitionEndEvent[Modernizr.prefixed('transition')], function (e) {
+  addEvent(el, transitionEndEvent[Modernizr.prefixed('transition')], function (e) {
     elData.tProp && e.propertyName.match(elData.tProp) && elData.onEndFn();
-  }, false);
+  });
   elData.tEnd = true;
 }
 
@@ -496,7 +496,7 @@ function addFocus (el, fn) {
 }
 
 function stopEvent (e, stopPropagation) {
-  e.preventDefault();
+  e.preventDefault ? e.preventDefault() : (e.returnValue = false);
   stopPropagation && e.stopPropagation();
 }
 

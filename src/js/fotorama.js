@@ -1189,13 +1189,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
     return that[(that.fullScreen ? 'cancel' : 'request') + 'FullScreen']();
   };
 
-  if (document.addEventListener) {
-    document.addEventListener(fullScreenApi.event, function () {
-      if (data && !fullScreenApi.is() && !$videoPlaying) {
-        cancelFullScreen();
-      }
-    }, false);
-  }
+  addEvent(document, fullScreenApi.event, function () {
+    if (data && !fullScreenApi.is() && !$videoPlaying) {
+      cancelFullScreen();
+    }
+  });
 
   that.resize = function (options) {
     if (!data) return this;

@@ -38,7 +38,7 @@ function wheel ($el, options) {
 
     (options.onEnd || noop)(e, options.shift ? direction : xDelta);
 
-  }, false);
+  });
 
   return tail;
 }

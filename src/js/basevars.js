@@ -12,8 +12,6 @@ var $WINDOW = $(window),
     MOBILE = navigator.userAgent.match(/Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i),
     SLOW = !CSS3 || MOBILE,
 
-    ADD_EVENT_LISTENER = 'addEventListener',
-
     MS_POINTER = navigator.msPointerEnabled,
 
     WHEEL = "onwheel" in document.createElement("div") ? "wheel" : document.onmousewheel !== undefined ? "mousewheel" : "DOMMouseScroll",
