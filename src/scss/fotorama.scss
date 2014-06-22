@@ -244,17 +244,6 @@ $blue: mix(#00d1ff, #008ed6);
   }
 }
 
-
-@mixin dotColor($color) {
-  .fotorama__dot {
-    border-color: $color;
-  }
-
-  .fotorama__active .fotorama__dot {
-    background-color: $color;
-  }
-}
-
 .fotorama__dot {
   display: block;
   width: 4px;
@@ -263,7 +252,7 @@ $blue: mix(#00d1ff, #008ed6);
   top: 12px;
   left: 6px;
   border-radius: 6px;
-  border: 1px solid;
+  border: 1px solid $gray;
 
   .fotorama__nav__frame:focus & {
     @extend %focus-overlay;
@@ -275,18 +264,16 @@ $blue: mix(#00d1ff, #008ed6);
   }
 
   .fotorama__nav__frame.fotorama__active & {
-    width: 6px;
-    height: 6px;
-    border: none;
+    width: 0;
+    height: 0;
+    border-width: 3px;
     &:after {
-      padding: 0;
-      top: 0;
-      left: 0;
+      padding: 3px;
+      top: -3px;
+      left: -3px;
     }
   }
 }
-
-@include dotColor($gray);
 
 .fotorama__thumb {
   overflow: hidden;
@@ -299,10 +286,6 @@ $blue: mix(#00d1ff, #008ed6);
     z-index: 2;
     @extend %focus-overlay;
   }
-
-  .fotorama__nav__frame.fotorama__active & {
-    border: none;
-  }
 }
 
 .fotorama__thumb-border {
@@ -313,6 +296,7 @@ $blue: mix(#00d1ff, #008ed6);
   border-style: solid;
   border-color: $blue;
   background-image: linear-gradient(to bottom right, rgba(255, 255, 255, .25), rgba(64, 64, 64, .1));
+  @extend %no-bg-on-print;
 }
 
 .fotorama__caption {

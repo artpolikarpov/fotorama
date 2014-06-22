@@ -135,9 +135,16 @@
     background: url('fotorama@2x.png') no-repeat;
     background-size: 96px 160px;
   }
+  @extend %no-bg-on-print;
 }
 
 %before-load-bg {
   background-color: mix(black, white);
   background-color: rgba(mix(black, white), .2);
+}
+
+%no-bg-on-print {
+  @media print {
+    background: none !important;
+  }
 }
