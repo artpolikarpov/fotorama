@@ -9,6 +9,11 @@
       "specs": "test/specs/basic.js"
     }
   },
+  "dimensions": {
+    "options": {
+      "specs": "test/specs/dimensions.js"
+    }
+  },
   "jquery-1.8.0": {
     "options": {
       "vendor": ["test/jquery/jquery-1.8.0.min.js", "out/fotorama.js"],

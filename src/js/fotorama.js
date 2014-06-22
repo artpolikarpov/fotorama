@@ -410,12 +410,15 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
   function setMeasures (width, height, ratio, index) {
     if (!measuresSetFLAG || (measuresSetFLAG === '*' && index === startIndex)) {
+
+      console.log('setMeasures', index, opts.width, opts.height);
+
       width = measureIsValid(opts.width) || measureIsValid(width) || WIDTH;
       height = measureIsValid(opts.height) || measureIsValid(height) || HEIGHT;
       that.resize({
         width: width,
         ratio: opts.ratio || ratio || width / height
-      }, 0, index === startIndex ? true : '*');
+      }, 0, index !== startIndex && '*');
     }
   }
 
@@ -1198,11 +1201,12 @@ jQuery.Fotorama = function ($fotorama, opts) {
   that.resize = function (options) {
     if (!data) return this;
 
-    extendMeasures(!that.fullScreen ? optionsToLowerCase(options) : {width: '100%', maxwidth: null, minwidth: null, height: '100%', maxheight: null, minheight: null}, [measures, that.fullScreen || opts]);
-
     var time = arguments[1] || 0,
-        setFLAG = arguments[2],
-        width = measures.width,
+        setFLAG = arguments[2];
+
+    extendMeasures(!that.fullScreen ? optionsToLowerCase(options) : {width: '100%', maxwidth: null, minwidth: null, height: '100%', maxheight: null, minheight: null}, [measures, setFLAG || that.fullScreen || opts]);
+
+    var width = measures.width,
         height = measures.height,
         ratio = measures.ratio,
         windowHeight = $WINDOW.height() - (o_nav ? $nav.height() : 0);
