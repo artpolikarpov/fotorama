@@ -1,7 +1,7 @@
 document.write(
     '<div class="fotorama" id="fotorama">' +
-        '<a href="http://s.fotorama.io/okonechnikov/1.jpg"></a>' +
-        '<a href="http://s.fotorama.io/okonechnikov/2-thumb.jpg"></a>' +
+        '<a href="http://s.fotorama.io/okonechnikov/1-lo.jpg"></a>' +
+        '<a href="http://s.fotorama.io/nyc/thumbs/crazyjohn.jpg"></a>' +
     '</div>'
 );
 
