@@ -2,6 +2,51 @@
 
 > https://github.com/artpolikarpov/fotorama/releases
 
+## 4.5.2, 23 June 2014
+
+<!--4.5.2:name-->
+
+Three years
+
+<!--/4.5.2:name-->
+
+<!--4.5.2:notes-->
+
+:birthday:
+
+* Keyboard accessibility, allow tabbing on arrows and thumbs.
+* #255 Better styles for printing.
+* New `controlsonstart` option. Set it to `false` if you want controls to appear only after hover or tap.
+* New `thumbfit` option.
+* New `thumbratio:'auto'` option (experimental :skull:).
+* #232 Simplify and fix logic when to trigger show events
+* #236 Fix video loading on https
+* Default cursor is now `pointer` because for desktop users one click is enough to switch the frame. Cursor changes to `grab` only on dragging and swiping.
+* #246 Make fotorama monolithic with z-index.
+* #251 Now fotorama’s dimensions are really the dimensions of the first image (by order, not by loading time).
+* #253 Do not cache `$('html')` and `$('body')` for correct fullscreen in single-page-apps (Meteor, Angular, Derby).
+* Fix `clicktransition` behaviour.
+* #243 Add missing dependencies and repository-setting to package.json
+* Better image fit, work nice with odd width without Retina artefacts.
+* Adjust animations.
+* Disabled trackpad by default.
+* Fix loop conditions.
+
+:candy: :candy: :candy:
+
+Today is the third anniversary of Fotorama.
+
+Using Fotorama? Be sure to drop me a link, wanna see it in action:
+* [:envelope: fotoramajs@gmail.com](fotoramajs@gmail.com)
+
+Thanks for your thanks:
+* PayPal: [fotoramajs@gmail.com](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7M9KK5AQPG6CC)
+* Yandex.Money: [4100139676157](https://money.yandex.ru/direct-payment.xml?receiver=4100139676157)
+* Bitcoin: [1AbXUmE6xzinqKaHu<wbr/>TVFRXtnxffFqvKkka](bitcoin:1AbXUmE6xzinqKaHuTVFRXtnxffFqvKkka)
+* Flattr: [Fotorama](https://flattr.com/thing/1845948/)
+
+<!--/4.5.2:notes-->
+
 ## 4.5.1, 29 March 2014
 
 <!--4.5.1:name-->
