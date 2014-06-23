@@ -39,7 +39,8 @@ Today is the third anniversary of Fotorama.
 Using Fotorama? Be sure to drop me a link, wanna see it in action:
 * [:envelope: fotoramajs@gmail.com](fotoramajs@gmail.com)
 
-Thanks for your thanks:
+### Thanks for your thanks :+1:
+
 * PayPal: [fotoramajs@gmail.com](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7M9KK5AQPG6CC)
 * Yandex.Money: [4100139676157](https://money.yandex.ru/direct-payment.xml?receiver=4100139676157)
 * Bitcoin: [1AbXUmE6xzinqKaHu<wbr/>TVFRXtnxffFqvKkka](bitcoin:1AbXUmE6xzinqKaHuTVFRXtnxffFqvKkka)
