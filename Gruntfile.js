@@ -274,56 +274,6 @@ compress: {
     ]
   }
 },
-s3: {
-  options: {
-    key: '<%= grunt.file.readJSON("secret.json").s3.key %>',
-    secret: '<%= grunt.file.readJSON("secret.json").s3.secret %>',
-    bucket: 'fotorama',
-    access: 'public-read',
-    gzip: true,
-    secure: false
-  },
-  separate: {
-    options: {
-      headers: {'Cache-Control': 'max-age=2592000'}
-    },
-    upload: [
-        // Separate version to separate folder
-      {
-        src: 'out/fotorama.*',
-        dest: '<%= pkg.version %>/'
-      },
-      {
-        src: 'out/fotorama@2x.png',
-        dest: '<%= pkg.version %>/fotorama@2x.png'
-      },
-      {
-        src: 'out/*.zip',
-        dest: '<%= pkg.version %>/',
-        options: {
-          gzip: false
-        }
-      }
-
-    ]
-  },
-  edge: {
-    // Latest to the root
-    options: {
-      headers: {'Cache-Control': 'max-age=1'}
-    },
-    upload: [
-      {
-        src: 'out/fotorama.*',
-        dest: ''
-      },
-      {
-        src: 'out/fotorama@2x.png',
-        dest: 'fotorama@2x.png'
-      }
-    ]
-  }
-},
 
 connect: {
   server: {
@@ -350,15 +300,15 @@ shell: {
   push: {
     command: 'git push --tags --progress origin master:master'
   },
-  publish: {
-    command: 'heroku config:add FOTORAMA_VERSION=<%= pkg.version %>'
-  },
   bower: {
     command: 'cd .fotorama-bower ' +
         '&& git add . ' +
         '&& git commit -am \'Tagging the <%= pkg.version %> release\' ' +
         '&& git tag <%= pkg.version %> ' +
         '&& git push --tags --progress origin master:master'
+  },
+  publish: {
+    command: 'heroku config:add FOTORAMA_VERSION=<%= pkg.version %>'
   }
 },
 
@@ -412,7 +362,6 @@ grunt.loadNpmTasks('grunt-contrib-jasmine');
 grunt.loadNpmTasks('grunt-contrib-clean');
 grunt.loadNpmTasks('grunt-contrib-compress');
 
-grunt.loadNpmTasks('grunt-s3');
 grunt.loadNpmTasks('grunt-contrib-connect');
 grunt.loadNpmTasks('grunt-shell');
 
@@ -428,5 +377,7 @@ grunt.registerTask('default', defaultTask.split(' '));
 //grunt.registerTask('look', 'copy:i sass autoprefixer jst replace:jst concat:js watch'.split(' '));
 
 // Publish, will fail without secret details ;-)
-grunt.registerTask('publish', (defaultTask + ' ' + 's3 copy:bower replace:version shell replace:history gh_release tweet').split(' '));
+grunt.registerTask('publish', (defaultTask + ' ' + 'copy:bower replace:version shell:commit shell:push shell:bower replace:history gh_release tweet').split(' '));
+
+grunt.registerTask('heroku', (defaultTask + ' ' + 'shell:heroku').split(' '));
 };
