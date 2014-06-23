@@ -21,18 +21,17 @@
       f = $('.fotorama').data('fotorama');
     })
 
+    if (window !== window.top) {
+      console.log('I’m in iframe');
 
-//    $(document).on('mousemove', function () {
-//      console.log('mousemove');
-//    });
-//
-//    $(document).on('mouseleave', function (e) {
-//      console.log('mouseleave', e.target);
-//    });
-//
-//    $('iframe').on('mousemove', function () {
-//      console.log('iframe mousemove');
-//    })
+      //$(document).on('mouseout', function (e) {
+        //console.log('mouseout', e.target);
+      //});
+
+//      $(window.top.document).on('mousemove', function () {
+//        console.log('Stop holodilnik');
+//      });
+    }
   </script>
 </head>
 
@@ -52,8 +51,6 @@
 	<a href="i/okonechnikov/6-lo.jpg"></a>
 	<a href="i/okonechnikov/5-lo.jpg"></a>
 </div>
-
-<iframe src="base--iframe.html" width="100%" height="500" frameborder="0"></iframe>
 
 <!-- © -->
 <p>Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>

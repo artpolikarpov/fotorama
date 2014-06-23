@@ -158,13 +158,11 @@ function moveOnTouch ($el, options) {
     (options.onEnd || noop).call(el, $.extend(result, {moved: result.moved || longTouchFLAG && snap, pos: moveElPos, newPos: newPos, overPos: overPos, time: time}));
   }
 
-  tail = $.extend(touch(options.$wrap, {
+  tail = $.extend(touch(options.$wrap, $.extend({}, options, {
     onStart: onStart,
     onMove: onMove,
-    onTouchEnd: options.onTouchEnd,
-    onEnd: onEnd,
-    select: options.select
-  }), tail);
+    onEnd: onEnd
+  })), tail);
 
   return tail;
 }
