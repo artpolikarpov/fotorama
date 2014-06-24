@@ -505,7 +505,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
             .addClass(imgClass + (fullFLAG ? ' ' + imgFullClass : ''))
             .prependTo($frame);
 
-        fit($img, specialMeasures || measures, specialFit || dataFrame.fit || opts.fit);
+        fit($img, ($.isFunction(specialMeasures) ? specialMeasures() : specialMeasures) || measures, specialFit || dataFrame.fit || opts.fit);
 
         $.Fotorama.cache[src] = frameData.state = 'loaded';
 
@@ -681,7 +681,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
       var $this = $(this),
           thisData = $this.data(),
           eq = thisData.eq,
-          specialMeasures = {h: o_thumbSide2},
+          getSpecialMeasures = function () {
+            return {
+              h: o_thumbSide2,
+              w: thisData.w
+            }
+          },
+          specialMeasures = getSpecialMeasures(),
           specialFit = (data[eq] || {}).thumbfit || opts.thumbfit;
 
       specialMeasures.w = thisData.w;
@@ -690,7 +696,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           || thisData.l > rightLimit
           || callFit(thisData.$img, specialMeasures, specialFit)) return;
 
-      loadFLAG && loadImg([eq], 'navThumb', specialMeasures, specialFit);
+      loadFLAG && loadImg([eq], 'navThumb', getSpecialMeasures, specialFit);
     });
   }
 
@@ -1575,8 +1581,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
   addFocusOnControls(fullscreenIcon);
 
   function reset () {
-    var ok = reset.ok;
-
     setData();
     setOptions();
 
