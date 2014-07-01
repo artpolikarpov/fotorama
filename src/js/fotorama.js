@@ -1386,13 +1386,18 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     if (opts.clicktransition && opts.clicktransition !== opts.transition) {
       console.log('change transition to: ' + opts.clicktransition);
-      // save original transition for later
-      o_transition = opts.transition;
-      that.setOptions({transition: opts.clicktransition});
 
-      clickToShow.t = setTimeout(function () {
-        that.show(showOptions);
-      }, 10);
+      // this timeout is for yield events flow
+      setTimeout(function () {
+        // save original transition for later
+        o_transition = opts.transition;
+        that.setOptions({transition: opts.clicktransition});
+
+        // this timeout is here to prevent jerking in some browsers
+        clickToShow.t = setTimeout(function () {
+          that.show(showOptions);
+        }, 10);
+      }, 0);
     } else {
       that.show(showOptions);
     }
