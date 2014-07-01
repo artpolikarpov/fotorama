@@ -1390,9 +1390,12 @@ jQuery.Fotorama = function ($fotorama, opts) {
       // this timeout is for yield events flow
       setTimeout(function () {
         // save original transition for later
-        o_transition = opts.transition;
+        var _o_transition = opts.transition;
+
         that.setOptions({transition: opts.clicktransition});
 
+        // now safe to pass base transition to o_transition, so that.show will restor it
+        o_transition = _o_transition;
         // this timeout is here to prevent jerking in some browsers
         clickToShow.t = setTimeout(function () {
           that.show(showOptions);
