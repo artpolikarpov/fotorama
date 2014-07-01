@@ -1045,15 +1045,15 @@ jQuery.Fotorama = function ($fotorama, opts) {
         triggerEvent('showend', {
           user: options.user
         });
+      }
 
-        console.log('o_transition', o_transition);
+      console.log('o_transition', o_transition);
 
-        if (!skipReposition && o_transition && o_transition !== opts.transition) {
-          console.log('set transition back to: ' + o_transition);
-          that.setOptions({transition: o_transition});
-          o_transition = false;
-          return;
-        }
+      if (!skipReposition && o_transition && o_transition !== opts.transition) {
+        console.log('set transition back to: ' + o_transition);
+        that.setOptions({transition: o_transition});
+        o_transition = false;
+        return;
       }
 
       updateFotoramaState();
