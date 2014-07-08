@@ -4,6 +4,7 @@ grunt.initConfig({
 pkg: grunt.file.readJSON('package.json'),
 meta: {
   banner: '/*!\n * <%= pkg.name %> <%= pkg.version %> | http://fotorama.io/license/\n */\n',
+  bannerJs: '<%= meta.banner %>fotoramaVersion = \'<%= pkg.version %>\';\n',
   sass: ['src/scss/*'],
   js: [
     'src/js/intro.js',
@@ -165,7 +166,7 @@ concat: {
       'out/fotorama.js': '<%= meta.js %>'
     },
     options: {
-      banner: '<%= meta.banner %>'
+      banner: '<%= meta.bannerJs %>'
     }
   },
   css: {
