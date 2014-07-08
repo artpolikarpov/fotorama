@@ -264,16 +264,16 @@ jQuery.Fotorama = function ($fotorama, opts) {
       classes[FLAG ? 'add' : 'remove'].push(value);
     }
 
-    if (size > 1) {
+    //if (size > 1) { // TODO: need special option for that (disableIfSinglePhoto, типа)
       o_nav = opts.nav;
       o_navTop = opts.navposition === 'top';
       classes.remove.push(selectClass);
 
       $arrs.toggle(!!opts.arrows);
-    } else {
-      o_nav = false;
-      $arrs.hide();
-    }
+//    } else {
+//      o_nav = false;
+//      $arrs.hide();
+//    }
 
     spinnerStop();
     spinner = new Spinner($.extend(spinnerDefaults, opts.spinner, spinnerOverride, {direction: o_rtl ? -1 : 1}));
@@ -640,7 +640,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         frameData.$wrap = $frame.children(':first');
         $navThumbFrame = $navThumbFrame.add($frame);
         if (dataFrame.video) {
-          $frame.append($videoPlay.clone());
+          frameData.$wrap.append($videoPlay.clone());
         }
       }
     });
@@ -1007,7 +1007,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     that.activeFrame = activeFrame = data[activeIndex];
     //console.timeEnd('that.show prepare');
 
-    var silent = _activeFrame === activeFrame;
+    var silent = _activeFrame === activeFrame && !options.user;
 
     //setTimeout(function () {
     //console.time('unloadVideo');

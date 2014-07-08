@@ -72,15 +72,11 @@
 	<script src="jquery/jquery-1.11.0.min.js"></script>
 
   <script>
-    $(document).on('click', function () {
-      console.log('document click');
-    });
-
     $(function () {
       f = $('.fotorama').data('fotorama');
 
-      $(document).on('click', function () {
-        console.log('document ready click');
+      $(document).on('click mouseup touchend', function (e) {
+        console.log('document', e.type);
       });
     })
   </script>

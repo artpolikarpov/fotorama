@@ -95,7 +95,8 @@
   }
 
   .fotorama__loaded &,
-  .fotorama__error & {
+  .fotorama__error &,
+  .fotorama__nav__frame & {
     opacity: 1;
     display: block;
   }
