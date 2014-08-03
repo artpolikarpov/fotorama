@@ -47,8 +47,8 @@ function measureIsValid (value) {
 }
 
 function getPosByIndex (index, side, margin, baseIndex) {
-  console.log('getPosByIndex', index, side, margin, baseIndex);
-  console.log((index - (baseIndex || 0)) * (side + (margin || 0)));
+  //console.log('getPosByIndex', index, side, margin, baseIndex);
+  //console.log((index - (baseIndex || 0)) * (side + (margin || 0)));
 
   return (index - (baseIndex || 0)) * (side + (margin || 0));
 }
@@ -297,14 +297,14 @@ function waitFor (test, fn, timeout) {
 }
 
 function setHash (hash) {
-  console.time('setHash ' + hash);
+  ////console.time('setHash ' + hash);
   location.replace(location.protocol
       + '//'
       + location.host
       + location.pathname.replace(/^\/?/, '/')
       + location.search
       + '#' + hash);
-  console.timeEnd('setHash ' + hash);
+  ////console.timeEnd('setHash ' + hash);
 }
 
 function fit ($el, measuresToFit, method) {
@@ -405,7 +405,7 @@ function smartClick ($el, fn, _options) {
       onMove: _options.onMove || noop,
       onTouchEnd: _options.onTouchEnd || noop,
       onEnd: function (result) {
-        console.log('smartClick → result.moved', result.moved);
+        //console.log('smartClick → result.moved', result.moved);
         if (result.moved) return;
         fn.call(this, startEvent);
       }
@@ -497,7 +497,7 @@ function addFocus (el, fn) {
 
 function stopEvent (e, stopPropagation) {
   e.preventDefault ? e.preventDefault() : (e.returnValue = false);
-  stopPropagation && e.stopPropagation();
+  stopPropagation && e.stopPropagation && e.stopPropagation();
 }
 
 function getDirectionSign (forward) {

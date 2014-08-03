@@ -13,18 +13,18 @@ function slide ($el, options) {
     };
   }
 
-  console.time('var translate = $.extend');
+  //////console.time('var translate = $.extend');
   var translate = $.extend(getTranslate(elPos/*, options._001*/), options.width && {width: options.width});
-  console.timeEnd('var translate = $.extend');
+  //////console.timeEnd('var translate = $.extend');
 
   elData.sliding = true;
 
   if (CSS3) {
     $el.css($.extend(getDuration(options.time), translate));
     if (options.time > 10) {
-      console.time('afterTransition');
+      //////console.time('afterTransition');
       afterTransition($el, 'transform', onEndFn, options.time);
-      console.timeEnd('afterTransition');
+      //////console.timeEnd('afterTransition');
     } else {
       onEndFn();
     }

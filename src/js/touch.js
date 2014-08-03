@@ -75,7 +75,7 @@ function touch ($el, options) {
         stopEvent(e);
       }
     } else {
-      console.log('onMove e.preventDefault');
+      //console.log('onMove e.preventDefault');
       stopEvent(e);
       (options.onMove || noop).call(el, e, {touch: touchFLAG});
     }
@@ -88,7 +88,7 @@ function touch ($el, options) {
   }
 
   function onEnd (e) {
-    //console.time('touch.js onEnd');
+    ////console.time('touch.js onEnd');
 
     (options.onTouchEnd || noop)();
 
@@ -110,7 +110,7 @@ function touch ($el, options) {
     }, 1000);
 
     (options.onEnd || noop).call(el, {moved: moved, $target: $target, control: controlTouch, touch: touchFLAG, startEvent: startEvent, aborted: !e || e.type === 'MSPointerCancel'});
-    //console.timeEnd('touch.js onEnd');
+    ////console.timeEnd('touch.js onEnd');
   }
 
   function onOtherStart () {
@@ -141,11 +141,12 @@ function touch ($el, options) {
     addEvent(document, 'touchend', onOtherEnd);
     addEvent(document, 'touchcancel', onOtherEnd);
 
-    addEvent(window, 'scroll', onOtherEnd);
+    $WINDOW.on('scroll', onOtherEnd);
 
-    addEvent(el, 'mousedown', onStart);
-    addEvent(document, 'mousemove', onMove);
-    addEvent(document, 'mouseup', onEnd);
+    $el.on('mousedown', onStart);
+    $DOCUMENT
+        .on('mousemove', onMove)
+        .on('mouseup', onEnd);
   }
 
   $el.on('click', 'a', function (e) {
