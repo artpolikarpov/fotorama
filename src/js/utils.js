@@ -31,11 +31,12 @@ function getDuration (time) {
 }
 
 function numberFromMeasure (value, measure) {
-  return +String(value).replace(measure || 'px', '') || undefined;
+  value = +String(value).replace(measure || 'px', '');
+  return isNaN(value) ? undefined : value;
 }
 
 function numberFromPercent (value) {
-  return /%$/.test(value) && numberFromMeasure(value, '%');
+  return /%$/.test(value) ? numberFromMeasure(value, '%') : undefined;
 }
 
 function numberFromWhatever (value, whole) {
@@ -43,7 +44,7 @@ function numberFromWhatever (value, whole) {
 }
 
 function measureIsValid (value) {
-  return (!!numberFromMeasure(value) || !!numberFromMeasure(value, '%')) && value;
+  return (!isNaN(numberFromMeasure(value)) || !isNaN(numberFromMeasure(value, '%'))) && value;
 }
 
 function getPosByIndex (index, side, margin, baseIndex) {
@@ -307,7 +308,7 @@ function setHash (hash) {
   ////console.timeEnd('setHash ' + hash);
 }
 
-function fit ($el, measuresToFit, method) {
+function fit ($el, measuresToFit, method, position) {
   var elData = $el.data(),
       measures = elData.measures;
 
@@ -317,14 +318,16 @@ function fit ($el, measuresToFit, method) {
       elData.l.r !== measures.ratio ||
       elData.l.w !== measuresToFit.w ||
       elData.l.h !== measuresToFit.h ||
-      elData.l.m !== method)) {
+      elData.l.m !== method ||
+      elData.l.p !== position)) {
     var width = measures.width,
         height = measures.height,
         ratio = measuresToFit.w / measuresToFit.h,
         biggerRatioFLAG = measures.ratio >= ratio,
         fitFLAG = method === 'scaledown',
         containFLAG = method === 'contain',
-        coverFLAG = method === 'cover';
+        coverFLAG = method === 'cover',
+        pos = parsePosition(position);
 
     if (biggerRatioFLAG && (fitFLAG || containFLAG) || !biggerRatioFLAG && coverFLAG) {
       width = minMaxLimit(measuresToFit.w, 0, fitFLAG ? width : Infinity);
@@ -337,8 +340,8 @@ function fit ($el, measuresToFit, method) {
     $el.css({
       width: Math.ceil(width),
       height: Math.ceil(height),
-      left: Math.floor(measuresToFit.w / 2 - width / 2),
-      top: Math.floor(measuresToFit.h / 2 - height / 2)
+      left: Math.floor(numberFromWhatever(pos.x, measuresToFit.w - width)),
+      top: Math.floor(numberFromWhatever(pos.y, measuresToFit.h- height))
     });
 
     elData.l = {
@@ -347,7 +350,8 @@ function fit ($el, measuresToFit, method) {
       r: measures.ratio,
       w: measuresToFit.w,
       h: measuresToFit.h,
-      m: method
+      m: method,
+      p: position
     };
   }
 
@@ -502,4 +506,12 @@ function stopEvent (e, stopPropagation) {
 
 function getDirectionSign (forward) {
   return forward ? '>' : '<';
+}
+
+function parsePosition (rule) {
+  rule = (rule + '').split(/\s+/);
+  return {
+    x: measureIsValid(rule[0]) || FIFTYFIFTY,
+    y: measureIsValid(rule[1]) || FIFTYFIFTY
+  }
 }

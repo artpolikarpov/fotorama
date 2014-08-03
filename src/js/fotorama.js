@@ -422,7 +422,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }
 
-  function loadImg (indexes, type, specialMeasures, specialFit, again) {
+  function loadImg (indexes, type, specialMeasures, method, position, again) {
     eachIndex(indexes, type, function (i, index, dataFrame, $frame, key, frameData) {
 
       if (!$frame) return;
@@ -459,7 +459,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
         if ((!dataFrame.html || type !== 'stage') && dummy && dummy !== src) {
           dataFrame[srcKey] = src = dummy;
-          loadImg([index], type, specialMeasures, specialFit, true);
+          loadImg([index], type, specialMeasures, method, position, true);
         } else {
           if (src && !dataFrame.html && !fullFLAG) {
             $frame
@@ -505,7 +505,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
             .addClass(imgClass + (fullFLAG ? ' ' + imgFullClass : ''))
             .prependTo($frame);
 
-        fit($img, ($.isFunction(specialMeasures) ? specialMeasures() : specialMeasures) || measures, specialFit || dataFrame.fit || opts.fit);
+        fit($img, ($.isFunction(specialMeasures) ? specialMeasures() : specialMeasures) || measures, method || dataFrame.fit || opts.fit, position || dataFrame.position || opts.position);
 
         $.Fotorama.cache[src] = frameData.state = 'loaded';
 
@@ -646,15 +646,17 @@ jQuery.Fotorama = function ($fotorama, opts) {
     });
   }
 
-  function callFit ($img, measuresToFit, method) {
-    return $img && $img.length && fit($img, measuresToFit, method);
+  function callFit ($img, measuresToFit, method, position) {
+    return $img && $img.length && fit($img, measuresToFit, method, position);
   }
 
   function stageFramePosition (indexes) {
     eachIndex(indexes, 'stage', function (i, index, dataFrame, $frame, key, frameData) {
       if (!$frame) return;
 
-      var normalizedIndex = normalizeIndex(index);
+      var normalizedIndex = normalizeIndex(index),
+          method = dataFrame.fit || opts.fit,
+          position = dataFrame.position || opts.position;
       frameData.eq = normalizedIndex;
 
       toDetach[STAGE_FRAME_KEY][normalizedIndex] = $frame.css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, opts.margin, repositionIndex)}, o_fade && getDuration(0)));
@@ -664,10 +666,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
         unloadVideo(dataFrame.$video);
       }
 
-      var method = dataFrame.fit || opts.fit;
-
-      callFit(frameData.$img, measures, method);
-      callFit(frameData.$full, measures, method);
+      callFit(frameData.$img, measures, method, position);
+      callFit(frameData.$full, measures, method, position);
     });
   }
 
@@ -688,15 +688,17 @@ jQuery.Fotorama = function ($fotorama, opts) {
             }
           },
           specialMeasures = getSpecialMeasures(),
-          specialFit = (data[eq] || {}).thumbfit || opts.thumbfit;
+          dataFrame = data[eq] || {},
+          method = dataFrame.thumbfit || opts.thumbfit,
+          position = dataFrame.thumbposition || opts.thumbposition;
 
       specialMeasures.w = thisData.w;
 
       if (thisData.l + thisData.w < leftLimit
           || thisData.l > rightLimit
-          || callFit(thisData.$img, specialMeasures, specialFit)) return;
+          || callFit(thisData.$img, specialMeasures, method, position)) return;
 
-      loadFLAG && loadImg([eq], 'navThumb', getSpecialMeasures, specialFit);
+      loadFLAG && loadImg([eq], 'navThumb', getSpecialMeasures, method, position);
     });
   }
 
