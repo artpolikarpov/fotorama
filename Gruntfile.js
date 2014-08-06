@@ -472,5 +472,6 @@ grunt.registerTask('default', defaultTask.split(' '));
 grunt.registerTask('cdnjs', (defaultTask + ' s3 replace:version copy:cdnjs shell:cdnjs').split(' '));
 
 // Publish, will fail without secret details ;-)
-grunt.registerTask('publish', (defaultTask + ' s3 replace:version copy:bower shell:commit shell:push shell:bower shell:heroku replace:history gh_release tweet').split(' '));
+grunt.registerTask('publish', (defaultTask + ' s3 replace:version copy:bower shell:commit shell:push shell:bower shell:heroku replace:history').split(' '));
+grunt.registerTask('release', ('gh_release tweet').split(' '));
 };
