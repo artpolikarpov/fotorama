@@ -2,6 +2,50 @@
 
 > https://github.com/artpolikarpov/fotorama/releases
 
+## 4.6.0, 7 August 2014
+
+<!--4.6.0:name-->
+
+Position
+
+<!--/4.6.0:name-->
+
+<!--4.6.0:notes-->
+
+* New `position` and `thumbposition` options.
+* Fix some IE7 & IE8 bugs (#273, #279).
+* Fix thumbnail fit.
+* Better auto initialization.
+* Fix blocking event flow in some odd situations.
+* #267 “Play” triangles on video thumbnails are back.
+* Finally fix `clicktransition` behaviour.
+* Fix `fotorama:show` event triggering.
+* Some minor fixes and optimization.
+
+### `position`
+
+Fotorama centers photos by default when fits them into a stage. Now you can change this:
+
+```html
+<!-- Align photos to the left-top corner -->
+<div class="fotorama" data-position="0 0">
+  <img src="1.jpg">
+
+  <!-- Override position for a single photo,
+       center 2.jpg horizontally, and move up by 10px -->
+  <img src="2.jpg" data-position="50% -10px">
+
+  <!-- Show the right-bottom corner of 3.jpg -->
+  <img src="3.jpg" data-position="100% 100%">
+</div>
+```
+
+### `thumbposition`
+
+Works just like `position` but for thumnbails.
+
+<!--/4.6.0:notes-->
+
 ## 4.5.2, 23 June 2014
 
 <!--4.5.2:name-->
