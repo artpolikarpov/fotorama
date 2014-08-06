@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Position</title>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.10.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../out/fotorama.css" rel="stylesheet">
+	<script src="../out/fotorama.js"></script>
+
+  <style type="text/css">
+    td {
+      vertical-align: top;
+    }
+    .background {
+      width: 300px;
+      height: 300px;
+      background-image: url(i/okonechnikov/1-lo.jpg);
+      background-repeat: no-repeat;
+      border: 1px solid;
+    }
+    .fotorama {
+      border: 1px solid;
+    }
+  </style>
+
+  <script type="text/javascript">
+    console = window.console || {};
+    console.time = console.time || $.noop;
+    console.timeEnd = console.timeEnd || $.noop;
+
+    fotoramaDefaults = {
+      width: 300,
+      height: 300,
+      nav: 'thumbs',
+      arrows: false,
+      fit: false,
+      data: [
+        {img: 'i/okonechnikov/1-lo.jpg'}
+      ]
+    };
+
+    $(function () {
+      f = $('.fotorama').data('fotorama');
+    })
+  </script>
+</head>
+
+<body>
+
+<h1>data-position && data-thumbposition test</h1>
+
+<table>
+  <tr>
+    <td colspan="2"><br>
+      50%</td>
+  </tr>
+  <tr>
+    <td>
+      <div class="fotorama" data-position="50%"></div>
+    </td>
+    <td>
+      <div class="background" style="background-position: 50%;"></div>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><br>
+      0 0</td>
+  </tr>
+  <tr>
+    <td>
+      <div class="fotorama" data-position="0 0"></div>
+    </td>
+    <td>
+      <div class="background" style="background-position: 0 0;"></div>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><br>
+      100%</td>
+  </tr>
+  <tr>
+    <td>
+      <div class="fotorama" data-position="100%" data-thumbposition="-10px -10px"></div>
+    </td>
+    <td>
+      <div class="background" style="background-position: 100%;"></div>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><br>
+      30px 130px</td>
+  </tr>
+  <tr>
+    <td>
+      <div class="fotorama" data-position="30px 130px" data-thumbposition="100% 100%"></div>
+    </td>
+    <td>
+      <div class="background" style="background-position: 30px 130px;"></div>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><br>
+      0 100%</td>
+  </tr>
+  <tr>
+    <td>
+      <div class="fotorama" data-nav="thumbs" data-thumbposition="10px 10px data-position="30px 130px" data-data="" data-startindex="1">
+        <img src="i/okonechnikov/1-lo.jpg" alt=""/>
+        <img src="i/okonechnikov/2-lo.jpg" data-position="0 100%" data-thumbposition="0 100%" alt=""/>
+      </div>
+    </td>
+    <td>
+      <div class="background" style="background-image: url(i/okonechnikov/2-lo.jpg); background-position: 0 100%;"></div>
+    </td>
+  </tr>
+</table>
+
+
+<!-- © -->
+<p>Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
+</body>
+</html>

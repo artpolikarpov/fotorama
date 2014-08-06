@@ -42,13 +42,6 @@
   left: 50% !important;
 }
 
-%stretch-for-fit {
-  @extend %center;
-  margin: -50% 0 0 -50%;
-  width: 100%;
-  height: 100%;
-}
-
 %initial-translate {
   transform: translate3d(0, 0, 0);
 }
@@ -57,12 +50,25 @@
   transform: translateZ(0);
 }
 
+%focus {
+  outline: 0;
+}
+
+%focus-overlay {
+  &:after {
+    content: '';
+    border-radius: inherit;
+    @extend %stretch;
+    background-color: rgba($blue, .5);
+  }
+}
+
 %no-transform {
   transform: none !important;
 }
 
 %transition-for-slide {
-  transition-property: transform;
+  transition-property: transform, width;
   transition-timing-function: cubic-bezier(.1, 0, .25, 1);
   transition-duration: 0ms;
 }
@@ -80,7 +86,7 @@
 }
 
 %no-margin {
-  margin: 0;
+  margin: auto;
   padding: 0;
 }
 
@@ -125,13 +131,20 @@
 
 %sprite {
   background: url('fotorama.png') no-repeat;
-  @media (#{-webkit-min-device-pixel-ratio}: 1.5), (min-resolution: 144dpi) {
+  @media (#{-webkit-min-device-pixel-ratio}: 1.5), (min-resolution: 2dppx) {
     background: url('fotorama@2x.png') no-repeat;
     background-size: 96px 160px;
   }
+  @extend %no-bg-on-print;
 }
 
 %before-load-bg {
   background-color: mix(black, white);
   background-color: rgba(mix(black, white), .2);
+}
+
+%no-bg-on-print {
+  @media print {
+    background: none !important;
+  }
 }

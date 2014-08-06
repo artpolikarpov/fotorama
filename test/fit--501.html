@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Basic fotorama</title>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.10.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../out/fotorama.css" rel="stylesheet">
+	<script src="../out/fotorama.js"></script>
+
+  <script type="text/javascript">
+    console = window.console || {};
+    console.time = console.time || $.noop;
+    console.timeEnd = console.timeEnd || $.noop;
+
+    $(function () {
+      f = $('.fotorama').data('fotorama');
+    })
+  </script>
+</head>
+
+<body>
+
+<!--<p>Basic fotorama:<p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div <mark>class="fotorama"</mark>></code></pre>-->
+
+<style type="text/css">
+  .fotorama__stage {
+    background-color: red;
+  }
+</style>
+
+<!-- Fotorama -->
+<div class="fotorama"
+     data-width="505"
+     data-fit="none"
+     data-nav="thumbs"
+     data-thumbfit="contain"
+     data-height="473">
+	<a href="i/getwear/IMG_5017.jpg"></a>
+	<a href="i/getwear/IMG_5020.jpg" data-thumbfit="none"></a>
+	<a href="i/getwear/IMG_5021.jpg"></a>
+</div>
+
+<!-- © -->
+</body>
+</html>

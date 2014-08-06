@@ -27,7 +27,7 @@ function moveOnTouch ($el, options) {
       [startTime, startCoo]
     ];
 
-    startElPos = moveElPos = tail.noMove || noStop ? 0 : stop($el, (options.getPos || noop)(), options._001);
+    startElPos = moveElPos = tail.noMove || noStop ? 0 : stop($el, (options.getPos || noop)()/*, options._001*/);
 
     (options.onStart || noop).call(el, e);
   }
@@ -68,7 +68,7 @@ function moveOnTouch ($el, options) {
       }
 
       if (!tail.noMove) {
-        $el.css(getTranslate(moveElPos, options._001));
+        $el.css(getTranslate(moveElPos/*, options._001*/));
         if (!moved) {
           moved = true;
           // only for mouse
@@ -81,14 +81,14 @@ function moveOnTouch ($el, options) {
   }
 
   function onEnd (result) {
-    //console.time('moveontouch.js onEnd');
+    ////console.time('moveontouch.js onEnd');
     if (tail.noSwipe && result.moved) return;
 
     if (!tracked) {
       startTracking(result.startEvent, true);
     }
 
-    console.log('onEnd');
+    //console.log('onEnd');
 
     result.touch || MS_POINTER || $el.removeClass(grabbingClass);
 
@@ -158,13 +158,11 @@ function moveOnTouch ($el, options) {
     (options.onEnd || noop).call(el, $.extend(result, {moved: result.moved || longTouchFLAG && snap, pos: moveElPos, newPos: newPos, overPos: overPos, time: time}));
   }
 
-  tail = $.extend(touch(options.$wrap, {
+  tail = $.extend(touch(options.$wrap, $.extend({}, options, {
     onStart: onStart,
     onMove: onMove,
-    onTouchEnd: options.onTouchEnd,
-    onEnd: onEnd,
-    select: options.select
-  }), tail);
+    onEnd: onEnd
+  })), tail);
 
   return tail;
 }

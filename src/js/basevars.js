@@ -12,8 +12,6 @@ var $WINDOW = $(window),
     MOBILE = navigator.userAgent.match(/Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i),
     SLOW = !CSS3 || MOBILE,
 
-    ADD_EVENT_LISTENER = 'addEventListener',
-
     MS_POINTER = navigator.msPointerEnabled,
 
     WHEEL = "onwheel" in document.createElement("div") ? "wheel" : document.onmousewheel !== undefined ? "mousewheel" : "DOMMouseScroll",
@@ -34,9 +32,13 @@ var $WINDOW = $(window),
     NAV_DOT_FRAME_KEY = '$navDotFrame',
     NAV_THUMB_FRAME_KEY = '$navThumbFrame',
 
+    AUTO = 'auto',
+
     BEZIER = bez([.1, 0, .25, 1]),
 
     MAX_WIDTH = 99999,
+
+    FIFTYFIFTY = '50%',
 
     OPTIONS = {
       // dimensions
@@ -52,6 +54,11 @@ var $WINDOW = $(window),
       margin: MARGIN,
       glimpse: 0,
 
+      fit: 'contain', // 'cover' || 'scaledown' || 'none'
+
+      position: FIFTYFIFTY,
+      thumbposition: FIFTYFIFTY,
+
       // navigation, thumbs
       nav: 'dots', // 'thumbs' || false
       navposition: 'bottom', // 'top'
@@ -60,10 +67,9 @@ var $WINDOW = $(window),
       thumbheight: THUMB_SIZE,
       thumbmargin: MARGIN,
       thumbborderwidth: MARGIN,
+      thumbfit: 'cover', // 'contain' || 'scaledown' || 'none'
 
       allowfullscreen: false, // true || 'native'
-
-      fit: 'contain', // 'cover' || 'scaledown' || 'none'
 
       transition: 'slide', // 'crossfade' || 'dissolve'
       clicktransition: null,
@@ -84,7 +90,7 @@ var $WINDOW = $(window),
       arrows: true,
       click: true,
       swipe: true,
-      trackpad: true,
+      trackpad: false,
 
       controlsonstart: true,
 

@@ -7,10 +7,10 @@ function wheel ($el, options) {
         prevent: {}
       };
 
-  el[ADD_EVENT_LISTENER] && el[ADD_EVENT_LISTENER](WHEEL, function (e) {
+  addEvent(el, WHEEL, function (e) {
     var yDelta = e.wheelDeltaY || -1 * e.deltaY || 0,
         xDelta = e.wheelDeltaX || -1 * e.deltaX || 0,
-        xWin = Math.abs(xDelta) > Math.abs(yDelta),
+        xWin = Math.abs(xDelta) && !Math.abs(yDelta),
         direction = getDirectionSign(xDelta < 0),
         sameDirection = lastDirection === direction,
         now = $.now(),
@@ -38,7 +38,7 @@ function wheel ($el, options) {
 
     (options.onEnd || noop)(e, options.shift ? direction : xDelta);
 
-  }, false);
+  });
 
   return tail;
 }

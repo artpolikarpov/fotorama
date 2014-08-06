@@ -66,4 +66,23 @@ describe('Initialization with data', function () {
 
     expect(fotorama1.data).not.toEqual(fotorama2.data);
   });
+
+  it('fotorama.load(data) is ok too', function (done) {
+    var data = [
+          {img: 'test/i/okonechnikov/6-lo.jpg'},
+          {img: 'test/i/okonechnikov/7-lo.jpg'},
+          {img: 'test/i/okonechnikov/8-lo.jpg'},
+          {img: 'test/i/okonechnikov/9-lo.jpg'}
+        ],
+        $rama = $('<div class="fotorama"></div>').appendTo('body').fotorama(),
+        rama = $rama.data('fotorama');
+
+    $rama.on('fotorama:show', function (e, fotorama) {
+      expect(fotorama).toBe(rama);
+      done();
+    });
+
+    rama.load(data);
+
+  });
 });

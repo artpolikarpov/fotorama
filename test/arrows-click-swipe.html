@@ -6,40 +6,10 @@
   <meta name="viewport" content="width=device-width">
   <meta name="msapplication-tap-highlight" content="no" />
 
-	<!-- jQuery, -->
-	<script src="jquery/jquery-1.10.2.min.js"></script>
-
-	<!-- Fotorama -->
 	<link  href="../out/fotorama.css?4.2.4" rel="stylesheet">
-	<script src="../out/fotorama.js?4.2.4"></script>
-
-  <script>
-    $(function () {
-      f = $('.fotorama').data('fotorama');
-    })
-  </script>
-
-  <script>
-    $(function () {
-      $('.js-set-options').on('change', function (e) {
-        var fotorama = $($(this).data('fotorama')).data('fotorama'),
-            options = {};
-
-        if (!fotorama) return;
-
-        $(':input', this).each(function () {
-          var $input = $(this);
-          options[$input.attr('name')] = $input.attr('type') === 'checkbox' ? $input.is(':checked') : $input.val();
-        });
-
-        fotorama.setOptions(options);
-
-      });
-    })
-  </script>
 </head>
 
-<body>
+<body style="pointer-events: auto;">
 
 <!--<p>Basic fotorama:<p>
 <pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div <mark>class="fotorama"</mark>></code></pre>-->
@@ -54,18 +24,21 @@
   <label><input type="checkbox" name="swipe" checked> Swipe</label>
 </form>
 
-<!-- Fotorama -->
-<div class="fotorama"
-     id="slide-controls"
-     data-width="700"
-     data-ratio="3/2"
-     data-max-width="100%">
-	<a href="i/okonechnikov/1-lo.jpg" data-caption="One"></a>
-	<a href="i/okonechnikov/2-lo.jpg" data-caption="Two"></a>
-	<a href="i/okonechnikov/9-lo.jpg" data-caption="Three"></a>
-	<a href="i/okonechnikov/6-lo.jpg" data-caption="Four"></a>
-	<a href="i/okonechnikov/5-lo.jpg" data-caption="Five"></a>
-</div>
+<div style="position: relative; overflow: hidden;"><div>
+  <!-- Fotorama -->
+  <div class="fotorama"
+       id="slide-controls"
+       data-width="700"
+       data-ratio="3/2"
+       data-clicktransition="crossfade"
+       data-max-width="100%">
+    <a href="i/okonechnikov/1-lo.jpg" data-caption="One"></a>
+    <a href="i/okonechnikov/2-lo.jpg" data-caption="Two"></a>
+    <a href="i/okonechnikov/9-lo.jpg" data-caption="Three"></a>
+    <a href="i/okonechnikov/6-lo.jpg" data-caption="Four"></a>
+    <a href="i/okonechnikov/5-lo.jpg" data-caption="Five"></a>
+  </div>
+</div></div>
 
 <p>Fotorama with crossfade transition:</p>
 
@@ -93,5 +66,42 @@
 
 <!-- © -->
 <p>Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
+
+
+<!-- jQuery, -->
+	<script src="jquery/jquery-1.11.0.min.js"></script>
+
+  <script>
+    $(function () {
+      f = $('.fotorama').data('fotorama');
+
+      $(document).on('click mouseup touchend', function (e) {
+        console.log('document', e.type);
+      });
+    })
+  </script>
+
+  <script>
+    $(function () {
+      $('.js-set-options').on('change', function (e) {
+        var fotorama = $($(this).data('fotorama')).data('fotorama'),
+            options = {};
+
+        if (!fotorama) return;
+
+        $(':input', this).each(function () {
+          var $input = $(this);
+          options[$input.attr('name')] = $input.attr('type') === 'checkbox' ? $input.is(':checked') : $input.val();
+        });
+
+        fotorama.setOptions(options);
+
+      });
+    })
+  </script>
+
+  <!-- Fotorama -->
+	<script src="../out/fotorama.js?4.2.4"></script>
+
 </body>
 </html>

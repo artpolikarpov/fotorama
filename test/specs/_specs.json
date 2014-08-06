@@ -4,9 +4,22 @@
     "vendor": ["test/jquery/jquery-1.10.2.min.js", "out/fotorama.js"],
     "styles": "out/fotorama.css"
   },
+  "utils": {
+    "options": {
+      "helpers": false,
+      "vendor": ["test/jquery/jquery-1.11.0.min.js", "src/js/modernizr.js", "src/js/bez.js", "src/js/fullscreen.js", "src/js/basevars.js", "src/js/utils.js"],
+      "styles": false,
+      "specs": "test/specs/utils.js"
+    }
+  },
   "basic": {
     "options": {
       "specs": "test/specs/basic.js"
+    }
+  },
+  "dimensions": {
+    "options": {
+      "specs": "test/specs/dimensions.js"
     }
   },
   "jquery-1.8.0": {

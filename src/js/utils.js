@@ -16,10 +16,10 @@ function readPosition ($el) {
   }
 }
 
-function getTranslate (pos, _001) {
+function getTranslate (pos/*, _001*/) {
   var obj = {};
   if (CSS3) {
-    obj.transform = 'translate3d(' + (pos + (_001 ? 0.001 : 0)) + 'px,0,0)'; // 0.001 to remove Retina artifacts
+    obj.transform = 'translate3d(' + (pos/* + (_001 ? 0.001 : 0)*/) + 'px,0,0)'; // 0.001 to remove Retina artifacts
   } else {
     obj.left = pos;
   }
@@ -31,11 +31,12 @@ function getDuration (time) {
 }
 
 function numberFromMeasure (value, measure) {
-  return +String(value).replace(measure || 'px', '') || undefined;
+  value = +String(value).replace(measure || 'px', '');
+  return isNaN(value) ? undefined : value;
 }
 
 function numberFromPercent (value) {
-  return /%$/.test(value) && numberFromMeasure(value, '%');
+  return /%$/.test(value) ? numberFromMeasure(value, '%') : undefined;
 }
 
 function numberFromWhatever (value, whole) {
@@ -43,10 +44,13 @@ function numberFromWhatever (value, whole) {
 }
 
 function measureIsValid (value) {
-  return (!!numberFromMeasure(value) || !!numberFromMeasure(value, '%')) && value;
+  return (!isNaN(numberFromMeasure(value)) || !isNaN(numberFromMeasure(value, '%'))) && value;
 }
 
 function getPosByIndex (index, side, margin, baseIndex) {
+  //console.log('getPosByIndex', index, side, margin, baseIndex);
+  //console.log((index - (baseIndex || 0)) * (side + (margin || 0)));
+
   return (index - (baseIndex || 0)) * (side + (margin || 0));
 }
 
@@ -67,9 +71,9 @@ function bindTransitionEnd ($el) {
         msTransition: 'MSTransitionEnd',
         transition: 'transitionend'
       };
-  el.addEventListener(transitionEndEvent[Modernizr.prefixed('transition')], function (e) {
+  addEvent(el, transitionEndEvent[Modernizr.prefixed('transition')], function (e) {
     elData.tProp && e.propertyName.match(elData.tProp) && elData.onEndFn();
-  }, false);
+  });
   elData.tEnd = true;
 }
 
@@ -97,7 +101,7 @@ function afterTransition ($el, property, fn, time) {
 }
 
 
-function stop ($el, left, _001) {
+function stop ($el, left/*, _001*/) {
   if ($el.length) {
     var elData = $el.data();
     if (CSS3) {
@@ -111,7 +115,7 @@ function stop ($el, left, _001) {
       return readPosition($el);
     });
 
-    $el.css(getTranslate(lockedLeft, _001));//.width(); // `.width()` for reflow
+    $el.css(getTranslate(lockedLeft/*, _001*/));//.width(); // `.width()` for reflow
     return lockedLeft;
   }
 }
@@ -173,7 +177,7 @@ function findVideoId (href, forceVideo) {
     type = 'custom';
   }
 
-  return id ? {id: id, type: type, s: href.search.replace(/^\?/, '')} : false;
+  return id ? {id: id, type: type, s: href.search.replace(/^\?/, ''), p: getProtocol()} : false;
 }
 
 function getVideoThumbs (dataFrame, data, fotorama) {
@@ -294,17 +298,17 @@ function waitFor (test, fn, timeout) {
 }
 
 function setHash (hash) {
-  console.time('setHash ' + hash);
+  ////console.time('setHash ' + hash);
   location.replace(location.protocol
       + '//'
       + location.host
       + location.pathname.replace(/^\/?/, '/')
       + location.search
       + '#' + hash);
-  console.timeEnd('setHash ' + hash);
+  ////console.timeEnd('setHash ' + hash);
 }
 
-function fit ($el, measuresToFit, method) {
+function fit ($el, measuresToFit, method, position) {
   var elData = $el.data(),
       measures = elData.measures;
 
@@ -314,14 +318,16 @@ function fit ($el, measuresToFit, method) {
       elData.l.r !== measures.ratio ||
       elData.l.w !== measuresToFit.w ||
       elData.l.h !== measuresToFit.h ||
-      elData.l.m !== method)) {
+      elData.l.m !== method ||
+      elData.l.p !== position)) {
     var width = measures.width,
         height = measures.height,
         ratio = measuresToFit.w / measuresToFit.h,
         biggerRatioFLAG = measures.ratio >= ratio,
         fitFLAG = method === 'scaledown',
         containFLAG = method === 'contain',
-        coverFLAG = method === 'cover';
+        coverFLAG = method === 'cover',
+        pos = parsePosition(position);
 
     if (biggerRatioFLAG && (fitFLAG || containFLAG) || !biggerRatioFLAG && coverFLAG) {
       width = minMaxLimit(measuresToFit.w, 0, fitFLAG ? width : Infinity);
@@ -334,8 +340,8 @@ function fit ($el, measuresToFit, method) {
     $el.css({
       width: Math.ceil(width),
       height: Math.ceil(height),
-      marginLeft: Math.floor(-width / 2),
-      marginTop: Math.floor(-height / 2)
+      left: Math.floor(numberFromWhatever(pos.x, measuresToFit.w - width)),
+      top: Math.floor(numberFromWhatever(pos.y, measuresToFit.h- height))
     });
 
     elData.l = {
@@ -344,7 +350,8 @@ function fit ($el, measuresToFit, method) {
       r: measures.ratio,
       w: measuresToFit.w,
       h: measuresToFit.h,
-      m: method
+      m: method,
+      p: position
     };
   }
 
@@ -402,7 +409,7 @@ function smartClick ($el, fn, _options) {
       onMove: _options.onMove || noop,
       onTouchEnd: _options.onTouchEnd || noop,
       onEnd: function (result) {
-        console.log('smartClick → result.moved', result.moved);
+        //console.log('smartClick → result.moved', result.moved);
         if (result.moved) return;
         fn.call(this, startEvent);
       }
@@ -439,10 +446,10 @@ function clone (array) {
       });
 }
 
-function lockScroll (left, top) {
-  $WINDOW
-    .scrollLeft(left)
-    .scrollTop(top);
+function lockScroll ($el, left, top) {
+  $el
+    .scrollLeft(left || 0)
+    .scrollTop(top || 0);
 }
 
 function optionsToLowerCase (options) {
@@ -467,11 +474,44 @@ function getRatio (_ratio) {
   }
 }
 
+function addEvent (el, e, fn, bool) {
+  if (!e) return;
+  el.addEventListener ? el.addEventListener(e, fn, !!bool) : el.attachEvent('on'+e, fn);
+}
+
+function elIsDisabled (el) {
+  return !!el.getAttribute('disabled');
+}
+
+function disableAttr (FLAG) {
+  return {tabindex: FLAG * -1 + '', disabled: FLAG};
+}
+
+function addEnterUp (el, fn) {
+  addEvent(el, 'keyup', function (e) {
+    elIsDisabled(el) || e.keyCode == 13 && fn.call(el, e);
+  });
+}
+
+function addFocus (el, fn) {
+  addEvent(el, 'focus', el.onfocusin = function (e) {
+    fn.call(el, e);
+  }, true);
+}
+
 function stopEvent (e, stopPropagation) {
-  e.preventDefault();
-  stopPropagation && e.stopPropagation();
+  e.preventDefault ? e.preventDefault() : (e.returnValue = false);
+  stopPropagation && e.stopPropagation && e.stopPropagation();
 }
 
 function getDirectionSign (forward) {
   return forward ? '>' : '<';
+}
+
+function parsePosition (rule) {
+  rule = (rule + '').split(/\s+/);
+  return {
+    x: measureIsValid(rule[0]) || FIFTYFIFTY,
+    y: measureIsValid(rule[1]) || FIFTYFIFTY
+  }
 }
