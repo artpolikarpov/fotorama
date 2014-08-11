@@ -229,7 +229,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function stageNoMove () {
-    var _noMove = size < 2 || $videoPlaying;
+    var _noMove = (size < 2 && !opts.enableifsingleframe) || $videoPlaying;
     stageShaftTouchTail.noMove = _noMove || o_fade;
     stageShaftTouchTail.noSwipe = _noMove || !opts.swipe;
 
@@ -264,16 +264,16 @@ jQuery.Fotorama = function ($fotorama, opts) {
       classes[FLAG ? 'add' : 'remove'].push(value);
     }
 
-    //if (size > 1) { // TODO: need special option for that (disableIfSinglePhoto, типа)
+    if (size > 1 || opts.enableifsingleframe) {
       o_nav = opts.nav;
       o_navTop = opts.navposition === 'top';
       classes.remove.push(selectClass);
 
       $arrs.toggle(!!opts.arrows);
-//    } else {
-//      o_nav = false;
-//      $arrs.hide();
-//    }
+    } else {
+      o_nav = false;
+      $arrs.hide();
+    }
 
     spinnerStop();
     spinner = new Spinner($.extend(spinnerDefaults, opts.spinner, spinnerOverride, {direction: o_rtl ? -1 : 1}));

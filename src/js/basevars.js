@@ -92,6 +92,8 @@ var $WINDOW = $(window),
       swipe: true,
       trackpad: false,
 
+      enableifsingleframe: false,
+
       controlsonstart: true,
 
       shuffle: false,
