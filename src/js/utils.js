@@ -350,13 +350,6 @@ function fit ($el, measuresToFit, method, position) {
       top: Math.floor(numberFromWhatever(pos.y, measuresToFit.h- height))
     });
 
-    console.log(pos, measuresToFit, {
-      width: Math.ceil(width),
-      height: Math.ceil(height),
-      left: Math.floor(numberFromWhatever(pos.x, measuresToFit.w - width)),
-      top: Math.floor(numberFromWhatever(pos.y, measuresToFit.h- height))
-    });
-
     elData.l = {
       W: measures.width,
       H: measures.height,
