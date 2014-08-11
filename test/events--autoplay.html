@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Events</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.9.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../out/fotorama.css" rel="stylesheet">
+	<script src="../out/fotorama.js"></script>
+</head>
+
+<body>
+
+<p>Events:</p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>$('#events').on('fotorama:show', function (e, fotorama) {
+  $('#number').text(<mark>(fotorama.activeIndex + 1) + '/' + fotorama.size</mark>);
+});</code></pre>
+
+<script>
+	$(function () {
+		f = $('#events')
+				.on('fotorama:show', function (e, fotorama, direct) {
+					console.log(e.type, fotorama.activeFrame, direct);
+					$('#number').text((fotorama.activeIndex + 1)
+							+ '/' + fotorama.size);
+				})
+				.fotorama().data('fotorama');
+
+//    setTimeout(function () {
+//      f.stopAutoplay();
+//    }, 100);
+	});
+</script>
+
+<p style="margin-bottom: .5em;">Current frame: <mark id="number"></mark></p>
+
+<!-- Just don’t want to repeat this prefix in every img[src] -->
+<base href="i/okonechnikov/">
+
+<!-- Fotorama -->
+<div class="fotorama"
+     data-auto="false"
+     data-autoplay="500"
+     data-stopautoplayontouch="false"
+     id="events"
+     data-keyboard="true"
+     data-width="700"
+     data-ratio="3/2"
+     data-max-width="100%">
+  <img href="http://www.ucarecdn.com/304b1992-a08a-4d31-8d52-f5b4250417a4/-/resize/2048/">
+  <img href="http://www.ucarecdn.com/073fd26e-3a67-4979-9213-f54edcbc8324/-/resize/2048/">
+  <img href="http://www.ucarecdn.com/dcc54a54-3806-44af-9a08-60d7cb298e8a/-/resize/2048/">
+  <img href="http://www.ucarecdn.com/fa485be2-7583-48ff-a2cc-f94e96679880/-/resize/2048/">
+	<!--<a href="15-lo.jpg">15-lo.jpg</a>
+	<a href="23-lo.jpg">23-lo.jpg</a>
+	<a href="12-lo.jpg">12-lo.jpg</a>
+	<a href="16-lo.jpg">16-lo.jpg</a>
+	<a href="18-lo.jpg">18-lo.jpg</a>-->
+</div>
+
+<!-- © -->
+<p>Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
+</body>
+</html>

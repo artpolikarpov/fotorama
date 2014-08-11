@@ -290,15 +290,32 @@ function isDetached (el) {
   return !$.contains(document.documentElement, el);
 }
 
-function waitFor (test, fn, timeout) {
+function waitFor (test, fn, timeout, i) {
+  if (!waitFor.i) {
+    waitFor.i = 1;
+    waitFor.ii = [true];
+  }
+
+  i = i || waitFor.i;
+
+  if (typeof waitFor.ii[i] === 'undefined') {
+    waitFor.ii[i] = true;
+  }
+
   if (test()) {
     fn();
   } else {
-    setTimeout(function () {
-      waitFor(test, fn);
+    waitFor.ii[i] && setTimeout(function () {
+      waitFor.ii[i] && waitFor(test, fn, timeout, i);
     }, timeout || 100);
   }
+
+  return waitFor.i++;
 }
+
+waitFor.stop = function (i) {
+  waitFor.ii[i] = false;
+};
 
 function setHash (hash) {
   ////console.time('setHash ' + hash);

@@ -54,6 +54,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       lastActiveIndex,
       prevIndex,
       nextIndex,
+      nextAutoplayIndex,
       startIndex,
 
       o_loop,
@@ -910,7 +911,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function onTouchEnd () {
-    ////console.time('onTouchEnd');
     if (!opts.stopautoplayontouch) {
       releaseAutoplay();
       changeAutoplay();
@@ -927,7 +927,11 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function changeAutoplay () {
+    //console.log('changeAutoplay');
+
     clearTimeout(changeAutoplay.t);
+    waitFor.stop(changeAutoplay.w);
+
     if (!opts.autoplay || pausedAutoplayFLAG) {
       if (that.autoplay) {
         that.autoplay = false;
@@ -936,6 +940,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       return;
     }
+
+    //console.log('changeAutoplay continue');
 
     if (!that.autoplay) {
       that.autoplay = true;
@@ -946,12 +952,25 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
 
     var frameData = activeFrame[STAGE_FRAME_KEY].data();
-    waitFor(function () {
+    changeAutoplay.w = waitFor(function () {
+      //console.log('wait for the state of the current frame');
       return frameData.state || _activeIndex !== activeIndex;
     }, function () {
+      //console.log('the current frame is ready');
       changeAutoplay.t = setTimeout(function () {
+        //console.log('changeAutoplay.t setTimeout', pausedAutoplayFLAG, _activeIndex !== activeIndex);
         if (pausedAutoplayFLAG || _activeIndex !== activeIndex) return;
-        that.show(o_loop ? getDirectionSign(!o_rtl) : normalizeIndex(activeIndex + (o_rtl ? -1 : 1)));
+
+        var _nextAutoplayIndex = nextAutoplayIndex,
+            nextFrameData = data[_nextAutoplayIndex][STAGE_FRAME_KEY].data();
+
+        changeAutoplay.w = waitFor(function () {
+          //console.log('wait for the state of the next frame');
+          return nextFrameData.state || _nextAutoplayIndex !== nextAutoplayIndex;
+        }, function () {
+          if (pausedAutoplayFLAG || _nextAutoplayIndex !== nextAutoplayIndex) return;
+          that.show(o_loop ? getDirectionSign(!o_rtl) : nextAutoplayIndex);
+        });
       }, opts.autoplay);
     });
 
@@ -993,6 +1012,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     that.activeIndex = activeIndex = edgeIndex(index);
     prevIndex = getPrevIndex(activeIndex);
     nextIndex = getNextIndex(activeIndex);
+    nextAutoplayIndex = normalizeIndex(activeIndex + (o_rtl ? -1 : 1));
     activeIndexes = [activeIndex, prevIndex, nextIndex];
 
     dirtyIndex = o_loop ? index : activeIndex;
