@@ -30,9 +30,12 @@ function getDuration (time) {
   return {'transition-duration': time + 'ms'};
 }
 
+function unlessNaN (value, alternative) {
+  return isNaN(value) ? alternative : value;
+}
+
 function numberFromMeasure (value, measure) {
-  value = +String(value).replace(measure || 'px', '');
-  return isNaN(value) ? undefined : value;
+  return unlessNaN(+String(value).replace(measure || 'px', ''));
 }
 
 function numberFromPercent (value) {
@@ -40,7 +43,7 @@ function numberFromPercent (value) {
 }
 
 function numberFromWhatever (value, whole) {
-  return numberFromPercent(value) / 100 * whole || numberFromMeasure(value);
+  return unlessNaN(numberFromPercent(value) / 100 * whole, numberFromMeasure(value));
 }
 
 function measureIsValid (value) {
@@ -320,6 +323,9 @@ function fit ($el, measuresToFit, method, position) {
       elData.l.h !== measuresToFit.h ||
       elData.l.m !== method ||
       elData.l.p !== position)) {
+
+    console.log('fit');
+
     var width = measures.width,
         height = measures.height,
         ratio = measuresToFit.w / measuresToFit.h,
@@ -338,6 +344,13 @@ function fit ($el, measuresToFit, method, position) {
     }
 
     $el.css({
+      width: Math.ceil(width),
+      height: Math.ceil(height),
+      left: Math.floor(numberFromWhatever(pos.x, measuresToFit.w - width)),
+      top: Math.floor(numberFromWhatever(pos.y, measuresToFit.h- height))
+    });
+
+    console.log(pos, measuresToFit, {
       width: Math.ceil(width),
       height: Math.ceil(height),
       left: Math.floor(numberFromWhatever(pos.x, measuresToFit.w - width)),

@@ -21,20 +21,21 @@
   <script type="text/javascript">
     //<![CDATA[
       $(function(){
-      $('.fotorama')
-          .on('fotorama:fullscreenenter fotorama:fullscreenexit', function (e, fotorama) {
-          if (e.type === 'fotorama:fullscreenenter') {
-              // Настройки для полного экрана
-              fotorama.setOptions({
-                  nav: 'thumbs'
-              });
-          } else {
-              // Возврат к обычным настройкам
-              fotorama.setOptions({
-                  nav: 'dots'
-              });
-          }
-      }).fotorama();
+
+        f = $('.fotorama')
+            .on('fotorama:fullscreenenter fotorama:fullscreenexit', function (e, fotorama) {
+            if (e.type === 'fotorama:fullscreenenter') {
+                // Настройки для полного экрана
+                fotorama.setOptions({
+                    fit: 'cover'
+                });
+            } else {
+                // Возврат к обычным настройкам
+                fotorama.setOptions({
+                    fit: 'contain'
+                });
+            }
+        }).fotorama().data('fotorama');
       });//]]>
 
 
@@ -68,11 +69,14 @@
      data-max-width="100%"
      data-fit="cover"
      data-allow-full-screen="true">
-	<a href="i/okonechnikov/9-lo.jpg"></a>
-	<a href="i/okonechnikov/23-lo.jpg"></a>
-	<a href="i/okonechnikov/14-lo.jpg"></a>
-	<a href="i/okonechnikov/15-lo.jpg"></a>
-	<a href="i/okonechnikov/16-lo.jpg"></a>
+	<a href="i/nyc/guy-in-car.jpg"><img src="i/nyc/thumbs/guy-in-car.jpg" width="500" height="335"></a>
+	<a data-video="http://www.youtu.be/HmiVRWAVS3I">Englishman In New York</a>
+  <a href="i/nyc/acapella.jpg"><img src="i/nyc/thumbs/acapella.jpg" width="550" height="391"></a>
+	<a href="i/nyc/crazyjohn.jpg"><img src="i/nyc/thumbs/crazyjohn.jpg" width="450" height="591"></a>
+	<a href="i/nyc/dudeintheground.jpg"><img src="i/nyc/thumbs/dudeintheground.jpg" width="550" height="342"></a>
+	<a href="i/nyc/dudes.jpg"><img src="i/nyc/thumbs/dudes.jpg" width="550" height="341"></a>
+	<a href="i/nyc/explanation.jpg"><img src="i/nyc/thumbs/explanation.jpg" width="500" height="356"></a>
+	<a href="i/nyc/eyes.jpg"><img src="i/nyc/thumbs/eyes.jpg" width="500" height="354"></a>
 </div>
 
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad amet aperiam aspernatur assumenda autem beatae

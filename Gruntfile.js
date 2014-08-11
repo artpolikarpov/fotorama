@@ -134,6 +134,26 @@ copy: {
       }
     ]
   },
+  npm: {
+    files: [
+      {
+        src: 'out/fotorama.css',
+        dest: '.fotorama-npm/dist/fotorama.css'
+      },
+        {
+        src: 'out/fotorama.png',
+        dest: '.fotorama-npm/dist/fotorama.png'
+      },
+      {
+        src: 'out/fotorama@2x.png',
+        dest: '.fotorama-npm/dist/fotorama@2x.png'
+      },
+      {
+        src: 'out/fotorama.js',
+        dest: '.fotorama-npm/dist/fotorama.js'
+      }
+    ]
+  },
   cdnjs: {
     path: '/Users/artpolikarpov/Projects/Clone/cdnjs/ajax/libs/fotorama',
     files: [
@@ -224,7 +244,8 @@ replace: {
   version: {
     files: {
       'fotorama.jquery.json': 'fotorama.jquery.json',
-      '.fotorama-bower/bower.json': '.fotorama-bower/bower.json'
+      '.fotorama-bower/bower.json': '.fotorama-bower/bower.json',
+      '.fotorama-npm/package.json': '.fotorama-npm/package.json'
     },
     options: {
       patterns: [
@@ -391,6 +412,10 @@ shell: {
         '&& git tag <%= pkg.version %> ' +
         '&& git push --tags --progress origin master:master'
   },
+  npm: {
+    command: 'cd .fotorama-npm ' +
+        '&& npm publish'
+  },
   heroku: {
     command: 'heroku config:add FOTORAMA_VERSION=<%= pkg.version %> FOTORAMA_NEXT=<%= pkg.version %>'
   }
@@ -472,6 +497,6 @@ grunt.registerTask('default', defaultTask.split(' '));
 grunt.registerTask('cdnjs', (defaultTask + ' s3 replace:version copy:cdnjs shell:cdnjs').split(' '));
 
 // Publish, will fail without secret details ;-)
-grunt.registerTask('publish', (defaultTask + ' s3 replace:version copy:bower shell:commit shell:push shell:bower shell:heroku').split(' '));
+grunt.registerTask('publish', (defaultTask + ' s3 replace:version copy:bower shell:commit shell:push shell:bower shell:npm shell:heroku').split(' '));
 grunt.registerTask('release', ('replace:history gh_release tweet').split(' '));
 };

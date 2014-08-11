@@ -37,6 +37,10 @@ describe('Unit testing utils.js', function () {
     expect(numberFromWhatever('4%')).toBe(undefined);
     expect(numberFromWhatever('4%', 200)).toBe(8);
     expect(numberFromWhatever('4.5%', -300)).toBe(-13.5);
+    expect(numberFromWhatever('0', 0)).toBe(0);
+    expect(numberFromWhatever('100%', 0)).toBe(0);
+    expect(numberFromWhatever('100px', 0)).toBe(100);
+    expect(numberFromWhatever('50%', 0)).toBe(0);
   });
 
   it('parsePosition()', function () {
