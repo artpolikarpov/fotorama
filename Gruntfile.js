@@ -434,7 +434,7 @@ tweet: {
     options: {
       crop: true
     },
-    text: 'Fotorama <%= pkg.version %>',
+    text: 'Fotorama <%= pkg.version %>, “<%= grunt.file.readJSON("history.json")[pkg.version + ":name"] %>”',
     url: 'https://github.com/artpolikarpov/fotorama/releases/tag/<%= pkg.version %>'
   }
 },
