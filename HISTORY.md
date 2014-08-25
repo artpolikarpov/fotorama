@@ -2,6 +2,22 @@
 
 > https://github.com/artpolikarpov/fotorama/releases
 
+## 4.6.2, 7 August 2014
+
+<!--4.6.2:name-->
+Hot sorry
+<!--/4.6.2:name-->
+
+<!--4.6.2:notes-->
+Fotorama 4.6.0 broke image fitting into stage (#286, #291, and many more in inbox). This release fixes that.
+
+Some new features, meanwhile:
+* New `enableifsingleframe` option. Default value is `false`. Set it to `true` if you don’t want to disable fotorama navigation when it has only one frame.
+* Smarter autoplay. Now waits until the next frame will be fully loaded.
+
+
+<!--/4.6.2:notes-->
+
 ## 4.6.0, 7 August 2014
 
 <!--4.6.0:name-->
