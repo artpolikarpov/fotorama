@@ -487,7 +487,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           if (type === 'stage') {
             triggerTriggerEvent('load');
           }
-        }, 5);
+        }, 0);
       }
 
       if (!src) {
@@ -500,7 +500,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         waitFor(function () {
           return !touchedFLAG || !_i-- && !SLOW;
         }, function () {
-          loaded();
+          data && loaded();
         });
       }
 

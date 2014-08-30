@@ -75,4 +75,19 @@ describe('Destroy', function () {
       expect($('.fotorama__stage__frame.fotorama__active .fotorama__img').attr('src')).toBe('test/i/okonechnikov/2-lo.jpg');
     });
   });
+
+  it('.destoy() on fotorama:ready should not to break anything', function(done) {
+    var $fotorama = $('#fotorama');
+
+    $fotorama
+        .on('fotorama:ready', function(e, fotorama) {
+          fotorama.destroy();
+          $fotorama.fotorama();
+
+          var fotorama = $fotorama.data('fotorama');
+          expect(fotorama.data).toBeTruthy();
+          done();
+        })
+        .fotorama();
+  })
 });
