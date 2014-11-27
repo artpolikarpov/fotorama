@@ -328,7 +328,8 @@ function setHash (hash) {
   ////console.timeEnd('setHash ' + hash);
 }
 
-function fit ($el, measuresToFit, method, position) {
+function fit ($el, measuresToFit, method, position, imgspace,thumbSizes) {
+
   var elData = $el.data(),
       measures = elData.measures;
 
@@ -341,7 +342,6 @@ function fit ($el, measuresToFit, method, position) {
       elData.l.m !== method ||
       elData.l.p !== position)) {
 
-    console.log('fit');
 
     var width = measures.width,
         height = measures.height,
@@ -360,11 +360,34 @@ function fit ($el, measuresToFit, method, position) {
       width = height * measures.ratio;
     }
 
+   
+    // image space
+    // only for images, not for thumbs        
+    if(measuresToFit.h ==thumbSizes.h || measuresToFit.w == thumbSizes.w){
+      imgspace = 0;
+    }
+    
+    
+    if(imgspace != 0){
+    	var prop = height/width;
+	if(width > height){
+	  // horizontal
+	  imgspace = Math.floor(numberFromWhatever (imgspace, measuresToFit.w));
+	  width -= imgspace*2;
+	  height = width * prop;
+	}else{
+	  imgspace = Math.floor(numberFromWhatever (imgspace, measuresToFit.h));	  
+	  height -= imgspace*2;
+	  width = height / prop;	  
+	}
+    }
+
+    
     $el.css({
       width: Math.ceil(width),
       height: Math.ceil(height),
       left: Math.floor(numberFromWhatever(pos.x, measuresToFit.w - width)),
-      top: Math.floor(numberFromWhatever(pos.y, measuresToFit.h- height))
+      top:  Math.floor(numberFromWhatever(pos.y, measuresToFit.h- height))
     });
 
     elData.l = {

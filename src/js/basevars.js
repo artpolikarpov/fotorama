@@ -100,6 +100,8 @@ var $WINDOW = $(window),
 
       direction: 'ltr', // 'rtl'
 
+      imgspace:0,
+            
       shadows: true,
       spinner: null
     },
