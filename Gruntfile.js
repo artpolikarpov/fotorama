@@ -462,6 +462,6 @@ grunt.registerTask('default', defaultTask.split(' '));
 //grunt.registerTask('look', 'copy:i sass autoprefixer jst replace:jst concat:js watch'.split(' '));
 
 // Publish, will fail without secret details ;-)
-grunt.registerTask('publish', (defaultTask + ' s3 replace:version copy:bower copy:npm shell:commit shell:push shell:bower shell:npm').split(' '));
+grunt.registerTask('publish', (defaultTask + ' replace:version copy:bower copy:npm shell:commit shell:push shell:bower shell:npm').split(' '));
 grunt.registerTask('release', ('shell:heroku replace:history gh_release tweet').split(' '));
 };
