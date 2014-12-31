@@ -138,19 +138,19 @@ copy: {
     files: [
       {
         src: 'out/fotorama.css',
-        dest: '.fotorama-npm/dist/fotorama.css'
+        dest: '.fotorama-npm/fotorama.css'
       },
         {
         src: 'out/fotorama.png',
-        dest: '.fotorama-npm/dist/fotorama.png'
+        dest: '.fotorama-npm/fotorama.png'
       },
       {
         src: 'out/fotorama@2x.png',
-        dest: '.fotorama-npm/dist/fotorama@2x.png'
+        dest: '.fotorama-npm/fotorama@2x.png'
       },
       {
         src: 'out/fotorama.js',
-        dest: '.fotorama-npm/dist/fotorama.js'
+        dest: '.fotorama-npm/fotorama.js'
       }
     ]
   }

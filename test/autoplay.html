@@ -29,8 +29,6 @@
 
 <p>The show stops on&nbsp;touch. Change this with <code>data-stop-autoplay-on-touch="false"</code>.</p>
 
-<!-- Just don’t want to repeat this prefix in every img[src] -->
-<base href="i/okonechnikov/">
 
 <!-- Fotorama -->
 <div class="fotorama"
@@ -40,43 +38,26 @@
      data-fit="cover"
      data-nav="none"
      data-autoplay="1500"
-     data-arrows="false"
-     data-click="false"
-     data-swipe="false"
-     data-loop="true"
+     data-arrows="true"
+     data-click="true"
+     data-swipe="true"
+     data-loop="false"
      data-trackpad="false"
      data-stopautoplayontouch="false">
-	<a href="1-lo.jpg"><img src="1-thumb.jpg"></a>
-	<a href="2-lo.jpg"><img src="2-thumb.jpg"></a>
-	<a href="3-lo.jpg"><img src="3-thumb.jpg"></a>
-	<a href="4-lo.jpg"><img src="4-thumb.jpg"></a>
-	<a href="25-lo.jpg"><img src="25-thumb.jpg"></a>
-	<a href="26-lo.jpg"><img src="26-thumb.jpg"></a>
-	<a href="27-lo.jpg"><img src="27-thumb.jpg"></a>
-	<a href="28-lo.jpg"><img src="28-thumb.jpg"></a>
-	<a href="29-lo.jpg"><img src="29-thumb.jpg"></a>
-	<a href="30-lo.jpg"><img src="30-thumb.jpg"></a>
-	<a href="11-lo.jpg"><img src="11-thumb.jpg"></a>
-	<a href="12-lo.jpg"><img src="12-thumb.jpg"></a>
-	<a href="13-lo.jpg"><img src="13-thumb.jpg"></a>
-	<a href="14-lo.jpg"><img src="14-thumb.jpg"></a>
-	<a href="15-lo.jpg"><img src="15-thumb.jpg"></a>
-	<a href="16-lo.jpg"><img src="16-thumb.jpg"></a>
-	<a href="20-lo.jpg"><img src="20-thumb.jpg"></a>
-	<a href="21-lo.jpg"><img src="21-thumb.jpg"></a>
-	<a href="22-lo.jpg"><img src="22-thumb.jpg"></a>
-	<a href="23-lo.jpg"><img src="23-thumb.jpg"></a>
-	<a href="24-lo.jpg"><img src="24-thumb.jpg"></a>
-	<a href="17-lo.jpg"><img src="17-thumb.jpg"></a>
-	<a href="18-lo.jpg"><img src="18-thumb.jpg"></a>
-	<a href="19-lo.jpg"><img src="19-thumb.jpg"></a>
+	<a href="i/okonechnikov/1-lo.jpg"></a>
+	<a href="i/okonechnikov/2-lo.jpg"></a>
+	<a href="i/okonechnikov/9-lo.jpg"></a>
+	<a href="i/okonechnikov/6-lo.jpg"></a>
+	<a href="i/okonechnikov/5-lo.jpg"></a>
 </div>
 
 <script>'use strict';
-$('.fotorama').on('fotorama:showend', function (e, fotorama) {
-if (fotorama.size - fotorama.activeIndex === 1) {
-    fotorama.stopAutoplay();
-}
+var prev = Date.now();
+
+$('.fotorama').on('fotorama:show', function (e, fotorama) {
+    var now = Date.now() ;
+    console.log('fotorama:show:', now - prev);
+    prev = now;
 });
 
 </script>

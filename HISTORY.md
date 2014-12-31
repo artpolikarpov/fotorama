@@ -2,6 +2,21 @@
 
 > https://github.com/artpolikarpov/fotorama/releases
 
+## 4.6.3, 31 December 2014
+
+<!--4.6.3:name-->
+HPPNWYR
+<!--/4.6.3:name-->
+
+<!--4.6.3:notes-->
+
+* #339 Set `box-sizing: content-box;` only for needed blocks inside a fotorama
+* #323 Fix autoplay interval corruption on mousemove
+* #312 Let browsers round dimensions by themselfs
+* #299 No more collecting fotorama usage statistics via foreign iframe.
+
+<!--/4.6.3:notes-->
+
 ## 4.6.2, 7 August 2014
 
 <!--4.6.2:name-->

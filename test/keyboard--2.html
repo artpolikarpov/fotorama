@@ -43,6 +43,10 @@
 </style>
 <script>
 $(function () {
+	$(document).on('keydown keypress', function (e) {
+		console.log('$document', e.type, e.keyCode);
+	});
+
 	$('.js-arrow').on('mousedown', function (e) {
 		e.preventDefault();
 
