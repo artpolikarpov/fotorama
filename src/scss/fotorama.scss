@@ -54,11 +54,6 @@ $blue: mix(#00d1ff, #008ed6);
   @extend %no-select;
   direction: ltr;
   z-index: 0;
-
-  * {
-     // /test/specs/thumbs.js
-     @extend %content-box;
-   }
 }
 
 .fotorama__wrap--rtl {
@@ -217,6 +212,8 @@ $blue: mix(#00d1ff, #008ed6);
   cursor: pointer;
   @extend %no-tap;
   @extend %focus;
+  // /test/specs/thumbs.js
+  @extend %content-box;
 }
 
 .fotorama__nav--dots {
@@ -293,6 +290,7 @@ $blue: mix(#00d1ff, #008ed6);
   z-index: 9;
   top: 0;
   left: 0;
+  @extend %content-box;
   border-style: solid;
   border-color: $blue;
   background-image: linear-gradient(to bottom right, rgba(255, 255, 255, .25), rgba(64, 64, 64, .1));
