@@ -1337,10 +1337,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
         _activeIndex = activeIndex;
 
     if (typeof video === 'object' && dataFrame.videoReady) {
-      o_nativeFullScreen && that.fullScreen && that.cancelFullScreen();
+      //o_nativeFullScreen && that.fullScreen && that.cancelFullScreen();
 
       waitFor(function () {
-        return !fullScreenApi.is() || _activeIndex !== activeIndex;
+        return true;//!fullScreenApi.is() || _activeIndex !== activeIndex;
       }, function () {
         if (_activeIndex === activeIndex) {
           dataFrame.$video = dataFrame.$video || $($.Fotorama.jst.video(video));
