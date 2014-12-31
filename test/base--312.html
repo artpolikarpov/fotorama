@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Basic fotorama</title>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+
+	<!-- jQuery, -->
+	<script src="jquery/jquery-1.10.1.min.js"></script>
+
+	<!-- Fotorama -->
+	<link  href="../out/fotorama.css" rel="stylesheet">
+	<script src="../out/fotorama.js"></script>
+
+  <script type="text/javascript">
+    console = window.console || {};
+    console.time = console.time || $.noop;
+    console.timeEnd = console.timeEnd || $.noop;
+
+    $(function () {
+      f = $('.fotorama').data('fotorama');
+    })
+  </script>
+</head>
+
+<body>
+
+<!--<p>Basic fotorama:<p>
+<pre style="margin-top: -1em; margin-left: 1em;"><code>&lt;div <mark>class="fotorama"</mark>></code></pre>-->
+
+<!-- Fotorama -->
+<div class="fotorama">
+  <a href="http://placehold.it/201x200"></a>
+  <a href="http://placehold.it/200x200"></a>
+
+</div>
+
+<!-- © -->
+<p>Photos <a href="http://okonet.ru/">by Andrey Okonetchnikov</a></p>
+</body>
+</html>

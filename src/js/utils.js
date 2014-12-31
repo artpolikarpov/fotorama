@@ -361,10 +361,10 @@ function fit ($el, measuresToFit, method, position) {
     }
 
     $el.css({
-      width: Math.ceil(width),
-      height: Math.ceil(height),
-      left: Math.floor(numberFromWhatever(pos.x, measuresToFit.w - width)),
-      top: Math.floor(numberFromWhatever(pos.y, measuresToFit.h- height))
+      width: width,
+      height: height,
+      left: numberFromWhatever(pos.x, measuresToFit.w - width),
+      top: numberFromWhatever(pos.y, measuresToFit.h- height)
     });
 
     elData.l = {
