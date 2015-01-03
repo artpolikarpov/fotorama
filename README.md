@@ -1,3 +1,5 @@
+**Important!** If you load Fotorama from S3, please switch to [cdnjs](https://cdnjs.com/libraries/fotorama)! Our S3 bucket will be killed on JAN 12.
+
 # Fotorama source
 
 There is nothing for non-coders. Take the latest and ready-to-use Fotorama on its website:<br>
