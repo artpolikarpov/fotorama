@@ -506,7 +506,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
             .addClass(imgClass + (fullFLAG ? ' ' + imgFullClass : ''))
             .prependTo($frame);
 
-        fit($img, ($.isFunction(specialMeasures) ? specialMeasures() : specialMeasures) || measures, method || dataFrame.fit || opts.fit, position || dataFrame.position || opts.position);
+        fit($img, ($.isFunction(specialMeasures) ? specialMeasures() : specialMeasures) || measures, method || dataFrame.fit || opts.fit, position || dataFrame.position || opts.position, dataFrame.smartfitpx || opts.smartfitpx, dataFrame.smartfitthreshold || opts.smartfitthreshold);
 
         $.Fotorama.cache[src] = frameData.state = 'loaded';
 
@@ -647,8 +647,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     });
   }
 
-  function callFit ($img, measuresToFit, method, position) {
-    return $img && $img.length && fit($img, measuresToFit, method, position);
+  function callFit ($img, measuresToFit, method, position, smartfitPx, smartfitThreshold) {
+    return $img && $img.length && fit($img, measuresToFit, method, position, smartfitPx, smartfitThreshold);
   }
 
   function stageFramePosition (indexes) {
@@ -657,7 +657,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       var normalizedIndex = normalizeIndex(index),
           method = dataFrame.fit || opts.fit,
-          position = dataFrame.position || opts.position;
+          position = dataFrame.position || opts.position,
+          smartfitPx  = dataFrame.smartfitpx || opts.smartfitpx,
+          smartfitThreshold = dataFrame.smartfitthreshold || opts.smartfitthreshold;
       frameData.eq = normalizedIndex;
 
       toDetach[STAGE_FRAME_KEY][normalizedIndex] = $frame.css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, opts.margin, repositionIndex)}, o_fade && getDuration(0)));
@@ -667,8 +669,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
         unloadVideo(dataFrame.$video);
       }
 
-      callFit(frameData.$img, measures, method, position);
-      callFit(frameData.$full, measures, method, position);
+      callFit(frameData.$img, measures, method, position, smartfitPx, smartfitThreshold);
+      callFit(frameData.$full, measures, method, position, smartfitPx, smartfitThreshold);
     });
   }
 
@@ -691,13 +693,15 @@ jQuery.Fotorama = function ($fotorama, opts) {
           specialMeasures = getSpecialMeasures(),
           dataFrame = data[eq] || {},
           method = dataFrame.thumbfit || opts.thumbfit,
-          position = dataFrame.thumbposition || opts.thumbposition;
+          position = dataFrame.thumbposition || opts.thumbposition,
+          smartfitPx  = dataFrame.smartfitpx || opts.smartfitpx,
+          smartfitThreshold = dataFrame.smartfitthreshold || opts.smartfitthreshold;
 
       specialMeasures.w = thisData.w;
 
       if (thisData.l + thisData.w < leftLimit
           || thisData.l > rightLimit
-          || callFit(thisData.$img, specialMeasures, method, position)) return;
+          || callFit(thisData.$img, specialMeasures, method, position, smartfitPx, smartfitThreshold)) return;
 
       loadFLAG && loadImg([eq], 'navThumb', getSpecialMeasures, method, position);
     });

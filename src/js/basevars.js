@@ -56,6 +56,9 @@ var $WINDOW = $(window),
 
       fit: 'contain', // 'cover' || 'scaledown' || 'none'
 
+      smartfitpx: 1.5, // Maximum scaling of pixels in smart fit, eg: 100 px width maximum 150px scaled
+      smartfitthreshold: 0.75, // Threshold where smart fit scaling takes effect, 1 = exact, 0.75 = at least 75% cover the gallery area
+
       position: FIFTYFIFTY,
       thumbposition: FIFTYFIFTY,
 

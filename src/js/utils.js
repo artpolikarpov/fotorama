@@ -328,7 +328,7 @@ function setHash (hash) {
   ////console.timeEnd('setHash ' + hash);
 }
 
-function fit ($el, measuresToFit, method, position) {
+function fit ($el, measuresToFit, method, position, smartfitPx, smartfitThreshold) {
   var elData = $el.data(),
       measures = elData.measures;
 
@@ -341,8 +341,6 @@ function fit ($el, measuresToFit, method, position) {
       elData.l.m !== method ||
       elData.l.p !== position)) {
 
-    console.log('fit');
-
     var width = measures.width,
         height = measures.height,
         ratio = measuresToFit.w / measuresToFit.h,
@@ -350,22 +348,37 @@ function fit ($el, measuresToFit, method, position) {
         fitFLAG = method === 'scaledown',
         containFLAG = method === 'contain',
         coverFLAG = method === 'cover',
-        pos = parsePosition(position);
+        smartFlag = method === 'smart',
+        pos = parsePosition(position),
+        fitObj, zoom;
 
-    if (biggerRatioFLAG && (fitFLAG || containFLAG) || !biggerRatioFLAG && coverFLAG) {
+    if (biggerRatioFLAG && (fitFLAG || containFLAG) || !biggerRatioFLAG && (coverFLAG || smartFlag)) {
       width = minMaxLimit(measuresToFit.w, 0, fitFLAG ? width : Infinity);
       height = width / measures.ratio;
-    } else if (biggerRatioFLAG && coverFLAG || !biggerRatioFLAG && (fitFLAG || containFLAG)) {
+    } else if (biggerRatioFLAG && (coverFLAG || smartFlag) || !biggerRatioFLAG && (fitFLAG || containFLAG)) {
       height = minMaxLimit(measuresToFit.h, 0, fitFLAG ? height : Infinity);
       width = height * measures.ratio;
     }
 
-    $el.css({
+    fitObj = {
       width: width,
       height: height,
       left: numberFromWhatever(pos.x, measuresToFit.w - width),
       top: numberFromWhatever(pos.y, measuresToFit.h- height)
-    });
+    };
+
+    if(smartFlag) {
+      zoom = (measures.width / measuresToFit.w) * smartfitPx;
+
+      if (zoom < smartfitThreshold) {
+          fitObj.width = parseInt(fitObj.width * zoom, 10);
+          fitObj.height = parseInt(fitObj.height * zoom, 10);
+          fitObj.left = parseInt((measuresToFit.w - fitObj.width) / 2, 10);
+          fitObj.top = -parseInt((fitObj.height - measuresToFit.h) / 2, 10);
+      }
+    }
+
+    $el.css(fitObj);
 
     elData.l = {
       W: measures.width,
