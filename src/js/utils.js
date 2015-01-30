@@ -172,7 +172,7 @@ function findVideoId (href, forceVideo) {
     type = 'youtube';
   } else if (href.host.match(/vimeo\.com/)) {
     type = 'vimeo';
-    id = href.pathname.replace(/^\/(video\/)?/, '').replace(/\/.*/, '');
+    id = href.pathname.replace(/^\/(\w+\/)*/, '').replace(/\/.*/, '');
   }
 
   if ((!id || !type) && forceVideo) {
@@ -190,14 +190,13 @@ function getVideoThumbs (dataFrame, data, fotorama) {
     img = thumb.replace(/\/default.jpg$/, '/hqdefault.jpg');
     dataFrame.thumbsReady = true;
   } else if (video.type === 'vimeo') {
-    $.ajax({
-      url: getProtocol() + 'vimeo.com/api/v2/video/' + video.id + '.json',
-      dataType: 'jsonp',
-      success: function (json) {
+    $.getJSON(getProtocol() + 'vimeo.com/api/oembed.json',
+      {url: 'http://vimeo.com/' + video.id},
+      function (json) {
         dataFrame.thumbsReady = true;
-        updateData(data, {img: json[0].thumbnail_large, thumb: json[0].thumbnail_small}, dataFrame.i, fotorama);
+        updateData(data, {img: json.thumbnail_url, thumb: json.thumbnail_url}, dataFrame.i, fotorama);
       }
-    });
+    );
   } else {
     dataFrame.thumbsReady = true;
   }
