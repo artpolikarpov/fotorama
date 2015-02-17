@@ -1239,7 +1239,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     var width = measures.width,
         height = measures.height,
         ratio = measures.ratio,
-        windowHeight = $WINDOW.height() - (o_nav ? $nav.height() : 0);
+        windowHeight = $WINDOW.height() - (o_nav && $nav.css('position') != 'absolute' && $nav.css('position') != 'fixed' ? $nav.height() : 0);
 
     if (measureIsValid(width)) {
       $wrap
