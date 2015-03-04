@@ -255,11 +255,12 @@ function getDataFromHtml ($el) {
   function getDimensions ($img, $child, imgData) {
     var separateThumbFLAG = imgData.thumb && imgData.img !== imgData.thumb,
         width = numberFromMeasure(imgData.width || $img.attr('width')),
-        height = numberFromMeasure(imgData.height || $img.attr('height'));
-
+        height = numberFromMeasure(imgData.height || $img.attr('height')),
+        altText = $img.attr('alt');
     $.extend(imgData, {
       width: width,
       height: height,
+      alt: altText,
       thumbratio: getRatio(imgData.thumbratio || (numberFromMeasure(imgData.thumbwidth || ($child && $child.attr('width')) || separateThumbFLAG || width) / numberFromMeasure(imgData.thumbheight || ($child && $child.attr('height')) || separateThumbFLAG || height)))
     });
   }
