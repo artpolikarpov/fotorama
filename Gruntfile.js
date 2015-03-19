@@ -11,7 +11,6 @@ meta: {
     'src/js/css-classes.js',
     'src/js/skip.js',
     'src/js/_.js',
-    'src/js/modernizr.js',
     'src/js/fullscreen.js',
     'src/js/spin.js',
     'src/js/bez.js',
