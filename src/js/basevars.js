@@ -6,7 +6,8 @@ var $WINDOW = $(window),
     TEST_EL = document.createElement('div'),
 
     QUIRKS_FORCE = location.hash.replace('#', '') === 'quirks',
-    TRANSFORMS3D = (function(a,b){a=TEST_EL.style;b='erspective';return'p'+b in a||'WebkitP'+b in a||'MozP'+b in a||'OP'+b in a||'msP'+b in a})(),    CSS3 = TRANSFORMS3D && !QUIRKS_FORCE,
+    TRANSFORMS3D = (function(a,b){a=TEST_EL.style;b='erspective';return'p'+b in a||'WebkitP'+b in a||'MozP'+b in a||'OP'+b in a||'msP'+b in a})(),
+    CSS3 = TRANSFORMS3D && !QUIRKS_FORCE,
     COMPAT = TRANSFORMS3D || document.compatMode === 'CSS1Compat',
     FULLSCREEN = fullScreenApi.ok,
 
