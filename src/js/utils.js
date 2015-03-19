@@ -61,20 +61,29 @@ function getIndexByPos (pos, side, margin, baseIndex) {
   return -Math.round(pos / (side + (margin || 0)) - (baseIndex || 0));
 }
 
+function transitionEndEventName(){
+    var t;
+    var transitions = {
+      transition:'transitionend',
+      msTransition: 'MSTransitionEnd',
+      OTransition:'oTransitionEnd otransitionend',
+      MozTransition:'transitionend',
+      WebkitTransition:'webkitTransitionEnd'
+    }
+
+    for(t in transitions){
+        if( TEST_EL.style[t] !== undefined ){
+            return transitions[t];
+        }
+    }
+}
+
 function bindTransitionEnd ($el) {
   var elData = $el.data();
 
   if (elData.tEnd) return;
 
-  var el = $el[0],
-      transitionEndEvent = {
-        WebkitTransition: 'webkitTransitionEnd',
-        MozTransition: 'transitionend',
-        OTransition: 'oTransitionEnd otransitionend',
-        msTransition: 'MSTransitionEnd',
-        transition: 'transitionend'
-      };
-  addEvent(el, transitionEndEvent[Modernizr.prefixed('transition')], function (e) {
+  addEvent($el[0], transitionEndEventName(), function (e) {
     elData.tProp && e.propertyName.match(elData.tProp) && elData.onEndFn();
   });
   elData.tEnd = true;
