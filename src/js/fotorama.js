@@ -506,7 +506,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
             .addClass(imgClass + (fullFLAG ? ' ' + imgFullClass : ''))
             .prependTo($frame);
 
-        method = method || (that.fullScreen ? dataFrame.fullfit || opts.fullfit : dataFrame.fit || opts.fit)
+        method = method || (that.fullScreen  && opts.fullfit ? dataFrame.fullfit || opts.fullfit : dataFrame.fit || opts.fit)
         fit($img, ($.isFunction(specialMeasures) ? specialMeasures() : specialMeasures) || measures, method, position || dataFrame.position || opts.position);
 
         $.Fotorama.cache[src] = frameData.state = 'loaded';
@@ -657,7 +657,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       if (!$frame) return;
 
       var normalizedIndex = normalizeIndex(index),
-          method = (that.fullScreen ? dataFrame.fullfit || opts.fullfit : dataFrame.fit || opts.fit),
+          method = (that.fullScreen && opts.fullfit ? dataFrame.fullfit || opts.fullfit : dataFrame.fit || opts.fit),
           position = dataFrame.position || opts.position;
       frameData.eq = normalizedIndex;
 
