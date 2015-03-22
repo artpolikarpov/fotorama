@@ -70,6 +70,7 @@ var $WINDOW = $(window),
       thumbfit: 'cover', // 'contain' || 'scaledown' || 'none'
 
       allowfullscreen: false, // true || 'native'
+      fullfit: 'contain', // 'cover' || 'scaledown' || 'none'
 
       transition: 'slide', // 'crossfade' || 'dissolve'
       clicktransition: null,
