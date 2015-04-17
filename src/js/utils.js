@@ -341,7 +341,7 @@ function fit ($el, measuresToFit, method, position) {
       elData.l.m !== method ||
       elData.l.p !== position)) {
 
-    console.log('fit');
+    //console.log('fit');
 
     var width = measures.width,
         height = measures.height,
@@ -354,7 +354,13 @@ function fit ($el, measuresToFit, method, position) {
 
     if (biggerRatioFLAG && (fitFLAG || containFLAG) || !biggerRatioFLAG && coverFLAG) {
       width = minMaxLimit(measuresToFit.w, 0, fitFLAG ? width : Infinity);
-      height = width / measures.ratio;
+      if (fitFLAG && measures.ratio < 1 && measuresToFit.w >= measures.width) {
+    	  // portrait image in scaledown mode
+    	  // keep height as ratio of scaled width
+      }
+      else {
+    	  height = width / measures.ratio;
+      }
     } else if (biggerRatioFLAG && coverFLAG || !biggerRatioFLAG && (fitFLAG || containFLAG)) {
       height = minMaxLimit(measuresToFit.h, 0, fitFLAG ? height : Infinity);
       width = height * measures.ratio;
