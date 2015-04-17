@@ -418,7 +418,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
       height = measureIsValid(opts.height) || measureIsValid(height) || HEIGHT;
       that.resize({
         width: width,
-        ratio: opts.ratio || ratio || width / height
+        height: height,
+        ratio: opts.ratio || ratio || width / height,
+        fit: opts.fit  // added 'fit' so we can determine best way to resize 
       }, 0, index !== startIndex && '*');
     }
   }
@@ -1239,6 +1241,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     var width = measures.width,
         height = measures.height,
         ratio = measures.ratio,
+        scaledown = options && options.fit === 'scaledown',
         windowHeight = $WINDOW.height() - (o_nav ? $nav.height() : 0);
 
     if (measureIsValid(width)) {
@@ -1261,7 +1264,14 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
       height = numberFromWhatever(height, windowHeight);
 
-      height = height || (ratio && width / ratio);
+      if (scaledown && ratio) {
+    	  // use the minimal height
+    	  height = Math.min(height, width / ratio);
+      }
+      else if (!scaledown && ratio) {
+    	  // always use scaled height
+    	  height = width / ratio;
+      }
 
       if (height) {
         width = Math.round(width);
