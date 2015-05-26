@@ -341,7 +341,7 @@ function fit ($el, measuresToFit, method, position) {
       elData.l.m !== method ||
       elData.l.p !== position)) {
 
-    console.log('fit');
+    //console.log('fit');
 
     var width = measures.width,
         height = measures.height,
