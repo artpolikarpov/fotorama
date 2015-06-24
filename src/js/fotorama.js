@@ -663,7 +663,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
       toDetach[STAGE_FRAME_KEY][normalizedIndex] = $frame.css($.extend({left: o_fade ? 0 : getPosByIndex(index, measures.w, opts.margin, repositionIndex)}, o_fade && getDuration(0)));
 
       if (isDetached($frame[0])) {
-        $frame.appendTo($stageShaft);
+        if ($stageShaft[0] !== $frame.parent()[0]) {
+          $frame.appendTo($stageShaft);
+        }  
         unloadVideo(dataFrame.$video);
       }
 
