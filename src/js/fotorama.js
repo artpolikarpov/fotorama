@@ -1376,6 +1376,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
 
     if ($video && $video !== $videoPlaying) {
+      $video.hide();
       $video.remove();
       triggerEvent('unloadvideo');
     }
