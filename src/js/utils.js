@@ -18,7 +18,7 @@ function readPosition ($el) {
 
 function getTranslate (pos/*, _001*/) {
   var obj = {};
-  if (CSS3) {
+  if (CSS3 && !isTouchDevice()) {
     obj.transform = 'translate3d(' + (pos/* + (_001 ? 0.001 : 0)*/) + 'px,0,0)'; // 0.001 to remove Retina artifacts
   } else {
     obj.left = pos;

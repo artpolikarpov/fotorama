@@ -33,6 +33,9 @@ function moveOnTouch ($el, options) {
   }
 
   function onStart (e, result) {
+    if (isMobileDeviceZoomed()) {
+      return;
+    }
     min = tail.min;
     max = tail.max;
     snap = tail.snap;
@@ -48,6 +51,9 @@ function moveOnTouch ($el, options) {
   }
 
   function onMove (e, result) {
+    if (isMobileDeviceZoomed()) {
+      return;
+    }
     if (!tail.noSwipe) {
       if (!tracked) {
         startTracking(e);
@@ -81,6 +87,9 @@ function moveOnTouch ($el, options) {
   }
 
   function onEnd (result) {
+    if (isMobileDeviceZoomed()) {
+      return;
+    }
     ////console.time('moveontouch.js onEnd');
     if (tail.noSwipe && result.moved) return;
 

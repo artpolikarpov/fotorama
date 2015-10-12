@@ -144,7 +144,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     var keydownCommon = 'keydown.' + _fotoramaClass,
         localStamp = _fotoramaClass + stamp,
         keydownLocal = 'keydown.' + localStamp,
-        resizeLocal = 'resize.' + localStamp + ' ' + 'orientationchange.' + localStamp;
+        resizeLocal = 'resize.' + localStamp,
+        orientationChangeLocal = 'orientationchange.' + localStamp;
 
     if (FLAG) {
       $DOCUMENT
@@ -181,12 +182,28 @@ jQuery.Fotorama = function ($fotorama, opts) {
               !$BODY.hasClass(_fullscreenClass) && e.stopPropagation();
             });
       }
-
-      $WINDOW.on(resizeLocal, that.resize);
+      if (!isTouchDevice()) {
+        $WINDOW.on(resizeLocal, that.resize);
+      } else {
+        $WINDOW.on(orientationChangeLocal, that.resize);
+      }
     } else {
       $DOCUMENT.off(keydownLocal);
-      $WINDOW.off(resizeLocal);
+      if (!isTouchDevice()) {
+        $WINDOW.off(resizeLocal);
+      } else {
+        $WINDOW.off(orientationChangeLocal);
+      }
     }
+  }
+
+  function isTouchDevice() {
+    var result = 'ontouchstart' in window || window.navigator.msMaxTouchPoints;
+
+    isTouchDevice = function() {
+        return result;
+    };
+    return result;
   }
 
   function appendElements (FLAG) {
@@ -900,6 +917,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function onTouchStart () {
+    if (isMobileDeviceZoomed()) return;
     clearTimeout(onTouchEnd.t);
     touchedFLAG = 1;
 
@@ -911,7 +929,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   }
 
   function onTouchEnd () {
-    if (!touchedFLAG) return;
+    if (!touchedFLAG || isMobileDeviceZoomed()) return;
     if (!opts.stopautoplayontouch) {
       releaseAutoplay();
       changeAutoplay();
@@ -1403,7 +1421,9 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }
 
-  $stage.on('mousemove', stageCursor);
+  if (!isTouchDevice()) {
+    $stage.on('mousemove', stageCursor);
+  }
 
   function clickToShow (showOptions) {
     clearTimeout(clickToShow.t);
