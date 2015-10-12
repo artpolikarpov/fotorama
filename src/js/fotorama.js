@@ -1479,12 +1479,12 @@ jQuery.Fotorama = function ($fotorama, opts) {
   stageShaftTouchTail = moveOnTouch($stageShaft, {
     onStart: onTouchStart,
     onMove: function (e, result) {
-      //setShadow($stage, result.edge);
+      setShadow($stage, result.edge);
     },
     onTouchEnd: onTouchEnd,
     onEnd: function (result) {
       ////console.time('stageShaftTouchTail.onEnd');
-      //setShadow($stage);
+      setShadow($stage);
 
       ////console.log('result', result);
 
@@ -1517,7 +1517,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   navShaftTouchTail = moveOnTouch($navShaft, {
     onStart: onTouchStart,
     onMove: function (e, result) {
-      //setShadow($nav, result.edge);
+      setShadow($nav, result.edge);
     },
     onTouchEnd: onTouchEnd,
     onEnd: function (result) {
