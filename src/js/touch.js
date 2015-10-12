@@ -24,6 +24,9 @@ function touch ($el, options) {
       moved;
 
   function onStart (e) {
+    if (isMobileDeviceZoomed()) {
+      return;
+    }
     $target = $(e.target);
     tail.checked = targetIsSelectFLAG = targetIsLinkFlag = moved = false;
 
@@ -53,6 +56,9 @@ function touch ($el, options) {
   }
 
   function onMove (e) {
+    if (isMobileDeviceZoomed()) {
+      return;
+    }
     if ((e.touches && e.touches.length > 1)
         || (MS_POINTER && !e.isPrimary)
         || moveEventType !== e.type
@@ -88,6 +94,9 @@ function touch ($el, options) {
   }
 
   function onEnd (e) {
+    if (isMobileDeviceZoomed()) {
+      return;
+    }
     ////console.time('touch.js onEnd');
 
     (options.onTouchEnd || noop)();
@@ -141,12 +150,14 @@ function touch ($el, options) {
     addEvent(document, 'touchend', onOtherEnd);
     addEvent(document, 'touchcancel', onOtherEnd);
 
-    $WINDOW.on('scroll', onOtherEnd);
-
-    $el.on('mousedown', onStart);
-    $DOCUMENT
+    if (!isTouchDevice()) {
+      $WINDOW.on('scroll', onOtherEnd);
+      $el.on('mousedown', onStart);
+      $DOCUMENT
         .on('mousemove', onMove)
         .on('mouseup', onEnd);
+    }
+
   }
 
   $el.on('click', 'a', function (e) {

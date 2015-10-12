@@ -1,4 +1,7 @@
 function slide ($el, options) {
+  if (isMobileDeviceZoomed()) {
+    return;
+  }
   var elData = $el.data(),
       elPos = Math.round(options.pos),
       onEndFn = function () {
@@ -34,6 +37,9 @@ function slide ($el, options) {
 }
 
 function fade ($el1, $el2, $frames, options, fadeStack, chain) {
+  if (isMobileDeviceZoomed()) {
+    return;
+  }
   var chainedFLAG = typeof chain !== 'undefined';
   if (!chainedFLAG) {
     fadeStack.push(arguments);

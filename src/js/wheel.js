@@ -1,3 +1,7 @@
+var isMobileDeviceZoomed = function() {
+    return isTouchDevice() && document.documentElement.clientWidth / window.innerWidth != 1;
+};
+
 function wheel ($el, options) {
   var el = $el[0],
       lockFLAG,
@@ -8,6 +12,9 @@ function wheel ($el, options) {
       };
 
   addEvent(el, WHEEL, function (e) {
+    if (isMobileDeviceZoomed()) {
+      return;
+    }
     var yDelta = e.wheelDeltaY || -1 * e.deltaY || 0,
         xDelta = e.wheelDeltaX || -1 * e.deltaX || 0,
         xWin = Math.abs(xDelta) && !Math.abs(yDelta),
