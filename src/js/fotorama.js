@@ -409,8 +409,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
     });
   }
 
-  function setMeasures (width, height, ratio, index) {
-    if (!measuresSetFLAG || (measuresSetFLAG === '*' && index === startIndex)) {
+  function setMeasures (width, height, ratio, index, type) {
+    if (type !== 'navThumb' && (!measuresSetFLAG || (measuresSetFLAG === '*' && index === startIndex))) {
 
       ////console.log('setMeasures', index, opts.width, opts.height);
 
@@ -499,7 +499,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
           ratio: img.width / img.height
         };
 
-        setMeasures(imgData.measures.width, imgData.measures.height, imgData.measures.ratio, index);
+        setMeasures(imgData.measures.width, imgData.measures.height, imgData.measures.ratio, index, type);
 
         $img
             .off('load error')
