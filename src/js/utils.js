@@ -235,6 +235,7 @@ function getDataFromHtml ($el) {
     var $child = $img.children('img').eq(0),
         _imgHref = $img.attr('href'),
         _imgSrc = $img.attr('src'),
+        _imgSrcset = $img.attr('srcset'),
         _thumbSrc = $child.attr('src'),
         _video = imgData.video,
         video = checkVideo ? findVideoId(_imgHref, _video === true) : false;
@@ -248,7 +249,8 @@ function getDataFromHtml ($el) {
     getDimensions($img, $child, $.extend(imgData, {
       video: video,
       img: imgData.img || _imgHref || _imgSrc || _thumbSrc,
-      thumb: imgData.thumb || _thumbSrc || _imgSrc || _imgHref
+      thumb: imgData.thumb || _thumbSrc || _imgSrc || _imgHref,
+      srcset: _imgSrcset
     }));
   }
 
