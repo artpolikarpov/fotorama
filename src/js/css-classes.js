@@ -1,5 +1,5 @@
 var _fotoramaClass = 'fotorama',
-    _fullscreenClass = 'fullscreen',
+    _fullscreenClass = 'fotorama__fullscreen',
 
     wrapClass = _fotoramaClass + '__wrap',
     wrapCss2Class = wrapClass + '--css2',
