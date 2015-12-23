@@ -4,6 +4,14 @@
 
 ## 4.6.3, 31 December 2014
 
+<!--4.6.4:name-->
+Dummy
+<!--/4.6.4:name-->
+
+<!--4.6.4:notes-->
+Just to fix npm & bower packages.
+<!--/4.6.4:notes-->
+
 <!--4.6.3:name-->
 HPPNWYR
 <!--/4.6.3:name-->
