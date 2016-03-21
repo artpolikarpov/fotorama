@@ -423,7 +423,34 @@ jQuery.Fotorama = function ($fotorama, opts) {
     }
   }
 
+  /**
+   * Defines whether fotorama in visible viewport.
+   * @param el - DOM element or jQuery object.
+   * @returns {boolean}
+   */
+  function isInViewport() {
+    var rect = $fotorama.get(0).getBoundingClientRect();
+    return (!!rect
+      && rect.bottom >= 0
+      && rect.right >= 0
+      && rect.top <= document.documentElement.clientHeight
+      && rect.left <= document.documentElement.clientWidth
+    );
+  }
+
+  if (opts.lazyLoad) {
+    addEvent(window, 'scroll', function () {
+      if (isInViewport()) {
+        reset();
+      }
+    });
+  }
+
   function loadImg (indexes, type, specialMeasures, method, position, again) {
+    // Load only images visible in viewport.
+    if (that.options.lazyload && !isInViewport()) {
+      return false;
+    }
     eachIndex(indexes, type, function (i, index, dataFrame, $frame, key, frameData) {
 
       if (!$frame) return;
