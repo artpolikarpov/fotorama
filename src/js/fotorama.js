@@ -1229,7 +1229,8 @@ jQuery.Fotorama = function ($fotorama, opts) {
   });
 
   that.resize = function (options) {
-    if (!data) return this;
+    // don't process resize for hidden elements
+    if (!data || $wrap.is(':hidden')) return this;
 
     var time = arguments[1] || 0,
         setFLAG = arguments[2];
