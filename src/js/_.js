@@ -1,2 +1,2 @@
 // My Underscore :-)
-var _ = {};
+var _ = new Object();
