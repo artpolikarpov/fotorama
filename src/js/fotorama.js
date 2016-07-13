@@ -510,11 +510,16 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
         $.Fotorama.cache[src] = frameData.state = 'loaded';
 
-        setTimeout(function () {
+        (window.requestAnimationFrame || setTimeout)(function () {
           $frame
               .trigger('f:load')
-              .removeClass(loadingClass + ' ' + errorClass)
-              .addClass(loadedClass + ' ' + (fullFLAG ? loadedFullClass : loadedImgClass));
+              .removeClass(loadingClass + ' ' + errorClass);
+
+          function addLoadedClass() {
+            $frame.addClass(loadedClass + ' ' + (fullFLAG ? loadedFullClass : loadedImgClass));
+          }
+
+          (window.requestAnimationFrame || setTimeout)(addLoadedClass, 0);
 
           if (type === 'stage') {
             triggerTriggerEvent('load');
