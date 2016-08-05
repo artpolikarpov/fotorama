@@ -1182,7 +1182,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     if (that.fullScreen) {
       that.fullScreen = false;
 
-      if (FULLSCREEN) {
+      if (o_nativeFullScreen && FULLSCREEN) {
         fullScreenApi.cancel(fotorama);
       }
 
