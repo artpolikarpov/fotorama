@@ -902,6 +902,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
   function onTouchStart () {
     clearTimeout(onTouchEnd.t);
     touchedFLAG = 1;
+    triggerEvent('touchstart');
 
     if (opts.stopautoplayontouch) {
       that.stopAutoplay();
@@ -919,6 +920,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
 
     onTouchEnd.t = setTimeout(function () {
       touchedFLAG = 0;
+      triggerEvent('touchend');
     }, TRANSITION_DURATION + TOUCH_TIMEOUT);
     ////console.timeEnd('onTouchEnd');
   }
