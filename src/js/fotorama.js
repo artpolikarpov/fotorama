@@ -80,6 +80,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
       stageWheelTail = {},
       navShaftTouchTail = {},
       navWheelTail = {},
+      smartClickTails = [],
 
       scrollTop,
       scrollLeft,
@@ -1319,6 +1320,12 @@ jQuery.Fotorama = function ($fotorama, opts) {
     that.cancelFullScreen();
     that.stopAutoplay();
 
+    stageShaftTouchTail.destroy();
+    navShaftTouchTail.destroy();
+    $.each(smartClickTails, function (i, item) {
+        item.destroy();
+    });
+
     data = that.data = null;
 
     appendElements();
@@ -1581,7 +1588,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
     clickToShow({index: $arrs.index(this) ? '>' : '<', slow: e.altKey, user: true});
   }
 
-  smartClick($arrs, function (e) {
+  smartClickTails = smartClick($arrs, function (e) {
     stopEvent(e);
     onArrClick.call(this, e);
   }, {

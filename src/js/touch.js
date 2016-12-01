@@ -1,7 +1,8 @@
 var lastEvent,
     moveEventType,
     preventEvent,
-    preventEventTimeout;
+    preventEventTimeout,
+    nsCounter = 0;
 
 function extendEvent (e) {
   var touch = (e.touches || [])[0] || e;
@@ -21,7 +22,8 @@ function touch ($el, options) {
       targetIsSelectFLAG,
       targetIsLinkFlag,
       tolerance,
-      moved;
+      moved,
+      ns = ".fotoramatouch_" + (nsCounter++);
 
   function onStart (e) {
     $target = $(e.target);
@@ -127,6 +129,22 @@ function touch ($el, options) {
     }, TOUCH_TIMEOUT);
   }
 
+  function destroy(){
+      $DOCUMENT.off(ns);
+      $WINDOW.off(ns);
+
+      if (MS_POINTER) {
+        removeEvent(document, 'MSPointerMove', onMove);
+        removeEvent(document,'MSPointerCancel', onEnd);
+        removeEvent(document, 'MSPointerUp', onEnd);
+      }
+      else {
+        removeEvent(document, 'touchstart', onOtherStart);
+        removeEvent(document, 'touchend', onOtherEnd);
+        removeEvent(document, 'touchcancel', onOtherEnd);
+      }
+  }
+
   if (MS_POINTER) {
     addEvent(el, 'MSPointerDown', onStart);
     addEvent(document, 'MSPointerMove', onMove);
@@ -141,17 +159,18 @@ function touch ($el, options) {
     addEvent(document, 'touchend', onOtherEnd);
     addEvent(document, 'touchcancel', onOtherEnd);
 
-    $WINDOW.on('scroll', onOtherEnd);
+    $WINDOW.on('scroll' + ns, onOtherEnd);
 
     $el.on('mousedown', onStart);
     $DOCUMENT
-        .on('mousemove', onMove)
-        .on('mouseup', onEnd);
+        .on('mousemove' + ns, onMove)
+        .on('mouseup' + ns, onEnd);
   }
 
   $el.on('click', 'a', function (e) {
     tail.checked && stopEvent(e);
   });
 
+  tail.destroy = destroy;
   return tail;
 }

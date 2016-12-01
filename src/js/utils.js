@@ -414,7 +414,7 @@ function getIndexFromHash (hash, data, ok, startindex) {
 
 function smartClick ($el, fn, _options) {
   _options = _options || {};
-
+  var tails = [];
   $el.each(function () {
     var $this = $(this),
         thisData = $this.data(),
@@ -423,8 +423,7 @@ function smartClick ($el, fn, _options) {
     if (thisData.clickOn) return;
 
     thisData.clickOn = true;
-
-    $.extend(touch($this, {
+    tails.push($.extend(touch($this, {
       onStart: function (e) {
         startEvent = e;
         (_options.onStart || noop).call(this, e);
@@ -436,8 +435,9 @@ function smartClick ($el, fn, _options) {
         if (result.moved) return;
         fn.call(this, startEvent);
       }
-    }), {noMove: true});
+    }), {noMove: true}));
   });
+  return tails;
 }
 
 function div (classes, child) {
@@ -500,6 +500,11 @@ function getRatio (_ratio) {
 function addEvent (el, e, fn, bool) {
   if (!e) return;
   el.addEventListener ? el.addEventListener(e, fn, !!bool) : el.attachEvent('on'+e, fn);
+}
+
+function removeEvent(el, e, fn, bool) {
+  if (!e) return;
+  el.removeEventListener ? el.removeEventListener(e, fn, !!bool) : el.detachEvent('on'+e, fn);
 }
 
 function elIsDisabled (el) {
