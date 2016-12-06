@@ -536,7 +536,7 @@ jQuery.Fotorama = function ($fotorama, opts) {
         waitFor(function () {
           return !touchedFLAG || !_i-- && !SLOW;
         }, function () {
-          loaded();
+          data && loaded();
         });
       }
 

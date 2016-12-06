@@ -97,4 +97,19 @@ describe('Destroy', function () {
       done();
     });
   });
+
+  it('.destoy() on fotorama:ready should not to break anything', function(done) {
+    var $fotorama = $('#fotorama');
+
+    $fotorama
+        .on('fotorama:ready', function(e, fotorama) {
+          fotorama.destroy();
+          $fotorama.fotorama();
+
+          var fotorama = $fotorama.data('fotorama');
+          expect(fotorama.data).toBeTruthy();
+          done();
+        })
+        .fotorama();
+  })
 });
