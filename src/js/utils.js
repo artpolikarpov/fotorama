@@ -255,8 +255,19 @@ function getDataFromHtml ($el) {
   function getDimensions ($img, $child, imgData) {
     var separateThumbFLAG = imgData.thumb && imgData.img !== imgData.thumb,
         width = numberFromMeasure(imgData.width || $img.attr('width')),
-        height = numberFromMeasure(imgData.height || $img.attr('height'));
-
+        height = numberFromMeasure(imgData.height || $img.attr('height')),
+        alt = $img.attr('alt'),
+        title = $img.attr('title');
+    if (alt){
+      $.extend(imgData, {
+        alt: alt
+      });
+    }
+    if (title){
+      $.extend(imgData, {
+        title: title
+      });
+    }
     $.extend(imgData, {
       width: width,
       height: height,

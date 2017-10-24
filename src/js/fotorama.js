@@ -560,6 +560,13 @@ jQuery.Fotorama = function ($fotorama, opts) {
       }
 
       frameData.state = '';
+
+      if ( frameData.data.hasOwnProperty('alt') ) {
+          img.alt= frameData.data.alt;
+      }
+      if ( frameData.data.hasOwnProperty('title') ) {
+          img.title= frameData.data.title;
+      }
       img.src = src;
     });
   }
