@@ -1,3 +1,6 @@
+   _Sponsored by_<br>
+<a href="https://uploadcare.com/?utm_source=fotorama"><img src="https://ucarecdn.com/74c4d283-f7cf-45d7-924c-fc77345585af/uc-logo-horizontal.svg"></a>
+
 # Fotorama source
 
 There is nothing for non-coders. Take the latest and ready-to-use Fotorama on its website:<br>
