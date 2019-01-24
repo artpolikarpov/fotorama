@@ -1,7 +1,4 @@
-   _Sponsored by_<br>
-<a href="https://uploadcare.com/?utm_source=fotorama"><img src="https://ucarecdn.com/74c4d283-f7cf-45d7-924c-fc77345585af/uc-logo-horizontal.svg"></a>
-
-# Fotorama source
+# Fotorama
 
 There is nothing for non-coders. Take the latest and ready-to-use Fotorama on its website:<br>
 > **http://fotorama.io/set-up**
@@ -25,3 +22,8 @@ The built version of Fotorama will be put in the `out/`.
 3. Push to your fork and submit a pull request to Fotorama’s `develop` branch.
 
 Regarding code style like indentation and whitespace, follow the conventions you see used in the source already.
+
+<hr>
+
+   _Sponsored by_<br>
+<a href="https://uploadcare.com/?utm_source=fotorama"><img src="https://ucarecdn.com/74c4d283-f7cf-45d7-924c-fc77345585af/uc-logo-horizontal.svg"></a>
