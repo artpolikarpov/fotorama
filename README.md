@@ -1,4 +1,4 @@
-# Fotorama
+# Fotorama source
 
 There is nothing for non-coders. Take the latest and ready-to-use Fotorama on its website:<br>
 > **http://fotorama.io/set-up**
