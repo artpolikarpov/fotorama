@@ -25,5 +25,5 @@ Regarding code style like indentation and whitespace, follow the conventions you
 
 <hr>
 
-   _Sponsored by_<br>
+   _Supported by_<br>
 <a href="https://uploadcare.com/?utm_source=github&utm_campaign=fotorama"><img src="https://ucarecdn.com/74c4d283-f7cf-45d7-924c-fc77345585af/uc-logo-horizontal.svg"></a>
