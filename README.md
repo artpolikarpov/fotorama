@@ -1,6 +1,8 @@
 # Fotorama source
+[![Backers on Open Collective](https://opencollective.com/Fotorama/backers/badge.svg)](#backers)
+ [![Sponsors on Open Collective](https://opencollective.com/Fotorama/sponsors/badge.svg)](#sponsors) 
 
-There is nothing for non-coders. Take the latest and ready-to-use Fotorama on its website:<br>
+There is nothing here for non-coders. Take the latest and ready-to-use Fotorama on its website:<br>
 > **http://fotorama.io/set-up**
 
 ## How to build
@@ -27,3 +29,33 @@ Regarding code style like indentation and whitespace, follow the conventions you
 
    _Supported by_<br>
 <a href="https://uploadcare.com/?utm_source=github&utm_campaign=fotorama"><img src="https://ucarecdn.com/74c4d283-f7cf-45d7-924c-fc77345585af/uc-logo-horizontal.svg"></a>
+
+## Contributors
+
+This project exists thanks to all the people who contribute. 
+<a href="https://github.com/artpolikarpov/Fotorama/graphs/contributors"><img src="https://opencollective.com/Fotorama/contributors.svg?width=890&button=false" /></a>
+
+
+## Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/Fotorama#backer)]
+
+<a href="https://opencollective.com/Fotorama#backers" target="_blank"><img src="https://opencollective.com/Fotorama/backers.svg?width=890"></a>
+
+
+## Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/Fotorama#sponsor)]
+
+<a href="https://opencollective.com/Fotorama/sponsor/0/website" target="_blank"><img src="https://opencollective.com/Fotorama/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/Fotorama/sponsor/1/website" target="_blank"><img src="https://opencollective.com/Fotorama/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/Fotorama/sponsor/2/website" target="_blank"><img src="https://opencollective.com/Fotorama/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/Fotorama/sponsor/3/website" target="_blank"><img src="https://opencollective.com/Fotorama/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/Fotorama/sponsor/4/website" target="_blank"><img src="https://opencollective.com/Fotorama/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/Fotorama/sponsor/5/website" target="_blank"><img src="https://opencollective.com/Fotorama/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/Fotorama/sponsor/6/website" target="_blank"><img src="https://opencollective.com/Fotorama/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/Fotorama/sponsor/7/website" target="_blank"><img src="https://opencollective.com/Fotorama/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/Fotorama/sponsor/8/website" target="_blank"><img src="https://opencollective.com/Fotorama/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/Fotorama/sponsor/9/website" target="_blank"><img src="https://opencollective.com/Fotorama/sponsor/9/avatar.svg"></a>
+
+

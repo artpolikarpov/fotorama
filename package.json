@@ -24,5 +24,16 @@
     "grunt-contrib-sass": "~0.7.3",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-s3": "^0.2.0-alpha.3"
+  },
+  "dependencies": {
+    "opencollective-postinstall": "^2.0.2",
+    "opencollective": "^1.0.3"
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/Fotorama"
+  },
+  "scripts": {
+    "postinstall": "opencollective-postinstall"
   }
 }
