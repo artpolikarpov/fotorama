@@ -149,8 +149,8 @@ function touch ($el, options) {
         .on('mouseup', onEnd);
   }
 
-  $el.on('click', 'a', function (e) {
-    tail.checked && stopEvent(e);
+  $el.on('mousedown', 'a', function (e) {
+      e.stopPropagation();
   });
 
   return tail;
