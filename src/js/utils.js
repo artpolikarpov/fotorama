@@ -192,7 +192,7 @@ function getVideoThumbs (dataFrame, data, fotorama) {
   } else if (video.type === 'vimeo') {
     $.ajax({
       url: getProtocol() + 'vimeo.com/api/v2/video/' + video.id + '.json',
-      dataType: 'jsonp',
+      dataType: 'json',
       success: function (json) {
         dataFrame.thumbsReady = true;
         updateData(data, {img: json[0].thumbnail_large, thumb: json[0].thumbnail_small}, dataFrame.i, fotorama);
