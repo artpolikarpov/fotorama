@@ -499,7 +499,12 @@ function getRatio (_ratio) {
 
 function addEvent (el, e, fn, bool) {
   if (!e) return;
-  el.addEventListener ? el.addEventListener(e, fn, !!bool) : el.attachEvent('on'+e, fn);
+  var supportsPassive = false;
+  try {
+    document.addEventListener('test', null, {get passive() {supportsPassive = true}});
+  } catch(err) {}
+  var opt = (supportsPassive) ? {passive: true} : !!bool;
+  el.addEventListener ? el.addEventListener(e, fn, opt) : el.attachEvent('on'+e, fn);
 }
 
 function elIsDisabled (el) {
